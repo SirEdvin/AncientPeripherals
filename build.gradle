@@ -131,6 +131,7 @@ repositories {
 
 
 dependencies {
+    compileOnly "org.jetbrains:annotations:${jb_annotations}"
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation fg.deobf("org.squiddev:cc-tweaked-${cc_version}")
     implementation fg.deobf("de.srendi.advancedperipherals:AdvancedPeripherals:${ap_version}")
