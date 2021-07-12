@@ -27,7 +27,7 @@ public class AncientPeripheralsJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(Items.TRAINABLE_MECHANIC_SOUL.get()), AutomataRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(Items.TRAINABLE_AUTOMATA_CORE.get()), AutomataRecipeCategory.UID);
     }
 
     @Override

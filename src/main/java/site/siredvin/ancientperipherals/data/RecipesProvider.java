@@ -19,9 +19,9 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
     @Override
     protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
         makeSmithingRecipe(
-                de.srendi.advancedperipherals.common.setup.Items.WEAK_MECHANIC_SOUL.get().asItem(),
+                de.srendi.advancedperipherals.common.setup.Items.WEAK_AUTOMATA_CORE.get().asItem(),
                 net.minecraft.item.Items.NETHERITE_INGOT.getItem(),
-                Items.FORGED_MECHANIC_SOUL.get().asItem(), consumer
+                Items.FORGED_AUTOMATA_CORE.get().asItem(), consumer
         );
     }
 

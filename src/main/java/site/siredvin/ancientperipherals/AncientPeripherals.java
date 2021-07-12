@@ -30,7 +30,7 @@ public class AncientPeripherals {
 
     public static final String MOD_ID = "ancientperipherals";
     public static final Logger LOGGER = LogManager.getLogger("Ancient Peripherals");
-    public static final ItemGroup TAB = new ItemGroup("ancientperipheralstab") {
+    public static final ItemGroup TAB = new ItemGroup("ancientperipherals") {
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(Blocks.REALITY_FORGER.get());

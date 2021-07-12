@@ -1,6 +1,5 @@
 package site.siredvin.ancientperipherals.common.integration.jei.automata;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,14 +9,11 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.ancientperipherals.common.setup.Items;
 
-import java.util.Collections;
 import java.util.List;
 
 public class AutomataRecipeCategory implements IRecipeCategory<AutomataRecipe> {
@@ -28,7 +24,7 @@ public class AutomataRecipeCategory implements IRecipeCategory<AutomataRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(AncientPeripherals.MOD_ID, AutomataRecipe.GROUP);
 
     public AutomataRecipeCategory(IGuiHelper guiHelper) {
-        icon = guiHelper.createDrawableIngredient(new ItemStack(Items.TRAINABLE_MECHANIC_SOUL.get()));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(Items.TRAINABLE_AUTOMATA_CORE.get()));
         background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 132, 75);
     }
 

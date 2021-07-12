@@ -18,6 +18,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.common.blocks.FlexibleRealityAnchor;
+import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
 import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.ancientperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
@@ -33,7 +34,6 @@ public class RealityForgerPeripheral extends BasePeripheral {
     private static final DirectionProperty[] DIRECTION_PROPERTY_CANDIDATES = new DirectionProperty[]{
             BlockStateProperties.FACING, BlockStateProperties.FACING_HOPPER, BlockStateProperties.HORIZONTAL_FACING
     };
-    private static final int DEFAULT_RADIUS = 8;
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{
         put("playerPassable", FlexibleRealityAnchor.PLAYER_PASSABLE);
         put("lightPassable", FlexibleRealityAnchor.LIGHT_PASSABLE);
@@ -76,8 +76,8 @@ public class RealityForgerPeripheral extends BasePeripheral {
             Optional<Property<?>> optProperty = state.getValues().keySet().stream().filter(property -> property.getName().equals(entry.getKey())).findAny();
             if (!optProperty.isPresent())
                 return Pair.onlyLeft(MethodResult.of(null, String.format("Unknown property name %s", entry.getKey())));
-            // Please, don't blame me for this untyped shit
-            // If you can handle it better, you're welcome)
+            // Please, don't blame me for this untyped garbage code
+            // If you can handle it better, you're welcome
             Property property = optProperty.get();
             if (property instanceof EnumProperty) {
                 EnumProperty enumProperty = (EnumProperty<?>) property;
@@ -136,7 +136,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
     @LuaFunction
     public final List<Map<String, Integer>> detectAnchors() {
         List<Map<String, Integer>> data = new ArrayList<>();
-        ScanUtils.relativeTraverseBlocks(getWorld(), getPos(), DEFAULT_RADIUS, (blockState, pos) -> {
+        ScanUtils.relativeTraverseBlocks(getWorld(), getPos(), AncientPeripheralsConfig.realityForgerRadius, (blockState, pos) -> {
             if (blockState.is(Blocks.FLEXIBLE_REALITY_ANCHOR.get())) {
                 data.add(new HashMap<String, Integer>(){{
                     put("x", pos.getX());
@@ -169,9 +169,8 @@ public class RealityForgerPeripheral extends BasePeripheral {
         Pair<MethodResult, Pair<Boolean, BlockState>> blockFindResult = findBlock(table);
         if (blockFindResult.leftPresent())
             return blockFindResult.getLeft();
-        BlockPos pos = getPos();
         World world = getWorld();
-        ScanUtils.traverseBlocks(getWorld(), getPos(), DEFAULT_RADIUS, (blockState, newPos) -> {
+        ScanUtils.traverseBlocks(world, getPos(), AncientPeripheralsConfig.realityForgerRadius, (blockState, newPos) -> {
             TileEntity blockEntity = world.getBlockEntity(newPos);
             if (blockEntity instanceof FlexibleRealityAnchorTileEntity) {
                 forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) blockEntity, blockFindResult.getRight().getRight(), table, blockFindResult.getRight().getLeft());

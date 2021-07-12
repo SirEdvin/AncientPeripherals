@@ -1,12 +1,15 @@
 {
   "jei.category.ancientperipherals.automata": "Automata crafting",
-  "item.ancientperipherals.forged_mechanic_soul": "Forged mechanic soul",
-  "item.ancientperipherals.forged_mechanic_soul.tooltip": "§7Seems, this soul lost any ability to function. Maybe, you can feed this soul with something more smart, than regular mob?",
-  "item.ancientperipherals.trainable_mechanic_soul": "Trainable mechanic soul",
-  "item.ancientperipherals.trainable_mechanic_soul.tooltip": "§7Mechanic soul with shards of librarian villager. Was it worth it?",
+  "item.ancientperipherals.forged_automata_core": "Forged automata core",
+  "item.ancientperipherals.forged_automata_core.tooltip": "§7Seems, this core lost any ability to function. Maybe, you can feed this core with something more smart, than regular mob?",
+  "item.ancientperipherals.trainable_automata_core": "Trainable automata core",
+  "item.ancientperipherals.trainable_automata_core.tooltip": "§7Automata core with shards of librarian villager. Was it worth it?",
+  "item.ancientperipherals.abstractium_ingot": "Abstractium ingot",
+  "item.ancientperipherals.abstractium_ingot.tooltip": "XP, reforged by trainable automata",
   "block.ancientperipherals.flexible_reality_anchor": "Flexible reality anchor",
   "block.ancientperipherals.flexible_reality_anchor.tooltip": "§7Flexible block, that can be changed via reality forger",
   "block.ancientperipherals.reality_forger": "Reality forger",
   "block.ancientperipherals.reality_forger.tooltip": "§7Now you can decide, how reality looks like. Control render for any flexible reality anchor blocks!",
-  "itemGroup.ancientperipheralstab": "Ancient Peripherals"
+  "itemGroup.ancientperipherals": "Ancient Peripherals",
+  "turtle.ancientperipherals.trainable": "Trainable automata"
 }

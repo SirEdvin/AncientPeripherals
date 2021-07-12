@@ -2,16 +2,16 @@ package site.siredvin.ancientperipherals.computercraft.turtles;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BaseTurtle;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.ModelTransformingTurtle;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import site.siredvin.ancientperipherals.common.setup.Items;
-import site.siredvin.ancientperipherals.computercraft.peripherals.TrainableMechanicSoulPeripheral;
+import site.siredvin.ancientperipherals.computercraft.peripherals.TrainableAutomataCorePeripheral;
 import site.siredvin.ancientperipherals.utils.TranslationUtil;
 
-public class TrainableTurtle extends BaseTurtle<TrainableMechanicSoulPeripheral> {
+public class TrainableTurtle extends ModelTransformingTurtle<TrainableAutomataCorePeripheral> {
     public TrainableTurtle() {
-        super("trainable_turtle", TranslationUtil.turtle("trainable"), new ItemStack(Items.TRAINABLE_MECHANIC_SOUL.get()));
+        super("trainable_automata", TranslationUtil.turtle("trainable"), new ItemStack(Items.TRAINABLE_AUTOMATA_CORE.get()));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TrainableTurtle extends BaseTurtle<TrainableMechanicSoulPeripheral>
     }
 
     @Override
-    protected TrainableMechanicSoulPeripheral buildPeripheral(ITurtleAccess turtle, TurtleSide side) {
-        return new TrainableMechanicSoulPeripheral("trainableMechaniSoul", turtle, side);
+    protected TrainableAutomataCorePeripheral buildPeripheral(ITurtleAccess turtle, TurtleSide side) {
+        return new TrainableAutomataCorePeripheral("trainableAutomataCore", turtle, side);
     }
 }

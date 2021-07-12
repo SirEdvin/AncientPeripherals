@@ -3,12 +3,13 @@ package site.siredvin.ancientperipherals.common.setup;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.ancientperipherals.common.items.BaseItem;
-import site.siredvin.ancientperipherals.common.items.ForgedMechanicSoul;
+import site.siredvin.ancientperipherals.common.items.ForgedAutomataCore;
 
 public class Items {
 
-    public static final RegistryObject<Item> FORGED_MECHANIC_SOUL = Registration.ITEMS.register("forged_mechanic_soul", ForgedMechanicSoul::new);
-    public static final RegistryObject<Item> TRAINABLE_MECHANIC_SOUL = Registration.ITEMS.register("trainable_mechanic_soul", BaseItem::new);
+    public static final RegistryObject<Item> FORGED_AUTOMATA_CORE = Registration.ITEMS.register("forged_automata_core", ForgedAutomataCore::new);
+    public static final RegistryObject<Item> TRAINABLE_AUTOMATA_CORE = Registration.ITEMS.register("trainable_automata_core", BaseItem::new);
+    public static final RegistryObject<Item> ABSTRACTIUM_INGOT = Registration.ITEMS.register("abstractium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64)));
 
     public static void register() {
     }
