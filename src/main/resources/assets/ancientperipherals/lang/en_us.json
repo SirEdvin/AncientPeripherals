@@ -1,8 +1,9 @@
 {
+  "jei.category.ancientperipherals.automata": "Automata crafting",
   "item.ancientperipherals.forged_mechanic_soul": "Forged mechanic soul",
-  "item.ancientperipherals.forged_mechanic_soul.tooltip": "§Seems, this soul lost any ability to function. Maybe, you can feed this soul with something more smart, than regular mob?",
+  "item.ancientperipherals.forged_mechanic_soul.tooltip": "§7Seems, this soul lost any ability to function. Maybe, you can feed this soul with something more smart, than regular mob?",
   "item.ancientperipherals.trainable_mechanic_soul": "Trainable mechanic soul",
-  "item.ancientperipherals.trainable_mechanic_soul.tooltip": "§Mechanic soul with shards of librarian villager. Was it worth it?",
+  "item.ancientperipherals.trainable_mechanic_soul.tooltip": "§7Mechanic soul with shards of librarian villager. Was it worth it?",
   "block.ancientperipherals.flexible_reality_anchor": "Flexible reality anchor",
   "block.ancientperipherals.flexible_reality_anchor.tooltip": "§7Flexible block, that can be changed via reality forger",
   "block.ancientperipherals.reality_forger": "Reality forger",

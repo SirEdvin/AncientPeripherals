@@ -73,6 +73,11 @@ public class AutomataRecipe implements IRecipe<IInventory> {
     }
 
     @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return recipeItems;
+    }
+
+    @Override
     public ItemStack assemble(IInventory inventory) {
         return result.copy();
     }
