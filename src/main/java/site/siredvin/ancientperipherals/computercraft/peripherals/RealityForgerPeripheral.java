@@ -8,17 +8,21 @@ import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeriph
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.*;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.ancientperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
 import site.siredvin.ancientperipherals.utils.LuaUtils;
+import site.siredvin.ancientperipherals.utils.RepresentationUtil;
 import site.siredvin.ancientperipherals.utils.ScanUtils;
 
 import javax.annotation.Nonnull;
@@ -26,6 +30,9 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class RealityForgerPeripheral extends BasePeripheral {
+    private static final DirectionProperty[] DIRECTION_PROPERTY_CANDIDATES = new DirectionProperty[]{
+            BlockStateProperties.FACING, BlockStateProperties.FACING_HOPPER, BlockStateProperties.HORIZONTAL_FACING
+    };
     private static final int DEFAULT_RADIUS = 8;
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{
         put("playerPassable", FlexibleRealityAnchor.PLAYER_PASSABLE);
@@ -43,6 +50,52 @@ public class RealityForgerPeripheral extends BasePeripheral {
         return true;
     }
 
+    private Pair<MethodResult, BlockState> setFacing(Direction facing, BlockState targetState) {
+        // Detect with facing are present
+        DirectionProperty directionProperty = null;
+
+        for (DirectionProperty candidate: DIRECTION_PROPERTY_CANDIDATES) {
+            if (targetState.getValues().containsKey(candidate)) {
+                directionProperty = candidate;
+                break;
+            }
+        }
+        if (directionProperty == null) {
+            AncientPeripherals.LOGGER.warn(String.format("Cannot set direction for block %s", targetState.getBlock().getDescriptionId()));
+            return Pair.onlyRight(targetState);
+        }
+        // Checking
+        if (!directionProperty.getPossibleValues().contains(facing)) {
+            return Pair.onlyLeft(MethodResult.of(null, String.format("Only %s directions are available", RepresentationUtil.mergeValues(directionProperty.getPossibleValues()))));
+        }
+        return Pair.onlyRight(targetState.setValue(directionProperty, facing));
+    }
+
+    private Pair<MethodResult, BlockState> applyBlockAttrs(BlockState state, Map<?, ?> blockAttrs) {
+        for (Map.Entry<?, ?> entry: blockAttrs.entrySet()) {
+            Optional<Property<?>> optProperty = state.getValues().keySet().stream().filter(property -> property.getName().equals(entry.getKey())).findAny();
+            if (!optProperty.isPresent())
+                return Pair.onlyLeft(MethodResult.of(null, String.format("Unknown property name %s", entry.getKey())));
+            // Please, don't blame me for this untyped shit
+            // If you can handle it better, you're welcome)
+            Property property = optProperty.get();
+            if (property instanceof EnumProperty) {
+                EnumProperty enumProperty = (EnumProperty<?>) property;
+                String value = entry.getValue().toString().toLowerCase();
+                // Well, how even here could happen NPE?
+                Optional targetedEnum = enumProperty.getPossibleValues().stream().filter(candidate -> candidate.toString().toLowerCase().equals(value)).findAny();
+                if (!targetedEnum.isPresent())
+                    return Pair.onlyLeft(MethodResult.of(null, String.format("Incorrect value %s, only %s is allowed", entry.getValue(), RepresentationUtil.mergeValues(enumProperty.getPossibleValues()))));
+                state = state.setValue(enumProperty, (Enum)targetedEnum.get());
+            } else if (property instanceof BooleanProperty) {
+                state = state.setValue(property, (Boolean) entry.getValue());
+            } else if (property instanceof IntegerProperty) {
+                state = state.setValue(property, ((Number) entry.getValue()).intValue());
+            }
+        }
+        return Pair.onlyRight(state);
+    }
+
     private Pair<MethodResult, Pair<Boolean, BlockState>> findBlock(Map<?, ?> table) {
         boolean applyBlock = false;
         BlockState targetState = null;
@@ -52,6 +105,15 @@ public class RealityForgerPeripheral extends BasePeripheral {
                 return Pair.onlyLeft(MethodResult.of(null, "Cannot find block"));
             Block block = blockOptional.get();
             targetState = block.defaultBlockState();
+            if (table.containsKey("attrs")) {
+                Object blockAttrs = table.get("attrs");
+                if (!(blockAttrs instanceof Map))
+                    return Pair.onlyLeft(MethodResult.of(null, "attrs should be a table!"));
+                Pair<MethodResult, BlockState> attributesApplyResult = applyBlockAttrs(targetState, (Map<?, ?>) blockAttrs);
+                if (attributesApplyResult.leftPresent())
+                    return attributesApplyResult.ignoreRight();
+                targetState = attributesApplyResult.getRight();
+            }
             applyBlock = true;
         }
         return Pair.onlyRight(Pair.of(applyBlock, targetState));
