@@ -1,4 +1,4 @@
-package site.siredvin.ancientperipherals.common.integration.jei;
+package site.siredvin.ancientperipherals.integrations.jei;
 
 import com.google.common.collect.ImmutableSet;
 import mezz.jei.api.IModPlugin;
@@ -11,7 +11,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import site.siredvin.ancientperipherals.AncientPeripherals;
-import site.siredvin.ancientperipherals.common.integration.jei.automata.AutomataRecipeCategory;
+import site.siredvin.ancientperipherals.integrations.jei.automata.AutomataRecipeCategory;
 import site.siredvin.ancientperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.ancientperipherals.common.setup.Items;
 

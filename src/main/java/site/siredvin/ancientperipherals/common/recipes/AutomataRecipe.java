@@ -13,6 +13,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import site.siredvin.ancientperipherals.common.setup.Items;
 import site.siredvin.ancientperipherals.common.setup.RecipeSerializers;
 
 import java.util.Map;
@@ -106,6 +107,16 @@ public class AutomataRecipe implements IRecipe<IInventory> {
     @Override
     public IRecipeType<?> getType() {
         return TYPE;
+    }
+
+    @Override
+    public String getGroup() {
+        return this.group;
+    }
+
+    @Override
+    public ItemStack getToastSymbol() {
+        return new ItemStack(Items.TRAINABLE_AUTOMATA_CORE.get());
     }
 
     // Parsing

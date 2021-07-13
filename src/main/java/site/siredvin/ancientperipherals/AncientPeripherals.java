@@ -11,6 +11,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -24,6 +25,8 @@ import site.siredvin.ancientperipherals.common.models.FlexibleRealityAnchorModel
 import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.setup.CCRegistration;
 import site.siredvin.ancientperipherals.common.setup.Registration;
+import site.siredvin.ancientperipherals.integrations.patchouli.AutomataRecipePage;
+import vazkii.patchouli.client.book.ClientBookRegistry;
 
 @Mod(AncientPeripherals.MOD_ID)
 public class AncientPeripherals {
@@ -66,5 +69,8 @@ public class AncientPeripherals {
     @SubscribeEvent
     public void clientSetup(FMLClientSetupEvent event) {
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), RenderType.translucent());
+        if (ModList.get().isLoaded("patchouli")) {
+            ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "automata"), AutomataRecipePage.class);
+        }
     }
 }

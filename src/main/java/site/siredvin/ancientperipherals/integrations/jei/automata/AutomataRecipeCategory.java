@@ -1,4 +1,4 @@
-package site.siredvin.ancientperipherals.common.integration.jei.automata;
+package site.siredvin.ancientperipherals.integrations.jei.automata;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
