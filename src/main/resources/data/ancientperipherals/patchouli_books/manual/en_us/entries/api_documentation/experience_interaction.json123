@@ -1,0 +1,33 @@
+{
+  "name": "Experience Interaction API",
+  "icon": "minecraft:writable_book",
+  "category": "ancientperipherals:api_documentation",
+  "advancement": "ancientperipherals:scientific_automata_core",
+  "pages": [
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "getStoredXP",
+      "parameters": [],
+      "description": "Returns number of stored experience points",
+      "output": "int"
+    },
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "collectXP",
+      "parameters": [],
+      "description": "Tries to collect experience orb in automata range. Returns amount of collected experience points.",
+      "output": "int",
+      "canOutputError": "yes"
+    },
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "suckOwnerXP",
+      "parameters": [
+        ["int", "count"]
+      ],
+      "description": "Tries to extract defined experience points from owned player. Returns amount of collected points.",
+      "output": "int",
+      "canOutputError": "yes"
+    }
+  ]
+}

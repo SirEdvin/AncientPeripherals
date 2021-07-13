@@ -1,0 +1,19 @@
+{
+  "name": "Operations API",
+  "icon": "minecraft:writable_book",
+  "category": "ancientperipherals:api_documentation",
+  "advancement": "advancedperipherals:weak_automata_core",
+  "pages": [
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "getConfiguration",
+      "returns": [
+        ["configuration", "{ [string] = any }"]
+      ],
+      "throw": [
+        "incorrect arguments"
+      ],
+      "description": "Generic function for peripheral configuration accessing. Should contains all information about internal cooldowns, costs, interaction limitations, etc."
+    }
+  ]
+}

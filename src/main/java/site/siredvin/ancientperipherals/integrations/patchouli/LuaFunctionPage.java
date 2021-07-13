@@ -11,6 +11,8 @@ import vazkii.patchouli.client.book.gui.BookTextRenderer;
 import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookEntry;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +35,29 @@ public class LuaFunctionPage extends BookPage {
     private StringTextComponent prefixedLocalizedText(String prefix, IVariable text) {
         // Well, if you just pass text component after `append`
         // it just ignored
-        return new StringTextComponent(TranslationUtil.localization(prefix).append(text.as(ITextComponent.class)).getString());
+        return prefixedLocalizedText(prefix, text, new StringTextComponent("Missing component!!!"));
+    }
+
+    private StringTextComponent prefixedLocalizedText(String prefix, @Nullable IVariable text, @Nonnull ITextComponent def) {
+        // Well, if you just pass text component after `append`
+        // it just ignored
+        ITextComponent textComponent;
+        if (text == null) {
+            textComponent = def;
+        } else {
+            textComponent = text.as(ITextComponent.class);
+        }
+        return new StringTextComponent(TranslationUtil.localization(prefix).append(textComponent).getString());
     }
 
     private StringTextComponent prefixedText(String prefix, IVariable text) {
         // Well, if you just pass text component after `append`
         // it just ignored
         return new StringTextComponent(new StringTextComponent(prefix).append(text.as(ITextComponent.class)).getString());
+    }
+
+    private StringTextComponent mergeComponents(IFormattableTextComponent first, IFormattableTextComponent second) {
+        return new StringTextComponent(first.append(second).getString());
     }
 
     private StringTextComponent wrapParameter(IVariable parameter) {
@@ -54,21 +72,28 @@ public class LuaFunctionPage extends BookPage {
     @Override
     public void onDisplayed(GuiBookEntry parent, int left, int top) {
         super.onDisplayed(parent, left, top);
+        // Think about fake layouting ... (
 
         actualTitle = functionName.as(ITextComponent.class);
 
         parameterRenderers = new ArrayList<>();
         int height_counter = STARTING_HEIGHT;
-        parameterRenderers.add(new BookTextRenderer(parent, TranslationUtil.localization("parameters"), 0, height_counter));
-        height_counter += GuiBook.TEXT_LINE_HEIGHT;
-
-        for (IVariable parameter: parameters.asList()) {
-            parameterRenderers.add(new BookTextRenderer(parent, wrapParameter(parameter), 0, height_counter));
+        List<IVariable> parametersList = parameters.asList();
+        if (parametersList.isEmpty()) {
+            parameterRenderers.add(new BookTextRenderer(parent, mergeComponents(TranslationUtil.localization("parameters"), TranslationUtil.localization("no_parameters")), 0, height_counter));
             height_counter += GuiBook.TEXT_LINE_HEIGHT;
+        } else {
+            parameterRenderers.add(new BookTextRenderer(parent, TranslationUtil.localization("parameters"), 0, height_counter));
+            height_counter += GuiBook.TEXT_LINE_HEIGHT;
+            for (IVariable parameter : parameters.asList()) {
+                parameterRenderers.add(new BookTextRenderer(parent, wrapParameter(parameter), 0, height_counter));
+                height_counter += GuiBook.TEXT_LINE_HEIGHT;
+            }
         }
+
         outputRenderer = new BookTextRenderer(parent, prefixedLocalizedText("output", output), 0, height_counter);
         height_counter += GuiBook.TEXT_LINE_HEIGHT;
-        canOutputErrorRenderer = new BookTextRenderer(parent, prefixedLocalizedText("can_output_error", canOutputError), 0, height_counter);
+        canOutputErrorRenderer = new BookTextRenderer(parent, prefixedLocalizedText("can_output_error", canOutputError, TranslationUtil.localization("no_output_error")), 0, height_counter);
         height_counter += GuiBook.TEXT_LINE_HEIGHT;
         descriptionRenderer = new BookTextRenderer(parent, prefixedLocalizedText("description", description), 0, height_counter);
 

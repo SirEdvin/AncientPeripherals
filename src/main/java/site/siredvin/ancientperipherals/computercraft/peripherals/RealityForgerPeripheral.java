@@ -8,20 +8,20 @@ import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeriph
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.state.*;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.EnumProperty;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.Property;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
 import site.siredvin.ancientperipherals.common.setup.Blocks;
-import site.siredvin.ancientperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.ancientperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
+import site.siredvin.ancientperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.ancientperipherals.utils.LuaUtils;
 import site.siredvin.ancientperipherals.utils.RepresentationUtil;
 import site.siredvin.ancientperipherals.utils.ScanUtils;
@@ -31,9 +31,6 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class RealityForgerPeripheral extends BasePeripheral {
-    private static final DirectionProperty[] DIRECTION_PROPERTY_CANDIDATES = new DirectionProperty[]{
-            BlockStateProperties.FACING, BlockStateProperties.FACING_HOPPER, BlockStateProperties.HORIZONTAL_FACING
-    };
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{
         put("playerPassable", FlexibleRealityAnchor.PLAYER_PASSABLE);
         put("lightPassable", FlexibleRealityAnchor.LIGHT_PASSABLE);
@@ -50,34 +47,14 @@ public class RealityForgerPeripheral extends BasePeripheral {
         return true;
     }
 
-    private Pair<MethodResult, BlockState> setFacing(Direction facing, BlockState targetState) {
-        // Detect with facing are present
-        DirectionProperty directionProperty = null;
-
-        for (DirectionProperty candidate: DIRECTION_PROPERTY_CANDIDATES) {
-            if (targetState.getValues().containsKey(candidate)) {
-                directionProperty = candidate;
-                break;
-            }
-        }
-        if (directionProperty == null) {
-            AncientPeripherals.LOGGER.warn(String.format("Cannot set direction for block %s", targetState.getBlock().getDescriptionId()));
-            return Pair.onlyRight(targetState);
-        }
-        // Checking
-        if (!directionProperty.getPossibleValues().contains(facing)) {
-            return Pair.onlyLeft(MethodResult.of(null, String.format("Only %s directions are available", RepresentationUtil.mergeValues(directionProperty.getPossibleValues()))));
-        }
-        return Pair.onlyRight(targetState.setValue(directionProperty, facing));
-    }
-
-    private Pair<MethodResult, BlockState> applyBlockAttrs(BlockState state, Map<?, ?> blockAttrs) {
+    // Please, don't blame me for this untyped garbage code
+    // If you can handle it better, you're welcome
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private BlockState applyBlockAttrs(BlockState state, Map<?, ?> blockAttrs) throws LuaException {
         for (Map.Entry<?, ?> entry: blockAttrs.entrySet()) {
             Optional<Property<?>> optProperty = state.getValues().keySet().stream().filter(property -> property.getName().equals(entry.getKey())).findAny();
             if (!optProperty.isPresent())
-                return Pair.onlyLeft(MethodResult.of(null, String.format("Unknown property name %s", entry.getKey())));
-            // Please, don't blame me for this untyped garbage code
-            // If you can handle it better, you're welcome
+                throw new LuaException(String.format("Unknown property name %s", entry.getKey()));
             Property property = optProperty.get();
             if (property instanceof EnumProperty) {
                 EnumProperty enumProperty = (EnumProperty<?>) property;
@@ -85,38 +62,39 @@ public class RealityForgerPeripheral extends BasePeripheral {
                 // Well, how even here could happen NPE?
                 Optional targetedEnum = enumProperty.getPossibleValues().stream().filter(candidate -> candidate.toString().toLowerCase().equals(value)).findAny();
                 if (!targetedEnum.isPresent())
-                    return Pair.onlyLeft(MethodResult.of(null, String.format("Incorrect value %s, only %s is allowed", entry.getValue(), RepresentationUtil.mergeValues(enumProperty.getPossibleValues()))));
+                    throw new LuaException(String.format("Incorrect value %s, only %s is allowed", entry.getKey(), RepresentationUtil.mergeValues(enumProperty.getPossibleValues())));
                 state = state.setValue(enumProperty, (Enum)targetedEnum.get());
             } else if (property instanceof BooleanProperty) {
+                if (!(entry.getValue() instanceof Boolean))
+                    throw new LuaException(String.format("Incorrect value %s, should be boolean", entry.getKey()));
                 state = state.setValue(property, (Boolean) entry.getValue());
             } else if (property instanceof IntegerProperty) {
+                if (!(entry.getValue() instanceof Number))
+                    throw new LuaException(String.format("Incorrect value %s, should be boolean", entry.getKey()));
                 state = state.setValue(property, ((Number) entry.getValue()).intValue());
             }
         }
-        return Pair.onlyRight(state);
+        return state;
     }
 
-    private Pair<MethodResult, Pair<Boolean, BlockState>> findBlock(Map<?, ?> table) {
+    private Pair<Boolean, BlockState> findBlock(Map<?, ?> table) throws LuaException {
         boolean applyBlock = false;
         BlockState targetState = null;
         if (table.containsKey("block")) {
             Optional<Block> blockOptional = Registry.BLOCK.getOptional(new ResourceLocation(table.get("block").toString()));
             if (!blockOptional.isPresent())
-                return Pair.onlyLeft(MethodResult.of(null, "Cannot find block"));
+                throw new LuaException(String.format("Cannot find block %s", table.get("block")));
             Block block = blockOptional.get();
             targetState = block.defaultBlockState();
             if (table.containsKey("attrs")) {
                 Object blockAttrs = table.get("attrs");
                 if (!(blockAttrs instanceof Map))
-                    return Pair.onlyLeft(MethodResult.of(null, "attrs should be a table!"));
-                Pair<MethodResult, BlockState> attributesApplyResult = applyBlockAttrs(targetState, (Map<?, ?>) blockAttrs);
-                if (attributesApplyResult.leftPresent())
-                    return attributesApplyResult.ignoreRight();
-                targetState = attributesApplyResult.getRight();
+                    throw new LuaException("attrs should be a table");
+                targetState = applyBlockAttrs(targetState, (Map<?, ?>) blockAttrs);
             }
             applyBlock = true;
         }
-        return Pair.onlyRight(Pair.of(applyBlock, targetState));
+        return Pair.of(applyBlock, targetState);
     }
 
     private void forgeRealityTileEntity(FlexibleRealityAnchorTileEntity realityMirror, @Nullable BlockState targetState, Map<?, ?> flags, boolean applyState) {
@@ -149,31 +127,50 @@ public class RealityForgerPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
+    public final MethodResult forgeRealityPieces(@Nonnull IArguments arguments) throws LuaException {
+        BlockPos center = getPos();
+        World world = getWorld();
+        List<BlockPos> poses = new ArrayList<>();
+        for (Object value: arguments.getTable(0).values()) {
+            if (!(value instanceof Map))
+                throw new LuaException("First argument should be list of block positions");
+            poses.add(LuaUtils.convertToBlockPos(center, (Map<?, ?>) value));
+        }
+        List<FlexibleRealityAnchorTileEntity> entities = new ArrayList<>();
+        for (BlockPos pos: poses) {
+            TileEntity entity = world.getBlockEntity(pos);
+            if (!(entity instanceof FlexibleRealityAnchorTileEntity))
+                return MethodResult.of(false, String.format("Incorrect coordinates (%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ()));
+            entities.add((FlexibleRealityAnchorTileEntity) entity);
+        }
+        Map<?, ?> table = arguments.getTable(1);
+        Pair<Boolean, BlockState> blockFindResult = findBlock(table);
+        entities.forEach(entity -> forgeRealityTileEntity(entity, blockFindResult.getRight(), table, blockFindResult.getLeft()));
+        return MethodResult.of(true);
+    }
+
+    @LuaFunction(mainThread = true)
     public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
         BlockPos targetPosition = LuaUtils.convertToBlockPos(getPos(), arguments.getTable(0));
         Map<?, ?> table = arguments.getTable(1);
         World world = getWorld();
         TileEntity entity = world.getBlockEntity(targetPosition);
         if (!(entity instanceof FlexibleRealityAnchorTileEntity))
-            return MethodResult.of(null, "Incorrect coordinates");
-        Pair<MethodResult, Pair<Boolean, BlockState>> blockFindResult = findBlock(table);
-        if (blockFindResult.leftPresent())
-            return blockFindResult.getLeft();
-        forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) entity, blockFindResult.getRight().getRight(), table, blockFindResult.getRight().getLeft());
+            return MethodResult.of(false, "Incorrect coordinates");
+        Pair<Boolean, BlockState> blockFindResult = findBlock(table);
+        forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) entity, blockFindResult.getRight(), table, blockFindResult.getLeft());
         return MethodResult.of(true);
     }
 
     @LuaFunction(mainThread = true)
     public final MethodResult forgeReality(@Nonnull IArguments arguments) throws LuaException {
         Map<?, ?> table = arguments.getTable(0);
-        Pair<MethodResult, Pair<Boolean, BlockState>> blockFindResult = findBlock(table);
-        if (blockFindResult.leftPresent())
-            return blockFindResult.getLeft();
+        Pair<Boolean, BlockState> blockFindResult = findBlock(table);
         World world = getWorld();
         ScanUtils.traverseBlocks(world, getPos(), AncientPeripheralsConfig.realityForgerRadius, (blockState, newPos) -> {
             TileEntity blockEntity = world.getBlockEntity(newPos);
             if (blockEntity instanceof FlexibleRealityAnchorTileEntity) {
-                forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) blockEntity, blockFindResult.getRight().getRight(), table, blockFindResult.getRight().getLeft());
+                forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) blockEntity, blockFindResult.getRight(), table, blockFindResult.getLeft());
             }
         });
         return MethodResult.of(true);

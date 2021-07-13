@@ -5,7 +5,7 @@
   "advancements.ancientperipherals.scientific_automata_core.description": "Scientific progress always require sacrifices. Always.",
   "jei.category.ancientperipherals.automata": "Automata crafting",
   "item.ancientperipherals.forged_automata_core": "Forged automata core",
-  "item.ancientperipherals.forged_automata_core.tooltip": "§7Seems, this core lost any ability to function. Maybe, you can feed this core with something more smart, than regular mob?",
+  "item.ancientperipherals.forged_automata_core.tooltip": "§7Seems, this core lost any ability to function...",
   "item.ancientperipherals.scientific_automata_core": "Scientific automata core",
   "item.ancientperipherals.scientific_automata_core.tooltip": "§7Automata core with shards of scientific villager. Was it worth it?",
   "item.ancientperipherals.abstractium_ingot": "Abstractium ingot",
@@ -19,7 +19,9 @@
   "itemGroup.ancientperipherals": "Ancient Peripherals",
   "turtle.ancientperipherals.scientific": "Scientific automata",
   "text.ancientperipherals.parameters": "$(l)Parameters$(): ",
+  "text.ancientperipherals.no_parameters": "absent",
   "text.ancientperipherals.output": "$(l)Output$(): ",
   "text.ancientperipherals.can_output_error": "$(l)Can output error$(): ",
-  "text.ancientperipherals.description": "$(l)Description$(): "
+  "text.ancientperipherals.description": "$(l)Description$(): ",
+  "text.ancientperipherals.no_output_error": "no"
 }

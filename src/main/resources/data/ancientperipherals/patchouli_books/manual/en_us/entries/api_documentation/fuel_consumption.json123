@@ -1,0 +1,39 @@
+{
+  "name": "Fuel consumption API",
+  "icon": "minecraft:writable_book",
+  "category": "ancientperipherals:api_documentation",
+  "advancement": "advancedperipherals:weak_automata_core",
+  "pages": [
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "getFuelLevel",
+      "parameters": [],
+      "description": "Returns current fuel level",
+      "output": "int"
+    },
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "getMaxFuelLevel",
+      "parameters": [],
+      "description": "Returns max fuel level",
+      "output": "int"
+    },
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "getFuelConsumptionRate",
+      "parameters": [],
+      "description": "Get current fuel consumption rate",
+      "output": "int"
+    },
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "setFuelConsumptionRate",
+      "parameters": [
+        ["int", "level"]
+      ],
+      "description": "Trying set fuel consumption level",
+      "output": "true",
+      "canOutputError": "yes"
+    }
+  ]
+}
