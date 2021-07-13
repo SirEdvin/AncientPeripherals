@@ -10,6 +10,12 @@
   "block.ancientperipherals.flexible_reality_anchor.tooltip": "§7Flexible block, that can be changed via reality forger",
   "block.ancientperipherals.reality_forger": "Reality forger",
   "block.ancientperipherals.reality_forger.tooltip": "§7Now you can decide, how reality looks like. Control render for any flexible reality anchor blocks!",
+  "block.ancientperipherals.abstractium_block": "Abstractium block",
+  "block.ancientperipherals.abstractium_block.tooltip": "XP, reforged by trainable automata collected into block",
   "itemGroup.ancientperipherals": "Ancient Peripherals",
-  "turtle.ancientperipherals.trainable": "Trainable automata"
+  "turtle.ancientperipherals.trainable": "Trainable automata",
+  "text.ancientperipherals.parameters": "$(l)Parameters$(): ",
+  "text.ancientperipherals.output": "$(l)Output$(): ",
+  "text.ancientperipherals.can_output_error": "$(l)Can output error$(): ",
+  "text.ancientperipherals.description": "$(l)Description$(): "
 }

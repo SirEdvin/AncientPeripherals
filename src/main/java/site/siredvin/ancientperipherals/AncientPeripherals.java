@@ -26,6 +26,7 @@ import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.setup.CCRegistration;
 import site.siredvin.ancientperipherals.common.setup.Registration;
 import site.siredvin.ancientperipherals.integrations.patchouli.AutomataRecipePage;
+import site.siredvin.ancientperipherals.integrations.patchouli.LuaFunctionPage;
 import vazkii.patchouli.client.book.ClientBookRegistry;
 
 @Mod(AncientPeripherals.MOD_ID)
@@ -71,6 +72,7 @@ public class AncientPeripherals {
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), RenderType.translucent());
         if (ModList.get().isLoaded("patchouli")) {
             ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "automata"), AutomataRecipePage.class);
+            ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "lua_function"), LuaFunctionPage.class);
         }
     }
 }

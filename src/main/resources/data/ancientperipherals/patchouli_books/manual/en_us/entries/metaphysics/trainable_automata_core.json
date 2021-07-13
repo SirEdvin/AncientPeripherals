@@ -1,0 +1,17 @@
+{
+  "name": "Test page",
+  "icon": "ancientperipherals:trainable_automata_core",
+  "category": "advancedperipherals:metaphysics",
+  "pages": [
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "crystallizeXP",
+      "parameters": [
+        ["int",  "ingot_count"]
+      ],
+      "description": "crystallize XP from stored XP in turtle and transform it to abstractium ingots",
+      "output": "true",
+      "canOutputError": "yes"
+    }
+  ]
+}

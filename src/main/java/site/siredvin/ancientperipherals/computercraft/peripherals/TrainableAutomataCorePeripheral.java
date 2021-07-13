@@ -105,11 +105,11 @@ public class TrainableAutomataCorePeripheral extends AutomataCorePeripheral {
     }
 
     @LuaFunction
-    public final MethodResult crystallizeXP(int count) {
+    public final MethodResult crystallizeXP(int ingots_count) {
         ItemStack result = new ItemStack(Items.ABSTRACTIUM_INGOT.get());
-        if (count < result.getMaxStackSize())
+        if (ingots_count < result.getMaxStackSize())
             return MethodResult.of(null, "Can craft only one stack at time");
-        int requiredXPAmount = count * AncientPeripheralsConfig.abstractiumXPPointsCost;
+        int requiredXPAmount = ingots_count * AncientPeripheralsConfig.abstractiumXPPointsCost;
         CompoundNBT data = owner.getDataStorage();
         int currentAmount = data.getInt(COLLECTED_XP_AMOUNT);
         if (currentAmount < requiredXPAmount)
@@ -125,7 +125,7 @@ public class TrainableAutomataCorePeripheral extends AutomataCorePeripheral {
         if (freeSlot == -1)
             return MethodResult.of(null, "Cannot find free slot in turtle");
         data.putInt(COLLECTED_XP_AMOUNT, currentAmount - requiredXPAmount);
-        result.setCount(count);
+        result.setCount(ingots_count);
         turtleInventory.setItem(freeSlot, result);
         return MethodResult.of(true);
     }
