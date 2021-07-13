@@ -32,7 +32,7 @@ public class ConfigHandler {
         AncientPeripheralsConfig.collectXPCooldown = ConfigHolder.COMMON_CONFIG.COLLECT_XP_COOLDOWN.get();
         AncientPeripheralsConfig.collectXPCost = ConfigHolder.COMMON_CONFIG.COLLECT_XP_COST.get();
         // Automata Cores
-        AncientPeripheralsConfig.trainableAutomataCoreInteractionRadius = ConfigHolder.COMMON_CONFIG.TRAINABLE_AUTOMATA_CORE_INTERACTION_RADIUS.get();
-        AncientPeripheralsConfig.trainableAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.TRAINABLE_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
+        AncientPeripheralsConfig.scientificAutomataCoreInteractionRadius = ConfigHolder.COMMON_CONFIG.SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS.get();
+        AncientPeripheralsConfig.scientificAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
     }
 }

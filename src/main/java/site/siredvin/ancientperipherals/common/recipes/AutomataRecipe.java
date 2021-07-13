@@ -116,7 +116,7 @@ public class AutomataRecipe implements IRecipe<IInventory> {
 
     @Override
     public ItemStack getToastSymbol() {
-        return new ItemStack(Items.TRAINABLE_AUTOMATA_CORE.get());
+        return new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get());
     }
 
     // Parsing

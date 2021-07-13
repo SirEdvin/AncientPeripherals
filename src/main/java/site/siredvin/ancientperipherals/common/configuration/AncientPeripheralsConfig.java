@@ -13,8 +13,8 @@ public class AncientPeripheralsConfig {
     public static int collectXPCooldown;
     public static int collectXPCost;
     // Configuration
-    public static int trainableAutomataCoreInteractionRadius;
-    public static int trainableAutomataCoreMaxFuelConsumptionLevel;
+    public static int scientificAutomataCoreInteractionRadius;
+    public static int scientificAutomataCoreMaxFuelConsumptionLevel;
 
     public static class CommonConfig {
 
@@ -31,8 +31,8 @@ public class AncientPeripheralsConfig {
         final ForgeConfigSpec.IntValue COLLECT_XP_COST;
 
         // Mechanic souls
-        final ForgeConfigSpec.IntValue TRAINABLE_AUTOMATA_CORE_INTERACTION_RADIUS;
-        final ForgeConfigSpec.IntValue TRAINABLE_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
+        final ForgeConfigSpec.IntValue SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS;
+        final ForgeConfigSpec.IntValue SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
 
         CommonConfig(final ForgeConfigSpec.Builder builder) {
             builder.comment("").push("Features");
@@ -47,8 +47,8 @@ public class AncientPeripheralsConfig {
             COLLECT_XP_COST = builder.defineInRange("collectXPCost", 1, 1, Integer.MAX_VALUE);
             builder.pop();
             builder.comment("").push("Automata cores");
-            TRAINABLE_AUTOMATA_CORE_INTERACTION_RADIUS = builder.defineInRange("trainableAutomataCoreInteractionRadius", 4, 1, 64);
-            TRAINABLE_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("trainableAutomataCoreInteractionRadius", 4, 1, 64);
+            SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS = builder.defineInRange("scientificAutomataCoreInteractionRadius", 4, 1, 64);
+            SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("scientificAutomataCoreInteractionRadius", 4, 1, 64);
             builder.pop();
         }
     }

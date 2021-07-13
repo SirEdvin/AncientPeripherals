@@ -24,6 +24,7 @@ import site.siredvin.ancientperipherals.common.configuration.ConfigHolder;
 import site.siredvin.ancientperipherals.common.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.setup.CCRegistration;
+import site.siredvin.ancientperipherals.common.setup.FeedingRecipes;
 import site.siredvin.ancientperipherals.common.setup.Registration;
 import site.siredvin.ancientperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.ancientperipherals.integrations.patchouli.LuaFunctionPage;
@@ -59,7 +60,10 @@ public class AncientPeripherals {
 
     @SubscribeEvent
     public void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(CCRegistration::register);
+        event.enqueueWork(() -> {
+            CCRegistration.register();
+            FeedingRecipes.register();
+        });
     }
 
     @SubscribeEvent

@@ -24,7 +24,7 @@ public class AutomataRecipeCategory implements IRecipeCategory<AutomataRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(AncientPeripherals.MOD_ID, AutomataRecipe.GROUP);
 
     public AutomataRecipeCategory(IGuiHelper guiHelper) {
-        icon = guiHelper.createDrawableIngredient(new ItemStack(Items.TRAINABLE_AUTOMATA_CORE.get()));
+        icon = guiHelper.createDrawableIngredient(new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get()));
         background = guiHelper.createDrawable(GUI_TEXTURE, 0, 0, 132, 75);
     }
 

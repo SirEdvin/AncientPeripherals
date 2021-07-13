@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "ancientperipherals:item/cores/forged_gear",
-    "layer1": "ancientperipherals:item/cores/fire"
+    "layer1": "ancientperipherals:item/cores/fire_yellow"
   }
 }
