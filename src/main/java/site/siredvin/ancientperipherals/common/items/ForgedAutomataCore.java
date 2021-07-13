@@ -1,7 +1,6 @@
 package site.siredvin.ancientperipherals.common.items;
 
 import de.srendi.advancedperipherals.api.metaphysics.IFeedableAutomataCore;
-import de.srendi.advancedperipherals.common.setup.Villagers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
@@ -12,7 +11,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.FakePlayer;
-import site.siredvin.ancientperipherals.common.setup.Items;
 
 import java.util.HashMap;
 import java.util.Map;

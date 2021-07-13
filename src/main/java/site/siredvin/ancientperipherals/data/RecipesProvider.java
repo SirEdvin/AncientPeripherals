@@ -34,6 +34,15 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("ISSI")
                 .pattern("IFFI")
                 .save(consumer);
+        AutomataRecipeBuilder.start(Blocks.REALITY_FORGER.get())
+                .define('B', Blocks.ABSTRACTIUM_BLOCK.get())
+                .define('P', de.srendi.advancedperipherals.common.setup.Blocks.PERIPHERAL_CASING.get())
+                .define('R', net.minecraft.block.Blocks.REDSTONE_BLOCK)
+                .pattern("PB  ")
+                .pattern("BR  ")
+                .pattern("  R ")
+                .pattern("   R")
+                .save(consumer);
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
