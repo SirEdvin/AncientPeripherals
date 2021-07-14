@@ -7,6 +7,7 @@ import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import dan200.computercraft.shared.turtle.core.TurtlePlayer;
 import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -24,12 +25,17 @@ import site.siredvin.ancientperipherals.computercraft.turtles.base.TurtleDigTool
 import site.siredvin.ancientperipherals.utils.TranslationUtil;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public class TurtleExtractingPickaxe extends TurtleDigTool {
     public static ResourceLocation ID = new ResourceLocation(AncientPeripherals.MOD_ID, "extracting_pickaxe");
 
     public TurtleExtractingPickaxe() {
         super(ID, TranslationUtil.turtle("extracting_pickaxe"), Items.EXTRACTING_PICKAXE.get());
+    }
+
+    public TurtleExtractingPickaxe(ResourceLocation id, String adjective, Supplier<ItemStack> itemStackSup) {
+        super(id, adjective, itemStackSup.get());
     }
 
     protected @Nullable BlockPos findOre(World world, BlockPos center) {
@@ -48,6 +54,10 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
         return null;
     }
 
+    public ItemStack mimicTool() {
+        return new ItemStack(net.minecraft.item.Items.DIAMOND_PICKAXE);
+    }
+
     @Override
     protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
         World world = turtle.getWorld();
@@ -63,7 +73,7 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
         if (world.isEmptyBlock(blockPosition) || WorldUtil.isLiquidBlock(world, blockPosition))
             return TurtleCommandResult.failure("Nothing to dig here");
         TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
-        turtlePlayer.loadInventory(new ItemStack(net.minecraft.item.Items.DIAMOND_PICKAXE));
+        turtlePlayer.loadInventory(mimicTool());
         if (!digOneBlock(turtle, side, world, blockPosition, turtlePlayer, turtleTile))
             return TurtleCommandResult.failure();
         return TurtleCommandResult.success();

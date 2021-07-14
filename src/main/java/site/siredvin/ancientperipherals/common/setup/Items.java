@@ -57,6 +57,7 @@ public class Items {
 
     // Usefull abstractium tools
 
+    // Should extends ToolItem
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
             "cutting_axe", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableCuttingAxe, TurtleCuttingAxe.ID, null)
     );

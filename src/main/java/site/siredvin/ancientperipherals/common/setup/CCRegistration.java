@@ -12,7 +12,11 @@ public class CCRegistration {
     public static EnchantingTurtle enchantingTurtle;
     public static SmithingTurtle smithingTurtle;
     public static TurtleCuttingAxe cuttingAxeTurtle;
+    public static TurtleCuttingAxeWithSilkTouch cuttingAxeWithSilkTouchTurtle;
+    public static TurtleCuttingAxeWithFortune cuttingAxeWithFortuneTurtle;
     public static TurtleExtractingPickaxe extractingPickaxeTurtle;
+    public static TurtleExtractingPickaxeWithFortune extractingPickaxeWithFortuneTurtle;
+    public static TurtleExtractingPickaxeWithSilkTouch extractingPickaxeWithSilkTouchTurtle;
 
     public static void register() {
         registerPocketUpgrades();
@@ -31,8 +35,16 @@ public class CCRegistration {
         ComputerCraftAPI.registerTurtleUpgrade(smithingTurtle);
         cuttingAxeTurtle = new TurtleCuttingAxe();
         ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeTurtle);
+        cuttingAxeWithFortuneTurtle = new TurtleCuttingAxeWithFortune();
+        ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeWithSilkTouchTurtle);
+        cuttingAxeWithSilkTouchTurtle = new TurtleCuttingAxeWithSilkTouch();
+        ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeWithSilkTouchTurtle);
         extractingPickaxeTurtle = new TurtleExtractingPickaxe();
         ComputerCraftAPI.registerTurtleUpgrade(extractingPickaxeTurtle);
+        extractingPickaxeWithFortuneTurtle = new TurtleExtractingPickaxeWithFortune();
+        ComputerCraftAPI.registerTurtleUpgrade(extractingPickaxeWithFortuneTurtle);
+        extractingPickaxeWithSilkTouchTurtle = new TurtleExtractingPickaxeWithSilkTouch();
+        ComputerCraftAPI.registerTurtleUpgrade(extractingPickaxeWithSilkTouchTurtle);
     }
 
 }

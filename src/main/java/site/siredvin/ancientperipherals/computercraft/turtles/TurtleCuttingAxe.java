@@ -7,6 +7,7 @@ import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import dan200.computercraft.shared.turtle.core.TurtlePlayer;
 import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +25,7 @@ import site.siredvin.ancientperipherals.utils.TranslationUtil;
 import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class TurtleCuttingAxe extends TurtleDigTool {
 
@@ -40,6 +42,14 @@ public class TurtleCuttingAxe extends TurtleDigTool {
 
     public TurtleCuttingAxe() {
         super(ID, TranslationUtil.turtle("cutting_axe"), Items.CUTTING_AXE.get());
+    }
+
+    public TurtleCuttingAxe(ResourceLocation id, String adjective, Supplier<ItemStack> itemStackSup) {
+        super(id, adjective, itemStackSup.get());
+    }
+
+    public ItemStack mimicTool() {
+        return new ItemStack(net.minecraft.item.Items.DIAMOND_AXE);
     }
 
     @Override
@@ -62,7 +72,7 @@ public class TurtleCuttingAxe extends TurtleDigTool {
         if (treeBlocks.size() >= AncientPeripheralsConfig.cuttingAxeMaxBlockCount)
             AncientPeripherals.LOGGER.info("Tree cutting stopped because of max size");
         TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
-        turtlePlayer.loadInventory(new ItemStack(net.minecraft.item.Items.DIAMOND_AXE));
+        turtlePlayer.loadInventory(mimicTool());
         for (BlockPos pos: treeBlocks) {
             digOneBlock(turtle, side, world, pos, turtlePlayer, turtleTile);
         }

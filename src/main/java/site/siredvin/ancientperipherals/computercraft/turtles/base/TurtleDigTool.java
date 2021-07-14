@@ -16,6 +16,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -30,8 +31,15 @@ import java.util.function.Function;
 
 public abstract class TurtleDigTool extends TurtleTool {
 
+    private final ItemStack craftingItemStack;
+
+    public TurtleDigTool(ResourceLocation id, String adjective, ItemStack itemStack) {
+        super(id, adjective, itemStack.getItem());
+        craftingItemStack = itemStack;
+    }
     public TurtleDigTool(ResourceLocation id, String adjective, Item item) {
         super(id, adjective, item);
+        craftingItemStack = new ItemStack(item);
     }
 
     @Nonnull
@@ -45,7 +53,13 @@ public abstract class TurtleDigTool extends TurtleTool {
     public boolean isItemSuitable(@NotNull ItemStack stack) {
         if (!isEnabled())
             return false;
-        return super.isItemSuitable(stack);
+        CompoundNBT tag = stack.getTag();
+        CompoundNBT targetTag = craftingItemStack.getTag();
+        if (targetTag == null)
+            return tag == null;
+        if (tag == null)
+            return false;
+        return craftingItemStack.getTag().equals(stack.getTag());
     }
 
     protected abstract TurtleCommandResult dig(@Nonnull ITurtleAccess turtle, @Nonnull TurtleSide side, @Nonnull Direction direction);
@@ -88,11 +102,11 @@ public abstract class TurtleDigTool extends TurtleTool {
         return true;
     }
 
-    protected static Function<ItemStack, ItemStack> turtleDropConsumer(TileEntity tile, ITurtleAccess turtle) {
+    protected Function<ItemStack, ItemStack> turtleDropConsumer(TileEntity tile, ITurtleAccess turtle) {
         return (drop) -> tile.isRemoved() ? drop : InventoryUtil.storeItems(drop, turtle.getItemHandler(), turtle.getSelectedSlot());
     }
 
-    protected static void stopConsuming(TileEntity tile, ITurtleAccess turtle) {
+    protected void stopConsuming(TileEntity tile, ITurtleAccess turtle) {
         Direction direction = tile.isRemoved() ? null : turtle.getDirection().getOpposite();
         DropConsumer.clearAndDrop(turtle.getWorld(), turtle.getPosition(), direction);
     }
