@@ -5,8 +5,17 @@
   "priority": true,
   "pages": [
     {
+      "type": "text",
+      "text": "Here you can find catalog of code examples. If you want to sumbit code example, you can create issue at $(l:https://github.com/SirEdvin/AncientPeripherals/issues)here$()."
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
       "type": "link",
       "text": "Example of primitive reality forger usage. For correct usage you should build described structure and  carefully change block position for you case",
+      "title": "Reality forger",
       "url": "https://gist.github.com/SirEdvin/adde0b68b05962796db83bf1ef5ca2b5",
       "link_text": "Go to code"
     },
@@ -42,7 +51,7 @@
           [
             "A     ",
             "A     ",
-            "A  FOZ",
+            "A  F0Z",
             "A   C "
           ]
         ]
