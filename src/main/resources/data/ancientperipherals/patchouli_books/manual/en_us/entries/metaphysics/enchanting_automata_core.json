@@ -18,41 +18,6 @@
         "ancientperipherals:api_documentation/operations",
         "ancientperipherals:api_documentation/experience_interaction"
       ]
-    },
-    {
-      "type": "ancientperipherals:lua_function_left_page",
-      "functionName": "enchant",
-      "operationGroup": "enchant",
-      "description": "Trying to enchant item in selected slot. But instead of standard minecraft level cost, every level will have same cost that can be retrieved via $(configuration)"
-    },
-    {
-      "type": "ancientperipherals:lua_function_right_page",
-      "parameters": [
-        ["number", "used level count, should be positive integer, less then or equal to default minecraft enchanting level limit"]
-      ],
-      "returns": [
-        ["true | nil", "True if operation successful, nil otherwise"],
-        ["nil | string", "Error message"]
-      ]
-    },
-    {
-      "type": "ancientperipherals:lua_function_left_page",
-      "functionName": "extractEnchantment",
-      "description": "Tried to extract enchantments from selected slot to book",
-      "throw": [
-        "Slot argument out of bounds"
-      ],
-      "operationGroup": "enchant"
-    },
-    {
-      "type": "ancientperipherals:lua_function_right_page",
-      "parameters": [
-        ["number", "slot with book, that will be enchanted. Should be from 1 to 16"]
-      ],
-      "returns": [
-        ["true | nil", "True if operation successful, nil otherwise"],
-        ["nil | string", "Error message"]
-      ]
     }
   ]
 }

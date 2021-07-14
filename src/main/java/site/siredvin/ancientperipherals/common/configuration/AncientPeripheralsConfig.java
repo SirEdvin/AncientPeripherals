@@ -22,6 +22,7 @@ public class AncientPeripheralsConfig {
     public static int scientificAutomataCoreMaxFuelConsumptionLevel;
     public static int enchantingAutomataCoreInteractionRadius;
     public static int enchantingAutomataCoreMaxFuelConsumptionLevel;
+    public static double enchantingAutomataCoreDisappearChance;
 
     public static class CommonConfig {
 
@@ -47,6 +48,7 @@ public class AncientPeripheralsConfig {
         final ForgeConfigSpec.IntValue SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
         final ForgeConfigSpec.IntValue ENCHANTING_AUTOMATA_CORE_INTERACTION_RADIUS;
         final ForgeConfigSpec.IntValue ENCHANTING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
+        final ForgeConfigSpec.DoubleValue ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE;
 
         CommonConfig(final ForgeConfigSpec.Builder builder) {
             builder.comment("").push("Features");
@@ -70,6 +72,7 @@ public class AncientPeripheralsConfig {
             SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("scientificAutomataCoreInteractionRadius", 4, 1, 64);
             ENCHANTING_AUTOMATA_CORE_INTERACTION_RADIUS = builder.defineInRange("enchantingAutomataCoreInteractionRadius", 4, 1, 64);
             ENCHANTING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("enchantingAutomataCoreMaxFuelConsumptionLevel", 4, 1, 64);
+            ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE = builder.defineInRange("enchantingAutomataCoreDisappearChance", 0.05, 0.1, 1);
             builder.pop();
         }
     }

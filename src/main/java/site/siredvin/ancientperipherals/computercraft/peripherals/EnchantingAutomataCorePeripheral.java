@@ -5,6 +5,7 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -13,7 +14,6 @@ import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsC
 import site.siredvin.ancientperipherals.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,6 +38,8 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         data.put("enchantCost", AncientPeripheralsConfig.enchantCost);
         data.put("enchantCooldown", AncientPeripheralsConfig.enchantCooldown);
         data.put("enchantLevelCost", AncientPeripheralsConfig.enchantLevelCost);
+        data.put("treasureEnchantmentsAllowed", allowTreasureEnchants());
+        data.put("enchantmentWipeChance", AncientPeripheralsConfig.enchantingAutomataCoreDisappearChance);
         return data;
     }
 
@@ -102,8 +104,16 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
             return MethodResult.of(null, "Selected item is not enchanted");
         if (!targetItem.getItem().equals(Items.BOOK))
             return MethodResult.of(null, "Target item is not book");
-        EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(selectedItem), targetItem);
+        if (targetItem.getCount() != 1)
+            return MethodResult.of(null, "Target book should be 1 in stack");
+        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(selectedItem);
+        if (getWorld().random.nextInt(100) < AncientPeripheralsConfig.enchantingAutomataCoreDisappearChance * 100) {
+            enchants.keySet().stream().findAny().ifPresent(enchants::remove);
+        }
+        ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
+        EnchantmentHelper.setEnchantments(enchants, enchantedBook);
         EnchantmentHelper.setEnchantments(Collections.emptyMap(), selectedItem);
+        turtleInventory.setItem(target -1, enchantedBook);
         trackOperation(ENCHANT_OPERATION);
         return MethodResult.of(true);
     }

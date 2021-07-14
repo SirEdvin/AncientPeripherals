@@ -1,0 +1,43 @@
+{
+  "name": "Enchantment Interaction API",
+  "icon": "minecraft:writable_book",
+  "category": "ancientperipherals:api_documentation",
+  "advancement": "ancientperipherals:enchanting_automata_core",
+  "pages": [
+    {
+      "type": "ancientperipherals:lua_function_left_page",
+      "functionName": "enchant",
+      "operationGroup": "enchant",
+      "description": "Trying to enchant item in selected slot. But instead of standard minecraft level cost, every level will have same cost that can be retrieved via $(configuration).$(p)Also, from $(configuration) you can understand if treasure enchantments obtainable"
+    },
+    {
+      "type": "ancientperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "used level count, should be positive integer, less then or equal to default minecraft enchanting level limit"]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
+    },
+    {
+      "type": "ancientperipherals:lua_function_left_page",
+      "functionName": "extractEnchantment",
+      "description": "Tried to extract enchantments from selected slot to book. Take a note, that with some chance (that can be find in $(configuration) result) one of enchantment can disappear.",
+      "throw": [
+        "Slot argument out of bounds"
+      ],
+      "operationGroup": "enchant"
+    },
+    {
+      "type": "ancientperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "slot with book, that will be enchanted. Should be from 1 to 16"]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
+    }
+  ]
+}
