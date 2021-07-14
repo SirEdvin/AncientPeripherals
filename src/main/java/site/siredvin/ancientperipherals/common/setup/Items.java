@@ -8,10 +8,7 @@ import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsC
 import site.siredvin.ancientperipherals.common.items.ArmorMaterial;
 import site.siredvin.ancientperipherals.common.items.ItemTier;
 import site.siredvin.ancientperipherals.common.items.*;
-import site.siredvin.ancientperipherals.computercraft.turtles.EnchantingTurtle;
-import site.siredvin.ancientperipherals.computercraft.turtles.ScientificTurtle;
-import site.siredvin.ancientperipherals.computercraft.turtles.SmithingTurtle;
-import site.siredvin.ancientperipherals.computercraft.turtles.TurtleCuttingAxe;
+import site.siredvin.ancientperipherals.computercraft.turtles.*;
 
 public class Items {
 
@@ -62,6 +59,10 @@ public class Items {
 
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
             "cutting_axe", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableCuttingAxe, TurtleCuttingAxe.ID, null)
+    );
+
+    public static final RegistryObject<Item> EXTRACTING_PICKAXE = Registration.ITEMS.register(
+            "extracting_pickaxe", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableExtractingPickaxe, TurtleExtractingPickaxe.ID, null)
     );
 
     public static void register() {

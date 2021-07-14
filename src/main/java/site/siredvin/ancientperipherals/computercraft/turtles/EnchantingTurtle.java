@@ -3,7 +3,6 @@ package site.siredvin.ancientperipherals.computercraft.turtles;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.ModelTransformingTurtle;
-import jdk.incubator.jpackage.internal.resources.ResourceLocator;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
