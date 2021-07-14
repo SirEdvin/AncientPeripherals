@@ -23,6 +23,7 @@ import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
 import site.siredvin.ancientperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.ancientperipherals.utils.LuaUtils;
+import site.siredvin.ancientperipherals.utils.PositionUtils;
 import site.siredvin.ancientperipherals.utils.RepresentationUtil;
 import site.siredvin.ancientperipherals.utils.ScanUtils;
 
@@ -45,6 +46,10 @@ public class RealityForgerPeripheral extends BasePeripheral {
     @Override
     public boolean isEnabled() {
         return AncientPeripheralsConfig.enableRealityForger;
+    }
+
+    public int _getInteractionRadius() {
+        return AncientPeripheralsConfig.realityForgerRadius;
     }
 
     // Please, don't blame me for this untyped garbage code
@@ -112,6 +117,11 @@ public class RealityForgerPeripheral extends BasePeripheral {
     }
 
     @LuaFunction
+    public final int getInteractionRadius() {
+        return _getInteractionRadius();
+    }
+
+    @LuaFunction
     public final List<Map<String, Integer>> detectAnchors() {
         List<Map<String, Integer>> data = new ArrayList<>();
         ScanUtils.relativeTraverseBlocks(getWorld(), getPos(), AncientPeripheralsConfig.realityForgerRadius, (blockState, pos) -> {
@@ -128,8 +138,10 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
     @LuaFunction(mainThread = true)
     public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
-        // TODO: add interaction radius check
-        BlockPos targetPosition = LuaUtils.convertToBlockPos(getPos(), arguments.getTable(0));
+        BlockPos center = getPos();
+        BlockPos targetPosition = LuaUtils.convertToBlockPos(center, arguments.getTable(0));
+        if (!PositionUtils.radiusCorrect(center, targetPosition, _getInteractionRadius()))
+            return MethodResult.of(null, "Block are too far away");
         Map<?, ?> table = arguments.getTable(1);
         World world = getWorld();
         TileEntity entity = world.getBlockEntity(targetPosition);
@@ -143,7 +155,6 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
     @LuaFunction(mainThread = true)
     public final MethodResult forgeRealityPieces(@Nonnull IArguments arguments) throws LuaException {
-        // TODO: add interaction radius check
         BlockPos center = getPos();
         World world = getWorld();
         List<BlockPos> poses = new ArrayList<>();
@@ -154,6 +165,8 @@ public class RealityForgerPeripheral extends BasePeripheral {
         }
         List<FlexibleRealityAnchorTileEntity> entities = new ArrayList<>();
         for (BlockPos pos: poses) {
+            if (!PositionUtils.radiusCorrect(center, pos, _getInteractionRadius()))
+                return MethodResult.of(null, "One of blocks are too far away");
             TileEntity entity = world.getBlockEntity(pos);
             if (!(entity instanceof FlexibleRealityAnchorTileEntity))
                 return MethodResult.of(false, String.format("Incorrect coordinates (%d, %d, %d)", pos.getX(), pos.getY(), pos.getZ()));
@@ -170,7 +183,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
         Map<?, ?> table = arguments.getTable(0);
         Pair<Boolean, BlockState> blockFindResult = findBlock(table);
         World world = getWorld();
-        ScanUtils.traverseBlocks(world, getPos(), AncientPeripheralsConfig.realityForgerRadius, (blockState, newPos) -> {
+        ScanUtils.traverseBlocks(world, getPos(), _getInteractionRadius(), (blockState, newPos) -> {
             TileEntity blockEntity = world.getBlockEntity(newPos);
             if (blockEntity instanceof FlexibleRealityAnchorTileEntity) {
                 forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) blockEntity, blockFindResult.getRight(), table, blockFindResult.getLeft());

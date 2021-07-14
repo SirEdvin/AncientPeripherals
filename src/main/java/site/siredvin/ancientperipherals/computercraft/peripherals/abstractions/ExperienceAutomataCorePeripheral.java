@@ -1,15 +1,11 @@
 package site.siredvin.ancientperipherals.computercraft.peripherals.abstractions;
 
-import dan200.computercraft.ComputerCraft;
-import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.turtle.ITurtleAccess;
-import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import dan200.computercraft.api.turtle.TurtleSide;
-import dan200.computercraft.shared.turtle.blocks.ITurtleTile;
 import dan200.computercraft.shared.turtle.blocks.TileTurtle;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.AutomataCorePeripheral;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -21,12 +17,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
 import site.siredvin.ancientperipherals.utils.LuaUtils;
+import site.siredvin.ancientperipherals.utils.PositionUtils;
 
 import java.util.Map;
 import java.util.Optional;
 
 public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePeripheral {
-    // TODO: add XP transfer logic between turtles
     protected final static String TRANSFER_XP_OPERATION = "collectXP";
     protected final static String COLLECTED_XP_AMOUNT = "CollectedXPAmount";
 
@@ -132,13 +128,15 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
 
     @LuaFunction(mainThread = true)
     public final MethodResult sendXP(Map<?, ?> rawBlockPos, int limit) throws LuaException {
-        // TODO: add interaction radius check
         Optional<MethodResult>  checkResults = cooldownCheck(TRANSFER_XP_OPERATION);
         if (checkResults.isPresent()) return checkResults.get();
         checkResults = consumeFuelOp(AncientPeripheralsConfig.transferXPCost);
         if (checkResults.isPresent()) return checkResults.get();
-        BlockPos pos = LuaUtils.convertToBlockPos(getPos(), rawBlockPos);
-        TileEntity entity = getWorld().getBlockEntity(pos);
+        BlockPos pos = getPos();
+        BlockPos targetPos = LuaUtils.convertToBlockPos(pos, rawBlockPos);
+        if (!PositionUtils.radiusCorrect(pos, targetPos, getInteractionRadius()))
+            return MethodResult.of(null, "Turtle are too far away");
+        TileEntity entity = getWorld().getBlockEntity(targetPos);
         if (!(entity instanceof TileTurtle))
             return MethodResult.of(null, "Target block is not turtle");
         ITurtleAccess targetTurtle = ((TileTurtle) entity).getAccess();

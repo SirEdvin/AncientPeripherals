@@ -88,6 +88,14 @@
         ["boolean", "If operation successful"],
         ["nil | string", "error message"]
       ]
+    },
+    {
+      "type": "ancientperipherals:lua_function_page",
+      "functionName": "getInteractionRadius",
+      "description": "Utility function for better limitation understanding",
+      "returns": [
+        ["number", "max interaction radius"]
+      ]
     }
   ]
 }
