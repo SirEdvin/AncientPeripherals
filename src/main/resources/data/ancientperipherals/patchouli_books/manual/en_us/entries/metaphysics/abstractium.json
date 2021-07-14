@@ -12,7 +12,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "ancientperipherals:asbtractium_block"
+      "recipe": "ancientperipherals:abstractium_block"
     },
     {
       "type": "text",
@@ -31,7 +31,7 @@
     {
       "type": "crafting",
       "recipe": "ancientperipherals:abstractium_sword",
-      "recipe2": "ancientperipherals:abstractium_helment"
+      "recipe2": "ancientperipherals:abstractium_helmet"
     },
     {
       "type": "crafting",
