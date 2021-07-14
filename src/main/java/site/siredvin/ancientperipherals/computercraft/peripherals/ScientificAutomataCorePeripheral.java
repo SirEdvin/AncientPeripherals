@@ -1,5 +1,6 @@
 package site.siredvin.ancientperipherals.computercraft.peripherals;
 
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
@@ -44,10 +45,12 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
     }
 
     @LuaFunction
-    public final MethodResult crystallizeXP(int ingots_count) {
+    public final MethodResult crystallizeXP(int ingots_count) throws LuaException {
         ItemStack result = new ItemStack(Items.ABSTRACTIUM_INGOT.get());
         if (ingots_count < result.getMaxStackSize())
-            return MethodResult.of(null, "Can craft only one stack at time");
+            throw new LuaException("Count should less or equal stack count");
+        if (ingots_count < 1)
+            throw new LuaException("Count should be positive integer");
         int requiredXPAmount = ingots_count * AncientPeripheralsConfig.abstractiumXPPointsCost;
         CompoundNBT data = owner.getDataStorage();
         int currentAmount = _getStoredXP(data);

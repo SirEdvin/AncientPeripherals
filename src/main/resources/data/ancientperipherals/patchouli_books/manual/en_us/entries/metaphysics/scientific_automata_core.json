@@ -20,14 +20,19 @@
       ]
     },
     {
-      "type": "ancientperipherals:lua_function",
+      "type": "ancientperipherals:lua_function_left_page",
       "functionName": "crystallizeXP",
+      "description": "Trying to crystallize XP from stored XP in turtle and transform it to abstractium ingots. Ingot cost can be retrieved via $(l:ancientperipherals:api_documentation/operations#configuration)getConfiguration$() method"
+    },
+    {
+      "type": "ancientperipherals:lua_function_right_page",
       "parameters": [
-        ["int",  "ingot_count"]
+        ["number", "ingot count, should be positive integer less or equal then 64"]
       ],
-      "description": "crystallize XP from stored XP in turtle and transform it to abstractium ingots",
-      "output": "true",
-      "canOutputError": "yes"
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
     }
   ]
 }

@@ -10,15 +10,8 @@ import vazkii.patchouli.client.book.gui.BookTextRenderer;
 import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookEntry;
 
-import java.util.List;
+public class LuaFunctionLeftPage extends BookPage {
 
-public class LuaFunctionPage extends BookPage {
-
-    protected static final int STARTING_HEIGHT = 24;
-    protected static final int STARTING_HEIGHT_WITHOUT_TITLE = 9;
-
-    IVariable parameters;
-    IVariable returns;
     @SerializedName("throw") IVariable can_throw;
     IVariable functionName;
     IVariable description;
@@ -32,31 +25,10 @@ public class LuaFunctionPage extends BookPage {
         actualTitle = functionName.as(ITextComponent.class);
 
         TextBuilder builder = TextBuilder.start((IFormattableTextComponent) description.as(ITextComponent.class)).p();
-        if (parameters != null) {
-            builder.addLocal("parameters").br().startList();
-            List<IVariable> parameterList = parameters.asList();
-            for (IVariable parameter: parameterList) {
-                List<IVariable> parameterArray = parameter.asList();
-                builder.listElement().italic((IFormattableTextComponent) parameterArray.get(0).as(ITextComponent.class))
-                        .add(": ")
-                        .add((IFormattableTextComponent) parameterArray.get(1).as(ITextComponent.class))
-                        .finish();
-            }
-            builder.finishList();
-        }
-        List<IVariable> returns = this.returns.asList();
-        builder.addLocal("returns").br().startList();
-        for (IVariable returnValue: returns) {
-            List<IVariable> returnArray = returnValue.asList();
-            builder.listElement().italic((IFormattableTextComponent) returnArray.get(0).as(ITextComponent.class))
-                    .add(": ")
-                    .add((IFormattableTextComponent) returnArray.get(1).as(ITextComponent.class))
-                    .finish();
-        }
         builder.finishList();
         if (can_throw != null)
             builder.addLocal("throw").add((IFormattableTextComponent) can_throw.as(ITextComponent.class));
-        textRenderer = new BookTextRenderer(parent, builder.build(), 0, STARTING_HEIGHT);
+        textRenderer = new BookTextRenderer(parent, builder.build(), 0, LuaFunctionPage.STARTING_HEIGHT);
 
     }
 

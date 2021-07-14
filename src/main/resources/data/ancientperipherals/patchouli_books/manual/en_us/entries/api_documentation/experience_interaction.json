@@ -7,27 +7,31 @@
     {
       "type": "ancientperipherals:lua_function",
       "functionName": "getStoredXP",
-      "parameters": [],
-      "description": "Returns number of stored experience points",
-      "output": "int"
+      "returns": [
+        ["number", "stored experience points"]
+      ],
+      "description": "Getting number of stored experience points"
     },
     {
       "type": "ancientperipherals:lua_function",
       "functionName": "collectXP",
-      "parameters": [],
       "description": "Tries to collect experience orb in automata range. Returns amount of collected experience points.",
-      "output": "int",
-      "canOutputError": "yes"
+      "returns": [
+        ["number | nil", "Sucked XP amount, nil if operation failed"],
+        ["nil | string", "error message"]
+      ]
     },
     {
       "type": "ancientperipherals:lua_function",
       "functionName": "suckOwnerXP",
       "parameters": [
-        ["int", "count"]
+        ["number", "suck experience points limit, must be positive integer"]
       ],
-      "description": "Tries to extract defined experience points from owned player. Returns amount of collected points.",
-      "output": "int",
-      "canOutputError": "yes"
+      "returns": [
+        ["number | nil", "Sucked XP amount, nil if operation failed"],
+        ["nil | string", "error message"]
+      ],
+      "description": "Tries to extract defined experience points from owned player."
     }
   ]
 }

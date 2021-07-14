@@ -6,12 +6,10 @@
   "pages": [
     {
       "type": "ancientperipherals:lua_function",
+      "anchor": "configuration",
       "functionName": "getConfiguration",
       "returns": [
-        ["configuration", "{ [string] = any }"]
-      ],
-      "throw": [
-        "incorrect arguments"
+        ["{ [string] = any }", "configuration"]
       ],
       "description": "Generic function for peripheral configuration accessing. Should contains all information about internal cooldowns, costs, interaction limitations, etc."
     }

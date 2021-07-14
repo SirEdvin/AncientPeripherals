@@ -1,37 +1,28 @@
 package site.siredvin.ancientperipherals.integrations.patchouli;
 
-import com.google.gson.annotations.SerializedName;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.client.book.BookPage;
 import vazkii.patchouli.client.book.gui.BookTextRenderer;
-import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookEntry;
 
 import java.util.List;
 
-public class LuaFunctionPage extends BookPage {
-
-    protected static final int STARTING_HEIGHT = 24;
-    protected static final int STARTING_HEIGHT_WITHOUT_TITLE = 9;
+public class LuaFunctionRightPage extends BookPage {
 
     IVariable parameters;
     IVariable returns;
-    @SerializedName("throw") IVariable can_throw;
-    IVariable functionName;
-    IVariable description;
 
-    transient ITextComponent actualTitle;
     transient BookTextRenderer textRenderer;
 
     @Override
     public void onDisplayed(GuiBookEntry parent, int left, int top) {
         super.onDisplayed(parent, left, top);
-        actualTitle = functionName.as(ITextComponent.class);
 
-        TextBuilder builder = TextBuilder.start((IFormattableTextComponent) description.as(ITextComponent.class)).p();
+        TextBuilder builder = TextBuilder.start(new StringTextComponent(""));
         if (parameters != null) {
             builder.addLocal("parameters").br().startList();
             List<IVariable> parameterList = parameters.asList();
@@ -54,16 +45,12 @@ public class LuaFunctionPage extends BookPage {
                     .finish();
         }
         builder.finishList();
-        if (can_throw != null)
-            builder.addLocal("throw").add((IFormattableTextComponent) can_throw.as(ITextComponent.class));
-        textRenderer = new BookTextRenderer(parent, builder.build(), 0, STARTING_HEIGHT);
+        textRenderer = new BookTextRenderer(parent, builder.build(), 0, LuaFunctionPage.STARTING_HEIGHT_WITHOUT_TITLE);
 
     }
 
     @Override
     public void render(MatrixStack ms, int mouseX, int mouseY, float pticks) {
-        parent.drawCenteredStringNoShadow(ms, i18n(actualTitle.getString()), GuiBook.PAGE_WIDTH / 2, 0, book.headerColor);
-        GuiBook.drawSeparator(ms, book, 0, 12);
         textRenderer.render(ms, mouseX, mouseY);
     }
 
