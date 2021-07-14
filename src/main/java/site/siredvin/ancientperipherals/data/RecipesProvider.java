@@ -3,6 +3,7 @@ package site.siredvin.ancientperipherals.data;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
+import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
@@ -48,6 +49,65 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
         TweakedShapelessRecipeBuilder.shapeless(Blocks.ABSTRACTIUM_BLOCK.get())
                 .requires(Items.ABSTRACTIUM_INGOT.get(), 9)
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_AXE.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern("II ")
+                .pattern("IS ")
+                .pattern(" S ")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_HOE.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern("II ")
+                .pattern(" S ")
+                .pattern(" S ")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_SWORD.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern(" I ")
+                .pattern(" I ")
+                .pattern(" S ")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_PICKAXE.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern("III")
+                .pattern(" S ")
+                .pattern(" S ")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_SHOVEL.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern(" I ")
+                .pattern(" S ")
+                .pattern(" S ")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_BOOTS.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .pattern("   ")
+                .pattern("I I")
+                .pattern("I I")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_CHESTPLATE.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .pattern("I I")
+                .pattern("III")
+                .pattern("III")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_HELMET.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .pattern("   ")
+                .pattern("III")
+                .pattern("I I")
+                .save(consumer);
+        TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_LEGGINGS.get())
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .pattern("III")
+                .pattern("I I")
+                .pattern("I I")
                 .save(consumer);
     }
 

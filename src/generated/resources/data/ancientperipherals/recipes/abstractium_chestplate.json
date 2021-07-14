@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "ancientperipherals:abstractium_ingot"
+    }
+  },
+  "result": {
+    "item": "ancientperipherals:abstractium_chestplate"
+  }
+}

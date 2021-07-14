@@ -13,6 +13,34 @@
     {
       "type": "crafting",
       "recipe": "ancientperipherals:asbtractium_block"
+    },
+    {
+      "type": "text",
+      "text": "You also can created tools from abstractium! But they are basically useless, have little durability and looks ugly"
+    },
+    {
+      "type": "crafting",
+      "recipe": "ancientperipherals:abstractium_axe",
+      "recipe2": "ancientperipherals:abstractium_pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "ancientperipherals:abstractium_hoe",
+      "recipe2": "ancientperipherals:abstractium_shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "ancientperipherals:abstractium_sword",
+      "recipe2": "ancientperipherals:abstractium_helment"
+    },
+    {
+      "type": "crafting",
+      "recipe": "ancientperipherals:abstractium_boots",
+      "recipe2": "ancientperipherals:abstractium_leggings"
+    },
+    {
+      "type": "crafting",
+      "recipe": "ancientperipherals:abstractium_chestplate"
     }
   ]
 }
