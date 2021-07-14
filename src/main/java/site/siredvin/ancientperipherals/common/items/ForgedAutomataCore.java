@@ -1,6 +1,6 @@
 package site.siredvin.ancientperipherals.common.items;
 
-import de.srendi.advancedperipherals.api.metaphysics.IFeedableAutomataCore;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IFeedableAutomataCore;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
