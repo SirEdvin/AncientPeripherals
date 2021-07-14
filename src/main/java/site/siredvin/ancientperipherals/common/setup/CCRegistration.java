@@ -6,6 +6,7 @@ import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.computercraft.turtles.EnchantingTurtle;
 import site.siredvin.ancientperipherals.computercraft.turtles.ScientificTurtle;
 import site.siredvin.ancientperipherals.computercraft.turtles.SmithingTurtle;
+import site.siredvin.ancientperipherals.computercraft.turtles.TurtleCuttingAxe;
 
 @Mod.EventBusSubscriber(modid = AncientPeripherals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CCRegistration {
@@ -13,6 +14,7 @@ public class CCRegistration {
     public static ScientificTurtle scientificTurtle;
     public static EnchantingTurtle enchantingTurtle;
     public static SmithingTurtle smithingTurtle;
+    public static TurtleCuttingAxe cuttingAxeTurtle;
 
     public static void register() {
         registerPocketUpgrades();
@@ -29,6 +31,8 @@ public class CCRegistration {
         ComputerCraftAPI.registerTurtleUpgrade(enchantingTurtle);
         smithingTurtle = new SmithingTurtle();
         ComputerCraftAPI.registerTurtleUpgrade(smithingTurtle);
+        cuttingAxeTurtle = new TurtleCuttingAxe();
+        ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeTurtle);
     }
 
 }

@@ -1,7 +1,9 @@
 package site.siredvin.ancientperipherals.common.setup;
 
+import de.srendi.advancedperipherals.AdvancedPeripherals;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
@@ -13,18 +15,19 @@ import site.siredvin.ancientperipherals.common.items.PeripheralItem;
 import site.siredvin.ancientperipherals.computercraft.turtles.EnchantingTurtle;
 import site.siredvin.ancientperipherals.computercraft.turtles.ScientificTurtle;
 import site.siredvin.ancientperipherals.computercraft.turtles.SmithingTurtle;
+import site.siredvin.ancientperipherals.computercraft.turtles.TurtleCuttingAxe;
 
 public class Items {
 
     // Automata cores
     public static final RegistryObject<Item> FORGED_AUTOMATA_CORE = Registration.ITEMS.register("forged_automata_core", ForgedAutomataCore::new);
     public static final RegistryObject<Item> SCIENTIFIC_AUTOMATA_CORE = Registration.ITEMS.register(
-            "scientific_automata_core", () -> new PeripheralItem(() -> true, ScientificTurtle.ID, null));
+            "scientific_automata_core", () -> new PeripheralItem(() -> true, new ResourceLocation(AdvancedPeripherals.MOD_ID, ScientificTurtle.ID), null));
     public static final RegistryObject<Item> ENCHANTING_AUTOMATA_CORE = Registration.ITEMS.register(
-            "enchanting_automata_core", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableEnchantingAutomataCore, EnchantingTurtle.ID, null)
+            "enchanting_automata_core", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableEnchantingAutomataCore, new ResourceLocation(AdvancedPeripherals.MOD_ID, EnchantingTurtle.ID), null)
     );
     public static final RegistryObject<Item> SMITHING_AUTOMATA_CORE = Registration.ITEMS.register(
-            "smithing_automata_core", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableSmithingAutomataCore, SmithingTurtle.ID, null)
+            "smithing_automata_core", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableSmithingAutomataCore, new ResourceLocation(AdvancedPeripherals.MOD_ID, SmithingTurtle.ID), null)
     );
 
     // Abstractium
@@ -57,6 +60,12 @@ public class Items {
     );
     public static final RegistryObject<Item> ABSTRACTIUM_BOOTS = Registration.ITEMS.register(
             "abstractium_boots", () -> new ArmorItem(ArmorMaterial.ABSTRACTIUM, EquipmentSlotType.FEET, (new Item.Properties()).tab(AncientPeripherals.TAB))
+    );
+
+    // Usefull abstractium tools
+
+    public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
+            "cutting_axe", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableCuttingAxe, TurtleCuttingAxe.ID, null)
     );
 
     public static void register() {

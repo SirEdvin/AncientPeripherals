@@ -3,12 +3,15 @@ package site.siredvin.ancientperipherals.data;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.setup.Items;
+import site.siredvin.ancientperipherals.data.builders.AutomataRecipeBuilder;
+import site.siredvin.ancientperipherals.data.builders.SmithingRecipe;
+import site.siredvin.ancientperipherals.data.builders.TweakedShapedRecipeBuilder;
+import site.siredvin.ancientperipherals.data.builders.TweakedShapelessRecipeBuilder;
 
 import java.util.function.Consumer;
 
@@ -43,6 +46,16 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("BR  ")
                 .pattern("  R ")
                 .pattern("   R")
+                .save(consumer);
+        AutomataRecipeBuilder.start(Items.CUTTING_AXE.get())
+                .define('D', net.minecraft.item.Items.DIAMOND)
+                .define('A', Items.ABSTRACTIUM_INGOT.get())
+                .define('C', Items.ABSTRACTIUM_AXE.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern("DAA ")
+                .pattern("DAS ")
+                .pattern(" DC ")
+                .pattern("  S ")
                 .save(consumer);
     }
 

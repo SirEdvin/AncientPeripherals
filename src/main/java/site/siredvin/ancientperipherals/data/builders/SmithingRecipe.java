@@ -1,4 +1,4 @@
-package site.siredvin.ancientperipherals.data;
+package site.siredvin.ancientperipherals.data.builders;
 
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;

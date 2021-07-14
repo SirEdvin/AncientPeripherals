@@ -4,22 +4,22 @@ import de.srendi.advancedperipherals.common.util.ItemUtil;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.ancientperipherals.AncientPeripherals;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class PeripheralItem extends BaseItem {
 
-    private final @Nullable String turtleID;
-    private final @Nullable String pocketID;
+    private final @Nullable ResourceLocation turtleID;
+    private final @Nullable ResourceLocation pocketID;
 
-    public PeripheralItem(Supplier<Boolean> enabledSup, @Nullable String turtleID, @Nullable String pocketID) {
+    public PeripheralItem(Supplier<Boolean> enabledSup, @Nullable ResourceLocation turtleID, @Nullable ResourceLocation pocketID) {
         this(new Properties().stacksTo(1), enabledSup, turtleID, pocketID);
     }
 
-    public PeripheralItem(Properties properties, Supplier<Boolean> enabledSup, @Nullable String turtleID, @Nullable String pocketID) {
+    public PeripheralItem(Properties properties, Supplier<Boolean> enabledSup, @Nullable ResourceLocation turtleID, @Nullable ResourceLocation pocketID) {
         super(properties, enabledSup);
         this.turtleID = turtleID;
         this.pocketID = pocketID;
@@ -32,12 +32,12 @@ public class PeripheralItem extends BaseItem {
             return;
         if (isEnabled()) {
             if (turtleID != null) {
-                items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_ADVANCED, AncientPeripherals.MOD_ID + ":" + turtleID));
-                items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_NORMAL, AncientPeripherals.MOD_ID + ":" + turtleID));
+                items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_ADVANCED, turtleID.toString()));
+                items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_NORMAL, turtleID.toString()));
             }
             if (pocketID != null) {
-                items.add(ItemUtil.makePocket(ItemUtil.POCKET_ADVANCED, AncientPeripherals.MOD_ID + ":" + pocketID));
-                items.add(ItemUtil.makePocket(ItemUtil.POCKET_NORMAL, AncientPeripherals.MOD_ID + ":" + pocketID));
+                items.add(ItemUtil.makePocket(ItemUtil.POCKET_ADVANCED, pocketID.toString()));
+                items.add(ItemUtil.makePocket(ItemUtil.POCKET_NORMAL, pocketID.toString()));
             }
         }
     }

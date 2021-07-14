@@ -8,12 +8,14 @@ public class AncientPeripheralsConfig {
     public static boolean enableRealityForger;
     public static boolean enableEnchantingAutomataCore;
     public static boolean enableSmithingAutomataCore;
+    public static boolean enableCuttingAxe;
     // Restictions
     public static int realityForgerRadius;
     public static int abstractiumXPPointsCost;
     public static int enchantLevelCost;
     public static int xpToFuelRate;
     public static double furnaceBurnFuelCostRate;
+    public static int cuttingAxeMaxBlockCount;
     // Operations
     public static int transferXPCooldown;
     public static int transferXPCost;
@@ -36,6 +38,7 @@ public class AncientPeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_REALITY_FORGER;
         final ForgeConfigSpec.BooleanValue ENABLE_ENCHATING_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_SMITHING_AUTOMATA_CORE;
+        final ForgeConfigSpec.BooleanValue ENABLE_CUTTING_AXE;
 
         // Restrictions
 
@@ -44,6 +47,7 @@ public class AncientPeripheralsConfig {
         final ForgeConfigSpec.IntValue ENCHANT_LEVEL_COST;
         final ForgeConfigSpec.IntValue XP_TO_FUEL_RATE;
         final ForgeConfigSpec.DoubleValue SMELT_FUEL_COST_RATE;
+        final ForgeConfigSpec.IntValue CUTTING_AXE_MAX_BLOCK_COUNT;
 
         // Operations
         final ForgeConfigSpec.IntValue TRANSFER_XP_COOLDOWN;
@@ -67,6 +71,7 @@ public class AncientPeripheralsConfig {
             ENABLE_REALITY_FORGER = builder.define("enableRealityForger", true);
             ENABLE_ENCHATING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true);
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true);
+            ENABLE_CUTTING_AXE = builder.define("enableCuttingAxe", true);
             builder.pop();
             builder.comment("").push("Restrictions");
             REALITY_FORGER_RADIUS = builder.defineInRange("realityForgerRadius", 8, 1, 64);
@@ -74,6 +79,9 @@ public class AncientPeripheralsConfig {
             XP_TO_FUEL_RATE = builder.defineInRange("xpToFuelRate", 10, 1, Integer.MAX_VALUE);
             ENCHANT_LEVEL_COST = builder.defineInRange("enchantLevelCost", 30, 1, Integer.MAX_VALUE);
             SMELT_FUEL_COST_RATE = builder.defineInRange("smeltFuelCostRate", 0.8, 0.1, 1.5);
+            CUTTING_AXE_MAX_BLOCK_COUNT = builder
+                    .comment("Define max block count, that could be cut at once via Cutting axe. Don't set big numbers, it can cause server crashes")
+                    .defineInRange("cuttingAxeMaxBlockCount", 1024, 256, Integer.MAX_VALUE);
             builder.pop();
             builder.comment("").push("Operations");
             TRANSFER_XP_COOLDOWN = builder.defineInRange("transferXPCooldown", 1_000, 1, Integer.MAX_VALUE);
