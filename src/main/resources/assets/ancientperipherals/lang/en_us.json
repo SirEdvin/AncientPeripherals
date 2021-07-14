@@ -3,6 +3,8 @@
   "advancements.ancientperipherals.forged_automata_core.description": "Are you ready for what coming next?",
   "advancements.ancientperipherals.scientific_automata_core": "Physicus ex machina",
   "advancements.ancientperipherals.scientific_automata_core.description": "Scientific progress always require sacrifices. Always.",
+  "advancements.ancientperipherals.obtain_abstractium": "Obtain abstractium",
+  "advancements.ancientperipherals.obtain_abstractium.description": "Hopes, it will not start leak ...",
   "jei.category.ancientperipherals.automata": "Automata crafting",
   "item.ancientperipherals.forged_automata_core": "Forged automata core",
   "item.ancientperipherals.forged_automata_core.tooltip": "§7Seems, this core lost any ability to function...",
@@ -20,5 +22,5 @@
   "turtle.ancientperipherals.scientific": "Scientific automata",
   "text.ancientperipherals.parameters": "$(l)Parameters$(): ",
   "text.ancientperipherals.returns": "$(l)Returns$():",
-  "text.ancientperipherals.throw": "$(l)Throw errors$(): "
+  "text.ancientperipherals.throw": "$(l)Throw in case of$(): "
 }

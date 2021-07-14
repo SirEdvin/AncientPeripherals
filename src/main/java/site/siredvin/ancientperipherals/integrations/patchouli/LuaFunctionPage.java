@@ -54,8 +54,13 @@ public class LuaFunctionPage extends BookPage {
                     .finish();
         }
         builder.finishList();
-        if (can_throw != null)
-            builder.addLocal("throw").add((IFormattableTextComponent) can_throw.as(ITextComponent.class));
+        if (can_throw != null) {
+            builder.addLocal("throw").br();
+            List<IVariable> throwReasons = can_throw.asList();
+            for (IVariable throwReason: throwReasons) {
+                builder.addBulletListElement((IFormattableTextComponent) throwReason.as(ITextComponent.class));
+            }
+        }
         textRenderer = new BookTextRenderer(parent, builder.build(), 0, STARTING_HEIGHT);
 
     }

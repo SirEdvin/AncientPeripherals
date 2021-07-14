@@ -1,0 +1,18 @@
+{
+  "name": "Abstractium",
+  "icon": "ancientperipherals:abstractium_ingot",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "ancientperipherals:abstractium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Abstractium",
+      "item": "ancientperipherals:abstractium_ingot",
+      "text": "Oh, this unexpected! Seems scientific automata core can be used to transfer raw experience into something very flexible. $(p)Abstractium seems like very irregular material than change it abilities depends on condition. How many uses for this you can find?"
+    },
+    {
+      "type": "crafting",
+      "recipe": "ancientperipherals:asbtractium_block"
+    }
+  ]
+}

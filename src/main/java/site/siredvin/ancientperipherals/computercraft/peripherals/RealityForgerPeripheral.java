@@ -127,6 +127,20 @@ public class RealityForgerPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
+    public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
+        BlockPos targetPosition = LuaUtils.convertToBlockPos(getPos(), arguments.getTable(0));
+        Map<?, ?> table = arguments.getTable(1);
+        World world = getWorld();
+        TileEntity entity = world.getBlockEntity(targetPosition);
+        if (!(entity instanceof FlexibleRealityAnchorTileEntity))
+            return MethodResult.of(false, "Incorrect coordinates");
+        Pair<Boolean, BlockState> blockFindResult = findBlock(table);
+        forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) entity, blockFindResult.getRight(), table, blockFindResult.getLeft());
+        return MethodResult.of(true);
+    }
+
+
+    @LuaFunction(mainThread = true)
     public final MethodResult forgeRealityPieces(@Nonnull IArguments arguments) throws LuaException {
         BlockPos center = getPos();
         World world = getWorld();
@@ -146,19 +160,6 @@ public class RealityForgerPeripheral extends BasePeripheral {
         Map<?, ?> table = arguments.getTable(1);
         Pair<Boolean, BlockState> blockFindResult = findBlock(table);
         entities.forEach(entity -> forgeRealityTileEntity(entity, blockFindResult.getRight(), table, blockFindResult.getLeft()));
-        return MethodResult.of(true);
-    }
-
-    @LuaFunction(mainThread = true)
-    public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
-        BlockPos targetPosition = LuaUtils.convertToBlockPos(getPos(), arguments.getTable(0));
-        Map<?, ?> table = arguments.getTable(1);
-        World world = getWorld();
-        TileEntity entity = world.getBlockEntity(targetPosition);
-        if (!(entity instanceof FlexibleRealityAnchorTileEntity))
-            return MethodResult.of(false, "Incorrect coordinates");
-        Pair<Boolean, BlockState> blockFindResult = findBlock(table);
-        forgeRealityTileEntity((FlexibleRealityAnchorTileEntity) entity, blockFindResult.getRight(), table, blockFindResult.getLeft());
         return MethodResult.of(true);
     }
 

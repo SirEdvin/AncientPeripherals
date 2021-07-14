@@ -79,6 +79,14 @@ public class TextBuilder {
         return new ListElementBuilder(this);
     }
 
+    public TextBuilder addBulletListElement(String name) {
+        return add("$(li)").add(name);
+    }
+
+    public TextBuilder addBulletListElement(IFormattableTextComponent name) {
+        return add("$(li)").add(name);
+    }
+
     public ITextComponent build() {
         return new StringTextComponent(buffer.getString());
     }

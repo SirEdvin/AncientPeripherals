@@ -10,6 +10,8 @@ import vazkii.patchouli.client.book.gui.BookTextRenderer;
 import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookEntry;
 
+import java.util.List;
+
 public class LuaFunctionLeftPage extends BookPage {
 
     @SerializedName("throw") IVariable can_throw;
@@ -26,8 +28,13 @@ public class LuaFunctionLeftPage extends BookPage {
 
         TextBuilder builder = TextBuilder.start((IFormattableTextComponent) description.as(ITextComponent.class)).p();
         builder.finishList();
-        if (can_throw != null)
-            builder.addLocal("throw").add((IFormattableTextComponent) can_throw.as(ITextComponent.class));
+        if (can_throw != null) {
+            builder.addLocal("throw").br();
+            List<IVariable> throwReasons = can_throw.asList();
+            for (IVariable throwReason: throwReasons) {
+                builder.addBulletListElement((IFormattableTextComponent) throwReason.as(ITextComponent.class));
+            }
+        }
         textRenderer = new BookTextRenderer(parent, builder.build(), 0, LuaFunctionPage.STARTING_HEIGHT);
 
     }
