@@ -5,11 +5,15 @@
   "advancements.ancientperipherals.scientific_automata_core.description": "Scientific progress always require sacrifices. Always.",
   "advancements.ancientperipherals.obtain_abstractium": "Obtain abstractium",
   "advancements.ancientperipherals.obtain_abstractium.description": "Hopes, it will not start leak ...",
+  "advancements.ancientperipherals.enchanting_automata_core": "Better then enchanting table",
+  "advancements.ancientperipherals.enchanting_automata_core.description": "Is this Industrial Foregoing reference?",
   "jei.category.ancientperipherals.automata": "Automata crafting",
   "item.ancientperipherals.forged_automata_core": "Forged automata core",
   "item.ancientperipherals.forged_automata_core.tooltip": "§7Seems, this core lost any ability to function...",
   "item.ancientperipherals.scientific_automata_core": "Scientific automata core",
   "item.ancientperipherals.scientific_automata_core.tooltip": "§7Automata core with shards of scientific villager. Was it worth it?",
+  "item.ancientperipherals.enchanting_automata_core": "Enchanting automata core",
+  "item.ancientperipherals.enchanting_automata_core.tooltip": "§7Automata core with shards of librarian villager. Can perform enchants",
   "item.ancientperipherals.abstractium_ingot": "Abstractium ingot",
   "item.ancientperipherals.abstractium_ingot.tooltip": "XP, reforged by scientific automata",
   "block.ancientperipherals.flexible_reality_anchor": "Flexible reality anchor",
@@ -20,7 +24,9 @@
   "block.ancientperipherals.abstractium_block.tooltip": "XP, reforged by scientific automata collected into block",
   "itemGroup.ancientperipherals": "Ancient Peripherals",
   "turtle.ancientperipherals.scientific": "Scientific automata",
+  "turtle.ancientperipherals.enchanting": "Enchanting automata",
   "text.ancientperipherals.parameters": "$(l)Parameters$(): ",
   "text.ancientperipherals.returns": "$(l)Returns$():",
-  "text.ancientperipherals.throw": "$(l)Throw in case of$(): "
+  "text.ancientperipherals.throw": "$(l)Throw in case of$(): ",
+  "text.ancientperipherals.operation_group": "$(l)Operation group$(): "
 }

@@ -38,7 +38,7 @@
         ["boolean", "is applied"],
         ["string | nil", "error string"]
       ],
-      "description": "Trying set fuel consumption level"
+      "description": "Trying set fuel consumption level. Max consumption rate can be received via $(l:ancientperipherals:api_documentation/operations#configuration)getConfiguration$() method"
     }
   ]
 }

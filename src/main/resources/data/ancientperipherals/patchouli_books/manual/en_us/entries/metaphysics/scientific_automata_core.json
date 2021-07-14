@@ -22,7 +22,7 @@
     {
       "type": "ancientperipherals:lua_function_left_page",
       "functionName": "crystallizeXP",
-      "description": "Trying to crystallize XP from stored XP in turtle and transform it to abstractium ingots. Ingot cost can be retrieved via $(l:ancientperipherals:api_documentation/operations#configuration)getConfiguration$() method"
+      "description": "Trying to crystallize XP from stored XP in turtle and transform it to abstractium ingots. Ingot cost can be retrieved via $(configuration)"
     },
     {
       "type": "ancientperipherals:lua_function_right_page",

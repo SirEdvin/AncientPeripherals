@@ -5,8 +5,16 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import site.siredvin.ancientperipherals.utils.TranslationUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TextBuilder {
     private final static String LIST_SPACING = "  ";
+    private final static Map<String, String> CUSTOM_MACROS = new HashMap<String, String>() {{
+        put("$(blockPos)", "$(l:ancientperipherals:api_documentation/extra_types#BlockPos)blockPos$()");
+        put("$(blockVisual)", "$(l:ancientperipherals:api_documentation/extra_types#BlockVisual)blockVisual()");
+        put("$(configuration)", "$(l:ancientperipherals:api_documentation/operations#configuration)getConfiguration$()");
+    }};
     private IFormattableTextComponent buffer;
     private int list_last_number = 1;
     private boolean insideList = false;
@@ -25,7 +33,7 @@ public class TextBuilder {
         return this;
     }
 
-    public TextBuilder addLocal(String name) {
+    public TextBuilder local(String name) {
         buffer = buffer.append(TranslationUtil.localization(name));
         return this;
     }
@@ -88,7 +96,11 @@ public class TextBuilder {
     }
 
     public ITextComponent build() {
-        return new StringTextComponent(buffer.getString());
+        String text = buffer.getString();
+        for (Map.Entry<String, String> entry: CUSTOM_MACROS.entrySet()) {
+            text = text.replace(entry.getKey(), entry.getValue());
+        }
+        return new StringTextComponent(text);
     }
 
     public static TextBuilder start(IFormattableTextComponent start) {

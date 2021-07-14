@@ -20,6 +20,7 @@ public class LuaFunctionPage extends BookPage {
     IVariable parameters;
     IVariable returns;
     @SerializedName("throw") IVariable can_throw;
+    IVariable operationGroup;
     IVariable functionName;
     IVariable description;
 
@@ -33,7 +34,7 @@ public class LuaFunctionPage extends BookPage {
 
         TextBuilder builder = TextBuilder.start((IFormattableTextComponent) description.as(ITextComponent.class)).p();
         if (parameters != null) {
-            builder.addLocal("parameters").br().startList();
+            builder.local("parameters").br().startList();
             List<IVariable> parameterList = parameters.asList();
             for (IVariable parameter: parameterList) {
                 List<IVariable> parameterArray = parameter.asList();
@@ -45,7 +46,7 @@ public class LuaFunctionPage extends BookPage {
             builder.finishList();
         }
         List<IVariable> returns = this.returns.asList();
-        builder.addLocal("returns").br().startList();
+        builder.local("returns").br().startList();
         for (IVariable returnValue: returns) {
             List<IVariable> returnArray = returnValue.asList();
             builder.listElement().italic((IFormattableTextComponent) returnArray.get(0).as(ITextComponent.class))
@@ -54,8 +55,10 @@ public class LuaFunctionPage extends BookPage {
                     .finish();
         }
         builder.finishList();
+        if (operationGroup != null)
+            builder.local("operation_group").add((IFormattableTextComponent) operationGroup.as(ITextComponent.class)).br();
         if (can_throw != null) {
-            builder.addLocal("throw").br();
+            builder.local("throw").br();
             List<IVariable> throwReasons = can_throw.asList();
             for (IVariable throwReason: throwReasons) {
                 builder.addBulletListElement((IFormattableTextComponent) throwReason.as(ITextComponent.class));

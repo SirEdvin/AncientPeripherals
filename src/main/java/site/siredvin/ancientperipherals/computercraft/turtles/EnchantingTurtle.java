@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.ancientperipherals.common.setup.Items;
-import site.siredvin.ancientperipherals.computercraft.peripherals.ScientificAutomataCorePeripheral;
+import site.siredvin.ancientperipherals.computercraft.peripherals.EnchantingAutomataCorePeripheral;
 import site.siredvin.ancientperipherals.utils.TranslationUtil;
 
-public class ScientificTurtle extends ModelTransformingTurtle<ScientificAutomataCorePeripheral> {
-    public ScientificTurtle() {
-        super("scientific_automata", TranslationUtil.turtle("scientific"), new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get()));
+public class EnchantingTurtle extends ModelTransformingTurtle<EnchantingAutomataCorePeripheral> {
+    public EnchantingTurtle() {
+        super("enchanting_automata", TranslationUtil.turtle("enchanting"), new ItemStack(Items.ENCHANTING_AUTOMATA_CORE.get()));
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ScientificTurtle extends ModelTransformingTurtle<ScientificAutomata
     }
 
     @Override
-    protected ScientificAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new ScientificAutomataCorePeripheral("scientificAutomataCore", turtle, side);
+    protected EnchantingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
+        return new EnchantingAutomataCorePeripheral("enchantingAutomataCore", turtle, side);
     }
 }

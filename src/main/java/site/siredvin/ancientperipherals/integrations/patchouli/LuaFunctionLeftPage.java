@@ -17,6 +17,7 @@ public class LuaFunctionLeftPage extends BookPage {
     @SerializedName("throw") IVariable can_throw;
     IVariable functionName;
     IVariable description;
+    IVariable operationGroup;
 
     transient ITextComponent actualTitle;
     transient BookTextRenderer textRenderer;
@@ -27,9 +28,10 @@ public class LuaFunctionLeftPage extends BookPage {
         actualTitle = functionName.as(ITextComponent.class);
 
         TextBuilder builder = TextBuilder.start((IFormattableTextComponent) description.as(ITextComponent.class)).p();
-        builder.finishList();
+        if (operationGroup != null)
+            builder.local("operation_group").add((IFormattableTextComponent) operationGroup.as(ITextComponent.class)).br();
         if (can_throw != null) {
-            builder.addLocal("throw").br();
+            builder.local("throw").br();
             List<IVariable> throwReasons = can_throw.asList();
             for (IVariable throwReason: throwReasons) {
                 builder.addBulletListElement((IFormattableTextComponent) throwReason.as(ITextComponent.class));

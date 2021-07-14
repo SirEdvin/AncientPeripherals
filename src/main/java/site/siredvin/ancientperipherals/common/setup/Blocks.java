@@ -6,6 +6,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.ancientperipherals.common.blocks.BaseBlock;
 import site.siredvin.ancientperipherals.common.blocks.FlexibleRealityAnchor;
+import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
 import site.siredvin.ancientperipherals.common.items.BaseBlockItem;
 import site.siredvin.ancientperipherals.common.items.PeripheralBlockItem;
 
@@ -22,7 +23,7 @@ public class Blocks {
     public static final RegistryObject<Block> REALITY_FORGER = register(
             "reality_forger",
             () -> new APTileEntityBlock<>(TileEntityTypes.REALITY_FORGER, true),
-            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> true)
+            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> AncientPeripheralsConfig.enableRealityForger)
     );
     public static final RegistryObject<Block> ABSTRACTIUM_BLOCK = register(
             "abstractium_block",

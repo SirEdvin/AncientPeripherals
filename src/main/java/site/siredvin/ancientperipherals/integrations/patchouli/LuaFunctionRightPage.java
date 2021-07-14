@@ -24,7 +24,7 @@ public class LuaFunctionRightPage extends BookPage {
 
         TextBuilder builder = TextBuilder.start(new StringTextComponent(""));
         if (parameters != null) {
-            builder.addLocal("parameters").br().startList();
+            builder.local("parameters").br().startList();
             List<IVariable> parameterList = parameters.asList();
             for (IVariable parameter: parameterList) {
                 List<IVariable> parameterArray = parameter.asList();
@@ -36,7 +36,7 @@ public class LuaFunctionRightPage extends BookPage {
             builder.finishList();
         }
         List<IVariable> returns = this.returns.asList();
-        builder.addLocal("returns").br().startList();
+        builder.local("returns").br().startList();
         for (IVariable returnValue: returns) {
             List<IVariable> returnArray = returnValue.asList();
             builder.listElement().italic((IFormattableTextComponent) returnArray.get(0).as(ITextComponent.class))

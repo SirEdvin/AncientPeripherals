@@ -44,7 +44,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return AncientPeripheralsConfig.enableRealityForger;
     }
 
     // Please, don't blame me for this untyped garbage code
@@ -128,6 +128,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
     @LuaFunction(mainThread = true)
     public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
+        // TODO: add interaction radius check
         BlockPos targetPosition = LuaUtils.convertToBlockPos(getPos(), arguments.getTable(0));
         Map<?, ?> table = arguments.getTable(1);
         World world = getWorld();
@@ -142,6 +143,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
     @LuaFunction(mainThread = true)
     public final MethodResult forgeRealityPieces(@Nonnull IArguments arguments) throws LuaException {
+        // TODO: add interaction radius check
         BlockPos center = getPos();
         World world = getWorld();
         List<BlockPos> poses = new ArrayList<>();

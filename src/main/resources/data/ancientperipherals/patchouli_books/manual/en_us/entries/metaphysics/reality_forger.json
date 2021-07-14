@@ -16,7 +16,7 @@
     },
     {
       "type": "text",
-      "text": "However, reality forger cannot interact with reality directly, it can only control prepared area.$(p)Seems, you need to setup some flexible reality anchor and then change their appearance via lua methods.$(p)Take a note, that forger interaction area is limited. You can get exact interaction radius via $(l:ancientperipherals:api_documentation/operations#configuration)getConfiguration$() method."
+      "text": "However, reality forger cannot interact with reality directly, it can only control prepared area.$(p)Seems, you need to setup some flexible reality anchor and then change their appearance via lua methods.$(p)Take a note, that forger interaction area is limited. You can get exact interaction radius via $(configuration)."
     },
     {
       "type": "ancientperipherals:automata",
@@ -30,7 +30,7 @@
     {
       "type": "ancientperipherals:lua_function_right_page",
       "returns": [
-        ["{$(l:ancientperipherals:api_documentation/extra_types#BlockPos)blockPos$()}", "list of anchor positions"]
+        ["{$(blockPos)}", "list of anchor positions"]
       ]
     },
     {
@@ -44,8 +44,8 @@
     {
       "type": "ancientperipherals:lua_function_right_page",
       "parameters": [
-        ["$(l:ancientperipherals:api_documentation/extra_types#BlockPos)blockPos$()", "target anchor"],
-        ["$(l:ancientperipherals:api_documentation/extra_types#BlockVisual)blockVisual$()", "block visual parameters to be changed, parameters that are missed will left unchanged"]
+        ["$(blockPos)", "target anchor"],
+        ["$(blockVisual)", "block visual parameters to be changed, parameters that are missed will left unchanged"]
       ],
       "returns": [
         ["boolean", "If operation successful"],
@@ -63,8 +63,8 @@
     {
       "type": "ancientperipherals:lua_function_right_page",
       "parameters": [
-        ["{$(l:ancientperipherals:api_documentation/extra_types#BlockPos)blockPos$()}", "list of target anchors"],
-        ["$(l:ancientperipherals:api_documentation/extra_types#BlockVisual)blockVisual$()", "block visual parameters to be changed, parameters that are missed will left unchanged"]
+        ["{$(blockPos)}", "list of target anchors"],
+        ["$(blockVisual)", "block visual parameters to be changed, parameters that are missed will left unchanged"]
       ],
       "returns": [
         ["boolean", "If operation successful"],
@@ -82,7 +82,7 @@
     {
       "type": "ancientperipherals:lua_function_right_page",
       "parameters": [
-        ["$(l:ancientperipherals:api_documentation/extra_types#BlockVisual)blockVisual$()", "block visual parameters to be changed, parameters that are missed will left unchanged"]
+        ["$(blockVisual)", "block visual parameters to be changed, parameters that are missed will left unchanged"]
       ],
       "returns": [
         ["boolean", "If operation successful"],
