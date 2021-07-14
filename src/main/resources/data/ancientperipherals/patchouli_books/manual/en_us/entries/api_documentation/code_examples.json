@@ -1,0 +1,52 @@
+{
+  "name": "Code examples",
+  "icon": "minecraft:writable_book",
+  "category": "ancientperipherals:api_documentation",
+  "priority": true,
+  "pages": [
+    {
+      "type": "link",
+      "text": "Example of primitive reality forger usage. For correct usage you should build described structure and  carefully change block position for you case",
+      "url": "https://gist.github.com/SirEdvin/adde0b68b05962796db83bf1ef5ca2b5",
+      "link_text": "Go to code"
+    },
+    {
+      "type": "multiblock",
+      "multiblock": {
+        "mapping": {
+          "0": "computercraft:computer_advanced",
+          "C": "advancedperipherals:chat_box",
+          "Z": "advancedperipherals:player_detector",
+          "F": "ancientperipherals:reality_forger",
+          "A": "ancientperipherals:flexible_reality_anchor"
+        },
+        "pattern": [
+          [
+            "A     ",
+            "A     ",
+            "A     ",
+            "A     "
+          ],
+          [
+            "A     ",
+            "A     ",
+            "A     ",
+            "A     "
+          ],
+          [
+            "A     ",
+            "A     ",
+            "A     ",
+            "A     "
+          ],
+          [
+            "A     ",
+            "A     ",
+            "A  FOZ",
+            "A   C "
+          ]
+        ]
+      }
+    }
+  ]
+}
