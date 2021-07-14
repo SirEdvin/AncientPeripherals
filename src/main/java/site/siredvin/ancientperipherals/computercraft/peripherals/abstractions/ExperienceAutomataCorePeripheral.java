@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
 import site.siredvin.ancientperipherals.utils.LuaUtils;
-import site.siredvin.ancientperipherals.utils.PositionUtils;
+import site.siredvin.ancientperipherals.utils.CheckUtils;
 
 import java.util.Map;
 import java.util.Optional;
@@ -134,7 +134,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         if (checkResults.isPresent()) return checkResults.get();
         BlockPos pos = getPos();
         BlockPos targetPos = LuaUtils.convertToBlockPos(pos, rawBlockPos);
-        if (!PositionUtils.radiusCorrect(pos, targetPos, getInteractionRadius()))
+        if (!CheckUtils.radiusCorrect(pos, targetPos, getInteractionRadius()))
             return MethodResult.of(null, "Turtle are too far away");
         TileEntity entity = getWorld().getBlockEntity(targetPos);
         if (!(entity instanceof TileTurtle))

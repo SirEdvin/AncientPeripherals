@@ -11,8 +11,9 @@ import site.siredvin.ancientperipherals.computercraft.peripherals.EnchantingAuto
 import site.siredvin.ancientperipherals.utils.TranslationUtil;
 
 public class EnchantingTurtle extends ModelTransformingTurtle<EnchantingAutomataCorePeripheral> {
+    public static final String ID = "enchanting_automata";
     public EnchantingTurtle() {
-        super("enchanting_automata", TranslationUtil.turtle("enchanting"), new ItemStack(Items.ENCHANTING_AUTOMATA_CORE.get()));
+        super(ID, TranslationUtil.turtle("enchanting"), new ItemStack(Items.ENCHANTING_AUTOMATA_CORE.get()));
     }
 
     @Override

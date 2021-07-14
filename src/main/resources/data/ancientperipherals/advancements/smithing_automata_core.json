@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "ancientperipherals:smithing_automata_core"
+    },
+    "title": {
+      "translate": "advancements.ancientperipherals.smithing_automata_core"
+    },
+    "description": {
+      "translate": "advancements.ancientperipherals.smithing_automata_core.description"
+    }
+  },
+  "parent": "ancientperipherals:forged_automata_core",
+  "criteria": {
+    "item_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "ancientperipherals:smithing_automata_core"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -90,7 +90,7 @@
       ]
     },
     {
-      "type": "ancientperipherals:lua_function_page",
+      "type": "ancientperipherals:lua_function",
       "functionName": "getInteractionRadius",
       "description": "Utility function for better limitation understanding",
       "returns": [

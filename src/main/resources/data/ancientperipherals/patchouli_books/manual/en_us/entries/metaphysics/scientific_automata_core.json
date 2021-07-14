@@ -33,6 +33,15 @@
         ["true | nil", "True if operation successful, nil otherwise"],
         ["nil | string", "Error message"]
       ]
+    },
+    {
+      "type": "ancientperipherals:lua_function",
+      "functionName": "craft",
+      "description": "Perform automata crafting for inventory. Inventory should be same, as described on automata crafting recipe. Result will be stored in first empty slot",
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
     }
   ]
 }

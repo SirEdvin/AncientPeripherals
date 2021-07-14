@@ -1,0 +1,58 @@
+{
+  "name": "Smithing API",
+  "icon": "minecraft:writable_book",
+  "category": "ancientperipherals:api_documentation",
+  "advancement": "ancientperipherals:smithing_automata_core",
+  "pages": [
+    {
+      "type": "ancientperipherals:lua_function_left_page",
+      "functionName": "smith",
+      "description": "Perform smith crafting for item in selected slot",
+      "throw": [
+        "Incorrect slot definition"
+      ],
+      "operationGroup": "smith"
+    },
+    {
+      "type": "ancientperipherals:lua_function_right_page",
+      "parameters": [
+        [
+          "number",
+          "Slot for second item for smithing recipe, should be from 1 to 16"
+        ],
+        [
+          "number",
+          "Slot for result item. Slot should be empty and number should be from 1 to 16"
+        ]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
+    },
+    {
+      "type": "ancientperipherals:lua_function_left_page",
+      "functionName": "smelt",
+      "description": "Perform smelt operation for items in selected slot. Result experience will be stored inside automata buffer.$(p)Take a note, that cooldown will be multiply by number of smelted items",
+      "throw": ["Incorrect slot definition"],
+      "operationGroup": "smelt"
+    },
+    {
+      "type": "ancientperipherals:lua_function_right_page",
+      "parameters": [
+        [
+          "number",
+          "Slot for result item. Slot should be empty and number should be from 1 to 16"
+        ],
+        [
+          "[number]",
+          "Limit on burned items. Optional argument"
+        ]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
+    }
+  ]
+}

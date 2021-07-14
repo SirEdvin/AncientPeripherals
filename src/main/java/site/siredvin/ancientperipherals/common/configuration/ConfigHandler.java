@@ -26,21 +26,27 @@ public class ConfigHandler {
         // Features
         AncientPeripheralsConfig.enableRealityForger = ConfigHolder.COMMON_CONFIG.ENABLE_REALITY_FORGER.get();
         AncientPeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
+        AncientPeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
         // Restrictions
         AncientPeripheralsConfig.realityForgerRadius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_RADIUS.get();
         AncientPeripheralsConfig.abstractiumXPPointsCost = ConfigHolder.COMMON_CONFIG.ABSTRACTIUM_XP_POINTS_COST.get();
         AncientPeripheralsConfig.xpToFuelRate = ConfigHolder.COMMON_CONFIG.XP_TO_FUEL_RATE.get();
         AncientPeripheralsConfig.enchantLevelCost = ConfigHolder.COMMON_CONFIG.ENCHANT_LEVEL_COST.get();
+        AncientPeripheralsConfig.furnaceBurnFuelCostRate = ConfigHolder.COMMON_CONFIG.SMELT_FUEL_COST_RATE.get();
         // Operations
         AncientPeripheralsConfig.transferXPCooldown = ConfigHolder.COMMON_CONFIG.TRANSFER_XP_COOLDOWN.get();
         AncientPeripheralsConfig.transferXPCost = ConfigHolder.COMMON_CONFIG.TRANSFER_XP_COST.get();
         AncientPeripheralsConfig.enchantCooldown = ConfigHolder.COMMON_CONFIG.ENCHANT_XP_COOLDOWN.get();
         AncientPeripheralsConfig.enchantCost = ConfigHolder.COMMON_CONFIG.ENCHANT_XP_COST.get();
+        AncientPeripheralsConfig.smeltCooldown = ConfigHolder.COMMON_CONFIG.SMELT_COOLDOWN.get();
+        AncientPeripheralsConfig.smithCost = ConfigHolder.COMMON_CONFIG.SMITH_COST.get();
+        AncientPeripheralsConfig.smithCooldown = ConfigHolder.COMMON_CONFIG.SMITH_COOLDOWN.get();
         // Automata Cores
         AncientPeripheralsConfig.scientificAutomataCoreInteractionRadius = ConfigHolder.COMMON_CONFIG.SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS.get();
         AncientPeripheralsConfig.scientificAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
         AncientPeripheralsConfig.enchantingAutomataCoreInteractionRadius = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_INTERACTION_RADIUS.get();
         AncientPeripheralsConfig.enchantingAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
         AncientPeripheralsConfig.enchantingAutomataCoreDisappearChance = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE.get();
+        AncientPeripheralsConfig.smithingAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.SMITHING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
     }
 }

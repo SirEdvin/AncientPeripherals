@@ -8,7 +8,7 @@
       "type": "spotlight",
       "title": "Enchanting automata core",
       "item": "ancientperipherals:enchanting_automata_core",
-      "text": "After consuming librarian soul, automata core become much more like enchanting table. But like every strict machine, this table likes strict linear progression. "
+      "text": "After consuming librarian soul, automata core become much more like enchanting table. But like every strict machine, this table likes strict linear progression."
     },
     {
       "type": "relations",
@@ -16,7 +16,8 @@
       "entries": [
         "ancientperipherals:api_documentation/fuel_consumption",
         "ancientperipherals:api_documentation/operations",
-        "ancientperipherals:api_documentation/experience_interaction"
+        "ancientperipherals:api_documentation/experience_interaction",
+        "ancientperipherals:api_documentation/enchantment_api"
       ]
     }
   ]

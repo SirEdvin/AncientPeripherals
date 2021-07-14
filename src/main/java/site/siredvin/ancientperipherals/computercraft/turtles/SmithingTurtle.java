@@ -7,13 +7,13 @@ import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.ancientperipherals.common.setup.Items;
-import site.siredvin.ancientperipherals.computercraft.peripherals.ScientificAutomataCorePeripheral;
+import site.siredvin.ancientperipherals.computercraft.peripherals.SmithingAutomataCorePeripheral;
 import site.siredvin.ancientperipherals.utils.TranslationUtil;
 
-public class ScientificTurtle extends ModelTransformingTurtle<ScientificAutomataCorePeripheral> {
-    public static final String ID = "scientific_automata";
-    public ScientificTurtle() {
-        super(ID, TranslationUtil.turtle("scientific"), new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get()));
+public class SmithingTurtle extends ModelTransformingTurtle<SmithingAutomataCorePeripheral> {
+    public static final String ID = "smithing_automata";
+    public SmithingTurtle() {
+        super(ID, TranslationUtil.turtle("smithing"), new ItemStack(Items.SMITHING_AUTOMATA_CORE.get()));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class ScientificTurtle extends ModelTransformingTurtle<ScientificAutomata
     }
 
     @Override
-    protected ScientificAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new ScientificAutomataCorePeripheral("scientificAutomataCore", turtle, side);
+    protected SmithingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
+        return new SmithingAutomataCorePeripheral("smithingAutomataCore", turtle, side);
     }
 }

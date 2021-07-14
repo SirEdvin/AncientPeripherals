@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import site.siredvin.ancientperipherals.common.configuration.AncientPeripheralsConfig;
 import site.siredvin.ancientperipherals.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
+import site.siredvin.ancientperipherals.utils.CheckUtils;
 
 import java.util.Collections;
 import java.util.Map;
@@ -94,12 +95,13 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         if (checkResults.isPresent()) return checkResults.get();
         checkResults = consumeFuelOp(AncientPeripheralsConfig.enchantCost);
         if (checkResults.isPresent()) return checkResults.get();
-        if (target < 0 || target > 15)
-            throw new LuaException("Target slot is incorrect");
+        addRotationCycle();
+        CheckUtils.isCorrectSlot(target);
+        target--; // Convert to java slot
         IInventory turtleInventory = turtle.getInventory();
         int selectedSlot = turtle.getSelectedSlot();
         ItemStack selectedItem = turtleInventory.getItem(selectedSlot);
-        ItemStack targetItem = turtleInventory.getItem(target - 1);
+        ItemStack targetItem = turtleInventory.getItem(target);
         if (!selectedItem.isEnchanted())
             return MethodResult.of(null, "Selected item is not enchanted");
         if (!targetItem.getItem().equals(Items.BOOK))
@@ -113,7 +115,7 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
         EnchantmentHelper.setEnchantments(enchants, enchantedBook);
         EnchantmentHelper.setEnchantments(Collections.emptyMap(), selectedItem);
-        turtleInventory.setItem(target -1, enchantedBook);
+        turtleInventory.setItem(target, enchantedBook);
         trackOperation(ENCHANT_OPERATION);
         return MethodResult.of(true);
     }

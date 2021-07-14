@@ -23,7 +23,7 @@ import site.siredvin.ancientperipherals.common.setup.Blocks;
 import site.siredvin.ancientperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
 import site.siredvin.ancientperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.ancientperipherals.utils.LuaUtils;
-import site.siredvin.ancientperipherals.utils.PositionUtils;
+import site.siredvin.ancientperipherals.utils.CheckUtils;
 import site.siredvin.ancientperipherals.utils.RepresentationUtil;
 import site.siredvin.ancientperipherals.utils.ScanUtils;
 
@@ -140,7 +140,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
     public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
         BlockPos center = getPos();
         BlockPos targetPosition = LuaUtils.convertToBlockPos(center, arguments.getTable(0));
-        if (!PositionUtils.radiusCorrect(center, targetPosition, _getInteractionRadius()))
+        if (!CheckUtils.radiusCorrect(center, targetPosition, _getInteractionRadius()))
             return MethodResult.of(null, "Block are too far away");
         Map<?, ?> table = arguments.getTable(1);
         World world = getWorld();
@@ -165,7 +165,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
         }
         List<FlexibleRealityAnchorTileEntity> entities = new ArrayList<>();
         for (BlockPos pos: poses) {
-            if (!PositionUtils.radiusCorrect(center, pos, _getInteractionRadius()))
+            if (!CheckUtils.radiusCorrect(center, pos, _getInteractionRadius()))
                 return MethodResult.of(null, "One of blocks are too far away");
             TileEntity entity = world.getBlockEntity(pos);
             if (!(entity instanceof FlexibleRealityAnchorTileEntity))

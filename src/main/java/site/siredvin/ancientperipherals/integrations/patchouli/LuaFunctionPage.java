@@ -56,9 +56,9 @@ public class LuaFunctionPage extends BookPage {
         }
         builder.finishList();
         if (operationGroup != null)
-            builder.local("operation_group").add((IFormattableTextComponent) operationGroup.as(ITextComponent.class)).br();
+            builder.local("operation_group").add((IFormattableTextComponent) operationGroup.as(ITextComponent.class)).p();
         if (can_throw != null) {
-            builder.local("throw").br();
+            builder.local("throw");
             List<IVariable> throwReasons = can_throw.asList();
             for (IVariable throwReason: throwReasons) {
                 builder.addBulletListElement((IFormattableTextComponent) throwReason.as(ITextComponent.class));
