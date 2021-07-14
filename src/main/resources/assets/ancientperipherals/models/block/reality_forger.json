@@ -1,6 +1,12 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "advancedperipherals:block/peripheral_casing"
+    "north": "ancientperipherals:block/reality_forger_side",
+    "south": "ancientperipherals:block/reality_forger_side",
+    "west": "ancientperipherals:block/reality_forger_side",
+    "east": "ancientperipherals:block/reality_forger_side",
+    "up": "ancientperipherals:block/reality_forger_top",
+    "down": "ancientperipherals:block/reality_forger_top",
+    "particle": "ancientperipherals:block/reality_forger_top"
   }
 }
