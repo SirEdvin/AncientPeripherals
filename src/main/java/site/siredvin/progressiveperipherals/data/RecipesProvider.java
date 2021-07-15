@@ -57,6 +57,26 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern(" DC ")
                 .pattern("  S ")
                 .save(consumer);
+        AutomataRecipeBuilder.start(Items.EXTRACTING_PICKAXE.get())
+                .define('D', net.minecraft.item.Items.DIAMOND)
+                .define('A', Items.ABSTRACTIUM_INGOT.get())
+                .define('C', Items.ABSTRACTIUM_PICKAXE.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern("DAAA")
+                .pattern(" DSD")
+                .pattern("  C ")
+                .pattern("  S ")
+                .save(consumer);
+        AutomataRecipeBuilder.start(Items.CORRECTING_SHOVEL.get())
+                .define('D', net.minecraft.item.Items.DIAMOND)
+                .define('A', Items.ABSTRACTIUM_INGOT.get())
+                .define('C', Items.ABSTRACTIUM_SHOVEL.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .pattern("  D ")
+                .pattern(" ASA")
+                .pattern("  C ")
+                .pattern("  S ")
+                .save(consumer);
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {

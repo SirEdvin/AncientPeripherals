@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.peripherals;
+package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;

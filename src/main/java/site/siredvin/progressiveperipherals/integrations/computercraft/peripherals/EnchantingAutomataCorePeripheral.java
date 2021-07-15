@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.peripherals;
+package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
@@ -11,7 +11,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
-import site.siredvin.progressiveperipherals.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 
 import java.util.Collections;

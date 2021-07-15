@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.turtles;
+package site.siredvin.progressiveperipherals.integrations.computercraft.turtles;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleCommandResult;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Items;
-import site.siredvin.progressiveperipherals.computercraft.turtles.base.TurtleDigTool;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
 import java.util.HashMap;

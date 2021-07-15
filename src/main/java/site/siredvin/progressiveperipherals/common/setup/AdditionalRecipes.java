@@ -4,11 +4,10 @@ import de.srendi.advancedperipherals.common.setup.Villagers;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Dimension;
 import site.siredvin.progressiveperipherals.common.items.ForgedAutomataCore;
-import site.siredvin.progressiveperipherals.computercraft.turtles.TurtleCorrectingShovel;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.TurtleCorrectingShovel;
 
 public class AdditionalRecipes {
 

@@ -5,7 +5,7 @@ import dan200.computercraft.api.turtle.AbstractTurtleUpgrade;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.fml.common.Mod;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.computercraft.turtles.*;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.ArrayList;
 import java.util.List;

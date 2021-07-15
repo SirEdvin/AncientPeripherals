@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.peripherals.abstractions;
+package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.abstractions;
 
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;

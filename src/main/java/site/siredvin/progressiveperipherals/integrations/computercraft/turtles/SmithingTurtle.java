@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.turtles;
+package site.siredvin.progressiveperipherals.integrations.computercraft.turtles;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
@@ -9,13 +9,13 @@ import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Items;
-import site.siredvin.progressiveperipherals.computercraft.peripherals.EnchantingAutomataCorePeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.SmithingAutomataCorePeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnchantingTurtle extends ModelTransformingTurtle<EnchantingAutomataCorePeripheral> {
-    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enchanting_automata");
-    public EnchantingTurtle() {
-        super(ID, TranslationUtil.turtle("enchanting"), new ItemStack(Items.ENCHANTING_AUTOMATA_CORE.get()));
+public class SmithingTurtle extends ModelTransformingTurtle<SmithingAutomataCorePeripheral> {
+    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "smithing_automata");
+    public SmithingTurtle() {
+        super(ID, TranslationUtil.turtle("smithing"), new ItemStack(Items.SMITHING_AUTOMATA_CORE.get()));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class EnchantingTurtle extends ModelTransformingTurtle<EnchantingAutomata
     }
 
     @Override
-    protected EnchantingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new EnchantingAutomataCorePeripheral("enchantingAutomataCore", turtle, side);
+    protected SmithingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
+        return new SmithingAutomataCorePeripheral("smithingAutomataCore", turtle, side);
     }
 }

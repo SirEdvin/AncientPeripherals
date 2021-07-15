@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.turtles.base;
+package site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base;
 
 import dan200.computercraft.ComputerCraft;
 import dan200.computercraft.api.turtle.ITurtleAccess;

@@ -10,7 +10,7 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.common.items.ArmorMaterial;
 import site.siredvin.progressiveperipherals.common.items.ItemTier;
 import site.siredvin.progressiveperipherals.common.items.*;
-import site.siredvin.progressiveperipherals.computercraft.turtles.*;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.HashSet;
 

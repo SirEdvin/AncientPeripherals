@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.computercraft.peripherals;
+package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
@@ -13,7 +13,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.SmithingRecipe;
 import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
-import site.siredvin.progressiveperipherals.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 import site.siredvin.progressiveperipherals.utils.LimitedInventory;
 

@@ -1,0 +1,26 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "DAAA",
+    " DSD",
+    "  C ",
+    "  S "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "A": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "C": {
+      "item": "progressiveperipherals:abstractium_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:extracting_pickaxe"
+  }
+}

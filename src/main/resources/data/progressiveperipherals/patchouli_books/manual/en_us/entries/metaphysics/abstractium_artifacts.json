@@ -12,11 +12,31 @@
       "type": "spotlight",
       "title": "Cutting axe",
       "item": "progressiveperipherals:cutting_axe",
-      "text": "Updated abstractium axe, that obtain abilities to cut whole tree in one cut, but loose ability to cut anything else. Only usable by turtle.$(p)But seems, if tree too large, even this axe cannot cut it at once."
+      "text": "Updated abstractium axe, that obtain abilities to cut whole tree in one cut, but loose ability to cut anything else. Only usable by turtle.$(p)Also, seems even if axe enchanted with Silk Touch it still usable for turtle"
     },
     {
       "type": "progressiveperipherals:automata",
       "recipe": "progressiveperipherals:cutting_axe"
+    },
+    {
+      "type": "spotlight",
+      "title": "Extracting pickaxe",
+      "item": "progressiveperipherals:extracting_pickaxe",
+      "text": "Updated abstractium pickaxe, that doesn't care about distances. Seems, it mining any ore, that can be found in current chunk. Only usable by turtle.$(p)Also, seems even if pickaxe enchanted with Silk Touch or Fortune it still usable for turtle"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:extracting_pickaxe"
+    },
+    {
+      "type": "spotlight",
+      "title": "Correcting axe",
+      "item": "progressiveperipherals:correcting_shovel",
+      "text": "Updated abstractium shovel, that seems pretty regular. You only notice, that sometimes block drop depends on current dimension. Only usable by turtle"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:correcting_shovel"
     }
   ]
 }
