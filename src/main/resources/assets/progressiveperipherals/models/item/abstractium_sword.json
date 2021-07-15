@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "progressiveperipherals:item/abstractium_sword"
+  }
+}

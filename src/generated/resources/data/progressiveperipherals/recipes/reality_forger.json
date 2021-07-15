@@ -1,0 +1,23 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "PB  ",
+    "BR  ",
+    "  R ",
+    "   R"
+  ],
+  "key": {
+    "B": {
+      "item": "progressiveperipherals:abstractium_block"
+    },
+    "P": {
+      "item": "advancedperipherals:peripheral_casing"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:reality_forger"
+  }
+}

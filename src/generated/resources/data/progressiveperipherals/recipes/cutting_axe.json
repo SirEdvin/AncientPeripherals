@@ -1,0 +1,26 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "DAA ",
+    "DAS ",
+    " DC ",
+    "  S "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "A": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "C": {
+      "item": "progressiveperipherals:abstractium_axe"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:cutting_axe"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Extra types",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "priority": true,
+  "pages": [
+    {
+      "type": "text",
+      "text": "This entry will describe additional variable types, mostly table format restrictions, that should be passed in api calls"
+    },
+    {
+      "type": "text",
+      "title": "BlockPos",
+      "anchor": "BlockPos",
+      "text": "BlockPos is table in next format $(o){x = 5, z = 6, y = 6}$(). Values should be integers, any additional keys will be ignored.$(p)Note, that BlockPos are $(l)always relative$() to peripheral position."
+    },
+    {
+      "type": "text",
+      "title": "BlockState",
+      "anchor": "BlockState",
+      "text": "BlockState is table of minecraft BlockState representation. Only one way to detect available keys for block state is inspect block in debug mode.$(p)Take note, that incorrect values passed to BlockState will case any peripheral to throw errors"
+    },
+    {
+      "type": "text",
+      "title": "BlockVisual",
+      "anchor": "BlockVisual",
+      "text": "BlockVisual is table then $(o)may$() contains next keys:$(br)$(o)string $()$(l)block$(): minecraft block id, for texture reference$(br)$(o)$(l:progressiveperipherals:api_documentation/extra_types#BlockState)BlockState$() $(l)attrs$(): minecraft block state$(br)$(o)boolean $()$(l)playerPassable$(): can player pass block$(br)$(o)boolean $()$(l)lightPassable$(): can light pass block$(br)$(o)boolean $()$(l)skyLightPassable$(): can sky light pass block$(br)$(o)boolean $()$(l)invisible$(): is block invisible"
+    }
+  ]
+}

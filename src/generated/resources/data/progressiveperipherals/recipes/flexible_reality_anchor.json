@@ -1,0 +1,24 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "IFFI",
+    "ISSI",
+    "ISSI",
+    "IFFI"
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "F": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:flexible_reality_anchor",
+    "count": 32
+  }
+}

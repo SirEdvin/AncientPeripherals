@@ -1,0 +1,105 @@
+{
+  "name": "Experience Interaction API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "progressiveperipherals:scientific_automata_core",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "getStoredXP",
+      "returns": [
+        ["number", "stored XP"]
+      ],
+      "description": "Getting number of stored XP"
+    },
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "getOwnerXP",
+      "returns": [
+        ["number | nil", "XP of player, nil if cannot find player"],
+        ["nil | string", "Error message"]
+      ],
+      "description": "Getting number of owned player XP"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "burnXP",
+      "description": "Convert XP to Fuel points. Rate can be received via $(configuration)"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "Limit of XP to burn, should be positive integer"]
+      ],
+      "returns": [
+        ["number", "burned XP"],
+        ["nil | string", "Error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "collectXP",
+      "description": "Tries to collect experience orb in automata interaction range, that can be received via $(configuration)",
+      "operationGroup": "transferXP"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["number | nil", "Sucked XP amount, nil if operation failed"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "suckOwnerXP",
+      "description": "Tries to extract XP from owned player.",
+      "operationGroup": "transferXP"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "suck XP limit, must be positive integer"]
+      ],
+      "returns": [
+        ["number | nil", "Sucked XP amount, nil if operation failed"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "sendXPToOwner",
+      "description": "Tries to send XP to owned player.",
+      "operationGroup": "transferXP"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "transfer XP limit, must be positive integer"]
+      ],
+      "returns": [
+        ["number | nil", "Transferred XP amount, nil if operation failed"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "sendXP",
+      "description": "Tries to send XP to another turtle in interaction radius.",
+      "throw": [
+        "incorrect parameters format"
+      ],
+      "operationGroup": "transferXP"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["$(blockPos)", "target turtle"],
+        ["number", "transfer XP limit, must be positive integer"]
+      ],
+      "returns": [
+        ["number | nil", "Transferred XP amount, nil if operation failed"],
+        ["nil | string", "error message"]
+      ]
+    }
+  ]
+}

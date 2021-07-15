@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.obtain_abstractium"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.obtain_abstractium.description"
+    }
+  },
+  "parent": "progressiveperipherals:scientific_automata_core",
+  "criteria": {
+    "item_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:abstractium_ingot"
+          }
+        ]
+      }
+    }
+  }
+}

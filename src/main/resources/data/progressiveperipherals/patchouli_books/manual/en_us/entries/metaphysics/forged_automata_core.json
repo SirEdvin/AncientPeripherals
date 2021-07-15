@@ -1,0 +1,18 @@
+{
+  "name": "Forged automata core",
+  "icon": "progressiveperipherals:forged_automata_core",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "advancedperipherals:weak_automata_core",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Forged automata core",
+      "item": "progressiveperipherals:forged_automata_core",
+      "text": "Seems, combining weak automata core with netherite are more promising, that you expect. Only one problem is left.$(p)This automata core doesn't interacting with any regular animal or hostile mob. Maybe you missing something?"
+    },
+    {
+      "type": "smithing",
+      "recipe": "progressiveperipherals:forged_automata_core_smithing"
+    }
+  ]
+}

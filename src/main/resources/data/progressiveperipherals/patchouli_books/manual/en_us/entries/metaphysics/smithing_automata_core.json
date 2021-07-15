@@ -1,0 +1,24 @@
+{
+  "name": "Smithing automata core",
+  "icon": "progressiveperipherals:smithing_automata_core",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "progressiveperipherals:smithing_automata_core",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Smithing automata core",
+      "item": "progressiveperipherals:scientific_automata_core",
+      "text": "After consuming toolsmith soul, automata core become very close smithing table. Now it can perform smithing recipe, but also, for some strange reason, can perform smelting recipes as well."
+    },
+    {
+      "type": "relations",
+      "title": "Available APIs",
+      "entries": [
+        "progressiveperipherals:api_documentation/fuel_consumption",
+        "progressiveperipherals:api_documentation/operations",
+        "progressiveperipherals:api_documentation/experience_interaction",
+        "progressiveperipherals:api_documentation/smithing_api"
+      ]
+    }
+  ]
+}

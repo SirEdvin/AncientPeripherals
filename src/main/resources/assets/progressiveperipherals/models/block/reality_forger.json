@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/reality_forger_side",
+    "south": "progressiveperipherals:block/reality_forger_side",
+    "west": "progressiveperipherals:block/reality_forger_side",
+    "east": "progressiveperipherals:block/reality_forger_side",
+    "up": "progressiveperipherals:block/reality_forger_top",
+    "down": "progressiveperipherals:block/reality_forger_top",
+    "particle": "progressiveperipherals:block/reality_forger_top"
+  }
+}

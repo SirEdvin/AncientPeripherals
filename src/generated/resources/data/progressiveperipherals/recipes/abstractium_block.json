@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:abstractium_ingot"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:abstractium_block"
+  }
+}

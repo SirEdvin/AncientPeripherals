@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "configured=true": { "model": "ancientperipherals:block/flexible_reality_anchor" },
-    "configured=false": { "model": "ancientperipherals:block/flexible_reality_anchor_empty" }
-  }
-}

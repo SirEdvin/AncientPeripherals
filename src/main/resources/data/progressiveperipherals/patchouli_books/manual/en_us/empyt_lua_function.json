@@ -1,0 +1,16 @@
+[
+  {
+    "type": "progressiveperipherals:lua_function_left_page",
+    "functionName": "",
+    "description": "",
+    "throw": [],
+    "operationGroup": ""
+  },
+  {
+    "type": "progressiveperipherals:lua_function_right_page",
+    "parameters": [
+    ],
+    "returns": [
+    ]
+  }
+]

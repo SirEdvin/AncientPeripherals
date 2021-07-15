@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "progressiveperipherals:item/cores/forged_gear",
+    "layer1": "progressiveperipherals:item/cores/fire_full_yellow"
+  }
+}

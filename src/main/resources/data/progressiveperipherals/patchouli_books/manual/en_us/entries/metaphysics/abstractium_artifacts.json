@@ -1,0 +1,22 @@
+{
+  "name": "Abstractium Artifacts",
+  "icon": "progressiveperipherals:cutting_axe",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "progressiveperipherals:abstractium",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Useless tools from start seems have some potential. Abstractium are very flexible material and can obtain useful properties with correct recipe"
+    },
+    {
+      "type": "spotlight",
+      "title": "Cutting axe",
+      "item": "progressiveperipherals:cutting_axe",
+      "text": "Updated abstractium axe, that obtain abilities to cut whole tree in one cut, but loose ability to cut anything else. Only usable by turtle.$(p)But seems, if tree too large, even this axe cannot cut it at once."
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:cutting_axe"
+    }
+  ]
+}

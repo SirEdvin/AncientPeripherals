@@ -1,0 +1,5 @@
+{
+  "name": "Progressive Peripherals",
+  "landing_text": "This manual provides basic information about all the peripherals added by this mod.",
+  "extend": "advancedperipherals:manual"
+}

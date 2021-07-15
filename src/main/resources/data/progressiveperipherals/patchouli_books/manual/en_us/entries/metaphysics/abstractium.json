@@ -1,0 +1,46 @@
+{
+  "name": "Abstractium",
+  "icon": "progressiveperipherals:abstractium_ingot",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "progressiveperipherals:abstractium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Abstractium",
+      "item": "progressiveperipherals:abstractium_ingot",
+      "text": "Oh, this unexpected! Seems scientific automata core can be used to transfer raw experience into something very flexible. $(p)Abstractium seems like very irregular material than change it abilities depends on condition. How many uses for this you can find?"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:abstractium_block"
+    },
+    {
+      "type": "text",
+      "text": "You also can created tools from abstractium! But they are basically useless, have little durability and looks ugly"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:abstractium_axe",
+      "recipe2": "progressiveperipherals:abstractium_pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:abstractium_hoe",
+      "recipe2": "progressiveperipherals:abstractium_shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:abstractium_sword",
+      "recipe2": "progressiveperipherals:abstractium_helmet"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:abstractium_boots",
+      "recipe2": "progressiveperipherals:abstractium_leggings"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:abstractium_chestplate"
+    }
+  ]
+}

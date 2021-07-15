@@ -1,0 +1,44 @@
+{
+  "name": "Fuel consumption API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "advancedperipherals:weak_automata_core",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "getFuelLevel",
+      "description": "Getting current fuel level",
+      "returns": [
+        ["number", "fuel level"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "getMaxFuelLevel",
+      "description": "Getting max fuel level",
+      "returns": [
+        ["number", "max fuel level"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "getFuelConsumptionRate",
+      "description": "Getting current fuel consumption rate",
+      "returns": [
+        ["number", "consuption rate"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "setFuelConsumptionRate",
+      "parameters": [
+        ["number", "consumption rate, should be positive integer"]
+      ],
+      "returns": [
+        ["boolean", "is applied"],
+        ["string | nil", "error string"]
+      ],
+      "description": "Trying set fuel consumption level. Max consumption rate can be received via $(l:progressiveperipherals:api_documentation/operations#configuration)getConfiguration$() method"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ apply plugin: 'maven-publish'
 
 version = "${mod_version}"
 group = 'site.siredvin.anchientperipherals' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'anchientperipherals'
+archivesBaseName = 'progressiveperipherals'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
@@ -63,7 +63,7 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
-                ancientperipherals {
+                progressiveperipherals {
                     source sourceSets.main
                 }
             }
@@ -85,7 +85,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                ancientperipherals {
+                progressiveperipherals {
                     source sourceSets.main
                 }
             }
@@ -107,10 +107,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'ancientperipherals', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'progressiveperipherals', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                ancientperipherals {
+                progressiveperipherals {
                     source sourceSets.main
                 }
             }
@@ -150,7 +150,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "ancientperipherals",
+            "Specification-Title": "progressiveperipherals",
             "Specification-Vendor": "SirEdvin",
             "Specification-Version": "${version}", // We are version 1 of ourselves
             "Implementation-Title": project.name,

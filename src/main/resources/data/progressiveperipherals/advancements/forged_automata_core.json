@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:forged_automata_core"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.forged_automata_core"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.forged_automata_core.description"
+    }
+  },
+  "parent": "advancedperipherals:weak_automata_core",
+  "criteria": {
+    "item_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:forged_automata_core"
+          }
+        ]
+      }
+    }
+  }
+}
