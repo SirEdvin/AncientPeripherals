@@ -12,9 +12,8 @@ authors="SirEdvin"
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 Progressive Peripherals is a mod that adds many useful extensions for Advanced Peripherals automata core system.
-You can operation XP, perform enchantems, smithing recipes and much more.
-In addition to automata core system expension, you can find many useful peripherals, like:
-- Reality Forger, that allow you to change block visual style programmly
+You can operate XP, perform enchantments, smithing recipes and much more.
+In addition to automata core system expansion, you can find many useful peripherals, like reality forger, etc.
 '''
 [[dependencies.progressiveperipherals]]
     modId = "forge"
@@ -40,3 +39,9 @@ In addition to automata core system expension, you can find many useful peripher
     versionRange = "[0.7,)"
     ordering = "NONE"
     side = "BOTH"
+[[dependencies.progressiveperipherals]]
+    modId = "patchouli"
+    mandatory = true
+    versionRange = "[1.16.5-50,)"
+    ordering = "NONE"
+    side = "CLIENT"
