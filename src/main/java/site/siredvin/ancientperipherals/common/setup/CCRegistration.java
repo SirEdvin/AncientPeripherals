@@ -1,22 +1,19 @@
 package site.siredvin.ancientperipherals.common.setup;
 
 import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.turtle.AbstractTurtleUpgrade;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.fml.common.Mod;
 import site.siredvin.ancientperipherals.AncientPeripherals;
 import site.siredvin.ancientperipherals.computercraft.turtles.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mod.EventBusSubscriber(modid = AncientPeripherals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CCRegistration {
 
-    public static ScientificTurtle scientificTurtle;
-    public static EnchantingTurtle enchantingTurtle;
-    public static SmithingTurtle smithingTurtle;
-    public static TurtleCuttingAxe cuttingAxeTurtle;
-    public static TurtleCuttingAxeWithSilkTouch cuttingAxeWithSilkTouchTurtle;
-    public static TurtleCuttingAxeWithFortune cuttingAxeWithFortuneTurtle;
-    public static TurtleExtractingPickaxe extractingPickaxeTurtle;
-    public static TurtleExtractingPickaxeWithFortune extractingPickaxeWithFortuneTurtle;
-    public static TurtleExtractingPickaxeWithSilkTouch extractingPickaxeWithSilkTouchTurtle;
+    public static List<AbstractTurtleUpgrade> turtleUpgrades;
 
     public static void register() {
         registerPocketUpgrades();
@@ -27,24 +24,19 @@ public class CCRegistration {
     }
 
     private static void registerTurtleUpgrades() {
-        scientificTurtle = new ScientificTurtle();
-        ComputerCraftAPI.registerTurtleUpgrade(scientificTurtle);
-        enchantingTurtle = new EnchantingTurtle();
-        ComputerCraftAPI.registerTurtleUpgrade(enchantingTurtle);
-        smithingTurtle = new SmithingTurtle();
-        ComputerCraftAPI.registerTurtleUpgrade(smithingTurtle);
-        cuttingAxeTurtle = new TurtleCuttingAxe();
-        ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeTurtle);
-        cuttingAxeWithFortuneTurtle = new TurtleCuttingAxeWithFortune();
-        ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeWithSilkTouchTurtle);
-        cuttingAxeWithSilkTouchTurtle = new TurtleCuttingAxeWithSilkTouch();
-        ComputerCraftAPI.registerTurtleUpgrade(cuttingAxeWithSilkTouchTurtle);
-        extractingPickaxeTurtle = new TurtleExtractingPickaxe();
-        ComputerCraftAPI.registerTurtleUpgrade(extractingPickaxeTurtle);
-        extractingPickaxeWithFortuneTurtle = new TurtleExtractingPickaxeWithFortune();
-        ComputerCraftAPI.registerTurtleUpgrade(extractingPickaxeWithFortuneTurtle);
-        extractingPickaxeWithSilkTouchTurtle = new TurtleExtractingPickaxeWithSilkTouch();
-        ComputerCraftAPI.registerTurtleUpgrade(extractingPickaxeWithSilkTouchTurtle);
+        turtleUpgrades = new ArrayList<AbstractTurtleUpgrade>() {{
+            add(new ScientificTurtle());
+            add(new EnchantingTurtle());
+            add(new SmithingTurtle());
+            add(new TurtleCuttingAxe());
+            add(new TurtleExtractingPickaxe());
+            add(TurtleCuttingAxe.enchant("silk_", Enchantments.SILK_TOUCH, 1));
+            add(TurtleExtractingPickaxe.enchant("silk_", Enchantments.SILK_TOUCH, 1));
+            add(TurtleExtractingPickaxe.enchant("fortune_1_", Enchantments.BLOCK_FORTUNE, 1));
+            add(TurtleExtractingPickaxe.enchant("fortune_2_", Enchantments.BLOCK_FORTUNE, 2));
+            add(TurtleExtractingPickaxe.enchant("fortune_3_", Enchantments.BLOCK_FORTUNE, 3));
+        }};
+        turtleUpgrades.forEach(ComputerCraftAPI::registerTurtleUpgrade);
     }
 
 }

@@ -7,6 +7,8 @@ import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import dan200.computercraft.shared.turtle.core.TurtlePlayer;
 import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.BlockTags;
@@ -38,10 +40,11 @@ public class TurtleCuttingAxe extends TurtleDigTool {
             new Vector3i(-1, 0, 0),
     };
 
-    public static ResourceLocation ID = new ResourceLocation(AncientPeripherals.MOD_ID, "cutting_axe");
+    public static final String CORE_NAME = "cutting_axe";
+    public static final ResourceLocation ID = new ResourceLocation(AncientPeripherals.MOD_ID, CORE_NAME);
 
     public TurtleCuttingAxe() {
-        super(ID, TranslationUtil.turtle("cutting_axe"), Items.CUTTING_AXE.get());
+        super(ID, TranslationUtil.turtle(CORE_NAME), Items.CUTTING_AXE.get());
     }
 
     public TurtleCuttingAxe(ResourceLocation id, String adjective, Supplier<ItemStack> itemStackSup) {
@@ -110,6 +113,33 @@ public class TurtleCuttingAxe extends TurtleDigTool {
                     detectTree(world, newPos, detectedBlocks, referenceBlock);
                 }
             }
+        }
+    }
+
+    public static EnchantedTurtleCuttingAxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel) {
+        return new EnchantedTurtleCuttingAxe(prefix, enchantment, enchantmentLevel);
+    }
+
+    public static class EnchantedTurtleCuttingAxe extends TurtleCuttingAxe {
+
+        private final Enchantment enchantment;
+        private final int enchantmentLevel;
+
+        public EnchantedTurtleCuttingAxe(String prefix, Enchantment enchantment, int enchantmentLevel) {
+            super(new ResourceLocation(AncientPeripherals.MOD_ID, prefix + CORE_NAME), TranslationUtil.turtle(prefix + CORE_NAME), () -> {
+                ItemStack craftingItem = new ItemStack(Items.CUTTING_AXE.get());
+                craftingItem.enchant(enchantment, enchantmentLevel);
+                return craftingItem;
+            });
+            this.enchantment = enchantment;
+            this.enchantmentLevel = enchantmentLevel;
+        }
+
+        @Override
+        public ItemStack mimicTool() {
+            ItemStack targetTool = super.mimicTool();
+            targetTool.enchant(enchantment, enchantmentLevel);
+            return targetTool;
         }
     }
 }

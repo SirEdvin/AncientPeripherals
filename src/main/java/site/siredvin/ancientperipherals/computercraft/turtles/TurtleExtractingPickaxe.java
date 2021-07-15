@@ -7,7 +7,7 @@ import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import dan200.computercraft.shared.turtle.core.TurtlePlayer;
 import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -28,10 +28,11 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class TurtleExtractingPickaxe extends TurtleDigTool {
-    public static ResourceLocation ID = new ResourceLocation(AncientPeripherals.MOD_ID, "extracting_pickaxe");
+    public static final String CORE_NAME = "extracting_pickaxe";
+    public static final ResourceLocation ID = new ResourceLocation(AncientPeripherals.MOD_ID, CORE_NAME);
 
     public TurtleExtractingPickaxe() {
-        super(ID, TranslationUtil.turtle("extracting_pickaxe"), Items.EXTRACTING_PICKAXE.get());
+        super(ID, TranslationUtil.turtle(CORE_NAME), Items.EXTRACTING_PICKAXE.get());
     }
 
     public TurtleExtractingPickaxe(ResourceLocation id, String adjective, Supplier<ItemStack> itemStackSup) {
@@ -79,8 +80,35 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
         return TurtleCommandResult.success();
     }
 
+    public static EnchantedTurtleExtractingPickaxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel) {
+        return new EnchantedTurtleExtractingPickaxe(prefix, enchantment, enchantmentLevel);
+    }
+
     @Override
     protected boolean isEnabled() {
         return AncientPeripheralsConfig.enableExtractingPickaxe;
+    }
+
+    public static class EnchantedTurtleExtractingPickaxe extends TurtleExtractingPickaxe {
+
+        private final Enchantment enchantment;
+        private final int enchantmentLevel;
+
+        public EnchantedTurtleExtractingPickaxe(String prefix, Enchantment enchantment, int enchantmentLevel) {
+            super(new ResourceLocation(AncientPeripherals.MOD_ID, prefix + CORE_NAME), TranslationUtil.turtle(prefix + CORE_NAME), () -> {
+                ItemStack craftingItem = new ItemStack(Items.EXTRACTING_PICKAXE.get());
+                craftingItem.enchant(enchantment, enchantmentLevel);
+                return craftingItem;
+            });
+            this.enchantment = enchantment;
+            this.enchantmentLevel = enchantmentLevel;
+        }
+
+        @Override
+        public ItemStack mimicTool() {
+            ItemStack targetTool = super.mimicTool();
+            targetTool.enchant(enchantment, enchantmentLevel);
+            return targetTool;
+        }
     }
 }

@@ -1,5 +1,7 @@
 package site.siredvin.ancientperipherals.common.setup;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
@@ -9,6 +11,8 @@ import site.siredvin.ancientperipherals.common.items.ArmorMaterial;
 import site.siredvin.ancientperipherals.common.items.ItemTier;
 import site.siredvin.ancientperipherals.common.items.*;
 import site.siredvin.ancientperipherals.computercraft.turtles.*;
+
+import java.util.HashSet;
 
 public class Items {
 
@@ -59,11 +63,16 @@ public class Items {
 
     // Should extends ToolItem
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
-            "cutting_axe", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableCuttingAxe, TurtleCuttingAxe.ID, null)
+            "cutting_axe", () -> new EnchantablePeripheralItem(() -> AncientPeripheralsConfig.enableCuttingAxe, new HashSet<Enchantment>(){{
+                add(Enchantments.SILK_TOUCH);
+            }}, TurtleCuttingAxe.ID, null)
     );
 
     public static final RegistryObject<Item> EXTRACTING_PICKAXE = Registration.ITEMS.register(
-            "extracting_pickaxe", () -> new PeripheralItem(() -> AncientPeripheralsConfig.enableExtractingPickaxe, TurtleExtractingPickaxe.ID, null)
+            "extracting_pickaxe", () -> new EnchantablePeripheralItem(() -> AncientPeripheralsConfig.enableExtractingPickaxe, new HashSet<Enchantment>(){{
+                add(Enchantments.BLOCK_FORTUNE);
+                add(Enchantments.SILK_TOUCH);
+            }}, TurtleExtractingPickaxe.ID, null)
     );
 
     public static void register() {
