@@ -7,9 +7,12 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
-import site.siredvin.progressiveperipherals.common.items.ArmorMaterial;
-import site.siredvin.progressiveperipherals.common.items.ItemTier;
+import site.siredvin.progressiveperipherals.common.items.base.ArmorMaterial;
+import site.siredvin.progressiveperipherals.common.items.base.BaseItem;
+import site.siredvin.progressiveperipherals.common.items.base.ItemTier;
 import site.siredvin.progressiveperipherals.common.items.*;
+import site.siredvin.progressiveperipherals.common.items.peripheral.EnchantablePeripheralItem;
+import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralItem;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.HashSet;
@@ -77,6 +80,12 @@ public class Items {
 
     public static final RegistryObject<Item> CORRECTING_SHOVEL = Registration.ITEMS.register(
             "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel, TurtleCorrectingShovel.ID, null)
+    );
+
+    // Utility items
+
+    public static final RegistryObject<Item> CONTROLLING_HELMET = Registration.ITEMS.register(
+            "controlling_helmet", ControllingHelmet::new
     );
 
     public static void register() {

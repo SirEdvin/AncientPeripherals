@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.items;
+package site.siredvin.progressiveperipherals.common.items.base;
 
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;

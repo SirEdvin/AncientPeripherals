@@ -39,9 +39,3 @@ In addition to automata core system expansion, you can find many useful peripher
     versionRange = "[0.7,)"
     ordering = "NONE"
     side = "BOTH"
-[[dependencies.progressiveperipherals]]
-    modId = "patchouli"
-    mandatory = true
-    versionRange = "[1.16.5-50,)"
-    ordering = "NONE"
-    side = "CLIENT"

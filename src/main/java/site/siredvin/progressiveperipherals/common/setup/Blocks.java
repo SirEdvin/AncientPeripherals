@@ -7,8 +7,8 @@ import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.BaseBlock;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
-import site.siredvin.progressiveperipherals.common.items.BaseBlockItem;
-import site.siredvin.progressiveperipherals.common.items.PeripheralBlockItem;
+import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
+import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
 
 import java.util.function.Supplier;
 

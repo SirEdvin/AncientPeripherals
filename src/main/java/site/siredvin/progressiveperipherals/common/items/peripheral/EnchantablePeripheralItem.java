@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.items;
+package site.siredvin.progressiveperipherals.common.items.peripheral;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;

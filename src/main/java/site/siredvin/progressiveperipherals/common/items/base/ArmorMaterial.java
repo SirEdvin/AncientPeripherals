@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.items;
+package site.siredvin.progressiveperipherals.common.items.base;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;

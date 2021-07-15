@@ -11,6 +11,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.FakePlayer;
+import site.siredvin.progressiveperipherals.common.items.base.BaseItem;
 
 import java.util.HashMap;
 import java.util.Map;

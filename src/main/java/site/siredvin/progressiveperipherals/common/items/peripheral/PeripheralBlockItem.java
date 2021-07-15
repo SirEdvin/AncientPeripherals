@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.items;
+package site.siredvin.progressiveperipherals.common.items.peripheral;
 
 import de.srendi.advancedperipherals.AdvancedPeripherals;
 import de.srendi.advancedperipherals.common.util.ItemUtil;
@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

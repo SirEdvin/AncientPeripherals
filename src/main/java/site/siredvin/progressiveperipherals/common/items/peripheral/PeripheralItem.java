@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.items;
+package site.siredvin.progressiveperipherals.common.items.peripheral;
 
 import de.srendi.advancedperipherals.common.util.ItemUtil;
 import net.minecraft.item.ItemGroup;
@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.common.items.base.BaseItem;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;

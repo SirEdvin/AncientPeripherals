@@ -1,48 +1,32 @@
-package site.siredvin.progressiveperipherals.common.items;
+package site.siredvin.progressiveperipherals.common.items.base;
 
 import de.srendi.advancedperipherals.common.util.EnumColor;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Supplier;
 
-public class BaseItem extends Item {
+public class BaseBlockItem extends BlockItem {
+
     ITextComponent description;
-    Supplier<Boolean> enabledSup;
 
-    public BaseItem() {
-        this(new Item.Properties().stacksTo(1));
+    public BaseBlockItem(Block blockIn, Properties properties) {
+        super(blockIn, properties.tab(ProgressivePeripherals.TAB));
     }
 
-    public BaseItem(Properties properties) {
-        this(properties, () -> true);
-    }
-
-    public BaseItem(Properties properties, Supplier<Boolean> enabledSup) {
-        super(properties.tab(ProgressivePeripherals.TAB));
-        this.enabledSup = enabledSup;
-    }
-
-    public boolean isEnabled() {
-        return enabledSup.get();
-    }
-
-    @Override
-    public ITextComponent getDescription() {
-        if (description == null)
-            description = TranslationUtil.itemTooltip(getDescriptionId());
-        return description;
+    public BaseBlockItem(Block blockIn) {
+        this(blockIn, new Properties().stacksTo(1));
     }
 
     @Override
@@ -55,5 +39,16 @@ public class BaseItem extends Item {
         }
         if (!isEnabled())
             tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.disabled")));
+    }
+
+    @Override
+    public ITextComponent getDescription() {
+        if (description == null)
+            description = TranslationUtil.itemTooltip(getDescriptionId());
+        return description;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 }
