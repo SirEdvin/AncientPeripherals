@@ -24,7 +24,7 @@ import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.CCRegistration;
-import site.siredvin.progressiveperipherals.common.setup.FeedingRecipes;
+import site.siredvin.progressiveperipherals.common.setup.AdditionalRecipes;
 import site.siredvin.progressiveperipherals.common.setup.Registration;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
@@ -64,7 +64,7 @@ public class ProgressivePeripherals {
     public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CCRegistration.register();
-            FeedingRecipes.register();
+            AdditionalRecipes.register();
         });
     }
 

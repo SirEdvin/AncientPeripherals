@@ -75,6 +75,10 @@ public class Items {
             }}, TurtleExtractingPickaxe.ID, null)
     );
 
+    public static final RegistryObject<Item> CORRECTING_SHOVEL = Registration.ITEMS.register(
+            "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel, TurtleCorrectingShovel.ID, null)
+    );
+
     public static void register() {
     }
 

@@ -50,6 +50,7 @@
   "turtle.progressiveperipherals.fortune_1_extracting_pickaxe": "Fortune I Depth Extracting",
   "turtle.progressiveperipherals.fortune_2_extracting_pickaxe": "Fortune II Depth Extracting",
   "turtle.progressiveperipherals.fortune_3_extracting_pickaxe": "Fortune III Depth Extracting",
+  "turtle.progressiveperipherals.correcting_shovel": "Correcting",
   "text.progressiveperipherals.parameters": "$(l)Parameters$(): ",
   "text.progressiveperipherals.returns": "$(l)Returns$():",
   "text.progressiveperipherals.throw": "$(l)Throw in case of$(): ",

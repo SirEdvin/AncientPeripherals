@@ -144,6 +144,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:CyclopsCore-${cyclops_core_version}")
     runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:${top_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+    runtimeOnly fg.deobf("curse.maven:FTBGuiLibrary-${ftb_gui_library_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

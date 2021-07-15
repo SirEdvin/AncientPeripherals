@@ -35,6 +35,7 @@ public class CCRegistration {
             add(TurtleExtractingPickaxe.enchant("fortune_1_", Enchantments.BLOCK_FORTUNE, 1));
             add(TurtleExtractingPickaxe.enchant("fortune_2_", Enchantments.BLOCK_FORTUNE, 2));
             add(TurtleExtractingPickaxe.enchant("fortune_3_", Enchantments.BLOCK_FORTUNE, 3));
+            add(new TurtleCorrectingShovel());
         }};
         turtleUpgrades.forEach(ComputerCraftAPI::registerTurtleUpgrade);
     }

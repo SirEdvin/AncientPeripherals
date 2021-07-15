@@ -10,6 +10,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableSmithingAutomataCore;
     public static boolean enableCuttingAxe;
     public static boolean enableExtractingPickaxe;
+    public static boolean enableCorrectingShovel;
     // Restictions
     public static int realityForgerRadius;
     public static int abstractiumXPPointsCost;
@@ -41,6 +42,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_SMITHING_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_CUTTING_AXE;
         final ForgeConfigSpec.BooleanValue ENABLE_EXTRACTING_PICKAXE;
+        final ForgeConfigSpec.BooleanValue ENABLE_CORRECTING_SHOVEL;
 
         // Restrictions
 
@@ -75,6 +77,7 @@ public class ProgressivePeripheralsConfig {
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true);
             ENABLE_CUTTING_AXE = builder.define("enableCuttingAxe", true);
             ENABLE_EXTRACTING_PICKAXE = builder.define("enableExtractingPickaxe", true);
+            ENABLE_CORRECTING_SHOVEL = builder.define("enableCorrectingShovel", true);
             builder.pop();
             builder.comment("").push("Restrictions");
             REALITY_FORGER_RADIUS = builder.defineInRange("realityForgerRadius", 8, 1, 64);
