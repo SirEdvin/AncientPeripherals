@@ -1,5 +1,7 @@
 name: Bug Report
-description: Report bugs and problems
+description: Report bugs and problems\
+title: "[Bug]: "
+labels: [bug]
 body:
   - type: markdown
     attributes:

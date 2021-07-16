@@ -1,5 +1,7 @@
-name: Feature
+name: Feature request
 description: Suggest an idea for progressive peripherals
+title: "[Feature]: "
+labels: [enhancement]
 body:
   - type: textarea
     attributes:
