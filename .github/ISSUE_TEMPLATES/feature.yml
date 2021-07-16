@@ -1,0 +1,16 @@
+name: Feature
+description: Suggest an idea for progressive peripherals
+body:
+  - type: textarea
+    attributes:
+      label: Describe your idea
+      description: A clear and detailed description of your idea
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+  - type: input
+    attributes:
+      label: Linked Issues
