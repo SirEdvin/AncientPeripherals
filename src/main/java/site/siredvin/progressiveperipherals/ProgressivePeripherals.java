@@ -21,7 +21,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
-import site.siredvin.progressiveperipherals.common.models.FlexibleRealityAnchorModelLoader;
+import site.siredvin.progressiveperipherals.client.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.CCRegistration;
 import site.siredvin.progressiveperipherals.common.setup.AdditionalRecipes;

@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.models;
+package site.siredvin.progressiveperipherals.client.models;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;

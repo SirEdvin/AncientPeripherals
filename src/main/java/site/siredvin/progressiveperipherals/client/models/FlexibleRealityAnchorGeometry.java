@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.models;
+package site.siredvin.progressiveperipherals.client.models;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.model.*;

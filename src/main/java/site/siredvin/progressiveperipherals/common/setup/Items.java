@@ -82,12 +82,6 @@ public class Items {
             "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel, TurtleCorrectingShovel.ID, null)
     );
 
-    // Utility items
-
-    public static final RegistryObject<Item> CONTROLLING_HELMET = Registration.ITEMS.register(
-            "controlling_helmet", ControllingHelmet::new
-    );
-
     public static void register() {
     }
 
