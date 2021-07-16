@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "progressiveperipherals:item/controlling_helmet"
+    "layer0": "progressiveperipherals:item/technical_texture"
   }
 }

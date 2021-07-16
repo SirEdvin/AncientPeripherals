@@ -17,14 +17,23 @@ public class Blocks {
     static void register() {
     }
 
-    public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(
-            "flexible_reality_anchor", FlexibleRealityAnchor::new, () -> new BaseBlockItem(Blocks.FLEXIBLE_REALITY_ANCHOR.get())
-    );
+    // Peripherals
     public static final RegistryObject<Block> REALITY_FORGER = register(
             "reality_forger",
             () -> new APTileEntityBlock<>(TileEntityTypes.REALITY_FORGER, true),
             () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
     );
+    public static final RegistryObject<Block> HIVE_CONTROLLER = register(
+            "hive_controller",
+            () -> new APTileEntityBlock<>(TileEntityTypes.HIVE_CONTROLLER, true),
+            () -> new PeripheralBlockItem(Blocks.HIVE_CONTROLLER.get(), null, null, () -> true)
+    );
+    // Service blocks
+    public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(
+            "flexible_reality_anchor", FlexibleRealityAnchor::new, () -> new BaseBlockItem(Blocks.FLEXIBLE_REALITY_ANCHOR.get())
+    );
+
+    // Just blocks
     public static final RegistryObject<Block> ABSTRACTIUM_BLOCK = register(
             "abstractium_block",
             BaseBlock::new,
