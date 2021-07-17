@@ -1,17 +1,17 @@
-package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
+package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata;
 
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.progressiveperipherals.common.setup.Items;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.abstractions.ExperienceAutomataCorePeripheral;
 
 import java.util.Map;
 import java.util.Optional;
@@ -23,13 +23,8 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
     }
 
     @Override
-    protected int getMaxFuelConsumptionRate() {
-        return ProgressivePeripheralsConfig.scientificAutomataCoreMaxFuelConsumptionLevel;
-    }
-
-    @Override
-    public int getInteractionRadius() {
-        return ProgressivePeripheralsConfig.scientificAutomataCoreInteractionRadius;
+    public IAutomataCoreTier getTier() {
+        return AutomataCoreTier.TIER3;
     }
 
     @Override

@@ -20,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import site.siredvin.progressiveperipherals.client.models.FlexibleStatueModelLoader;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.client.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
@@ -71,6 +72,7 @@ public class ProgressivePeripherals {
     @SubscribeEvent
     public void modelSetup(ModelRegistryEvent event) {
         ModelLoaderRegistry.registerLoader(new ResourceLocation(ProgressivePeripherals.MOD_ID, "flexible_reality_anchor"), new FlexibleRealityAnchorModelLoader());
+        ModelLoaderRegistry.registerLoader(new ResourceLocation(ProgressivePeripherals.MOD_ID, "flexible_statue"), new FlexibleStatueModelLoader());
     }
 
     @SubscribeEvent

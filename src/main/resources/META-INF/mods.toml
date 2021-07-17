@@ -9,7 +9,6 @@ displayName="Progressive Peripherals"
 displayURL="https://github.com/SirEdvin/ProgressivePeripherals"
 logoFile="pack.png"
 authors="SirEdvin"
-# The description text for the mod (multi line!) (#mandatory)
 description='''
 Progressive Peripherals is a mod that adds many useful extensions for Advanced Peripherals automata core system.
 You can operate XP, perform enchantments, smithing recipes and much more.
