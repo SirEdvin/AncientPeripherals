@@ -63,8 +63,6 @@ public class Items {
     );
 
     // Usefull abstractium tools
-
-    // Should extends ToolItem
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
             "cutting_axe", () -> new EnchantablePeripheralItem(() -> ProgressivePeripheralsConfig.enableCuttingAxe, new HashSet<Enchantment>(){{
                 add(Enchantments.SILK_TOUCH);
@@ -80,12 +78,6 @@ public class Items {
 
     public static final RegistryObject<Item> CORRECTING_SHOVEL = Registration.ITEMS.register(
             "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel, TurtleCorrectingShovel.ID, null)
-    );
-
-    // Utility items
-
-    public static final RegistryObject<Item> CONTROLLING_HELMET = Registration.ITEMS.register(
-            "controlling_helmet", ControllingHelmet::new
     );
 
     public static void register() {

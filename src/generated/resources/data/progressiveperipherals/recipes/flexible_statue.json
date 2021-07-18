@@ -1,0 +1,21 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    " II ",
+    "ISSI",
+    "ISSI",
+    " II "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:flexible_statue",
+    "count": 32
+  }
+}

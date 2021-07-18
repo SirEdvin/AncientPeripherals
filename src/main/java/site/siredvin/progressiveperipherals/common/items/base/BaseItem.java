@@ -1,15 +1,13 @@
 package site.siredvin.progressiveperipherals.common.items.base;
 
 import de.srendi.advancedperipherals.common.util.EnumColor;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.client.util.InputMappings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import org.lwjgl.glfw.GLFW;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
@@ -18,7 +16,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BaseItem extends Item {
-    ITextComponent description;
+    protected ITextComponent description;
     Supplier<Boolean> enabledSup;
 
     public BaseItem() {
@@ -38,8 +36,13 @@ public class BaseItem extends Item {
         return enabledSup.get();
     }
 
-    @Override
-    public ITextComponent getDescription() {
+    public void appendModHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(EnumColor.buildTextComponent(getModDescription()));
+        if (!isEnabled())
+            tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.disabled")));
+    }
+
+    public @NotNull ITextComponent getModDescription() {
         if (description == null)
             description = TranslationUtil.itemTooltip(getDescriptionId());
         return description;
@@ -48,12 +51,6 @@ public class BaseItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if (!InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
-            tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.hold_ctrl")));
-        } else {
-            tooltip.add(EnumColor.buildTextComponent(getDescription()));
-        }
-        if (!isEnabled())
-            tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.disabled")));
+        appendModHoverText(stack, worldIn, tooltip, flagIn);
     }
 }

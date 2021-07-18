@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.models;
+package site.siredvin.progressiveperipherals.client.models;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;

@@ -37,20 +37,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enchantLevelCost = ConfigHolder.COMMON_CONFIG.ENCHANT_LEVEL_COST.get();
         ProgressivePeripheralsConfig.furnaceBurnFuelCostRate = ConfigHolder.COMMON_CONFIG.SMELT_FUEL_COST_RATE.get();
         ProgressivePeripheralsConfig.cuttingAxeMaxBlockCount = ConfigHolder.COMMON_CONFIG.CUTTING_AXE_MAX_BLOCK_COUNT.get();
-        // Operations
-        ProgressivePeripheralsConfig.transferXPCooldown = ConfigHolder.COMMON_CONFIG.TRANSFER_XP_COOLDOWN.get();
-        ProgressivePeripheralsConfig.transferXPCost = ConfigHolder.COMMON_CONFIG.TRANSFER_XP_COST.get();
-        ProgressivePeripheralsConfig.enchantCooldown = ConfigHolder.COMMON_CONFIG.ENCHANT_XP_COOLDOWN.get();
-        ProgressivePeripheralsConfig.enchantCost = ConfigHolder.COMMON_CONFIG.ENCHANT_XP_COST.get();
-        ProgressivePeripheralsConfig.smeltCooldown = ConfigHolder.COMMON_CONFIG.SMELT_COOLDOWN.get();
-        ProgressivePeripheralsConfig.smithCost = ConfigHolder.COMMON_CONFIG.SMITH_COST.get();
-        ProgressivePeripheralsConfig.smithCooldown = ConfigHolder.COMMON_CONFIG.SMITH_COOLDOWN.get();
         // Automata Cores
-        ProgressivePeripheralsConfig.scientificAutomataCoreInteractionRadius = ConfigHolder.COMMON_CONFIG.SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS.get();
-        ProgressivePeripheralsConfig.scientificAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
-        ProgressivePeripheralsConfig.enchantingAutomataCoreInteractionRadius = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_INTERACTION_RADIUS.get();
-        ProgressivePeripheralsConfig.enchantingAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
         ProgressivePeripheralsConfig.enchantingAutomataCoreDisappearChance = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE.get();
-        ProgressivePeripheralsConfig.smithingAutomataCoreMaxFuelConsumptionLevel = ConfigHolder.COMMON_CONFIG.SMITHING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL.get();
     }
 }

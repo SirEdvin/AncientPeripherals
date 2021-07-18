@@ -10,6 +10,12 @@
     },
     {
       "type": "text",
+      "title": "Color",
+      "anchor": "Color",
+      "text": "Color is table in next format $(o){red = 255, green = 0, blue = 120}$(). Values should be integers from 0 to 255, any additional keys will be ignored.$(p)If you pass values bigger than 255 it will cause color corruption."
+    },
+    {
+      "type": "text",
       "title": "BlockPos",
       "anchor": "BlockPos",
       "text": "BlockPos is table in next format $(o){x = 5, z = 6, y = 6}$(). Values should be integers, any additional keys will be ignored.$(p)Note, that BlockPos are $(l)always relative$() to peripheral position."
@@ -25,6 +31,12 @@
       "title": "BlockVisual",
       "anchor": "BlockVisual",
       "text": "BlockVisual is table then $(o)may$() contains next keys:$(br)$(o)string $()$(l)block$(): minecraft block id, for texture reference$(br)$(o)$(l:progressiveperipherals:api_documentation/extra_types#BlockState)BlockState$() $(l)attrs$(): minecraft block state$(br)$(o)boolean $()$(l)playerPassable$(): can player pass block$(br)$(o)boolean $()$(l)lightPassable$(): can light pass block$(br)$(o)boolean $()$(l)skyLightPassable$(): can sky light pass block$(br)$(o)boolean $()$(l)invisible$(): is block invisible"
+    },
+    {
+      "type": "text",
+      "title": "ShapeCube",
+      "anchor": "ShapeCube",
+      "text": "ShapeCube is table in next format $(o){x1=1, x2=2, y1=1, y2=5, z1=1, z2=10.5}$(). Values should be from 0 to 48.$(p)Additionally this table can have $(l:progressiveperipherals:api_documentation/extra_types#Color)Color$() property with name $(o)color$()."
     }
   ]
 }

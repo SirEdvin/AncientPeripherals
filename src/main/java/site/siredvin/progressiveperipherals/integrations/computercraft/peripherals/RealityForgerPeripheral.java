@@ -21,15 +21,18 @@ import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 import site.siredvin.progressiveperipherals.utils.RepresentationUtil;
 import site.siredvin.progressiveperipherals.utils.ScanUtils;
+import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RealityForgerPeripheral extends BasePeripheral {
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{

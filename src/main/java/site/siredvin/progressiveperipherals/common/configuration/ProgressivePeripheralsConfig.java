@@ -1,11 +1,16 @@
 package site.siredvin.progressiveperipherals.common.configuration;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.AutomataCoreTier;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.CountOperation;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation;
 
 public class ProgressivePeripheralsConfig {
 
     // Features
     public static boolean enableRealityForger;
+    public static boolean enableStatueWorkbench = true;
     public static boolean enableEnchantingAutomataCore;
     public static boolean enableSmithingAutomataCore;
     public static boolean enableCuttingAxe;
@@ -18,21 +23,8 @@ public class ProgressivePeripheralsConfig {
     public static int xpToFuelRate;
     public static double furnaceBurnFuelCostRate;
     public static int cuttingAxeMaxBlockCount;
-    // Operations
-    public static int transferXPCooldown;
-    public static int transferXPCost;
-    public static int enchantCooldown;
-    public static int enchantCost;
-    public static int smeltCooldown;
-    public static int smithCooldown;
-    public static int smithCost;
     // Configuration
-    public static int scientificAutomataCoreInteractionRadius;
-    public static int scientificAutomataCoreMaxFuelConsumptionLevel;
-    public static int enchantingAutomataCoreInteractionRadius;
-    public static int enchantingAutomataCoreMaxFuelConsumptionLevel;
     public static double enchantingAutomataCoreDisappearChance;
-    public static int smithingAutomataCoreMaxFuelConsumptionLevel;
 
     public static class CommonConfig {
 
@@ -53,22 +45,8 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.DoubleValue SMELT_FUEL_COST_RATE;
         final ForgeConfigSpec.IntValue CUTTING_AXE_MAX_BLOCK_COUNT;
 
-        // Operations
-        final ForgeConfigSpec.IntValue TRANSFER_XP_COOLDOWN;
-        final ForgeConfigSpec.IntValue TRANSFER_XP_COST;
-        final ForgeConfigSpec.IntValue ENCHANT_XP_COOLDOWN;
-        final ForgeConfigSpec.IntValue ENCHANT_XP_COST;
-        final ForgeConfigSpec.IntValue SMELT_COOLDOWN;
-        final ForgeConfigSpec.IntValue SMITH_COOLDOWN;
-        final ForgeConfigSpec.IntValue SMITH_COST;
-
         // Mechanic souls
-        final ForgeConfigSpec.IntValue SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS;
-        final ForgeConfigSpec.IntValue SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
-        final ForgeConfigSpec.IntValue ENCHANTING_AUTOMATA_CORE_INTERACTION_RADIUS;
-        final ForgeConfigSpec.IntValue ENCHANTING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
         final ForgeConfigSpec.DoubleValue ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE;
-        final ForgeConfigSpec.IntValue SMITHING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL;
 
         CommonConfig(final ForgeConfigSpec.Builder builder) {
             builder.comment("").push("Features");
@@ -90,22 +68,19 @@ public class ProgressivePeripheralsConfig {
                     .defineInRange("cuttingAxeMaxBlockCount", 1024, 256, Integer.MAX_VALUE);
             builder.pop();
             builder.comment("").push("Operations");
-            TRANSFER_XP_COOLDOWN = builder.defineInRange("transferXPCooldown", 1_000, 1, Integer.MAX_VALUE);
-            TRANSFER_XP_COST = builder.defineInRange("transferXPCost", 1, 0, Integer.MAX_VALUE);
-            ENCHANT_XP_COOLDOWN = builder.defineInRange("enchantXPCooldown", 5_000, 1, Integer.MAX_VALUE);
-            ENCHANT_XP_COST = builder.defineInRange("enchantXPCost", 10, 0, Integer.MAX_VALUE);
-            SMELT_COOLDOWN = builder.defineInRange("smeltCooldown", 1_000, 1, Integer.MAX_VALUE);
-            SMITH_COOLDOWN = builder.defineInRange("smithCooldown", 1_000, 1, Integer.MAX_VALUE);
-            SMITH_COST = builder.defineInRange("smithCost", 1, 0, Integer.MAX_VALUE);
+            register(CountOperation.values(), builder);
+            register(SimpleOperation.values(), builder);
             builder.pop();
             builder.comment("").push("Automata cores");
-            SCIENTIFIC_AUTOMATA_CORE_INTERACTION_RADIUS = builder.defineInRange("scientificAutomataCoreInteractionRadius", 4, 1, 64);
-            SCIENTIFIC_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("scientificAutomataCoreInteractionRadius", 4, 1, 64);
-            ENCHANTING_AUTOMATA_CORE_INTERACTION_RADIUS = builder.defineInRange("enchantingAutomataCoreInteractionRadius", 4, 1, 64);
-            ENCHANTING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("enchantingAutomataCoreMaxFuelConsumptionLevel", 4, 1, 64);
+            register(AutomataCoreTier.values(), builder);
             ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE = builder.defineInRange("enchantingAutomataCoreDisappearChance", 0.05, 0.1, 1);
-            SMITHING_AUTOMATA_CORE_MAX_FUEL_CONSUMPTION_LEVEL = builder.defineInRange("smithingAutomataCoreMaxFuelConsumptionLevel", 4, 1, 64);
             builder.pop();
+        }
+
+        protected void register(IConfigHandler[] data, final ForgeConfigSpec.Builder builder) {
+            for (IConfigHandler handler: data) {
+                handler.addToConfig(builder);
+            }
         }
     }
 }
