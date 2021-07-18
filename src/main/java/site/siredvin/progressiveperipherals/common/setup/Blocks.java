@@ -8,6 +8,7 @@ import site.siredvin.progressiveperipherals.common.blocks.BaseBlock;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleStatue;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorItem;
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
@@ -32,7 +33,7 @@ public class Blocks {
     );
     // Utility
     public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(
-            "flexible_reality_anchor", FlexibleRealityAnchor::new, () -> new BaseBlockItem(Blocks.FLEXIBLE_REALITY_ANCHOR.get())
+            "flexible_reality_anchor", FlexibleRealityAnchor::new, FlexibleRealityAnchorItem::new
     );
     public static final RegistryObject<Block> FLEXIBLE_STATUE = register(
             "flexible_statue", FlexibleStatue::new, FlexibleStatueItem::new

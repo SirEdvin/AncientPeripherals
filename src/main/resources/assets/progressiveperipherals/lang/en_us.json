@@ -61,5 +61,6 @@
   "text.progressiveperipherals.returns": "$(l)Returns$():",
   "text.progressiveperipherals.throw": "$(l)Throw in case of$(): ",
   "text.progressiveperipherals.operation_group": "$(l)Operation group$(): ",
-  "text.progressiveperipherals.author": "Author: "
+  "text.progressiveperipherals.author": "Author: ",
+  "text.progressiveperipherals.configured": "§oConfigured"
 }

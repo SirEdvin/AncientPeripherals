@@ -46,6 +46,13 @@ public class FlexibleRealityAnchorTileEntity extends TileEntity implements ITile
         pendingState = pendingState.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null);
     }
 
+    public void setMimic(BlockState mimic, BlockState state) {
+        this.mimic = mimic;
+        if (pendingState == null)
+            pendingState = state;
+        pendingState = pendingState.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null);
+    }
+
     public BlockState getMimic() {
         return this.mimic;
     }
@@ -101,7 +108,7 @@ public class FlexibleRealityAnchorTileEntity extends TileEntity implements ITile
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
         if (data.contains("mimic")) {
-            setMimic(NBTUtil.readBlockState(data.getCompound("mimic")));
+            setMimic(NBTUtil.readBlockState(data.getCompound("mimic")), state);
             if (!skipUpdate)
                 pushState();
         }

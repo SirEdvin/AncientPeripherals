@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEntity> {
     public static final BooleanProperty CONFIGURED = BooleanProperty.create("configured");
     public static final BooleanProperty PLAYER_PASSABLE = BooleanProperty.create("player_passable");
@@ -29,6 +33,14 @@ public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEnt
     public static final BooleanProperty LIGHT_PASSABLE = BooleanProperty.create("light_passable");
     public static final BooleanProperty SKY_LIGHT_PASSABLE = BooleanProperty.create("sky_light_passable");
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
+
+    private static final List<Property<?>> SAVABLE_PROPERTIES = new ArrayList<Property<?>>() {{
+        add(PLAYER_PASSABLE);
+        add(LIGHT_PASSABLE);
+        add(LIGHT_LEVEL);
+        add(SKY_LIGHT_PASSABLE);
+        add(INVISIBLE);
+    }};
 
     public FlexibleRealityAnchor() {
         super(Properties.of(Material.DECORATION).dynamicShape());
@@ -84,8 +96,9 @@ public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEnt
             return super.getShape(state, world, pos, context);
         FlexibleRealityAnchorTileEntity tileEntity = (FlexibleRealityAnchorTileEntity) world.getBlockEntity(pos);
         if (tileEntity != null) {
-            VoxelShape shape = tileEntity.getMimic().getShape(world, pos);
-            return shape;
+            BlockState mimicState = tileEntity.getMimic();
+            if (mimicState != null)
+                return tileEntity.getMimic().getShape(world, pos);
         }
         return super.getShape(state, world, pos, context);
     }
@@ -95,6 +108,11 @@ public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEnt
         if (state.getValue(INVISIBLE))
             return BlockRenderType.INVISIBLE;
         return super.getRenderShape(state);
+    }
+
+    @Override
+    public List<Property<?>> savableProperties() {
+        return SAVABLE_PROPERTIES;
     }
 
     @Override

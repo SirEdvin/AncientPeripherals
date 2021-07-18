@@ -63,8 +63,6 @@ public class Items {
     );
 
     // Usefull abstractium tools
-
-    // Should extends ToolItem
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
             "cutting_axe", () -> new EnchantablePeripheralItem(() -> ProgressivePeripheralsConfig.enableCuttingAxe, new HashSet<Enchantment>(){{
                 add(Enchantments.SILK_TOUCH);
