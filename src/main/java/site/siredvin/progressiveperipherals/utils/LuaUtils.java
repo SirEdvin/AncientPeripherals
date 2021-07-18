@@ -6,11 +6,15 @@ import net.minecraft.util.math.vector.Vector3f;
 import site.siredvin.progressiveperipherals.utils.dao.QuadData;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
+import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class LuaUtils {
+    public static final int MAX_QUAD_VECTOR = 48;
+
     public static BlockPos convertToBlockPos(Map<?, ?> table) throws LuaException {
         if (!table.containsKey("x") || !table.containsKey("y") || !table.containsKey("z"))
             throw new LuaException("Table should be block position table");
@@ -49,8 +53,28 @@ public class LuaUtils {
         return buildVector(((Number) x).floatValue(), ((Number) y).floatValue(), ((Number) z).floatValue(), min, max);
     }
 
+    public static Color convertToColor(@Nullable Object obj) throws LuaException {
+        if (obj == null)
+            return Color.WHITE;
+        if (!(obj instanceof Map))
+            throw new LuaException("Color should be table");
+        Map<?, ?> table = (Map<?, ?>) obj;
+        if (!table.containsKey("red") || !table.containsKey("green") || !table.containsKey("blue"))
+            throw new LuaException("Table should have color RGB codes");
+        Object red = table.get("red");
+        Object green = table.get("green");
+        Object blue = table.get("blue");
+        if (!(red instanceof Number) || !(green instanceof Number) || !(blue instanceof Number))
+            throw new LuaException("Table should have color RGB codes");
+        return new Color(((Number) red).intValue(), ((Number) green).intValue(), ((Number) blue).intValue());
+    }
+
     public static QuadData convertToQuadData(Map<?, ?> table) throws LuaException {
-        return new QuadData(convertToStartVector(table, 0, 16), convertToEndVector(table, 0, 16));
+        return new QuadData(
+                convertToStartVector(table, 0, MAX_QUAD_VECTOR),
+                convertToEndVector(table, 0, MAX_QUAD_VECTOR),
+                convertToColor(table.get("color"))
+        );
     }
 
     public static QuadList convertToQuadList(Map<?, ?> table) throws LuaException {

@@ -26,8 +26,8 @@ public class QuadList implements Serializable {
         return list.stream().map(QuadData::shape).reduce(VoxelShapes::or).orElse(VoxelShapes.empty());
     }
 
-    public Map<Integer, Map<String, Float>> toLua() {
-        Map<Integer, Map<String, Float>> data = new HashMap<>();
+    public Map<Integer, Map<String, Object>> toLua() {
+        Map<Integer, Map<String, Object>> data = new HashMap<>();
         for (int i = 0; i< list.size(); i++) {
             data.put(i + 1, list.get(i).toLua());
         }

@@ -27,6 +27,8 @@ public class NBTUtils {
         try {
             stream = new ObjectInputStream(byteStream);
             return (QuadList) stream.readObject();
+        } catch (InvalidClassException e) {
+            // just do nothing
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

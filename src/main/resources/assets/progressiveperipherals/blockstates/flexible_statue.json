@@ -1,6 +1,6 @@
 {
   "variants": {
     "configured=true": { "model": "progressiveperipherals:block/flexible_statue" },
-    "configured=false": { "model": "minecraft:block/stone" }
+    "configured=false": { "model": "progressiveperipherals:block/flexible_statue_empty" }
   }
 }
