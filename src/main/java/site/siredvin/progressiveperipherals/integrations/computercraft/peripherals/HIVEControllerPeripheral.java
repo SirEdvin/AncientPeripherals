@@ -3,12 +3,15 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.peripher
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.FuelConsumingPeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.operations.FuelConsumingPeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.brain.Brain;
+import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
+import net.minecraft.entity.ai.brain.memory.WalkTarget;
 import net.minecraft.entity.ai.brain.schedule.Schedule;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,10 +28,7 @@ import site.siredvin.progressiveperipherals.common.tileentities.HIVEControllerTi
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.RepresentationUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HIVEControllerPeripheral extends FuelConsumingPeripheral {
@@ -62,8 +62,8 @@ public class HIVEControllerPeripheral extends FuelConsumingPeripheral {
     }
 
     @Override
-    protected int getRawCooldown(String name) {
-        return 0;
+    public List<IPeripheralOperation<?>> possibleOperations() {
+        return Collections.emptyList();
     }
 
     protected Pair<MethodResult, MobEntity> getEntityByUUID(String entityUUID, boolean inControl) {
@@ -135,40 +135,11 @@ public class HIVEControllerPeripheral extends FuelConsumingPeripheral {
         Pair<MethodResult, MobEntity> searchResult = getEntityByUUID(entityUUID, true);
         if (searchResult.leftPresent())
             return searchResult.getLeft();
-        BlockPos pos = LuaUtils.convertToBlockPos(blockPos);
         MobEntity entity = searchResult.getRight();
         BlockPos entityPosition = entity.blockPosition();
-        MovementController movementController = entity.getMoveControl();
-        movementController.setWantedPosition(
-                entityPosition.getX() + pos.getX(),
-                entityPosition.getY() + pos.getY(),
-                entityPosition.getZ() + pos.getZ(),
-                movementController.getSpeedModifier()
-        );
-        return MethodResult.of(true);
-    }
-
-
-    @LuaFunction
-    public final MethodResult disableAI(String entityUUID) {
-        Pair<MethodResult, MobEntity> searchResult = getEntityByUUID(entityUUID, true);
-        if (searchResult.leftPresent())
-            return searchResult.getLeft();
-        MobEntity entity = searchResult.getRight();
+        BlockPos targetPos = LuaUtils.convertToBlockPos(entityPosition, blockPos);
         Brain<MobEntity> brain = (Brain<MobEntity>) entity.getBrain();
-        brain.setSchedule(Schedule.EMPTY);
-        brain.stopAll((ServerWorld) getWorld(), entity);
-        return MethodResult.of(true);
-    }
-
-    @LuaFunction
-    public final MethodResult enableAI(String entityUUID) {
-        Pair<MethodResult, MobEntity> searchResult = getEntityByUUID(entityUUID, true);
-        if (searchResult.leftPresent())
-            return searchResult.getLeft();
-        MobEntity entity = searchResult.getRight();
-        Brain<?> brain = entity.getBrain();
-        brain.setSchedule(Schedule.SIMPLE);
+        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, (float) entity.getMoveControl().getSpeedModifier(), 0));
         return MethodResult.of(true);
     }
 }

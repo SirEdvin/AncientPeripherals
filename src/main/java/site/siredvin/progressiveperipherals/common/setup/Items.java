@@ -62,6 +62,12 @@ public class Items {
             "abstractium_boots", () -> new ArmorItem(ArmorMaterial.ABSTRACTIUM, EquipmentSlotType.FEET, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
     );
 
+    // Utility items
+
+    public static final RegistryObject<Item> CONTROLLING_HELMET = Registration.ITEMS.register(
+            "controlling_helmet", ControllingHelmet::new
+    );
+
     // Usefull abstractium tools
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
             "cutting_axe", () -> new EnchantablePeripheralItem(() -> ProgressivePeripheralsConfig.enableCuttingAxe, new HashSet<Enchantment>(){{
