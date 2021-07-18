@@ -92,6 +92,6 @@ public class FlexibleStatueModel implements IDynamicBakedModel {
 
     @Override
     public ItemOverrideList getOverrides() {
-        return ItemOverrideList.EMPTY;
+        return new FlexibleStatueItemOverrideList();
     }
 }

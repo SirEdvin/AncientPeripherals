@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -17,11 +18,11 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
 
-import javax.annotation.Nullable;
-
-public class FlexibleRealityAnchor extends BaseBlock {
+public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEntity> {
     public static final BooleanProperty CONFIGURED = BooleanProperty.create("configured");
     public static final BooleanProperty PLAYER_PASSABLE = BooleanProperty.create("player_passable");
     public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level",0,15);
@@ -67,8 +68,26 @@ public class FlexibleRealityAnchor extends BaseBlock {
     }
 
     @Override
-    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    public @NotNull TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new FlexibleRealityAnchorTileEntity();
+    }
+
+    @NotNull
+    @Override
+    public ItemStack createItemStack() {
+        return new ItemStack(Blocks.FLEXIBLE_REALITY_ANCHOR.get().asItem());
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+        if (state.getValue(INVISIBLE))
+            return super.getShape(state, world, pos, context);
+        FlexibleRealityAnchorTileEntity tileEntity = (FlexibleRealityAnchorTileEntity) world.getBlockEntity(pos);
+        if (tileEntity != null) {
+            VoxelShape shape = tileEntity.getMimic().getShape(world, pos);
+            return shape;
+        }
+        return super.getShape(state, world, pos, context);
     }
 
     @Override

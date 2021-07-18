@@ -194,17 +194,4 @@ public class RealityForgerPeripheral extends BasePeripheral {
         });
         return MethodResult.of(true);
     }
-
-    @LuaFunction(mainThread = true)
-    public final MethodResult statue(Map<?, ?> blockPos, Map<?, ?> quads) throws LuaException {
-        BlockPos statuePos = LuaUtils.convertToBlockPos(getPos(), blockPos);
-        QuadList quadList = LuaUtils.convertToQuadList(quads);
-        World world = getWorld();
-        TileEntity tileEntity = world.getBlockEntity(statuePos);
-        if (!(tileEntity instanceof FlexibleStatueTileEntity))
-            return MethodResult.of(null, "incorrect block");
-        FlexibleStatueTileEntity statueTileEntity = (FlexibleStatueTileEntity) tileEntity;
-        statueTileEntity.setBakedQuads(quadList);
-        return MethodResult.of(true);
-    }
 }

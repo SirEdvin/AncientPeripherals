@@ -5,12 +5,10 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3f;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QuadData implements Serializable {
-    private transient Vector3f start;
-    private transient Vector3f end;
-    private transient float[] UV;
-
     public final float x1;
     public final float y1;
     public final float z1;
@@ -29,26 +27,20 @@ public class QuadData implements Serializable {
 
     public QuadData(Vector3f start, Vector3f end) {
         this(start.x(), start.y(), start.z(), end.x(), end.y(), end.z());
-        this.start = start;
-        this.end = end;
     }
 
     public Vector3f getStart() {
-        if (start == null)
-            start = new Vector3f(x1, y1, z1);
-        return start;
+        return new Vector3f(x1, y1, z1);
+
     }
 
     public Vector3f getEnd() {
-        if (end == null)
-            end = new Vector3f(x2, y2, z2);
-        return end;
+        return new Vector3f(x2, y2, z2);
     }
 
     public float[] getUV() {
-        if (UV == null)
-            UV = new float[]{x1, z1, x2, z2};
-        return UV;
+        // TODO: side-depends?
+        return new float[]{x1, z1, x2, z2};
     }
 
     public VoxelShape shape() {
@@ -61,5 +53,16 @@ public class QuadData implements Serializable {
             return false;
         QuadData other = (QuadData) o;
         return x1 == other.x1 && x2 == other.x2 && y1 == other.y1 && y2 == other.y2 && z1 == other.z1 && z2 == other.z2;
+    }
+
+    public Map<String, Float> toLua() {
+        Map<String, Float> data = new HashMap<>();
+        data.put("x1", x1);
+        data.put("y1", y1);
+        data.put("z1", z1);
+        data.put("x2", x2);
+        data.put("y2", y2);
+        data.put("z2", z2);
+        return data;
     }
 }

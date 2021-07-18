@@ -4,7 +4,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuadList implements Serializable {
     public List<QuadData> list;
@@ -22,5 +24,13 @@ public class QuadList implements Serializable {
 
     public VoxelShape shape() {
         return list.stream().map(QuadData::shape).reduce(VoxelShapes::or).orElse(VoxelShapes.empty());
+    }
+
+    public Map<Integer, Map<String, Float>> toLua() {
+        Map<Integer, Map<String, Float>> data = new HashMap<>();
+        for (int i = 0; i< list.size(); i++) {
+            data.put(i + 1, list.get(i).toLua());
+        }
+        return data;
     }
 }

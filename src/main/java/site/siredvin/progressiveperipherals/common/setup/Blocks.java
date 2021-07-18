@@ -8,6 +8,7 @@ import site.siredvin.progressiveperipherals.common.blocks.BaseBlock;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleStatue;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
 
@@ -24,12 +25,17 @@ public class Blocks {
             () -> new APTileEntityBlock<>(TileEntityTypes.REALITY_FORGER, true),
             () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
     );
+    public static final RegistryObject<Block> STATUE_WORKBENCH = register(
+            "statue_workbench",
+            () -> new APTileEntityBlock<>(TileEntityTypes.STATUE_WORKBENCH, true),
+            () -> new PeripheralBlockItem(Blocks.STATUE_WORKBENCH.get(), null, null, () -> ProgressivePeripheralsConfig.enableStatueWorkbench)
+    );
     // Utility
     public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(
             "flexible_reality_anchor", FlexibleRealityAnchor::new, () -> new BaseBlockItem(Blocks.FLEXIBLE_REALITY_ANCHOR.get())
     );
     public static final RegistryObject<Block> FLEXIBLE_STATUE = register(
-            "flexible_statue", FlexibleStatue::new, () -> new BaseBlockItem(Blocks.FLEXIBLE_STATUE.get())
+            "flexible_statue", FlexibleStatue::new, FlexibleStatueItem::new
     );
 
     // Other

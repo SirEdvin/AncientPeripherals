@@ -6,6 +6,7 @@ import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.StatueWorkbenchTileEntity;
 
 public class TileEntityTypes {
 
@@ -23,5 +24,9 @@ public class TileEntityTypes {
     public static final RegistryObject<TileEntityType<FlexibleStatueTileEntity>> FLEXIBLE_STATUE = Registration.TILE_ENTITIES.register(
             "flexible_statue",
             () -> new TileEntityType<>(FlexibleStatueTileEntity::new, Sets.newHashSet(Blocks.FLEXIBLE_STATUE.get()), null)
+    );
+    public static final RegistryObject<TileEntityType<StatueWorkbenchTileEntity>> STATUE_WORKBENCH = Registration.TILE_ENTITIES.register(
+            "statue_workbench",
+            () -> new TileEntityType<>(StatueWorkbenchTileEntity::new, Sets.newHashSet(Blocks.STATUE_WORKBENCH.get()), null)
     );
 }

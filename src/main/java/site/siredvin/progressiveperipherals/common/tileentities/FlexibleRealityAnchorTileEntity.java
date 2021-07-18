@@ -12,13 +12,14 @@ import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.util.Constants;
+import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-public class FlexibleRealityAnchorTileEntity extends TileEntity {
+public class FlexibleRealityAnchorTileEntity extends TileEntity implements ITileEntityDataProvider {
 
     public static final ModelProperty<BlockState> MIMIC = new ModelProperty<>();
 
@@ -58,9 +59,7 @@ public class FlexibleRealityAnchorTileEntity extends TileEntity {
     @Override
     public CompoundNBT getUpdateTag() {
         CompoundNBT tag = super.getUpdateTag();
-        if (mimic != null) {
-            tag.put("mimic", NBTUtil.writeBlockState(mimic));
-        }
+        tag = saveInternalData(tag);
         return tag;
     }
 
@@ -75,10 +74,11 @@ public class FlexibleRealityAnchorTileEntity extends TileEntity {
         BlockState oldMimic = mimic;
         CompoundNBT tag = pkt.getTag();
         if (tag.contains("mimic")) {
-            mimic = NBTUtil.readBlockState(tag.getCompound("mimic"));
-            if (!Objects.equals(oldMimic, mimic)) {
+            BlockState newMimic = NBTUtil.readBlockState(tag.getCompound("mimic"));
+            if (!Objects.equals(mimic, newMimic)) {
                 ModelDataManager.requestModelDataRefresh(this);
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE + Constants.BlockFlags.NOTIFY_NEIGHBORS);
+                setMimic(newMimic);
+                pushState();
             }
         }
     }
@@ -91,40 +91,34 @@ public class FlexibleRealityAnchorTileEntity extends TileEntity {
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
-        super.load(state, tag);
-        if (tag.contains("mimic")) {
-            mimic = NBTUtil.readBlockState(tag.getCompound("mimic"));
+    public CompoundNBT saveInternalData(CompoundNBT data) {
+        if (mimic != null) {
+            data.put("mimic", NBTUtil.writeBlockState(mimic));
+        }
+        return data;
+    }
+
+    @Override
+    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+        if (data.contains("mimic")) {
+            setMimic(NBTUtil.readBlockState(data.getCompound("mimic")));
+            if (!skipUpdate)
+                pushState();
         }
     }
 
     @Override
+    public void load(BlockState state, CompoundNBT tag) {
+        super.load(state, tag);
+        loadInternalData(state, tag, true);
+    }
+
+    @Override
     public CompoundNBT save(CompoundNBT tag) {
-        if (mimic != null) {
-            tag.put("mimic", NBTUtil.writeBlockState(mimic));
-        }
-        return super.save(tag);
+        return super.save(saveInternalData(tag));
     }
 
     public void clear() {
         this.setMimic(null);
-    }
-
-    private static CompoundNBT writeInteger(Integer tag) {
-        CompoundNBT compoundnbt = new CompoundNBT();
-        compoundnbt.putString("number", tag.toString());
-        return compoundnbt;
-    }
-
-    private static Integer readInteger(CompoundNBT tag) {
-        if (!tag.contains("number", 8)) {
-            return 0;
-        } else {
-            try {
-                return Integer.parseInt(tag.getString("number"));
-            } catch (NumberFormatException e) {
-                return 0;
-            }
-        }
     }
 }
