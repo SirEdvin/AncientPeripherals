@@ -1,0 +1,131 @@
+{
+  "name": "Statue workbench",
+  "icon": "progressiveperipherals:statue_workbench",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "progressiveperipherals:abstractium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Reality forger",
+      "item": "progressiveperipherals:statue_workbench",
+      "text": "$(l:progressiveperipherals:metaphysics/reality_forger)Reality Forger$() allows to mimic any block, that exists in the world. But what if you want to make your own? Now it is possible!"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:statue_workbench",
+      "recipe2": "progressiveperipherals:flexible_statue"
+    },
+    {
+      "type": "text",
+      "text": "Workbench allows you to interact with statue on top of it. Shape, that you build with lua methods will be saved even if you break statue. Also, you can set statue name and author."
+    },
+    {
+      "type": "multiblock",
+      "multiblock": {
+        "mapping": {
+          "0": "progressiveperipherals:statue_workbench",
+          "S": "progressiveperipherals:flexible_statue"
+        },
+        "pattern": [
+          ["S"],
+          ["0"]
+        ]
+      }
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "isPresent",
+      "description": "Checks, if statue is present on top of peripheral"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["boolean", "is statue present"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setStatueName",
+      "description": "Setter for statue name property"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "new statue name"]
+      ],
+      "returns": [
+        ["boolean", "If operation successful"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getStatueName",
+      "description": "Getter for statue name property"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "Current statue name or nil if statue name is missed or statue not present"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setAuthor",
+      "description": "Setter for statue author property"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "new author name"]
+      ],
+      "returns": [
+        ["boolean", "If operation successful"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getAuthor",
+      "description": "Getter for statue author property"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "Current statue name or nil if statue author is missed or statue not present"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setCubes",
+      "description": "Main method for changing statue shape. Statue will be build from this cubes",
+      "throw": [
+        "Invalid parameters format"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["{$(shapeCube)}", "list of shape cubes"]
+      ],
+      "returns": [
+        ["boolean | nil", "If operation successful"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getCubes",
+      "description": "Getting current cubes from statue"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{$(shapeCube)} | nil", "list of current shape cubes or nil"],
+        ["nil | string", "error message"]
+      ]
+    }
+  ]
+}

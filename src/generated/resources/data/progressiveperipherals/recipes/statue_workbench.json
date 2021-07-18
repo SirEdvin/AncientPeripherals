@@ -1,0 +1,26 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "   T",
+    " S  ",
+    "BBB ",
+    " P  "
+  ],
+  "key": {
+    "B": {
+      "item": "progressiveperipherals:abstractium_block"
+    },
+    "P": {
+      "item": "advancedperipherals:peripheral_casing"
+    },
+    "S": {
+      "item": "minecraft:stonecutter"
+    },
+    "T": {
+      "item": "minecraft:torch"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:statue_workbench"
+  }
+}

@@ -49,12 +49,12 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult getAuthor() {
+    public final MethodResult getStatueName() {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
         FlexibleStatueTileEntity tileEntity = opStatue.get();
-        return MethodResult.of(tileEntity.getAuthor());
+        return MethodResult.of(tileEntity.getName());
     }
 
     @LuaFunction(mainThread = true)
@@ -69,16 +69,16 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult getStatueName() {
+    public final MethodResult getAuthor() {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
         FlexibleStatueTileEntity tileEntity = opStatue.get();
-        return MethodResult.of(tileEntity.getName());
+        return MethodResult.of(tileEntity.getAuthor());
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult getQuads() {
+    public final MethodResult getCubes() {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
@@ -90,11 +90,11 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult setQuads(Map<?, ?> quads) throws LuaException {
+    public final MethodResult setCubes(Map<?, ?> cubes) throws LuaException {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        QuadList quadList = LuaUtils.convertToQuadList(quads);
+        QuadList quadList = LuaUtils.convertToQuadList(cubes);
         FlexibleStatueTileEntity tileEntity = opStatue.get();
         tileEntity.setBakedQuads(quadList);
         return MethodResult.of(true);
