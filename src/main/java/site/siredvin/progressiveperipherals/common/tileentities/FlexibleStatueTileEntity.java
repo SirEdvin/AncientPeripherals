@@ -6,23 +6,30 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.util.Constants;
 import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
+import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleStatue;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.NBTUtils;
+import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class FlexibleStatueTileEntity extends TileEntity implements ITileEntityDataProvider {
+public class FlexibleStatueTileEntity extends TileEntity implements ITileEntityDataProvider, IProbeable {
     public static final String BAKED_QUADS_TAG = "bakedQuads";
     public static final String NAME_TAG = "statueName";
     public static final String AUTHOR_TAG = "statueAuthor";
@@ -171,5 +178,16 @@ public class FlexibleStatueTileEntity extends TileEntity implements ITileEntityD
 
     public @Nullable QuadList getBakedQuads() {
         return bakedQuads;
+    }
+
+
+    @Override
+    public List<ITextComponent> commonProbeData(BlockState state) {
+        List<ITextComponent> data = new ArrayList<>();
+        if (name != null)
+            data.add(TranslationUtil.localization("statue_name").append(name));
+        if (author != null)
+            data.add(TranslationUtil.localization("statue_author").append(author));
+        return data;
     }
 }

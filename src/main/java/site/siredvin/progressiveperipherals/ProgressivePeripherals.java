@@ -11,12 +11,14 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,6 +33,8 @@ import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecip
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionRightPage;
+import site.siredvin.progressiveperipherals.integrations.top.ModProbeInfoProvider;
+import site.siredvin.progressiveperipherals.utils.Platform;
 import vazkii.patchouli.client.book.ClientBookRegistry;
 
 @Mod(ProgressivePeripherals.MOD_ID)
@@ -52,6 +56,7 @@ public class ProgressivePeripherals {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::modelSetup);
         modEventBus.addListener(this::clientSetup);
+        modEventBus.addListener(this::interModComms);
         modEventBus.addListener(ConfigHandler::configEvent);
         modEventBus.addListener(ConfigHandler::reloadConfigEvent);
 
@@ -84,5 +89,11 @@ public class ProgressivePeripherals {
             ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "lua_function_left_page"), LuaFunctionLeftPage.class);
             ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "lua_function_right_page"), LuaFunctionRightPage.class);
         }
+    }
+
+    @SubscribeEvent
+    public void interModComms(InterModEnqueueEvent event) {
+        Platform.maybeLoadIntegration("theoneprobe", "top.TOPPlugin")
+                .ifPresent(handler -> InterModComms.sendTo("theoneprobe", "getTheOneProbe", () -> handler));
     }
 }

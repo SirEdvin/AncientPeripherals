@@ -9,6 +9,8 @@
   "advancements.progressiveperipherals.enchanting_automata_core.description": "Is this Industrial Foregoing reference?",
   "advancements.progressiveperipherals.smithing_automata_core": "Automation is never ends on crafting",
   "advancements.progressiveperipherals.smithing_automata_core.description": "My naming is a mess. Actually, this turtle also allows fast burning ^_^",
+  "advancements.progressiveperipherals.builder_toolkit": "Builder toolkit",
+  "advancements.progressiveperipherals.builder_toolkit.description": "You can build anything. So what exact you will build?",
   "jei.category.progressiveperipherals.automata": "Automata crafting",
   "item.progressiveperipherals.forged_automata_core": "Forged automata core",
   "item.progressiveperipherals.forged_automata_core.tooltip": "§7Seems, this core lost any ability to function...",
@@ -62,5 +64,7 @@
   "text.progressiveperipherals.throw": "$(l)Throw in case of$(): ",
   "text.progressiveperipherals.operation_group": "$(l)Operation group$(): ",
   "text.progressiveperipherals.author": "Author: ",
-  "text.progressiveperipherals.configured": "§oConfigured"
+  "text.progressiveperipherals.configured": "§oConfigured",
+  "text.progressiveperipherals.statue_author": "Statue author: ",
+  "text.progressiveperipherals.statue_name": "Statue name:"
 }

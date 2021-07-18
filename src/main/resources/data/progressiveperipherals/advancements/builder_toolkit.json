@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:reality_forger"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.builder_toolkit"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.builder_toolkit.description"
+    }
+  },
+  "parent": "progressiveperipherals:abstractium",
+  "criteria": {
+    "forger_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:reality_forger"
+          }
+        ]
+      }
+    },
+    "workbench_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:statue_workbench"
+          }
+        ]
+      }
+    }
+  }
+}

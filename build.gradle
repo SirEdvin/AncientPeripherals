@@ -138,11 +138,12 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${jei_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
-    // Additional staff
+    // Optional integrations
+
+    implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:${top_version}")
 
     // Testing stuff
     runtimeOnly fg.deobf("curse.maven:CyclopsCore-${cyclops_core_version}")
-    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:${top_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 }
 
