@@ -1,10 +1,10 @@
 package site.siredvin.progressiveperipherals.utils;
 
-import net.minecraft.nbt.ByteArrayNBT;
-import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.*;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.io.*;
 
 public class NBTUtils {
@@ -21,6 +21,10 @@ public class NBTUtils {
         return null;
     }
 
+    public static INBT serializer(Color color) {
+        return IntNBT.valueOf(color.getRGB());
+    }
+
     public static @Nullable QuadList readQuadList(byte[] data) {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
         ObjectInputStream stream;
@@ -34,4 +38,9 @@ public class NBTUtils {
         }
         return null;
     }
+
+    public static Color readColor(int value) {
+        return new Color(value);
+    }
+
 }

@@ -80,6 +80,11 @@ public class Items {
             "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel, TurtleCorrectingShovel.ID, null)
     );
 
+    // Irrealium
+    public static final RegistryObject<Item> IRREALIUM_INGOT = Registration.ITEMS.register(
+            "irrealium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
+    );
+
     public static void register() {
     }
 

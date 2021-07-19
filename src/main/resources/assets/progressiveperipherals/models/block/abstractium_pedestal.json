@@ -1,0 +1,6 @@
+{
+  "parent": "progressiveperipherals:block/base_pedestal",
+  "textures": {
+    "1": "progressiveperipherals:block/abstractium_block"
+  }
+}

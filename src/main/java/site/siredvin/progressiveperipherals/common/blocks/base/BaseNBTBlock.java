@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.blocks;
+package site.siredvin.progressiveperipherals.common.blocks.base;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
 
@@ -22,25 +23,17 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class NBTBlock<T extends TileEntity & ITileEntityDataProvider> extends BaseBlock {
+public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvider> extends TileEntityBlock<T> {
     public static final String INTERNAL_DATA_TAG = "internalData";
     public static final String BLOCK_STATE_TAG = "blockState";
 
-    public NBTBlock() {
-        this(Properties.of(Material.METAL).strength(1, 5).harvestLevel(0).sound(SoundType.METAL).noOcclusion().harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops());
-    }
-
-    public NBTBlock(Properties properties) {
-        super(properties.strength(1, 5).harvestLevel(0).sound(SoundType.METAL).noOcclusion().harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops());
+    public BaseNBTBlock(Properties properties) {
+        super(properties);
     }
 
     @Override
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
-
-    @Override
-    public abstract @Nonnull TileEntity createTileEntity(BlockState state, IBlockReader world);
+    public abstract @Nonnull
+    @NotNull TileEntity createTileEntity(BlockState state, IBlockReader world);
 
     public abstract @Nonnull ItemStack createItemStack();
 

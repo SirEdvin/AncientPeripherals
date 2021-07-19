@@ -8,7 +8,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.common.blocks.NBTBlock;
+import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
@@ -24,7 +24,7 @@ public class FlexibleStatueItem extends BaseBlockItem {
 
     @Override
     public @NotNull ITextComponent getName(ItemStack stack) {
-        CompoundNBT internalData = stack.getTagElement(NBTBlock.INTERNAL_DATA_TAG);
+        CompoundNBT internalData = stack.getTagElement(BaseNBTBlock.INTERNAL_DATA_TAG);
         if (internalData != null && internalData.contains(FlexibleStatueTileEntity.NAME_TAG))
             return new StringTextComponent(internalData.getString(FlexibleStatueTileEntity.NAME_TAG));
         return super.getName(stack);
@@ -32,7 +32,7 @@ public class FlexibleStatueItem extends BaseBlockItem {
 
     @Override
     public void appendModHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        CompoundNBT internalData = stack.getTagElement(NBTBlock.INTERNAL_DATA_TAG);
+        CompoundNBT internalData = stack.getTagElement(BaseNBTBlock.INTERNAL_DATA_TAG);
         if (internalData != null && internalData.contains(FlexibleStatueTileEntity.AUTHOR_TAG)) {
             tooltip.add(TranslationUtil.localization("author").append(internalData.getString(FlexibleStatueTileEntity.AUTHOR_TAG)));
         } else {

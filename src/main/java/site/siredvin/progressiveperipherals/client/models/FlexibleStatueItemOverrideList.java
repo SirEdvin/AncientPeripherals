@@ -10,7 +10,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.client.models.abstr.AbstractFlexibleStatueModel;
-import site.siredvin.progressiveperipherals.common.blocks.NBTBlock;
+import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
 import site.siredvin.progressiveperipherals.utils.NBTUtils;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
@@ -50,7 +50,7 @@ public class FlexibleStatueItemOverrideList extends ItemOverrideList {
 
     @Override
     public IBakedModel resolve(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
-        CompoundNBT internalData = stack.getTagElement(NBTBlock.INTERNAL_DATA_TAG);
+        CompoundNBT internalData = stack.getTagElement(BaseNBTBlock.INTERNAL_DATA_TAG);
         QuadList list = null;
         if (internalData != null && internalData.contains(FlexibleStatueTileEntity.BAKED_QUADS_TAG)) {
             list = NBTUtils.readQuadList(internalData.getByteArray(FlexibleStatueTileEntity.BAKED_QUADS_TAG));

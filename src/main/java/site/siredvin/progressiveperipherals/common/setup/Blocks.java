@@ -1,17 +1,16 @@
 package site.siredvin.progressiveperipherals.common.setup;
 
-import de.srendi.advancedperipherals.common.blocks.base.APTileEntityBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraftforge.fml.RegistryObject;
-import site.siredvin.progressiveperipherals.common.blocks.BaseBlock;
-import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
-import site.siredvin.progressiveperipherals.common.blocks.FlexibleStatue;
+import site.siredvin.progressiveperipherals.common.blocks.*;
+import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorItem;
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
+import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
 
@@ -23,13 +22,18 @@ public class Blocks {
     // Peripherals
     public static final RegistryObject<Block> REALITY_FORGER = register(
             "reality_forger",
-            () -> new APTileEntityBlock<>(TileEntityTypes.REALITY_FORGER, true),
+            () -> new GenericTileEntityBlock<>(TileEntityTypes.REALITY_FORGER),
             () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
     );
     public static final RegistryObject<Block> STATUE_WORKBENCH = register(
             "statue_workbench",
-            () -> new APTileEntityBlock<>(TileEntityTypes.STATUE_WORKBENCH, true),
+            () -> new GenericTileEntityBlock<>(TileEntityTypes.STATUE_WORKBENCH),
             () -> new PeripheralBlockItem(Blocks.STATUE_WORKBENCH.get(), null, null, () -> ProgressivePeripheralsConfig.enableStatueWorkbench)
+    );
+    public static final RegistryObject<Block> ABSTRACTIUM_PEDESTAL = register(
+            "abstractium_pedestal",
+            AbstractiumPedestal::new,
+            () -> new PeripheralBlockItem(Blocks.ABSTRACTIUM_PEDESTAL.get(), null, null, () -> true)
     );
     // Utility
     public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(
@@ -38,12 +42,31 @@ public class Blocks {
     public static final RegistryObject<Block> FLEXIBLE_STATUE = register(
             "flexible_statue", FlexibleStatue::new, FlexibleStatueItem::new
     );
+    public static final RegistryObject<Block> IRREALIUM_PEDESTAL = register(
+            "irrealium_pedestal",
+            IrrealiumPedestal::new,
+            () -> new BaseBlockItem(Blocks.IRREALIUM_PEDESTAL.get())
+    );
+
+    // World feature
+
+    public static final RegistryObject<Block> REALITY_BREAKTHROUGH_POINT = register(
+            "reality_breakthrough_point",
+            RealityBreakthroughPoint::new,
+            () -> new BaseBlockItem(Blocks.REALITY_BREAKTHROUGH_POINT.get())
+    );
 
     // Other
     public static final RegistryObject<Block> ABSTRACTIUM_BLOCK = register(
             "abstractium_block",
-            BaseBlock::new,
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.ABSTRACTIUM_BLOCK.get())
+    );
+
+    public static final RegistryObject<Block> IRREALIUM_BLOCK = register(
+            "irrealium_block",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.IRREALIUM_BLOCK.get())
     );
 
     private static <T extends Block> RegistryObject<T> registerNoItem(String name, Supplier<T> block) {

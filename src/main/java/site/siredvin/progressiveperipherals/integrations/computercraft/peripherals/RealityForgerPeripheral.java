@@ -107,7 +107,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
     private void forgeRealityTileEntity(FlexibleRealityAnchorTileEntity realityMirror, @Nullable BlockState targetState, Map<?, ?> flags, boolean applyState) {
         if (applyState)
-            realityMirror.setMimic(targetState);
+            realityMirror.setMimic(targetState, true);
         flags.forEach((key, value) -> {
             BooleanProperty targetProperty = FLAG_MAPPING.get(key.toString());
             if (value instanceof Boolean) {
@@ -116,7 +116,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
                 }
             }
         });
-        realityMirror.pushState();
+        realityMirror.pushStackedState();
     }
 
     @LuaFunction

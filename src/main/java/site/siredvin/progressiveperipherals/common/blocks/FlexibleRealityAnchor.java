@@ -20,13 +20,15 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
+import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEntity> {
+public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTileEntity> {
     public static final BooleanProperty CONFIGURED = BooleanProperty.create("configured");
     public static final BooleanProperty PLAYER_PASSABLE = BooleanProperty.create("player_passable");
     public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level",0,15);
@@ -43,7 +45,7 @@ public class FlexibleRealityAnchor extends NBTBlock<FlexibleRealityAnchorTileEnt
     }};
 
     public FlexibleRealityAnchor() {
-        super(Properties.of(Material.DECORATION).dynamicShape());
+        super(BlockUtils.decoration().dynamicShape());
         this.registerDefaultState(
                 this.getStateDefinition().any()
                         .setValue(LIGHT_LEVEL, 0)
