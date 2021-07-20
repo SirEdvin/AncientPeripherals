@@ -27,6 +27,11 @@ public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity implements
     }
 
     @Override
+    public boolean hasStoredStack() {
+        return !storedStack.isEmpty();
+    }
+
+    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         if (!storedStack.isEmpty())
             data.put(ITEM_STACK_TAG, storedStack.serializeNBT());

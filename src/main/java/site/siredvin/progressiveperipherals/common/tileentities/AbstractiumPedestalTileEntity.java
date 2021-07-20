@@ -34,6 +34,11 @@ public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntit
     }
 
     @Override
+    public boolean hasStoredStack() {
+        return !storedStack.isEmpty();
+    }
+
+    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         if (!storedStack.isEmpty())
             data.put(ITEM_STACK_TAG, storedStack.serializeNBT());

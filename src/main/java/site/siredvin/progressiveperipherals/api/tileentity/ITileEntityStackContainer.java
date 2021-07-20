@@ -1,7 +1,10 @@
 package site.siredvin.progressiveperipherals.api.tileentity;
 
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public interface ITileEntityStackContainer {
-    ItemStack getStoredStack();
+    @NotNull ItemStack getStoredStack();
+    void setStoredStack(@NotNull ItemStack stack);
+    boolean hasStoredStack();
 }
