@@ -10,12 +10,10 @@ import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.client.models.FlexibleStatueItemOverrideList;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.utils.dao.QuadData;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -46,7 +44,7 @@ public abstract class AbstractFlexibleStatueModel implements IBakedModel {
         return quadsData.list.stream().map(data -> convert(bakery, data, stableSide)).collect(Collectors.toList());
     }
 
-    protected BakedQuad convert(FaceBakery bakery, QuadData data, @Nonnull Direction side) {
+    protected BakedQuad convert(FaceBakery bakery, QuadData data, @NotNull Direction side) {
         BlockPartFace face = new BlockPartFace(
                 null, -1, "", new BlockFaceUV(data.getUV(), 0)
         );

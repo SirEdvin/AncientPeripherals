@@ -4,22 +4,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
-import net.minecraftforge.common.util.Constants;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implements ITileEntityDataProvider {
 
@@ -43,7 +36,7 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
         setMimic(mimic, getBlockState(), skipUpdate);
     }
 
-    public void setMimic(@Nullable BlockState mimic, @Nonnull BlockState state, boolean skipUpdate) {
+    public void setMimic(@Nullable BlockState mimic, @NotNull BlockState state, boolean skipUpdate) {
         this.mimic = mimic;
         if (!skipUpdate) {
             pushState(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));

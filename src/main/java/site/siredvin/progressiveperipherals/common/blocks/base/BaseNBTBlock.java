@@ -14,12 +14,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
 
-import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,10 +30,9 @@ public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvide
     }
 
     @Override
-    public abstract @Nonnull
-    @NotNull TileEntity createTileEntity(BlockState state, IBlockReader world);
+    public abstract @NotNull TileEntity createTileEntity(BlockState state, IBlockReader world);
 
-    public abstract @Nonnull ItemStack createItemStack();
+    public abstract @NotNull ItemStack createItemStack();
 
     public List<Property<?>> savableProperties() {
         return Collections.emptyList();

@@ -1,9 +1,10 @@
 package site.siredvin.progressiveperipherals.api.tileentity;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.*;
 
 public interface IRealityBreakthroughPointTileEntity {
-    @Nonnull Color getColor();
-    @Nonnull IRealityBreakthroughPointTier getTier();
+    @NotNull Color getColor();
+    @NotNull IRealityBreakthroughPointTier getTier();
 }

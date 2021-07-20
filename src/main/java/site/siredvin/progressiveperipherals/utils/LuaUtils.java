@@ -3,10 +3,10 @@ package site.siredvin.progressiveperipherals.utils;
 import dan200.computercraft.api.lua.LuaException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.utils.dao.QuadData;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
-import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;

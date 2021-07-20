@@ -8,6 +8,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleStatue;
@@ -17,8 +19,6 @@ import site.siredvin.progressiveperipherals.utils.NBTUtils;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -77,22 +77,22 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
         return tag;
     }
 
-    public void setBakedQuads(@Nonnull QuadList bakedQuads) {
+    public void setBakedQuads(@NotNull QuadList bakedQuads) {
         setBakedQuads(bakedQuads, false);
     }
 
-    public void setBakedQuads(@Nonnull QuadList bakedQuads, boolean skipUpdate) {
+    public void setBakedQuads(@NotNull QuadList bakedQuads, boolean skipUpdate) {
         this.bakedQuads = bakedQuads;
         refreshShape();
         if (!skipUpdate)
             pushState(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
     }
 
-    public void setName(@Nonnull String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
     }
 
-    public void setAuthor(@Nonnull String author) {
+    public void setAuthor(@NotNull String author) {
         this.author = author;
     }
 

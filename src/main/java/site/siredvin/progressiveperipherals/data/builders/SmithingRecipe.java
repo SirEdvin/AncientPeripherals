@@ -7,9 +7,8 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-
-import javax.annotation.Nullable;
 
 public class SmithingRecipe implements IFinishedRecipe {
     private final ResourceLocation id;

@@ -12,11 +12,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.data.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.IModelData;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -28,9 +28,9 @@ public class FlexibleRealityAnchorModel implements IDynamicBakedModel {
         return Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(TEXTURE);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, @Nonnull IModelData extraData) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull Random rand, @NotNull IModelData extraData) {
         BlockState mimic = extraData.getData(FlexibleRealityAnchorTileEntity.MIMIC);
         if (mimic != null && !(mimic.getBlock() instanceof FlexibleRealityAnchor)) {
             IBakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(mimic);

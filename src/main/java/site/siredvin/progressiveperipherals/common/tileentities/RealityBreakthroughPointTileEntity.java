@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
 import site.siredvin.progressiveperipherals.api.tileentity.IRealityBreakthroughPointTier;
@@ -12,8 +13,6 @@ import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.NBTUtils;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +22,8 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IR
     private final static String COLOR_TAG = "pointColor";
     private final static String TIER_TAG = "pointTier";
 
-    private @Nullable Color color;
-    private @Nullable RealityBreakthroughPointTier tier;
+    private @NotNull Color color = Color.BLACK;
+    private @NotNull RealityBreakthroughPointTier tier = RealityBreakthroughPointTier.COMMON;
 
     public RealityBreakthroughPointTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_POINT.get());
@@ -33,10 +32,8 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IR
 
     @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
-        if (color != null)
-            data.put(COLOR_TAG, NBTUtils.serializer(color));
-        if (tier != null)
-            data.putString(TIER_TAG, tier.name().toLowerCase());
+        data.put(COLOR_TAG, NBTUtils.serializer(color));
+        data.putString(TIER_TAG, tier.name().toLowerCase());
         return data;
     }
 
@@ -65,16 +62,12 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IR
     }
 
     @Override
-    public @Nonnull Color getColor() {
-        if (color == null)
-            return Color.BLACK;
+    public @NotNull Color getColor() {
         return color;
     }
 
     @Override
-    public @Nonnull IRealityBreakthroughPointTier getTier() {
-        if (tier == null)
-            return RealityBreakthroughPointTier.COMMON;
+    public @NotNull IRealityBreakthroughPointTier getTier() {
         return tier;
     }
 

@@ -18,13 +18,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class TurtleExtractingPickaxe extends TurtleDigTool {

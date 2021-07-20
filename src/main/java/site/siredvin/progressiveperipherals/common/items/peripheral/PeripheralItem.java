@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.items.base.BaseItem;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class PeripheralItem extends BaseItem {

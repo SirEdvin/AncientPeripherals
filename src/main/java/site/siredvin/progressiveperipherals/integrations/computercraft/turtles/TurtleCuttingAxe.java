@@ -16,13 +16,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -54,7 +54,7 @@ public class TurtleCuttingAxe extends TurtleDigTool {
     }
 
     @Override
-    protected TurtleCommandResult dig(@Nonnull ITurtleAccess turtle, @Nonnull TurtleSide side, @Nonnull Direction direction) {
+    protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
         World world = turtle.getWorld();
         BlockPos turtlePosition = turtle.getPosition();
         TileEntity turtleTile = turtle instanceof TurtleBrain ? ((TurtleBrain)turtle).getOwner() : world.getBlockEntity(turtlePosition);

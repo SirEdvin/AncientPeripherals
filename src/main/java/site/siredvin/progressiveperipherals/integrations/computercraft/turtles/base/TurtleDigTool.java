@@ -26,7 +26,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.function.Function;
 
 public abstract class TurtleDigTool extends TurtleTool {
@@ -42,8 +41,8 @@ public abstract class TurtleDigTool extends TurtleTool {
         craftingItemStack = new ItemStack(item);
     }
 
-    @Nonnull
-    public TurtleCommandResult useTool(@Nonnull ITurtleAccess turtle, @Nonnull TurtleSide side, @Nonnull TurtleVerb verb, @Nonnull Direction direction) {
+    @NotNull
+    public TurtleCommandResult useTool(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull TurtleVerb verb, @NotNull Direction direction) {
         if (verb == TurtleVerb.DIG)
             return dig(turtle, side, direction);
         return TurtleCommandResult.failure("Unsupported action");
@@ -62,11 +61,11 @@ public abstract class TurtleDigTool extends TurtleTool {
         return craftingItemStack.getTag().equals(stack.getTag());
     }
 
-    protected abstract TurtleCommandResult dig(@Nonnull ITurtleAccess turtle, @Nonnull TurtleSide side, @Nonnull Direction direction);
+    protected abstract TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction);
 
     protected abstract boolean isEnabled();
 
-    protected boolean digOneBlock(@Nonnull ITurtleAccess turtle, @Nonnull TurtleSide side, World world, BlockPos blockPosition, TurtlePlayer turtlePlayer, TileEntity turtleTile) {
+    protected boolean digOneBlock(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, World world, BlockPos blockPosition, TurtlePlayer turtlePlayer, TileEntity turtleTile) {
         BlockState state = world.getBlockState(blockPosition);
         FluidState fluidState = world.getFluidState(blockPosition);
         if (ComputerCraft.turtlesObeyBlockProtection) {

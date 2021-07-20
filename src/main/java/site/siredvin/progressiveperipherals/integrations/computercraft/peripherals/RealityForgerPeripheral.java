@@ -17,22 +17,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityAnchorTileEntity;
-import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityForgerTileEntity;
-import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
+import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.RepresentationUtil;
 import site.siredvin.progressiveperipherals.utils.ScanUtils;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RealityForgerPeripheral extends BasePeripheral {
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{
@@ -140,7 +137,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult forgeRealityPiece(@Nonnull IArguments arguments) throws LuaException {
+    public final MethodResult forgeRealityPiece(@NotNull IArguments arguments) throws LuaException {
         BlockPos center = getPos();
         BlockPos targetPosition = LuaUtils.convertToBlockPos(center, arguments.getTable(0));
         if (!CheckUtils.radiusCorrect(center, targetPosition, _getInteractionRadius()))
@@ -157,7 +154,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
 
 
     @LuaFunction(mainThread = true)
-    public final MethodResult forgeRealityPieces(@Nonnull IArguments arguments) throws LuaException {
+    public final MethodResult forgeRealityPieces(@NotNull IArguments arguments) throws LuaException {
         BlockPos center = getPos();
         World world = getWorld();
         List<BlockPos> poses = new ArrayList<>();
@@ -182,7 +179,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult forgeReality(@Nonnull IArguments arguments) throws LuaException {
+    public final MethodResult forgeReality(@NotNull IArguments arguments) throws LuaException {
         Map<?, ?> table = arguments.getTable(0);
         Pair<Boolean, BlockState> blockFindResult = findBlock(table);
         World world = getWorld();

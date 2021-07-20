@@ -14,11 +14,11 @@ import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.SmithingRecipe;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 import site.siredvin.progressiveperipherals.utils.LimitedInventory;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +75,7 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
     }
 
     @LuaFunction
-    public final MethodResult smelt(@Nonnull IArguments arguments) throws LuaException {
+    public final MethodResult smelt(@NotNull IArguments arguments) throws LuaException {
         IInventory turtleInventory = turtle.getInventory();
         LimitedInventory limitedInventory = new LimitedInventory(turtleInventory, new int[]{turtle.getSelectedSlot()});
         int targetSlot = arguments.getInt(0);

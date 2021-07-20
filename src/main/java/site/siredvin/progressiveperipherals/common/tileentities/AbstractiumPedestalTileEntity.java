@@ -10,11 +10,10 @@ import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.AbstractiumPedestalPeripheral;
 
-import javax.annotation.Nonnull;
 
 public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntity<AbstractiumPedestalPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
     private static final String ITEM_STACK_TAG = "itemStackTag";
-    private @Nonnull ItemStack storedStack = ItemStack.EMPTY;
+    private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 
     public AbstractiumPedestalTileEntity() {
         super(TileEntityTypes.ABSTRACTIUM_PEDESTAL.get());
@@ -25,12 +24,12 @@ public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntit
         return new AbstractiumPedestalPeripheral("abstractiumPedestal", this);
     }
 
-    public void setStoredStack(@Nonnull ItemStack storedStack) {
+    public void setStoredStack(@NotNull ItemStack storedStack) {
         this.storedStack = storedStack;
         pushState();
     }
 
-    public @Nonnull ItemStack getStoredStack() {
+    public @NotNull ItemStack getStoredStack() {
         return storedStack;
     }
 
