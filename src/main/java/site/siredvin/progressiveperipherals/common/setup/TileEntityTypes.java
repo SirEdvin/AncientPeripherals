@@ -38,4 +38,8 @@ public class TileEntityTypes {
             "irrelium_pedestal",
             () -> new TileEntityType<>(IrrealiumPedestalTileEntity::new, Sets.newHashSet(Blocks.IRREALIUM_PEDESTAL.get()), null)
     );
+    public static final RegistryObject<TileEntityType<RealityBreakthroughRectorControllerTileEntity>> REALITY_BREAKTHROUGH_REACTOR_CONTROLLER = Registration.TILE_ENTITIES.register(
+            "reality_breakthrough_reactor_controller",
+            () -> new TileEntityType<>(RealityBreakthroughRectorControllerTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()), null)
+    );
 }

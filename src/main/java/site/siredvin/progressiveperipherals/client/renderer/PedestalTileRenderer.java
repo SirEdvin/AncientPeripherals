@@ -43,7 +43,7 @@ public class PedestalTileRenderer<T extends TileEntity & ITileEntityStackContain
     private static final Vector3d ITEM_TRANSLATE_EAST = new Vector3d(0.9, 0.5, 0.5);
     private static final Vector3d LABEL_TRANSLATE_EAST = new Vector3d(0.5, 1, 0.5);
 
-    private static final Vector3d ITEM_TRANSLATE_WEST = new Vector3d(0, 0.5, 0.5);
+    private static final Vector3d ITEM_TRANSLATE_WEST = new Vector3d(0.05, 0.5, 0.5);
     private static final Vector3d LABEL_TRANSLATE_WEST = new Vector3d(0.5, 1, 0.5);
 
 

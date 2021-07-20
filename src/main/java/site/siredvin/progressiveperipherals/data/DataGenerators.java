@@ -17,7 +17,8 @@ public class DataGenerators {
     public static void genData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-
+        generator.addProvider(new BlockTagsProvider(generator, existingFileHelper));
+        generator.addProvider(new ItemTagsProvider(generator, existingFileHelper));
         generator.addProvider(new RecipesProvider(generator));
         generator.addProvider(new BlockLootTablesProvider(generator));
     }
