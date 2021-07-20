@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/reality_breakthrough_reactor_io_port",
+    "south": "progressiveperipherals:block/reality_breakthrough_reactor_io_port",
+    "west": "progressiveperipherals:block/reality_breakthrough_reactor_io_port",
+    "east": "progressiveperipherals:block/reality_breakthrough_reactor_io_port",
+    "up": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
+    "down": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
+    "particle": "progressiveperipherals:block/reality_breakthrough_reactor_casing"
+  }
+}
