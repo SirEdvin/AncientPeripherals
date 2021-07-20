@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.common.blocks;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -41,6 +42,20 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
             }
         }
         return super.use(state, world, pos, player, hand, hit);
+    }
+
+
+    @Override
+    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity tileEntity = world.getBlockEntity(blockPos);
+            if (tileEntity instanceof IrrealiumPedestalTileEntity) {
+                IrrealiumPedestalTileEntity pedestalTileEntity = (IrrealiumPedestalTileEntity) tileEntity;
+                if (pedestalTileEntity.hasStoredStack())
+                    InventoryHelper.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), pedestalTileEntity.getStoredStack());
+            }
+        }
+        super.onRemove(state, world, blockPos, newState, isMoving);
     }
 
     @Override

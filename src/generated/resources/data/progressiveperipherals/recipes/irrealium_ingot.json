@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:irrealium_block"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:irrealium_ingot",
+    "count": 9
+  }
+}

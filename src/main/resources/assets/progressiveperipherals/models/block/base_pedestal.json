@@ -1,8 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"textures": {
-		"1": "progressiveperipherals:block/irrealium_block"
-	},
 	"elements": [
 		{
 			"name": "Base",

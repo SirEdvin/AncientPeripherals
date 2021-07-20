@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:abstractium_block"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:abstractium_ingot",
+    "count": 9
+  }
+}

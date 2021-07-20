@@ -1,6 +1,7 @@
 {
   "parent": "progressiveperipherals:block/base_pedestal",
   "textures": {
-    "1": "progressiveperipherals:block/irrealium_block"
+    "1": "progressiveperipherals:block/irrealium_block",
+    "particle": "progressiveperipherals:block/irrealium_block"
   }
 }

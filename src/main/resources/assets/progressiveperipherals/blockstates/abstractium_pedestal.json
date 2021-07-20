@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "progressiveperipherals:block/abstractium_pedestal"
-    }
+    "facing=north": {"model": "progressiveperipherals:block/abstractium_pedestal", "x":  90, "y": 0},
+    "facing=east": {"model": "progressiveperipherals:block/abstractium_pedestal", "x":  90, "y": 90},
+    "facing=west": {"model": "progressiveperipherals:block/abstractium_pedestal", "x":  90, "y": 270},
+    "facing=south": {"model": "progressiveperipherals:block/abstractium_pedestal", "x":  90, "y": 180},
+    "facing=up": {"model": "progressiveperipherals:block/abstractium_pedestal"},
+    "facing=down": {"model": "progressiveperipherals:block/abstractium_pedestal", "x": 180}
   }
 }
