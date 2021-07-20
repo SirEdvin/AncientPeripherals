@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.common.setup;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.*;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
@@ -60,13 +61,13 @@ public class Blocks {
     public static final RegistryObject<Block> ABSTRACTIUM_BLOCK = register(
             "abstractium_block",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
-            () -> new BaseBlockItem(Blocks.ABSTRACTIUM_BLOCK.get())
+            () -> new BaseBlockItem(Blocks.ABSTRACTIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> IRREALIUM_BLOCK = register(
             "irrealium_block",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
-            () -> new BaseBlockItem(Blocks.IRREALIUM_BLOCK.get())
+            () -> new BaseBlockItem(Blocks.IRREALIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
     );
 
     private static <T extends Block> RegistryObject<T> registerNoItem(String name, Supplier<T> block) {

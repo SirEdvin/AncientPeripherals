@@ -8,6 +8,8 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.periphera
 
 public class ProgressivePeripheralsConfig {
 
+    public static final int BREAKTHROUGH_SPAWN_LIMIT = 10_000;
+
     // Features
     public static boolean enableRealityForger;
     public static boolean enableStatueWorkbench = true;
@@ -23,6 +25,7 @@ public class ProgressivePeripheralsConfig {
     public static int xpToFuelRate;
     public static double furnaceBurnFuelCostRate;
     public static int cuttingAxeMaxBlockCount;
+    public static int breakthroughPointSpawnChance;
     // Configuration
     public static double enchantingAutomataCoreDisappearChance;
 
@@ -44,6 +47,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.IntValue XP_TO_FUEL_RATE;
         final ForgeConfigSpec.DoubleValue SMELT_FUEL_COST_RATE;
         final ForgeConfigSpec.IntValue CUTTING_AXE_MAX_BLOCK_COUNT;
+        final ForgeConfigSpec.IntValue BREAKTHROUGH_POINT_SPAWN_CHANCE;
 
         // Mechanic souls
         final ForgeConfigSpec.DoubleValue ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE;
@@ -66,6 +70,10 @@ public class ProgressivePeripheralsConfig {
             CUTTING_AXE_MAX_BLOCK_COUNT = builder
                     .comment("Define max block count, that could be cut at once via Cutting axe. Don't set big numbers, it can cause server crashes")
                     .defineInRange("cuttingAxeMaxBlockCount", 1024, 256, Integer.MAX_VALUE);
+            BREAKTHROUGH_POINT_SPAWN_CHANCE = builder
+                    .comment("Spawn chance per 10000 calls")
+                    .defineInRange("breakthroughPointSpawnChance", 20, 1, BREAKTHROUGH_SPAWN_LIMIT);
+
             builder.pop();
             builder.comment("").push("Operations");
             register(CountOperation.values(), builder);

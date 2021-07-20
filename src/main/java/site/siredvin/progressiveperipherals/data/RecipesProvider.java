@@ -5,6 +5,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.Items;
@@ -28,6 +29,16 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 Items.FORGED_AUTOMATA_CORE.get().asItem(), consumer
         );
     }
+
+    protected void buildBlockIngotRecipes(Consumer<IFinishedRecipe> consumer, IItemProvider block, IItemProvider ingot) {
+        TweakedShapelessRecipeBuilder.shapeless(block)
+                .requires(ingot, 9)
+                .save(consumer);
+        TweakedShapelessRecipeBuilder.shapeless(ingot, 9)
+                .requires(block)
+                .save(consumer);
+    }
+
     protected void buildAutomataRecipes(Consumer<IFinishedRecipe> consumer) {
         AutomataRecipeBuilder.start(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), 32)
                 .define('I', Items.ABSTRACTIUM_INGOT.get())
@@ -98,9 +109,8 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
-        TweakedShapelessRecipeBuilder.shapeless(Blocks.ABSTRACTIUM_BLOCK.get())
-                .requires(Items.ABSTRACTIUM_INGOT.get(), 9)
-                .save(consumer);
+        buildBlockIngotRecipes(consumer, Blocks.ABSTRACTIUM_BLOCK.get(), Items.ABSTRACTIUM_INGOT.get());
+        buildBlockIngotRecipes(consumer, Blocks.IRREALIUM_BLOCK.get(), Items.IRREALIUM_INGOT.get());
         TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_AXE.get())
                 .define('I', Items.ABSTRACTIUM_INGOT.get())
                 .define('S', net.minecraft.item.Items.STICK)
