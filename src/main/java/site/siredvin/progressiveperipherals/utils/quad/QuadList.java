@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.utils.dao;
+package site.siredvin.progressiveperipherals.utils.quad;
 
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;

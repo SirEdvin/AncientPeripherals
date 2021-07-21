@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
+import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.util.HashMap;
 import java.util.Map;

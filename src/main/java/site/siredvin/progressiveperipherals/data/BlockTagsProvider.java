@@ -25,7 +25,12 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.tag(BlockTags.BREAKTHROUGH_REACTOR_CASING).add(
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get(),
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_GLASS.get(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_IO_PORT.get()
+                Blocks.REALITY_BREAKTHROUGH_REACTOR_IO_PORT.get(),
+                Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()
+        );
+        this.tag(BlockTags.BREAKTHROUGH_REACTOR_CORNER).add(
+                Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(),
+                Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get()
         );
     }
 

@@ -1,6 +1,9 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
+import dan200.computercraft.api.lua.LuaFunction;
+import dan200.computercraft.api.lua.MethodResult;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.common.util.Pair;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityBreakthroughRectorControllerTileEntity;
 
 public class RealityBreakthroughReactorControllerPeripheral extends BasePeripheral {
@@ -13,5 +16,16 @@ public class RealityBreakthroughReactorControllerPeripheral extends BasePeripher
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @LuaFunction
+    public final boolean isConnected() {
+        return tileEntity.isConfigured();
+    }
+
+    @LuaFunction
+    public final MethodResult connect() {
+        Pair<Boolean, String> result = tileEntity.detectMultiBlock();
+        return MethodResult.of(result.getLeft(), result.getRight());
     }
 }

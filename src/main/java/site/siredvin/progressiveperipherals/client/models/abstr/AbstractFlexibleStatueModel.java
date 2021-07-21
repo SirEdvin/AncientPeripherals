@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
-import site.siredvin.progressiveperipherals.utils.dao.QuadData;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
+import site.siredvin.progressiveperipherals.utils.quad.QuadData;
+import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.util.List;
 import java.util.Random;

@@ -4,7 +4,7 @@ import net.minecraft.nbt.ByteArrayNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.IntNBT;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
+import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.awt.*;
 import java.io.*;

@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.utils;
 
 import java.util.Collection;
 
-public class RepresentationUtil {
+public class RepresentationUtils {
 
     public static <T> String mergeValues(Collection<T> objects) {
         StringBuilder builder = new StringBuilder();

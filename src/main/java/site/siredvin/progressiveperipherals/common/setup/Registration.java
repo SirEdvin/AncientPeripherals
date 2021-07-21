@@ -10,6 +10,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
+import site.siredvin.progressiveperipherals.common.tags.BlockTags;
+import site.siredvin.progressiveperipherals.common.tags.ItemTags;
 
 public class Registration {
 
@@ -27,6 +29,9 @@ public class Registration {
         TILE_ENTITIES.register(modEventBus);
         BLOCKS.register(modEventBus);
         FEATURES.register(modEventBus);
+
+        BlockTags.register();
+        ItemTags.register();
 
         RecipeSerializers.register();
         Blocks.register();

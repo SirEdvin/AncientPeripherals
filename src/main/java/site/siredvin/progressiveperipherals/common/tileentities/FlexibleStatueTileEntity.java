@@ -17,7 +17,7 @@ import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.utils.NBTUtils;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
+import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.util.ArrayList;
 import java.util.List;

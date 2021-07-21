@@ -4,8 +4,8 @@ import dan200.computercraft.api.lua.LuaException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.utils.dao.QuadData;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
+import site.siredvin.progressiveperipherals.utils.quad.QuadData;
+import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.awt.*;
 import java.util.ArrayList;

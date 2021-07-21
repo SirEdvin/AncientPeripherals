@@ -13,7 +13,7 @@ import site.siredvin.progressiveperipherals.client.models.abstr.AbstractFlexible
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
 import site.siredvin.progressiveperipherals.utils.NBTUtils;
-import site.siredvin.progressiveperipherals.utils.dao.QuadList;
+import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.util.List;
 import java.util.Random;

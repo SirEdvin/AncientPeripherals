@@ -12,8 +12,11 @@ public class ItemTags {
     protected static final TagRegistry<Item> HELPER = TagRegistryManager.create(new ResourceLocation(ProgressivePeripherals.MOD_ID, "item"), ITagCollectionSupplier::getItems);
 
     public static final ITag.INamedTag<Item> BREAKTHROUGH_REACTOR_CASING = bind("breakthrough_reactor_casing");
+    public static final ITag.INamedTag<Item> BREAKTHROUGH_REACTOR_CORNER = bind("breakthrough_reactor_corner");
 
     public static ITag.INamedTag<Item> bind(String p_199894_0_) {
         return HELPER.bind(ProgressivePeripherals.MOD_ID + ":" + p_199894_0_);
     }
+
+    public static void register(){}
 }

@@ -1,7 +1,6 @@
 {
   "variants": {
-    "": {
-      "model": "progressiveperipherals:block/reality_breakthrough_reactor_casing"
-    }
+    "connected=false": {"model": "progressiveperipherals:block/reality_breakthrough_reactor_casing"},
+    "connected=true": {"model": "progressiveperipherals:block/reality_breakthrough_reactor_casing_connected"}
   }
 }

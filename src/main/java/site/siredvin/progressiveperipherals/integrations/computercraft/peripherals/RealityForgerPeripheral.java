@@ -26,7 +26,7 @@ import site.siredvin.progressiveperipherals.common.tileentities.FlexibleRealityA
 import site.siredvin.progressiveperipherals.common.tileentities.RealityForgerTileEntity;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
-import site.siredvin.progressiveperipherals.utils.RepresentationUtil;
+import site.siredvin.progressiveperipherals.utils.RepresentationUtils;
 import site.siredvin.progressiveperipherals.utils.ScanUtils;
 
 import java.util.*;
@@ -67,7 +67,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
                 // Well, how even here could happen NPE?
                 Optional targetedEnum = enumProperty.getPossibleValues().stream().filter(candidate -> candidate.toString().toLowerCase().equals(value)).findAny();
                 if (!targetedEnum.isPresent())
-                    throw new LuaException(String.format("Incorrect value %s, only %s is allowed", entry.getKey(), RepresentationUtil.mergeValues(enumProperty.getPossibleValues())));
+                    throw new LuaException(String.format("Incorrect value %s, only %s is allowed", entry.getKey(), RepresentationUtils.mergeValues(enumProperty.getPossibleValues())));
                 state = state.setValue(enumProperty, (Enum)targetedEnum.get());
             } else if (property instanceof BooleanProperty) {
                 if (!(entry.getValue() instanceof Boolean))
