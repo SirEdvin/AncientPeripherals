@@ -8,7 +8,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntityType;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
+import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
 public abstract class MutableNBTPeripheralTileEntity<T extends BasePeripheral> extends PeripheralTileEntity<T> implements ITileEntityDataProvider {
     public MutableNBTPeripheralTileEntity(TileEntityType<?> p_i48289_1_) {

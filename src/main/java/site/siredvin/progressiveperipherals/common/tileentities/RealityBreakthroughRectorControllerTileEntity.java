@@ -1,5 +1,10 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
+import dan200.computercraft.api.lua.IArguments;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.lua.LuaException;
+import dan200.computercraft.api.lua.MethodResult;
+import dan200.computercraft.api.peripheral.IComputerAccess;
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -7,6 +12,8 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.api.blocks.IPeripheralPlugin;
+import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.multiblock.IMultiBlockStructure;
 import site.siredvin.progressiveperipherals.api.tileentity.IMultiBlockController;
 import site.siredvin.progressiveperipherals.common.multiblock.MultiBlockUtils;
@@ -16,11 +23,10 @@ import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tags.BlockTags;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.RealityBreakthroughReactorControllerPeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.rbtreactor.ControllerPlugin;
 import site.siredvin.progressiveperipherals.utils.RepresentationUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPeripheralTileEntity<RealityBreakthroughReactorControllerPeripheral> implements IMultiBlockController {
@@ -35,14 +41,40 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
 
     private boolean configured = false;
     private @Nullable SquareMultiBlock structure;
+    private final List<IPeripheralPlugin<RealityBreakthroughRectorControllerTileEntity>> plugins = new ArrayList<>();
+    private final Map<String, IPluggableLuaMethod<RealityBreakthroughRectorControllerTileEntity>> methodMap = new HashMap<>();
+    private String[] methodNames;
 
     public RealityBreakthroughRectorControllerTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get());
+        plugins.add(new ControllerPlugin());
+        rebuildMethodMap();
+    }
+
+    protected void rebuildMethodMap() {
+        methodMap.clear();
+        for (IPeripheralPlugin<RealityBreakthroughRectorControllerTileEntity> plugin: plugins) {
+            methodMap.putAll(plugin.getMethods());
+        }
+        methodNames = methodMap.keySet().toArray(new String[0]);
     }
 
     @Override
     protected @NotNull RealityBreakthroughReactorControllerPeripheral createPeripheral() {
         return new RealityBreakthroughReactorControllerPeripheral("realityBreakthroughReactorController", this);
+    }
+
+    @NotNull
+    public String[] getMethodNames() {
+        return methodNames;
+    }
+
+    @NotNull
+    public MethodResult callMethod(@NotNull IComputerAccess access, @NotNull ILuaContext context, int methodIndex, @NotNull IArguments arguments) throws LuaException {
+        IPluggableLuaMethod<RealityBreakthroughRectorControllerTileEntity> method = methodMap.get(methodNames[methodIndex]);
+        if (method == null)
+            throw new IllegalArgumentException("Cannot find method ...");
+        return method.call(access, context, arguments, this);
     }
 
     @Override

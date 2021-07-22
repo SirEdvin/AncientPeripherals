@@ -4,7 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
+import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackContainer;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;

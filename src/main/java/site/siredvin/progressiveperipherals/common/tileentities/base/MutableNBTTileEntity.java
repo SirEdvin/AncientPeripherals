@@ -7,7 +7,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
+import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
 public abstract class MutableNBTTileEntity extends TileEntity implements ITileEntityDataProvider {
     public MutableNBTTileEntity(TileEntityType<?> p_i48289_1_) {

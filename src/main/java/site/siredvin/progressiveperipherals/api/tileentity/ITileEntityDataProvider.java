@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.api.blocks;
+package site.siredvin.progressiveperipherals.api.tileentity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;

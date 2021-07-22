@@ -5,7 +5,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.api.blocks.ITileEntityDataProvider;
+import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
 import site.siredvin.progressiveperipherals.api.tileentity.IRealityBreakthroughPointTier;
 import site.siredvin.progressiveperipherals.api.tileentity.IRealityBreakthroughPointTileEntity;

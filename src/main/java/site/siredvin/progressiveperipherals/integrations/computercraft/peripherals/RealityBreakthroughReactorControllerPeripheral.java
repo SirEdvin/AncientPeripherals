@@ -1,12 +1,16 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
-import dan200.computercraft.api.lua.LuaFunction;
+import dan200.computercraft.api.lua.IArguments;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IDynamicPeripheral;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
-import de.srendi.advancedperipherals.common.util.Pair;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityBreakthroughRectorControllerTileEntity;
 
-public class RealityBreakthroughReactorControllerPeripheral extends BasePeripheral {
+public class RealityBreakthroughReactorControllerPeripheral extends BasePeripheral implements IDynamicPeripheral {
     private final RealityBreakthroughRectorControllerTileEntity tileEntity;
     public RealityBreakthroughReactorControllerPeripheral(String type, RealityBreakthroughRectorControllerTileEntity tileEntity) {
         super(type, tileEntity);
@@ -18,14 +22,15 @@ public class RealityBreakthroughReactorControllerPeripheral extends BasePeripher
         return true;
     }
 
-    @LuaFunction
-    public final boolean isConnected() {
-        return tileEntity.isConfigured();
+    @NotNull
+    @Override
+    public String[] getMethodNames() {
+        return tileEntity.getMethodNames();
     }
 
-    @LuaFunction(mainThread = true)
-    public final MethodResult connect() {
-        Pair<Boolean, String> result = tileEntity.detectMultiBlock();
-        return MethodResult.of(result.getLeft(), result.getRight());
+    @NotNull
+    @Override
+    public MethodResult callMethod(@NotNull IComputerAccess access, @NotNull ILuaContext context, int methodIndex, @NotNull IArguments arguments) throws LuaException {
+        return tileEntity.callMethod(access, context, methodIndex, arguments);
     }
 }
