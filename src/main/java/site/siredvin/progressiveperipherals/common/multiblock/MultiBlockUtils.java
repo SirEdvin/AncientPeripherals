@@ -5,6 +5,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.api.tileentity.IMultiBlockController;
 import site.siredvin.progressiveperipherals.utils.ScanUtils;
@@ -23,29 +25,44 @@ public class MultiBlockUtils {
         return zDiff + 1;
     }
 
-    public static BlockPos findLowestPoint(World world, BlockPos startPoint, Predicate<BlockState> isSuitable) {
-        while (true) {
+    public static @Nullable BlockPos findLowestPoint(World world, BlockPos startPoint, Predicate<BlockState> isSuitable, int deep) {
+        for (int i = 0; i < deep; i++) {
             if (!isSuitable.test(world.getBlockState(startPoint.below())))
-                return startPoint;
+                break;
             startPoint = startPoint.below();
         }
+        if (isSuitable.test(world.getBlockState(startPoint)))
+            return startPoint;
+        return null;
     }
 
-    public static Pair<BlockPos, BlockPos> findCorners(World world, BlockPos lowestPoint, Predicate<BlockState> isSuitable) {
+    public static @Nullable Pair<BlockPos, BlockPos> findCorners(World world, @NotNull BlockPos lowestPoint, Predicate<BlockState> isSuitable, int deep) {
         BlockPos northWestCorner = lowestPoint;
-        while (isSuitable.test(world.getBlockState(northWestCorner.north()))) {
+        for (int i = 0; i < deep; i++) {
+            if (!isSuitable.test(world.getBlockState(northWestCorner.north())))
+                break;
             northWestCorner = northWestCorner.north();
         }
-        while (isSuitable.test(world.getBlockState(northWestCorner.west()))) {
+        for (int i = 0; i < deep; i++) {
+            if (!isSuitable.test(world.getBlockState(northWestCorner.west())))
+                break;
             northWestCorner = northWestCorner.west();
         }
         BlockPos southEastCorner = lowestPoint;
-        while (isSuitable.test(world.getBlockState(northWestCorner.south()))) {
+        for (int i = 0; i < deep; i++) {
+            if (!isSuitable.test(world.getBlockState(southEastCorner.south())))
+                break;
             southEastCorner = southEastCorner.south();
         }
-        while (isSuitable.test(world.getBlockState(northWestCorner.east()))) {
+        for (int i = 0; i < deep; i++) {
+            if (!isSuitable.test(world.getBlockState(southEastCorner.east())))
+                break;
             southEastCorner = southEastCorner.east();
         }
+        if (!isSuitable.test(world.getBlockState(northWestCorner)))
+            return null;
+        if (!isSuitable.test(world.getBlockState(southEastCorner)))
+            return null;
         return Pair.of(northWestCorner, southEastCorner);
     }
 

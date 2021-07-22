@@ -57,7 +57,7 @@ public class RealityBreakthroughReactorBlock extends BaseBlock {
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             MultiBlockUtils.handlePartDestroy(
-                    world, blockPos, RealityBreakthroughRectorControllerTileEntity.SIZE, blockState -> state.is(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get())
+                    world, blockPos, RealityBreakthroughRectorControllerTileEntity.SIZE, blockState -> blockState.is(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get())
             );
         }
         super.onRemove(state, world, blockPos, newState, isMoving);

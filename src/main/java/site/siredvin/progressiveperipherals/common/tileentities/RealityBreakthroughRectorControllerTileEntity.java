@@ -21,6 +21,7 @@ import site.siredvin.progressiveperipherals.utils.RepresentationUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPeripheralTileEntity<RealityBreakthroughReactorControllerPeripheral> implements IMultiBlockController {
 
@@ -28,6 +29,9 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
 
     private final static String CONFIGURED_TAG = "configured";
     private final static String NORTH_WEST_LOWEST_POS_TAG = "northWestLowestPos";
+
+    private final static Predicate<BlockState> CORNER_PREDICATE = state -> state.is(BlockTags.BREAKTHROUGH_REACTOR_CORNER);
+    private final static Predicate<BlockState> CASING_PREDICATE = state -> state.is(BlockTags.BREAKTHROUGH_REACTOR_CASING);
 
     private boolean configured = false;
     private @Nullable SquareMultiBlock structure;
@@ -64,8 +68,12 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
         if (configured)
             return Pair.onlyLeft(true);
         BlockPos pos = getBlockPos();
-        BlockPos lowestPoint = MultiBlockUtils.findLowestPoint(level, pos, state -> state.is(BlockTags.BREAKTHROUGH_REACTOR_CASING));
-        Pair<BlockPos, BlockPos> corners = MultiBlockUtils.findCorners(level, lowestPoint, state -> state.is(BlockTags.BREAKTHROUGH_REACTOR_CORNER));
+        BlockPos lowestPoint = MultiBlockUtils.findLowestPoint(level, pos, CASING_PREDICATE, SIZE + 1);
+        if (lowestPoint == null)
+            return Pair.of(false, "Cannot find lowest point ...");
+        Pair<BlockPos, BlockPos> corners = MultiBlockUtils.findCorners(level, lowestPoint, CORNER_PREDICATE, SIZE + 1);
+        if (corners == null)
+            return Pair.of(false, "Cannot find lowest corners ...");
         BlockPos northWestCorner = corners.getLeft();
         BlockPos southEastCorner = corners.getRight();
         int size = MultiBlockUtils.calculateSquare(northWestCorner, southEastCorner);
@@ -83,7 +91,7 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
         List<BlockPos> incorrectPlacedBlocks = new ArrayList<>();
         structure.traverseCorners(blockPos -> {
             BlockState trState = level.getBlockState(blockPos);
-            if (!trState.is(BlockTags.BREAKTHROUGH_REACTOR_CORNER))
+            if (!CORNER_PREDICATE.test(trState))
                 incorrectPlacedBlocks.add(blockPos);
         });
         if (!incorrectPlacedBlocks.isEmpty())
@@ -91,7 +99,7 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
         // Check internals
         structure.traverseInsideSides(blockPos -> {
             BlockState trState = level.getBlockState(blockPos);
-            if (!trState.is(BlockTags.BREAKTHROUGH_REACTOR_CASING))
+            if (!CASING_PREDICATE.test(trState))
                 incorrectPlacedBlocks.add(blockPos);
         });
         if (!incorrectPlacedBlocks.isEmpty())
@@ -106,7 +114,7 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
         });
         if (!incorrectPlacedBlocks.isEmpty())
             return Pair.of(false, String.format("This blocks should be empty: %s", RepresentationUtils.mergeValues(incorrectPlacedBlocks)));
-        structure.setupInsideSidesFacingAndConnections(level, pos);
+        structure.setupFacingAndConnections(level, pos);
         configured = true;
         return Pair.onlyLeft(true);
     }
@@ -118,6 +126,16 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
 
     public boolean isConfigured() {
         return configured;
+    }
+
+    @Override
+    public Predicate<BlockState> getCasingPredicate() {
+        return CASING_PREDICATE;
+    }
+
+    @Override
+    public Predicate<BlockState> getCornerPredicate() {
+        return CORNER_PREDICATE;
     }
 
     @Override

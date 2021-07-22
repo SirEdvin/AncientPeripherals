@@ -23,7 +23,7 @@ public class RealityBreakthroughReactorControllerPeripheral extends BasePeripher
         return tileEntity.isConfigured();
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult connect() {
         Pair<Boolean, String> result = tileEntity.detectMultiBlock();
         return MethodResult.of(result.getLeft(), result.getRight());
