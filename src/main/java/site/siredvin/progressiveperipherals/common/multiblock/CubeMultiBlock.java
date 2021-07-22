@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class SquareMultiBlock implements IMultiBlockStructure {
+public class CubeMultiBlock implements IMultiBlockStructure {
     private final int size;
     private final MultiBlockCorner northWestLowest;
 
-    public SquareMultiBlock(BlockPos northWestLowest, int size) {
+    public CubeMultiBlock(BlockPos northWestLowest, int size) {
         this.size = size;
         this.northWestLowest = MultiBlockCorner.northWestLowest(northWestLowest);
     }
 
-    public SquareMultiBlock(BlockPos northWestLowest, BlockPos southEastCorner) {
+    public CubeMultiBlock(BlockPos northWestLowest, BlockPos southEastCorner) {
         this.size = MultiBlockUtils.calculateSquare(northWestLowest, southEastCorner);
         if (size == -1)
             throw new IllegalArgumentException("Coordinate should create square with yDiff 0");

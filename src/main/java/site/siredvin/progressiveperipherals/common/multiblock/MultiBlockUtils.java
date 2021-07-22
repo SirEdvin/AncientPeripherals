@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.api.tileentity.IMultiBlockController;
+import site.siredvin.progressiveperipherals.api.multiblock.IMultiBlockController;
 import site.siredvin.progressiveperipherals.utils.ScanUtils;
 
 import java.util.function.Predicate;

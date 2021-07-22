@@ -8,7 +8,7 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.core.asm.TaskCallback;
 import de.srendi.advancedperipherals.common.util.Pair;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.api.blocks.IPeripheralPlugin;
+import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityBreakthroughRectorControllerTileEntity;
 

@@ -1,5 +1,6 @@
-package site.siredvin.progressiveperipherals.common.blocks.rbtreactor;
+package site.siredvin.progressiveperipherals.common.blocks.multiblock;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -14,27 +15,28 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.common.blocks.GenericTileEntityBlock;
+import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
 import site.siredvin.progressiveperipherals.common.multiblock.MultiBlockProperties;
-import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
+import site.siredvin.progressiveperipherals.common.multiblock.MultiBlockUtils;
+import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.RealityBreakthroughRectorControllerTileEntity;
 
-public class RealityBreakthroughReactorController extends GenericTileEntityBlock<RealityBreakthroughRectorControllerTileEntity> {
-    public static final BooleanProperty CONNECTED = MultiBlockProperties.CONNECTED;
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+public class MultiBlockBlock extends BaseBlock {
 
-    public RealityBreakthroughReactorController() {
-        super(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(CONNECTED, false));
+    public static final BooleanProperty CONNECTED = MultiBlockProperties.CONNECTED;
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+
+    public MultiBlockBlock(AbstractBlock.Properties properties) {
+        super(properties);
+        this.registerDefaultState(this.getStateDefinition().any().setValue(CONNECTED, false).setValue(FACING, Direction.NORTH));
     }
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(FACING);
         builder.add(CONNECTED);
+        builder.add(FACING);
     }
-
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
@@ -54,9 +56,9 @@ public class RealityBreakthroughReactorController extends GenericTileEntityBlock
     @Override
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            RealityBreakthroughRectorControllerTileEntity tileEntity = (RealityBreakthroughRectorControllerTileEntity) world.getBlockEntity(blockPos);
-            if (tileEntity != null)
-                tileEntity.deconstructMultiBlock();
+            MultiBlockUtils.handlePartDestroy(
+                    world, blockPos, RealityBreakthroughRectorControllerTileEntity.SIZE, blockState -> blockState.is(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get())
+            );
         }
         super.onRemove(state, world, blockPos, newState, isMoving);
     }

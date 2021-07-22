@@ -1,7 +1,6 @@
-package site.siredvin.progressiveperipherals.api.blocks;
+package site.siredvin.progressiveperipherals.api.integrations;
 
 import net.minecraft.tileentity.TileEntity;
-import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 
 import java.util.Map;
 

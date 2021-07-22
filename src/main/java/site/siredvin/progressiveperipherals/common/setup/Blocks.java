@@ -6,9 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.*;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
-import site.siredvin.progressiveperipherals.common.blocks.rbtreactor.RealityBreakthroughReactorBlock;
-import site.siredvin.progressiveperipherals.common.blocks.rbtreactor.RealityBreakthroughReactorController;
-import site.siredvin.progressiveperipherals.common.blocks.rbtreactor.RealityBreakthroughReactorGlass;
+import site.siredvin.progressiveperipherals.common.blocks.multiblock.MultiBlockBlock;
+import site.siredvin.progressiveperipherals.common.blocks.multiblock.RealityBreakthroughReactorController;
+import site.siredvin.progressiveperipherals.common.blocks.multiblock.MultiBlockGlass;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorItem;
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
@@ -67,19 +67,19 @@ public class Blocks {
 
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_REACTOR_CASING = register(
             "reality_breakthrough_reactor_casing",
-            () -> new RealityBreakthroughReactorBlock(BlockUtils.defaultProperties()),
+            () -> new MultiBlockBlock(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_REACTOR_GLASS = register(
             "reality_breakthrough_reactor_glass",
-            () -> new RealityBreakthroughReactorGlass(BlockUtils.defaultProperties()),
+            () -> new MultiBlockGlass(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_GLASS.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_REACTOR_IO_PORT = register(
             "reality_breakthrough_reactor_io_port",
-            () -> new RealityBreakthroughReactorBlock(BlockUtils.defaultProperties()),
+            () -> new MultiBlockBlock(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_IO_PORT.get(), new Item.Properties().stacksTo(64))
     );
 
