@@ -11,6 +11,7 @@ import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.multiblock.ICubeMultiBlockController;
 import site.siredvin.progressiveperipherals.api.multiblock.IMultiBlockStructure;
+import site.siredvin.progressiveperipherals.api.multiblock.MultiBlockPluggableFeature;
 import site.siredvin.progressiveperipherals.common.multiblock.CubeMultiBlock;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPeripheralTileEntity<RealityBreakthroughReactorControllerPeripheral> implements ICubeMultiBlockController {
+public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPeripheralTileEntity<RealityBreakthroughReactorControllerPeripheral> implements ICubeMultiBlockController<RealityBreakthroughRectorControllerTileEntity> {
 
     public final static int SIZE = 5;
 
@@ -42,6 +43,8 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
     private final List<IPeripheralPlugin<RealityBreakthroughRectorControllerTileEntity>> plugins = new ArrayList<>();
     private final Map<String, IPluggableLuaMethod<RealityBreakthroughRectorControllerTileEntity>> methodMap = new HashMap<>();
     private String[] methodNames;
+
+    // add inventory logic
 
     public RealityBreakthroughRectorControllerTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get());
@@ -78,6 +81,11 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
     }
 
     @Override
+    public void handleFeature(MultiBlockPluggableFeature feature) {
+
+    }
+
+    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.putBoolean(CONFIGURED_TAG, configured);
         if (structure != null) {
@@ -92,6 +100,8 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
         if (data.contains(NORTH_WEST_LOWEST_POS_TAG)) {
             BlockPos northWestLowest = NBTUtil.readBlockPos(data.getCompound(NORTH_WEST_LOWEST_POS_TAG));
             structure = new CubeMultiBlock(northWestLowest, SIZE);
+            if (level != null && !level.isClientSide)
+                commonDetect();
         }
     }
 
@@ -146,5 +156,10 @@ public class RealityBreakthroughRectorControllerTileEntity extends MutableNBTPer
     @Override
     public void deconstructionCallback() {
         configured = false;
+    }
+
+    @Override
+    public void detectCallback() {
+
     }
 }

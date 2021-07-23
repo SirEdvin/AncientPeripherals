@@ -75,6 +75,7 @@ public interface ICubeMultiBlockController<T extends TileEntity & IMultiBlockCon
         structure.setupFacingAndConnections(world, pos);
         setConfigured(true);
         setStructure(structure);
+        commonDetect();
         return Pair.onlyLeft(true);
     }
 }

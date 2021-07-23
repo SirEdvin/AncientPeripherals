@@ -55,7 +55,7 @@ public interface IMultiBlockController<T extends TileEntity & IMultiBlockControl
             if (casingPredicate.test(state))
                 world.setBlockAndUpdate(blockPos, MultiBlockPropertiesUtils.setConnected(state, false));
         });
-        deconstructionCallback();
+        commonDeconstruction();
     }
 
     // multi-block peripheral logic
@@ -65,6 +65,7 @@ public interface IMultiBlockController<T extends TileEntity & IMultiBlockControl
     @NotNull List<IPeripheralPlugin<T>> getPlugins();
     @NotNull Map<String, IPluggableLuaMethod<T>> getMethodMap();
     void injectDefaultPlugins();
+    void handleFeature(MultiBlockPluggableFeature feature);
 
 
     default void cleanPluginsAndMethods() {
@@ -90,8 +91,13 @@ public interface IMultiBlockController<T extends TileEntity & IMultiBlockControl
         structure.traverseInsideSides(blockPos -> {
             BlockState state = world.getBlockState(blockPos);
             if (state.getBlock() instanceof IMultiBlockPlugin) {
-                IMultiBlockPlugin<T> plugin = (IMultiBlockPlugin<T>) state.getBlock();
-                plugins.add(plugin.getPlugin());
+                IMultiBlockPlugin<T> pluginBlock = (IMultiBlockPlugin<T>) state.getBlock();
+                IPeripheralPlugin<T> plugin = pluginBlock.getPlugin();
+                MultiBlockPluggableFeature feature = pluginBlock.getFeature();
+                if (plugin != null)
+                    plugins.add(plugin);
+                if (feature != null)
+                    handleFeature(feature);
             }
         });
         Map<String, IPluggableLuaMethod<T>> methodMap = getMethodMap();
@@ -104,11 +110,16 @@ public interface IMultiBlockController<T extends TileEntity & IMultiBlockControl
 
      // internal logic
 
-    default void deconstructionCallback() {
+    default void commonDeconstruction() {
         cleanPluginsAndMethods();
+        deconstructionCallback();
     }
 
-    default void detectCallback() {
+    default void commonDetect() {
         rebuildPluginsAndMethods();
+        detectCallback();
     }
+
+    void deconstructionCallback();
+    void detectCallback();
 }
