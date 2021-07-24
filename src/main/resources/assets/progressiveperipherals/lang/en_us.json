@@ -56,12 +56,14 @@
   "block.progressiveperipherals.irrealium_block.tooltip": "§7Ingot of interworld material stored in block",
   "block.progressiveperipherals.irrealium_pedestal": "Irrealium pedestal",
   "block.progressiveperipherals.irrealium_pedestal.tooltip": "§7Pedestal, that can store items. Maybe it has additional uses?",
-  "block.progressiveperipherals.reality_breakthrough_reactor_casing": "RBHReactor casing",
-  "block.progressiveperipherals.reality_breakthrough_reactor_casing.tooltip": "Casing block for reality breakthrough reactor. Safety for decorations",
-  "block.progressiveperipherals.reality_breakthrough_reactor_glass": "RBHReactor casing glass",
-  "block.progressiveperipherals.reality_breakthrough_reactor_glass.tooltip": "Transparent casing block for reality breakthrough reactor. Safety for decorations",
-  "block.progressiveperipherals.reality_breakthrough_reactor_io_port": "RBHReactor IO port",
-  "block.progressiveperipherals.reality_breakthrough_reactor_io_port.tooltip": "Functionality block for reality breakthrough reactor. Allows to perform input/output operation on reactor.",
+  "block.progressiveperipherals.irrealium_machinery_casing": "Irrealium machinery casing",
+  "block.progressiveperipherals.irrealium_machinery_casing.tooltip": "Casing block for any irrealium machine. Safety for decorations",
+  "block.progressiveperipherals.irrealium_machinery_glass": "Irrealium machinery glass",
+  "block.progressiveperipherals.irrealium_machinery_glass.tooltip": "Transparent casing block for any irrealium machine. Safety for decorations",
+  "block.progressiveperipherals.irrealium_machinery_io_port": "Irrealium machinery io port",
+  "block.progressiveperipherals.irrealium_machinery_io_port.tooltip": "Functionality block for any irrealium machine. Have no use now.",
+  "block.progressiveperipherals.irrealium_machinery_storage": "Irrealium machinery storage",
+  "block.progressiveperipherals.irrealium_machinery_storage.tooltip": "Functionality block for any irrealium machine. Allows to store result items for machine. Also can be used as generic chest.",
   "block.progressiveperipherals.reality_breakthrough_reactor_controller": "RBHReactor controller",
   "block.progressiveperipherals.reality_breakthrough_reactor_controller.tooltip": "Reality breakthrough reactor controller. Main block that collect reactor together and serve as peripheral for computer interactions",
   "itemGroup.progressiveperipherals": "Progressive Peripherals",
@@ -84,5 +86,6 @@
   "text.progressiveperipherals.configured": "§oConfigured",
   "text.progressiveperipherals.statue_author": "Statue author: ",
   "text.progressiveperipherals.statue_name": "Statue name: ",
-  "text.progressiveperipherals.point_tier": "Point tier: "
+  "text.progressiveperipherals.point_tier": "Point tier: ",
+  "text.progressiveperipherals.machinery_storage": "Machinery storage"
 }

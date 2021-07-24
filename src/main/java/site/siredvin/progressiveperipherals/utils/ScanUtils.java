@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiConsumer;
-import java.util.function.Predicate;
+import java.util.function.BiPredicate;
 
 public class ScanUtils {
     public static void relativeTraverseBlocks(World world, BlockPos center, int radius, BiConsumer<BlockState, BlockPos> consumer) {
@@ -39,10 +39,10 @@ public class ScanUtils {
         }
     }
 
-    public static @Nullable Pair<BlockPos, BlockState> findBlockInRadius(World world, BlockPos center, int radius, Predicate<BlockState> predicate) {
+    public static @Nullable Pair<BlockPos, BlockState> findBlockInRadius(World world, BlockPos center, int radius, BiPredicate<BlockState, BlockPos> predicate) {
         ValueContainer<Pair<BlockPos, BlockState>> container = new ValueContainer<>();
         traverseBlocks(world, center, radius, ((blockState, blockPos) -> {
-            if (predicate.test(blockState))
+            if (predicate.test(blockState, blockPos))
                 container.setValue(Pair.of(blockPos, blockState));
         }));
         return container.getValue();

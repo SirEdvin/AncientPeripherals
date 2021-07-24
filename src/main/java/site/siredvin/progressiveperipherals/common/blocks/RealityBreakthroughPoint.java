@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
-import site.siredvin.progressiveperipherals.common.tileentities.RealityBreakthroughPointTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 public class RealityBreakthroughPoint extends BaseBlock {
@@ -16,7 +16,7 @@ public class RealityBreakthroughPoint extends BaseBlock {
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState p_149645_1_) {
+    public BlockRenderType getRenderShape(BlockState blockState) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 

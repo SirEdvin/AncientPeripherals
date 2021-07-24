@@ -4,6 +4,10 @@ import com.google.common.collect.Sets;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.tileentities.*;
+import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.MachineryStorageTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTExtractorControllerTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTRectorControllerTileEntity;
 
 public class TileEntityTypes {
 
@@ -34,12 +38,20 @@ public class TileEntityTypes {
             "abstractium_pedestal",
             () -> new TileEntityType<>(AbstractiumPedestalTileEntity::new, Sets.newHashSet(Blocks.ABSTRACTIUM_PEDESTAL.get()), null)
     );
-    public static final RegistryObject<TileEntityType<IrrealiumPedestalTileEntity>> IRRELIUM_PEDESTAL = Registration.TILE_ENTITIES.register(
-            "irrelium_pedestal",
+    public static final RegistryObject<TileEntityType<IrrealiumPedestalTileEntity>> IRREALIUM_PEDESTAL = Registration.TILE_ENTITIES.register(
+            "irrealium_pedestal",
             () -> new TileEntityType<>(IrrealiumPedestalTileEntity::new, Sets.newHashSet(Blocks.IRREALIUM_PEDESTAL.get()), null)
     );
-    public static final RegistryObject<TileEntityType<RealityBreakthroughRectorControllerTileEntity>> REALITY_BREAKTHROUGH_REACTOR_CONTROLLER = Registration.TILE_ENTITIES.register(
+    public static final RegistryObject<TileEntityType<RBTRectorControllerTileEntity>> REALITY_BREAKTHROUGH_REACTOR_CONTROLLER = Registration.TILE_ENTITIES.register(
             "reality_breakthrough_reactor_controller",
-            () -> new TileEntityType<>(RealityBreakthroughRectorControllerTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()), null)
+            () -> new TileEntityType<>(RBTRectorControllerTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()), null)
+    );
+    public static final RegistryObject<TileEntityType<RBTExtractorControllerTileEntity>> REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER = Registration.TILE_ENTITIES.register(
+            "reality_breakthrough_reactor_extractor",
+            () -> new TileEntityType<>(RBTExtractorControllerTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get()), null)
+    );
+    public static final RegistryObject<TileEntityType<MachineryStorageTileEntity>> MACHINERY_STORAGE = Registration.TILE_ENTITIES.register(
+            "machinery_storage",
+            () -> new TileEntityType<>(MachineryStorageTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get()), null)
     );
 }

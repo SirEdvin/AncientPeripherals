@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "connected=false": {"model": "progressiveperipherals:block/irrealium_machinery_glass"},
+    "connected=true": {"model": "progressiveperipherals:block/irrealium_machinery_glass_connected"}
+  }
+}

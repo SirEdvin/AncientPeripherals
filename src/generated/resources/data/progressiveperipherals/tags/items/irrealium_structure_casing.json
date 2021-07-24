@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "progressiveperipherals:irrealium_machinery_casing",
+    "progressiveperipherals:irrealium_machinery_glass",
+    "progressiveperipherals:irrealium_machinery_io_port",
+    "progressiveperipherals:irrealium_machinery_storage",
+    "progressiveperipherals:reality_breakthrough_extractor_controller"
+  ]
+}

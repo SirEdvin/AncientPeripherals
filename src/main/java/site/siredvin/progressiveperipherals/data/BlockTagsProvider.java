@@ -22,15 +22,16 @@ public class BlockTagsProvider extends TagsProvider<Block> {
 
     @Override
     protected void addTags() {
-        this.tag(BlockTags.BREAKTHROUGH_REACTOR_CASING).add(
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_GLASS.get(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_IO_PORT.get(),
+        this.tag(BlockTags.IRREALIUM_STRUCTURE_CASING).add(
+                Blocks.IRREALIUM_MACHINERY_CASING.get(),
+                Blocks.IRREALIUM_MACHINERY_GLASS.get(),
+                Blocks.IRREALIUM_MACHINERY_IO_PORT.get(),
+                Blocks.IRREALIUM_MACHINERY_STORAGE.get(),
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()
         );
-        this.tag(BlockTags.BREAKTHROUGH_REACTOR_CORNER).add(
+        this.tag(BlockTags.IRREALIUM_STRUCTURE_CORNER).add(
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get()
+                Blocks.IRREALIUM_MACHINERY_CASING.get()
         );
     }
 

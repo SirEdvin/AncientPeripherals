@@ -5,6 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.AutomataCoreTier;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.CountOperation;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.FreeMachineryOperation;
 
 public class ProgressivePeripheralsConfig {
 
@@ -78,6 +79,7 @@ public class ProgressivePeripheralsConfig {
             builder.comment("").push("Operations");
             register(CountOperation.values(), builder);
             register(SimpleOperation.values(), builder);
+            register(FreeMachineryOperation.values(), builder);
             builder.pop();
             builder.comment("").push("Automata cores");
             register(AutomataCoreTier.values(), builder);

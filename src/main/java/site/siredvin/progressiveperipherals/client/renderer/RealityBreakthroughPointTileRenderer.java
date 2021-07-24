@@ -13,7 +13,7 @@ import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.common.tileentities.RealityBreakthroughPointTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
 
 import java.awt.*;
 

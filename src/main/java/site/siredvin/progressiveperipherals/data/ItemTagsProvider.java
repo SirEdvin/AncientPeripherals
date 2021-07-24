@@ -22,15 +22,16 @@ public class ItemTagsProvider extends TagsProvider<Item> {
 
     @Override
     protected void addTags() {
-        this.tag(ItemTags.BREAKTHROUGH_REACTOR_CASING).add(
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get().asItem(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_GLASS.get().asItem(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_IO_PORT.get().asItem(),
+        this.tag(ItemTags.IRREALIUM_STRUCTURE_CASING).add(
+                Blocks.IRREALIUM_MACHINERY_CASING.get().asItem(),
+                Blocks.IRREALIUM_MACHINERY_GLASS.get().asItem(),
+                Blocks.IRREALIUM_MACHINERY_IO_PORT.get().asItem(),
+                Blocks.IRREALIUM_MACHINERY_STORAGE.get().asItem(),
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem()
         );
-        this.tag(ItemTags.BREAKTHROUGH_REACTOR_CORNER).add(
+        this.tag(ItemTags.IRREALIUM_STRUCTURE_CORNER).add(
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_CASING.get().asItem()
+                Blocks.IRREALIUM_MACHINERY_CASING.get().asItem()
         );
     }
 

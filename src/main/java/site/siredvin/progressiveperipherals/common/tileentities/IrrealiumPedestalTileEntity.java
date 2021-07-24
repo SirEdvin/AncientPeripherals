@@ -14,7 +14,7 @@ public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity implements
     private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 
     public IrrealiumPedestalTileEntity() {
-        super(TileEntityTypes.IRRELIUM_PEDESTAL.get());
+        super(TileEntityTypes.IRREALIUM_PEDESTAL.get());
     }
 
     public void setStoredStack(@NotNull ItemStack storedStack) {

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "connected=false": {"model": "progressiveperipherals:block/irrealium_machinery_casing"},
+    "connected=true": {"model": "progressiveperipherals:block/irrealium_machinery_casing_connected"}
+  }
+}
