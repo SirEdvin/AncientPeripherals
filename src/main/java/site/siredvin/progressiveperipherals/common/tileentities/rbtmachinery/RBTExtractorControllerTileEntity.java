@@ -16,7 +16,7 @@ import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tags.BlockTags;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.RBTExtractorPeripheral;
-import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.rbtmachinery.ControllerPlugin;
+import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.PointDecryptPlugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
     // peripheral logic
     private final List<IPeripheralPlugin<RBTExtractorControllerTileEntity>> plugins = new ArrayList<>();
     private final Map<String, IPluggableLuaMethod<RBTExtractorControllerTileEntity>> methodMap = new HashMap<>();
-    private String[] methodNames;
+    private String[] methodNames = new String[0];
 
     public RBTExtractorControllerTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get());
@@ -75,7 +75,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
 
     @Override
     public void injectDefaultPlugins() {
-        plugins.add(new ControllerPlugin());
+        plugins.add(new PointDecryptPlugin<>());
     }
 
     @Override

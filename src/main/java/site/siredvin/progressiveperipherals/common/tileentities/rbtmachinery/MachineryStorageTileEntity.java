@@ -39,6 +39,17 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
     }
 
     @Override
+    public CompoundNBT save(CompoundNBT data) {
+        return saveInternalData(super.save(data));
+    }
+
+    @Override
+    public void load(BlockState state, CompoundNBT data) {
+        super.load(state, data);
+        loadInternalData(state, data, true);
+    }
+
+    @Override
     protected ITextComponent getDefaultName() {
         return TranslationUtil.localization("machinery_storage");
     }

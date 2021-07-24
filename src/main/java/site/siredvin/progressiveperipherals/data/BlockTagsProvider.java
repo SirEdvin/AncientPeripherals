@@ -27,10 +27,12 @@ public class BlockTagsProvider extends TagsProvider<Block> {
                 Blocks.IRREALIUM_MACHINERY_GLASS.get(),
                 Blocks.IRREALIUM_MACHINERY_IO_PORT.get(),
                 Blocks.IRREALIUM_MACHINERY_STORAGE.get(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()
+                Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(),
+                Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get()
         );
         this.tag(BlockTags.IRREALIUM_STRUCTURE_CORNER).add(
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(),
+                Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(),
                 Blocks.IRREALIUM_MACHINERY_CASING.get()
         );
     }

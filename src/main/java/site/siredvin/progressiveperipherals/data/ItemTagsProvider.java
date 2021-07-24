@@ -27,10 +27,12 @@ public class ItemTagsProvider extends TagsProvider<Item> {
                 Blocks.IRREALIUM_MACHINERY_GLASS.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_IO_PORT.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_STORAGE.get().asItem(),
-                Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem()
+                Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem(),
+                Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get().asItem()
         );
         this.tag(ItemTags.IRREALIUM_STRUCTURE_CORNER).add(
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem(),
+                Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_CASING.get().asItem()
         );
     }

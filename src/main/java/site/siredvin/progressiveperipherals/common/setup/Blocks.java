@@ -52,7 +52,7 @@ public class Blocks {
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER = register(
             "reality_breakthrough_extractor_controller",
             () -> new MachineryController<>(TileEntityTypes.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER),
-            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(), null, null, () -> true)
+            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(), null, null, () -> true)
     );
 
     // Utility

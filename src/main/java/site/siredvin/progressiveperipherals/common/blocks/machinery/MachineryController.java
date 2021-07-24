@@ -20,7 +20,6 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
 import site.siredvin.progressiveperipherals.common.blocks.GenericTileEntityBlock;
 import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
-import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTRectorControllerTileEntity;
 
 public class MachineryController<T extends TileEntity & IMachineryController<T>> extends GenericTileEntityBlock<T> {
     public static final BooleanProperty CONNECTED = MachineryBlockProperties.CONNECTED;
@@ -57,7 +56,7 @@ public class MachineryController<T extends TileEntity & IMachineryController<T>>
     @Override
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
-            RBTRectorControllerTileEntity tileEntity = (RBTRectorControllerTileEntity) world.getBlockEntity(blockPos);
+            IMachineryController<?> tileEntity = (IMachineryController<?>) world.getBlockEntity(blockPos);
             if (tileEntity != null)
                 tileEntity.deconstructMultiBlock();
         }

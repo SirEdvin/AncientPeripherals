@@ -37,8 +37,8 @@ public interface ICubeMachineryController<T extends TileEntity & IMachineryContr
         int calculatedSize = MachineryStructureUtil.calculateSquare(northWestCorner, southEastCorner);
         if (calculatedSize == -1)
             return Pair.of(false, "Floor level is not even square!");
-        if (calculatedSize != 5)
-            return Pair.of(false, "Floor level should be 5x5 square");
+        if (calculatedSize != size)
+            return Pair.of(false, String.format("Floor level should be %dx%d square", size, size));
         CubeMachineryStructure structure = new CubeMachineryStructure(northWestCorner, southEastCorner);
         // Check controller position
         if (structure.isInside(pos))

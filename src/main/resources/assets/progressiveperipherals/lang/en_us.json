@@ -66,6 +66,8 @@
   "block.progressiveperipherals.irrealium_machinery_storage.tooltip": "Functionality block for any irrealium machine. Allows to store result items for machine. Also can be used as generic chest.",
   "block.progressiveperipherals.reality_breakthrough_reactor_controller": "RBHReactor controller",
   "block.progressiveperipherals.reality_breakthrough_reactor_controller.tooltip": "Reality breakthrough reactor controller. Main block that collect reactor together and serve as peripheral for computer interactions",
+  "block.progressiveperipherals.reality_breakthrough_extractor_controller": "RBHExtractor controller",
+  "block.progressiveperipherals.reality_breakthrough_extractor_controller.tooltip": "Reality breakthrough extractor controller. Main block that collect extractor together and serve as peripheral for computer interactions",
   "itemGroup.progressiveperipherals": "Progressive Peripherals",
   "turtle.progressiveperipherals.scientific": "Scientific Automata",
   "turtle.progressiveperipherals.enchanting": "Enchanting Automata",

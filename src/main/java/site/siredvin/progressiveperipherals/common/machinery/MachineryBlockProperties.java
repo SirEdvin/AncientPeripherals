@@ -2,9 +2,9 @@ package site.siredvin.progressiveperipherals.common.machinery;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.util.Direction;
-import site.siredvin.progressiveperipherals.common.setup.Blocks;
+import site.siredvin.progressiveperipherals.utils.ValueContainer;
 
 import java.util.function.Predicate;
 
@@ -15,9 +15,11 @@ public class MachineryBlockProperties {
     public static final Predicate<BlockState> CONNECTED_TO_ANYTHING = NOT_CONNECTED_TO_ANYTHING.negate();
 
     public static BlockState setFacing(BlockState state, Direction direction) {
-        if (state.is(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()))
-            return state.setValue(BlockStateProperties.HORIZONTAL_FACING, direction);
-        return state.setValue(BlockStateProperties.FACING, direction);
+        ValueContainer<BlockState> container = ValueContainer.of(state);
+        state.getValues().keySet().stream()
+                .filter(p -> p.getName().equals("facing")).findAny()
+                .ifPresent(p -> container.mutate(bState -> bState.setValue((DirectionProperty) p, direction)));
+        return container.getValue();
     }
 
     public static BlockState setConnected(BlockState state, boolean isConnected) {

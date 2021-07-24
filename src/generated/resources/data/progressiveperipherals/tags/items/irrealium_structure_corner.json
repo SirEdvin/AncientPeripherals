@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "progressiveperipherals:reality_breakthrough_extractor_controller",
+    "minecraft:air",
     "progressiveperipherals:irrealium_machinery_casing"
   ]
 }

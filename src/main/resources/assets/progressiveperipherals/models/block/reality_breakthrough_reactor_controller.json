@@ -2,11 +2,11 @@
   "parent": "block/cube_all",
   "textures": {
     "north": "progressiveperipherals:block/reality_breakthrough_reactor_controller_front",
-    "south": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
-    "west": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
-    "east": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
-    "up": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
-    "down": "progressiveperipherals:block/reality_breakthrough_reactor_casing",
-    "particle": "progressiveperipherals:block/reality_breakthrough_reactor_casing"
+    "south": "progressiveperipherals:block/irrealium_machinery_casing",
+    "west": "progressiveperipherals:block/irrealium_machinery_casing",
+    "east": "progressiveperipherals:block/irrealium_machinery_casing",
+    "up": "progressiveperipherals:block/irrealium_machinery_casing",
+    "down": "progressiveperipherals:block/irrealium_machinery_casing",
+    "particle": "progressiveperipherals:block/irrealium_machinery_casing"
   }
 }
