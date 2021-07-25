@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
-import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.machinery.ICubeMachineryController;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryStructure;
 import site.siredvin.progressiveperipherals.common.machinery.CubeMachineryStructure;
@@ -21,9 +20,7 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.periphera
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.PointDecryptPlugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntity<RBTReactorControllerPeripheral> implements ICubeMachineryController<RBTRectorControllerTileEntity> {
@@ -43,8 +40,6 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
 
     // peripheral logic
     private final List<IPeripheralPlugin<RBTRectorControllerTileEntity>> plugins = new ArrayList<>();
-    private final Map<String, IPluggableLuaMethod<RBTRectorControllerTileEntity>> methodMap = new HashMap<>();
-    private String[] methodNames = new String[0];
 
     public RBTRectorControllerTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get());
@@ -55,24 +50,9 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
         return new RBTReactorControllerPeripheral("realityBreakthroughReactorController", this);
     }
 
-    @NotNull
-    public String[] getMethodNames() {
-        return methodNames;
-    }
-
-    @Override
-    public void setMethodNames(@NotNull String[] methodNames) {
-        this.methodNames = methodNames;
-    }
-
     @Override
     public @NotNull List<IPeripheralPlugin<RBTRectorControllerTileEntity>> getPlugins() {
         return plugins;
-    }
-
-    @Override
-    public @NotNull Map<String, IPluggableLuaMethod<RBTRectorControllerTileEntity>> getMethodMap() {
-        return methodMap;
     }
 
     @Override
@@ -115,7 +95,7 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
         return structure;
     }
 
-    public void setStructure(@NotNull CubeMachineryStructure structure) {
+    public void setStructure(@Nullable CubeMachineryStructure structure) {
         this.structure = structure;
     }
 
@@ -154,9 +134,7 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
     }
 
     @Override
-    public void deconstructionCallback() {
-        configured = false;
-    }
+    public void deconstructionCallback() {}
 
     @Override
     public void detectCallback() {}

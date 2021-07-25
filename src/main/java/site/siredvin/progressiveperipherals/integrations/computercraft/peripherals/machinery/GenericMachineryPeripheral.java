@@ -3,37 +3,45 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.peripher
 import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IDynamicPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
 import de.srendi.advancedperipherals.common.blocks.base.PeripheralTileEntity;
 import de.srendi.advancedperipherals.common.util.Pair;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
+import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<?> & IMachineryController<T>> extends OperationPeripheral implements IDynamicPeripheral {
     private final T tileEntity;
-    private boolean waitForInvalidateCheck = false;
+    private final Map<String, IPluggableLuaMethod<T>> methodMap;
+    private final String[] methodNames;
 
     public GenericMachineryPeripheral(String type, T tileEntity) {
         super(type, tileEntity);
         this.tileEntity = tileEntity;
+        methodMap = new HashMap<>();
+        for (IPeripheralPlugin<T> plugin: this.tileEntity.getPlugins()) {
+            methodMap.putAll(plugin.getMethods());
+        }
+        methodNames = methodMap.keySet().toArray(new String[0]);
     }
 
     @NotNull
     @Override
     public String[] getMethodNames() {
-        return tileEntity.getMethodNames();
+        return methodNames;
     }
 
     @NotNull
     @Override
     public MethodResult callMethod(@NotNull IComputerAccess access, @NotNull ILuaContext context, int methodIndex, @NotNull IArguments arguments) throws LuaException {
-        return tileEntity.callMethod(access, context, methodIndex, arguments);
-    }
-
-    public void prepareInvalidateCheck() {
-        this.waitForInvalidateCheck = true;
+        IPluggableLuaMethod<T> method = methodMap.get(getMethodNames()[methodIndex]);
+        if (method == null)
+            throw new IllegalArgumentException("Cannot find method ...");
+        return method.call(access, context, arguments, tileEntity);
     }
 
     @LuaFunction
@@ -45,14 +53,5 @@ public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<
     public MethodResult connect() {
         Pair<Boolean, String> result = tileEntity.detectMultiBlock();
         return MethodResult.of(result.getLeft(), result.getRight());
-    }
-
-    @Override
-    public boolean equals(@Nullable IPeripheral iPeripheral) {
-        if (waitForInvalidateCheck && iPeripheral == this) {
-            waitForInvalidateCheck = false;
-            return false;
-        }
-        return super.equals(iPeripheral);
     }
 }

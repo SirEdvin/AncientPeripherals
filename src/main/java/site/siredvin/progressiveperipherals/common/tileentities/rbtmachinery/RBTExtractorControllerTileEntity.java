@@ -7,7 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
-import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.machinery.ICubeMachineryController;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryStructure;
 import site.siredvin.progressiveperipherals.common.machinery.CubeMachineryStructure;
@@ -19,15 +18,12 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.periphera
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.PointDecryptPlugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEntity<RBTExtractorPeripheral> implements ICubeMachineryController<RBTExtractorControllerTileEntity> {
     public final static int SIZE = 3;
 
-    private final static String CONFIGURED_TAG = "configured";
     private final static String NORTH_WEST_LOWEST_POS_TAG = "northWestLowestPos";
 
     private final static Predicate<BlockState> CORNER_PREDICATE = state -> state.is(BlockTags.IRREALIUM_STRUCTURE_CORNER);
@@ -41,8 +37,6 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
 
     // peripheral logic
     private final List<IPeripheralPlugin<RBTExtractorControllerTileEntity>> plugins = new ArrayList<>();
-    private final Map<String, IPluggableLuaMethod<RBTExtractorControllerTileEntity>> methodMap = new HashMap<>();
-    private String[] methodNames = new String[0];
 
     public RBTExtractorControllerTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get());
@@ -53,25 +47,11 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
         return new RBTExtractorPeripheral("realityBreakthroughExtractorController", this);
     }
 
-    @NotNull
-    public String[] getMethodNames() {
-        return methodNames;
-    }
-
-    @Override
-    public void setMethodNames(@NotNull String[] methodNames) {
-        this.methodNames = methodNames;
-    }
-
     @Override
     public @NotNull List<IPeripheralPlugin<RBTExtractorControllerTileEntity>> getPlugins() {
         return plugins;
     }
 
-    @Override
-    public @NotNull Map<String, IPluggableLuaMethod<RBTExtractorControllerTileEntity>> getMethodMap() {
-        return methodMap;
-    }
 
     @Override
     public void injectDefaultPlugins() {
@@ -80,7 +60,6 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
 
     @Override
     public void invalidateCapabilities() {
-        peripheral.prepareInvalidateCheck();
         invalidateCaps();
     }
 
@@ -112,7 +91,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
         return structure;
     }
 
-    public void setStructure(@NotNull CubeMachineryStructure structure) {
+    public void setStructure(@Nullable CubeMachineryStructure structure) {
         this.structure = structure;
     }
 
@@ -151,9 +130,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
     }
 
     @Override
-    public void deconstructionCallback() {
-        configured = false;
-    }
+    public void deconstructionCallback() {}
 
     @Override
     public void detectCallback() {}

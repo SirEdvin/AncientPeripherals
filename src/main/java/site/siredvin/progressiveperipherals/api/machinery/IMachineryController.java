@@ -1,10 +1,5 @@
 package site.siredvin.progressiveperipherals.api.machinery;
 
-import dan200.computercraft.api.lua.IArguments;
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.lua.LuaException;
-import dan200.computercraft.api.lua.MethodResult;
-import dan200.computercraft.api.peripheral.IComputerAccess;
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
@@ -19,12 +14,10 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
-import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
 import site.siredvin.progressiveperipherals.utils.ValueContainer;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -34,9 +27,11 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     // multi-block structure logic
     Pair<Boolean, String> detectMultiBlock();
     @Nullable IMachineryStructure getStructure();
+    void forgetStructure();
     @Nullable World getLevel();
     BlockPos getBlockPos();
     boolean isConfigured();
+    void setConfigured(boolean configured);
     Predicate<BlockState> getCasingPredicate();
     Predicate<BlockState> getCornerPredicate();
     Predicate<BlockState> getCenterPredicate();
@@ -74,23 +69,12 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
 
     // multi-block peripheral logic
 
-    @NotNull String[] getMethodNames();
-    void setMethodNames(@NotNull String[] value);
     @NotNull List<IPeripheralPlugin<T>> getPlugins();
-    @NotNull Map<String, IPluggableLuaMethod<T>> getMethodMap();
     void injectDefaultPlugins();
 
 
     default void cleanPluginsAndMethods() {
         getPlugins().clear();
-        getMethodMap().clear();
-    }
-
-    default @NotNull MethodResult callMethod(@NotNull IComputerAccess access, @NotNull ILuaContext context, int methodIndex, @NotNull IArguments arguments) throws LuaException {
-        IPluggableLuaMethod<T> method = getMethodMap().get(getMethodNames()[methodIndex]);
-        if (method == null)
-            throw new IllegalArgumentException("Cannot find method ...");
-        return method.call(access, context, arguments, getThis());
     }
 
     default void rebuildPluginsAndMethods() {
@@ -109,12 +93,6 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
                 plugins.add(plugin);
             }
         });
-        Map<String, IPluggableLuaMethod<T>> methodMap = getMethodMap();
-        methodMap.clear();
-        for (IPeripheralPlugin<T> plugin: plugins) {
-            methodMap.putAll(plugin.getMethods());
-        }
-        setMethodNames(methodMap.keySet().toArray(new String[0]));
     }
 
     void invalidateCapabilities();
@@ -125,12 +103,15 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         cleanPluginsAndMethods();
         deconstructionCallback();
         invalidateCapabilities();
+        forgetStructure();
+        setConfigured(false);
     }
 
     default void commonDetect() {
         rebuildPluginsAndMethods();
         detectCallback();
         invalidateCapabilities();
+        setConfigured(true);
     }
 
     void deconstructionCallback();

@@ -5,9 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryStructureUtil;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.machinery.CubeMachineryStructure;
+import site.siredvin.progressiveperipherals.common.machinery.MachineryStructureUtil;
 import site.siredvin.progressiveperipherals.utils.RepresentationUtils;
 
 import java.util.ArrayList;
@@ -16,8 +16,12 @@ import java.util.Objects;
 
 public interface ICubeMachineryController<T extends TileEntity & IMachineryController<T>> extends IMachineryController<T> {
     int getSize();
-    void setStructure(@NotNull CubeMachineryStructure structure);
-    void setConfigured(boolean configured);
+    void setStructure(@Nullable CubeMachineryStructure structure);
+
+    @Override
+    default void forgetStructure() {
+        setStructure(null);
+    }
 
     default Pair<Boolean, String> detectMultiBlock() {
         World world = getLevel();
@@ -73,7 +77,6 @@ public interface ICubeMachineryController<T extends TileEntity & IMachineryContr
         if (!incorrectPlacedBlocks.isEmpty())
             return Pair.of(false, String.format("This blocks should be empty: %s", RepresentationUtils.mergeValues(incorrectPlacedBlocks)));
         structure.setupFacingAndConnections(world, pos);
-        setConfigured(true);
         setStructure(structure);
         commonDetect();
         return Pair.onlyLeft(true);
