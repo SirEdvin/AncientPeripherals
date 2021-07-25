@@ -79,6 +79,12 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
     }
 
     @Override
+    public void invalidateCapabilities() {
+        peripheral.prepareInvalidateCheck();
+        invalidateCaps();
+    }
+
+    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.putBoolean(CONFIGURED_TAG, configured);
         if (structure != null) {

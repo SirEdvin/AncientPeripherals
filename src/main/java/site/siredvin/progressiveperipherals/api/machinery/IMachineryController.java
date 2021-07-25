@@ -116,16 +116,20 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         setMethodNames(methodMap.keySet().toArray(new String[0]));
     }
 
+    void invalidateCapabilities();
+
     // internal logic
 
     default void commonDeconstruction() {
         cleanPluginsAndMethods();
         deconstructionCallback();
+        invalidateCapabilities();
     }
 
     default void commonDetect() {
         rebuildPluginsAndMethods();
         detectCallback();
+        invalidateCapabilities();
     }
 
     void deconstructionCallback();

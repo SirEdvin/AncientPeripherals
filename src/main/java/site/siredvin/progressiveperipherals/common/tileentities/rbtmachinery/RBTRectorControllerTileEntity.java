@@ -81,6 +81,11 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
     }
 
     @Override
+    public void invalidateCapabilities() {
+        invalidateCaps();
+    }
+
+    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.putBoolean(CONFIGURED_TAG, configured);
         if (structure != null) {
