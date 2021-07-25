@@ -86,7 +86,6 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
 
     @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
-        data.putBoolean(CONFIGURED_TAG, configured);
         if (structure != null) {
             data.put(NORTH_WEST_LOWEST_POS_TAG, NBTUtil.writeBlockPos(structure.getNorthWestLowest().getPos()));
         }
@@ -95,7 +94,6 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
 
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
-        configured = data.getBoolean(CONFIGURED_TAG);
         if (data.contains(NORTH_WEST_LOWEST_POS_TAG)) {
             BlockPos northWestLowest = NBTUtil.readBlockPos(data.getCompound(NORTH_WEST_LOWEST_POS_TAG));
             structure = new CubeMachineryStructure(northWestLowest, SIZE);

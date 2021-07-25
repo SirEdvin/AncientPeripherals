@@ -21,6 +21,7 @@ public class PointDecryptPlugin<T extends TileEntity & IMachineryController<T>> 
     @Override
     public void buildMethodMap() {
         methods.put("isDecrypted", this::isDecrypted);
+        methods.put("decrypt", this::decrypt);
     }
 
     public @NotNull MethodResult isDecrypted(@NotNull IComputerAccess access, @NotNull ILuaContext context, @NotNull IArguments arguments, @NotNull T controllerEntity) throws LuaException {
@@ -35,5 +36,11 @@ public class PointDecryptPlugin<T extends TileEntity & IMachineryController<T>> 
                 return new Object[]{null, "Cannot find breakthrough point"};
             return new Object[]{((RealityBreakthroughPointTileEntity) tileEntity).isDecrypted()};
         });
+    }
+
+    public @NotNull MethodResult decrypt(@NotNull IComputerAccess access, @NotNull ILuaContext context, @NotNull IArguments arguments, @NotNull T controllerEntity) throws LuaException {
+        Object x1 = arguments.get(0);
+        System.out.println("hahahah");
+        return MethodResult.of(true);
     }
 }

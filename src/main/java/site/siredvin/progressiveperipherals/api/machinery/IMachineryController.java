@@ -9,6 +9,7 @@ import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public interface IMachineryController<T extends TileEntity & IMachineryController<T>> {
+public interface IMachineryController<T extends TileEntity & IMachineryController<T>> extends ITickableTileEntity {
     // strange default logic
     T getThis();
     // multi-block structure logic
@@ -175,5 +176,13 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
             }
         });
         return list;
+    }
+
+    @Override
+    default void tick() {
+        IMachineryStructure structure = getStructure();
+        World world = getLevel();
+        if (world != null && !world.isClientSide && structure != null && !isConfigured())
+            commonDetect();
     }
 }
