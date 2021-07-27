@@ -33,6 +33,7 @@ public class RBTExtractorPeripheral extends GenericMachineryPeripheral<RBTExtrac
 
     @LuaFunction(mainThread = true)
     public final MethodResult extract() {
+        // TODO: add cooldown and power loss when cooldown is active
         World world = tileEntity.getLevel();
         Objects.requireNonNull(world);
         IMachineryStructure structure = tileEntity.getStructure();

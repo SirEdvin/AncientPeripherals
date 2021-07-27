@@ -98,7 +98,7 @@ public class Blocks {
     public static final RegistryObject<Block> CREATIVE_IRREALIUM_DECRYPTOR = register(
             "creative_irrealium_decryptor",
             () -> new MachineryPluggableBlock(BlockUtils.defaultProperties(), new CreativeDecryptPlugin<>()),
-            () -> new BaseBlockItem(Blocks.IRREALIUM_MACHINERY_STORAGE.get(), new Item.Properties().stacksTo(64))
+            () -> new BaseBlockItem(Blocks.CREATIVE_IRREALIUM_DECRYPTOR.get(), new Item.Properties().stacksTo(1))
     );
 
 
