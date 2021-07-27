@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "progressiveperipherals:reality_breakthrough_extractor_controller"
+          "name": "progressiveperipherals:reality_breakthrough_reactor_controller"
         }
       ],
       "conditions": [

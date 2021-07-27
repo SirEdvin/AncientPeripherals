@@ -55,7 +55,7 @@ public class MachineryController<T extends TileEntity & IMachineryController<T>>
 
     @Override
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (state.getBlock() != newState.getBlock() && state.getValue(MachineryBlockProperties.CONNECTED)) {
             IMachineryController<?> tileEntity = (IMachineryController<?>) world.getBlockEntity(blockPos);
             if (tileEntity != null)
                 tileEntity.deconstructMultiBlock();

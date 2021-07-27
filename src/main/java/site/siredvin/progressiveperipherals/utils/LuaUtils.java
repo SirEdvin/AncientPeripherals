@@ -9,11 +9,22 @@ import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class LuaUtils {
-    public static final int MAX_QUAD_VECTOR = 48;
+    private static final int MAX_QUAD_VECTOR = 48; // TODO: settings?
+
+    private static Vector3f buildVector(float x, float y, float z, float min, float max) throws LuaException {
+        if (x < min || y < min || z < min)
+            throw new LuaException(String.format("Coordinate lower then %.2f", min));
+        if (x > max || y > max || z > max)
+            throw new LuaException(String.format("Coordinate bigger then %.2f", min));
+        return new Vector3f(x, y, z);
+    }
+
+    // BlockPos tricks
 
     public static BlockPos convertToBlockPos(Map<?, ?> table) throws LuaException {
         if (!table.containsKey("x") || !table.containsKey("y") || !table.containsKey("z"))
@@ -30,6 +41,8 @@ public class LuaUtils {
         BlockPos relative = convertToBlockPos(table);
         return new BlockPos(center.getX() + relative.getX(), center.getY() + relative.getY(), center.getZ() + relative.getZ());
     }
+
+    // Quad tricks
 
     public static Vector3f convertToStartVector(Map<?, ?> table, float min, float max) throws LuaException {
         if (!table.containsKey("x1") || !table.containsKey("y1") || !table.containsKey("z1"))
@@ -87,11 +100,46 @@ public class LuaUtils {
         return new QuadList(data);
     }
 
-    private static Vector3f buildVector(float x, float y, float z, float min, float max) throws LuaException {
-        if (x < min || y < min || z < min)
-            throw new LuaException(String.format("Coordinate lower then %.2f", min));
-        if (x > max || y > max || z > max)
-            throw new LuaException(String.format("Coordinate bigger then %.2f", min));
-        return new Vector3f(x, y, z);
+    // Array tricks
+
+    public static Map<Integer, Double> toLua(double[] value) {
+        Map<Integer, Double> data = new HashMap<>();
+        for (int i = 0;i < value.length; i++) {
+            data.put(i + 1, value[i]);
+        }
+        return data;
     }
+
+    public static Map<Integer, Map<Integer, Double>> toLua(double[][] value) {
+        Map<Integer, Map<Integer, Double>> data = new HashMap<>();
+        for (int i = 0;i < value.length; i++) {
+            data.put(i + 1, toLua(value[i]));
+        }
+        return data;
+    }
+
+    public static double[] toArray(Map<Double, Number> data) throws LuaException {
+        int size = data.keySet().size();
+        double[] value = new double[size];
+        for (int i = 0; i < size; i++) {
+            Number valueCandidate = data.get((double) (i + 1));
+            if (valueCandidate == null)
+                throw new LuaException(String.format("Cannot find element for number %d", i + 1));
+            value[i] = valueCandidate.doubleValue();
+        }
+        return value;
+    }
+
+    public static double[][] toArrayOfArrays(Map<Double, Map<Double, Number>> data) throws LuaException {
+        int size = data.keySet().size();
+        double[][] value = new double[size][];
+        for (int i = 0; i < size; i++) {
+            Map<Double, Number> valueCandidate = data.get((double) (i + 1));
+            if (valueCandidate == null)
+                throw new LuaException(String.format("Cannot find element for number %d", i + 1));
+            value[i] = toArray(valueCandidate);
+        }
+        return value;
+    }
+
 }

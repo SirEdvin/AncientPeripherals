@@ -8,6 +8,7 @@ import net.minecraft.util.text.ITextComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
+import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
@@ -56,6 +57,28 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
         return pointState.getColor();
     }
 
+    public @NotNull IPuzzle getPuzzle() {
+        return pointState.getPuzzle();
+    }
+
+    public int getPowerLevel() {
+        return pointState.getPowerLevel();
+    }
+
+    public void consumePower(int amount) {
+        pointState.consumePower(amount);
+        if (pointState.getPowerLevel() <= 0)
+            level.destroyBlock(getBlockPos(), false);
+    }
+
+    public int getEncryptLevels() {
+        return pointState.getEncryptLevels();
+    }
+
+    public void decryptLevel() {
+        pointState.decryptLevel();
+    }
+
     public @NotNull RealityBreakthroughPointTier getTier() {
         return pointState.getTier();
     }
@@ -64,6 +87,7 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
     public List<ITextComponent> commonProbeData(BlockState state) {
         List<ITextComponent> data = new ArrayList<>();
         data.add(TranslationUtil.localization("point_tier").append(getTier().name().toLowerCase()));
+        data.add(TranslationUtil.localization("power_level").append(String.valueOf(getPowerLevel())));
         return data;
     }
 
@@ -80,11 +104,11 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
     }
 
     public boolean canProduceResource() {
-        return !pointState.isDecrypted() && pointType.getProducibleItem() != null;
+        return pointState.isDecrypted() && pointType.getProducibleItem() != null;
     }
 
     public @Nullable Item getProducibleResource() {
-        if (pointState.isDecrypted)
+        if (!pointState.isDecrypted())
             return null;
         return pointType.getProducibleItem();
     }
@@ -92,31 +116,27 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
     public static class PointState {
         private final static String TIER_TAG = "pointTier";
         private final static String POWER_LEVEL_TAG = "powerLevel";
-        private final static String IS_DECRYPTED_TAG = "isDecrypted";
+        private final static String ENCRYPT_LEVELS_TAG = "encryptLevels";
 
         private int powerLevel;
-        private boolean isDecrypted;
+        private int encryptLevels;
         private RealityBreakthroughPointTier tier;
 
         public PointState(RealityBreakthroughPointTier tier) {
             this.tier = tier;
             this.powerLevel = tier.getPowerLevel();
-            this.isDecrypted = false;
+            this.encryptLevels = tier.getEncryptLevels();
         }
 
         public boolean isDecrypted() {
-            return isDecrypted;
-        }
-
-        public void setDecrypted(boolean decrypted) {
-            isDecrypted = decrypted;
+            return encryptLevels == 0;
         }
 
         public RealityBreakthroughPointTier getTier() {
             return tier;
         }
 
-        public Color getColor() {
+        public @NotNull Color getColor() {
             return tier.getColor();
         }
 
@@ -127,7 +147,20 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
         public void setTier(RealityBreakthroughPointTier tier, Random random) {
             this.tier = tier;
             this.powerLevel = tier.getPowerLevel(random);
-            this.isDecrypted = false;
+            this.encryptLevels = tier.getEncryptLevels();
+        }
+
+        public @NotNull IPuzzle getPuzzle() {
+            return tier.getPuzzle();
+        }
+
+        public int getEncryptLevels() {
+            return tier.getEncryptLevels();
+        }
+
+        public void decryptLevel() {
+            if (encryptLevels > 0)
+                encryptLevels--;
         }
 
         public int getPowerLevel() {
@@ -135,21 +168,21 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
         }
 
         public void consumePower(int amount) {
-            powerLevel-=amount;
+            powerLevel -= amount;
         }
 
         public CompoundNBT serializeNBT() {
             CompoundNBT data = new CompoundNBT();
             data.putInt(POWER_LEVEL_TAG, powerLevel);
             data.putString(TIER_TAG, tier.name().toLowerCase());
-            data.putBoolean(IS_DECRYPTED_TAG, isDecrypted);
+            data.putInt(ENCRYPT_LEVELS_TAG, encryptLevels);
             return data;
         }
 
         public void deserializeNBT(CompoundNBT data) {
             this.tier = RealityBreakthroughPointTier.valueOf(data.getString(TIER_TAG).toUpperCase());
             this.powerLevel = data.getInt(POWER_LEVEL_TAG);
-            this.isDecrypted = data.getBoolean(IS_DECRYPTED_TAG);
+            this.encryptLevels = data.getInt(ENCRYPT_LEVELS_TAG);
         }
     }
 }

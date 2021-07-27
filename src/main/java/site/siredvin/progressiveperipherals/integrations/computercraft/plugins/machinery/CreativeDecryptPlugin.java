@@ -16,15 +16,13 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.B
 
 import java.util.Objects;
 
-public class PointDecryptPlugin<T extends TileEntity & IMachineryController<T>> extends BasePlugin<T> {
-
+public class CreativeDecryptPlugin<T extends TileEntity & IMachineryController<T>> extends BasePlugin<T> {
     @Override
     public void buildMethodMap() {
-        methods.put("isDecrypted", this::isDecrypted);
-        methods.put("decrypt", this::decrypt);
+        methods.put("forceDecrypt", this::forceDecrypt);
     }
 
-    public @NotNull MethodResult isDecrypted(@NotNull IComputerAccess access, @NotNull ILuaContext context, @NotNull IArguments arguments, @NotNull T controllerEntity) throws LuaException {
+    public @NotNull MethodResult forceDecrypt(@NotNull IComputerAccess access, @NotNull ILuaContext context, @NotNull IArguments arguments, @NotNull T controllerEntity) throws LuaException {
         return TaskCallback.make(context, () -> {
             World world = controllerEntity.getLevel();
             Objects.requireNonNull(world);
@@ -34,13 +32,10 @@ public class PointDecryptPlugin<T extends TileEntity & IMachineryController<T>> 
             TileEntity tileEntity = world.getBlockEntity(structure.getCenter());
             if (!(tileEntity instanceof RealityBreakthroughPointTileEntity))
                 return new Object[]{null, "Cannot find breakthrough point"};
-            return new Object[]{((RealityBreakthroughPointTileEntity) tileEntity).isDecrypted()};
+            RealityBreakthroughPointTileEntity point = (RealityBreakthroughPointTileEntity) tileEntity;
+            while (!point.isDecrypted())
+                point.decryptLevel();
+            return new Object[]{true};
         });
-    }
-
-    public @NotNull MethodResult decrypt(@NotNull IComputerAccess access, @NotNull ILuaContext context, @NotNull IArguments arguments, @NotNull T controllerEntity) throws LuaException {
-        Object x1 = arguments.get(0);
-        System.out.println("hahahah");
-        return MethodResult.of(true);
     }
 }

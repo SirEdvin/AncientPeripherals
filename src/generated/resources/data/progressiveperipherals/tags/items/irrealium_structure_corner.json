@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
+    "progressiveperipherals:reality_breakthrough_reactor_controller",
     "progressiveperipherals:reality_breakthrough_extractor_controller",
-    "minecraft:air",
     "progressiveperipherals:irrealium_machinery_casing"
   ]
 }

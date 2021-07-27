@@ -56,13 +56,13 @@ public class MachineryBlock extends BaseBlock {
 
     @Override
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (!state.is(newState.getBlock()) && state.getValue(MachineryBlockProperties.CONNECTED)) {
             MachineryStructureUtil.handlePartDestroy(
                     world, blockPos, RBTRectorControllerTileEntity.SIZE,
                     (bState, bPos) -> {
                         TileEntity tileEntity = world.getBlockEntity(bPos);
                         if (tileEntity instanceof IMachineryController) {
-                            return ((IMachineryController<?>) tileEntity).isBelongTo(bPos);
+                            return ((IMachineryController<?>) tileEntity).isBelongTo(blockPos);
                         }
                         return false;
                     }

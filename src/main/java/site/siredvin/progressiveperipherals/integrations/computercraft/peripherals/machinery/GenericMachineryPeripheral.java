@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<?> & IMachineryController<T>> extends OperationPeripheral implements IDynamicPeripheral {
-    private final T tileEntity;
+    protected final T tileEntity;
     private final Map<String, IPluggableLuaMethod<T>> methodMap;
     private final String[] methodNames;
 

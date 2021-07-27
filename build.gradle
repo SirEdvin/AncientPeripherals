@@ -129,6 +129,9 @@ repositories {
     maven { url 'https://ldtteam.jfrog.io/ldtteam/modding' }
 }
 
+configurations {
+    extraLibs
+}
 
 dependencies {
     compileOnly "org.jetbrains:annotations:${jb_annotations}"
@@ -138,6 +141,9 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei-${jei_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
+    // internal libraries
+    extraLibs "org.ejml:ejml-all:${ejml_version}"
+
     // Optional integrations
 
     implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:${top_version}")
@@ -145,6 +151,8 @@ dependencies {
     // Testing stuff
     runtimeOnly fg.deobf("curse.maven:CyclopsCore-${cyclops_core_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
+
+    configurations.implementation.extendsFrom(configurations.extraLibs)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -159,6 +167,9 @@ jar {
             "Implementation-Vendor" :"SirEdvin",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
+    }
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 

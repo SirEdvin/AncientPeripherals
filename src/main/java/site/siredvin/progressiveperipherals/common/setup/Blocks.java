@@ -6,15 +6,13 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.*;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
-import site.siredvin.progressiveperipherals.common.blocks.machinery.MachineryBlock;
-import site.siredvin.progressiveperipherals.common.blocks.machinery.MachineryController;
-import site.siredvin.progressiveperipherals.common.blocks.machinery.MachineryGlass;
-import site.siredvin.progressiveperipherals.common.blocks.machinery.MachineryStorage;
+import site.siredvin.progressiveperipherals.common.blocks.machinery.*;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorItem;
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
+import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
@@ -94,6 +92,12 @@ public class Blocks {
     public static final RegistryObject<Block> IRREALIUM_MACHINERY_STORAGE = register(
             "irrealium_machinery_storage",
             () -> new MachineryStorage(BlockUtils.defaultProperties(), 27),
+            () -> new BaseBlockItem(Blocks.IRREALIUM_MACHINERY_STORAGE.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> CREATIVE_IRREALIUM_DECRYPTOR = register(
+            "creative_irrealium_decryptor",
+            () -> new MachineryPluggableBlock(BlockUtils.defaultProperties(), new CreativeDecryptPlugin<>()),
             () -> new BaseBlockItem(Blocks.IRREALIUM_MACHINERY_STORAGE.get(), new Item.Properties().stacksTo(64))
     );
 

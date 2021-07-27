@@ -17,7 +17,7 @@ import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tags.BlockTags;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.RBTReactorControllerPeripheral;
-import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.PointDecryptPlugin;
+import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.GeneralBreakthroughPointPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
 
     @Override
     public void injectDefaultPlugins() {
-        plugins.add(new PointDecryptPlugin<>());
+        plugins.add(new GeneralBreakthroughPointPlugin<>());
     }
 
     @Override
