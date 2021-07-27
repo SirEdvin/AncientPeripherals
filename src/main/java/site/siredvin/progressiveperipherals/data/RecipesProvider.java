@@ -76,6 +76,15 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("BBB ")
                 .pattern(" P  ")
                 .save(consumer);
+        AutomataRecipeBuilder.start(Blocks.ABSTRACTIUM_PEDESTAL.get(), 6)
+                .define('I', Items.ABSTRACTIUM_INGOT.get())
+                .define('S', net.minecraft.block.Blocks.SMOOTH_STONE_SLAB)
+                .define('C', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .pattern(" CC ")
+                .pattern(" II ")
+                .pattern(" CC ")
+                .pattern("SSSS")
+                .save(consumer);
         AutomataRecipeBuilder.start(Items.CUTTING_AXE.get())
                 .define('D', net.minecraft.item.Items.DIAMOND)
                 .define('A', Items.ABSTRACTIUM_INGOT.get())

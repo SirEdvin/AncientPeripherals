@@ -12,7 +12,7 @@ public class TextBuilder {
     private final static String LIST_SPACING = "  ";
     private final static Map<String, String> CUSTOM_MACROS = new HashMap<String, String>() {{
         put("$(blockPos)", "$(l:progressiveperipherals:api_documentation/extra_types#BlockPos)blockPos$()");
-        put("$(blockVisual)", "$(l:progressiveperipherals:api_documentation/extra_types#BlockVisual)blockVisual()");
+        put("$(blockVisual)", "$(l:progressiveperipherals:api_documentation/extra_types#BlockVisual)blockVisual$()");
         put("$(configuration)", "$(l:progressiveperipherals:api_documentation/operations#configuration)getConfiguration$()");
         put("$(shapeCube)", "$(l:progressiveperipherals:api_documentation/extra_types#ShapeCube)shapeCube$()");
     }};

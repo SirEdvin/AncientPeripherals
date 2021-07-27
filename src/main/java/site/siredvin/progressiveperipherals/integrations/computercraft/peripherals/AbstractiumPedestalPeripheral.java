@@ -28,6 +28,7 @@ public class AbstractiumPedestalPeripheral extends BasePeripheral {
 
     @Override
     public boolean isEnabled() {
+        // TODO: settings
         return true;
     }
 

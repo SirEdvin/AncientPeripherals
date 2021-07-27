@@ -1,0 +1,24 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    " CC ",
+    " II ",
+    " CC ",
+    "SSSS"
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "C": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:abstractium_pedestal",
+    "count": 6
+  }
+}

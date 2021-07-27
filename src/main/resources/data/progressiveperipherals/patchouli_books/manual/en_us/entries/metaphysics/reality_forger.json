@@ -16,7 +16,7 @@
     },
     {
       "type": "text",
-      "text": "However, reality forger cannot interact with reality directly, it can only control prepared area.$(p)Seems, you need to setup some flexible reality anchor and then change their appearance via lua methods.$(p)Take a note, that forger interaction area is limited. You can get exact interaction radius via $(configuration)."
+      "text": "However, reality forger cannot interact with reality directly, it can only control prepared area.$(p)Seems, you need to setup some flexible reality anchor and then change their appearance via lua methods.$(p)Take a note, that forger interaction area is limited. You can get exact interaction radius via special function."
     },
     {
       "type": "progressiveperipherals:automata",

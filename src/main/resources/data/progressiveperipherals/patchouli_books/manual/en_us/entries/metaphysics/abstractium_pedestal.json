@@ -1,0 +1,59 @@
+{
+  "name": "Abstractium pedestal",
+  "icon": "progressiveperipherals:abstractium_pedestal",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "progressiveperipherals:abstractium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Abstractium pedestal",
+      "item": "progressiveperipherals:abstractium_pedestal",
+      "text": "Your scientific automata can forge abstractium ingots in form of pedestal. It can't hold any item, but it can display any item!$(p)$(o)Not very useful, but very creative$()"
+    },
+    {
+      "type": "image",
+      "title": "Example usage",
+      "border": true,
+      "images": [
+        "progressiveperipherals:textures/gui/patchouli/abstractium_pedestal.png"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:abstractium_pedestal"
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getItem",
+      "description": "Allows to understand what item currently shown by pedestal"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string", "Current item minecraft ID"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setItem",
+      "description": "Allows to set displayed item on pedestal",
+      "throw": [
+        "Incorrect minecraft ID provided"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "Minecraft ID of item"],
+        ["[string]", "Optional custom hover name for item"]
+      ],
+      "returns": [
+        ["true", "Result of settings item"]
+      ]
+    }
+  ]
+}
