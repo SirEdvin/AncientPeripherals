@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/reality_breakthrough_extractor_controller_connected",
+    "south": "progressiveperipherals:block/irrealium_machinery_casing",
+    "west": "progressiveperipherals:block/irrealium_machinery_casing",
+    "east": "progressiveperipherals:block/irrealium_machinery_casing",
+    "up": "progressiveperipherals:block/irrealium_machinery_casing",
+    "down": "progressiveperipherals:block/irrealium_machinery_casing",
+    "particle": "progressiveperipherals:block/irrealium_machinery_casing"
+  }
+}

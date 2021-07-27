@@ -4,9 +4,9 @@
     "progressiveperipherals:irrealium_machinery_casing",
     "progressiveperipherals:irrealium_machinery_glass",
     "progressiveperipherals:irrealium_machinery_io_port",
-    "progressiveperipherals:creative_irrealium_decryptor",
+    "progressiveperipherals:irrealium_machinery_storage",
     "progressiveperipherals:reality_breakthrough_reactor_controller",
     "progressiveperipherals:reality_breakthrough_extractor_controller",
-    "minecraft:air"
+    "progressiveperipherals:irrealium_machinery_creative_decryptor"
   ]
 }
