@@ -31,7 +31,7 @@ public class Blocks {
 
     public static final RegistryObject<Block> STATUE_WORKBENCH = register(
             "statue_workbench",
-            () -> new GenericTileEntityBlock<>(TileEntityTypes.STATUE_WORKBENCH),
+            StatueWorkbench::new,
             () -> new PeripheralBlockItem(Blocks.STATUE_WORKBENCH.get(), null, null, () -> ProgressivePeripheralsConfig.enableStatueWorkbench)
     );
 

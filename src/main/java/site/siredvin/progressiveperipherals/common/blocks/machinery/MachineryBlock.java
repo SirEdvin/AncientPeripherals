@@ -38,6 +38,7 @@ public class MachineryBlock extends BaseBlock {
         builder.add(CONNECTED);
         builder.add(FACING);
     }
+
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));

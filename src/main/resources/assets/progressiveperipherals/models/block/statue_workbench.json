@@ -1,10 +1,10 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "north": "progressiveperipherals:block/peripheral_casing",
-    "south": "progressiveperipherals:block/peripheral_casing",
-    "west": "progressiveperipherals:block/peripheral_casing",
-    "east": "progressiveperipherals:block/peripheral_casing",
+    "north": "progressiveperipherals:block/statue_workbench_side",
+    "south": "progressiveperipherals:block/statue_workbench_side",
+    "west": "progressiveperipherals:block/statue_workbench_side",
+    "east": "progressiveperipherals:block/statue_workbench_side",
     "up": "progressiveperipherals:block/peripheral_casing",
     "down": "progressiveperipherals:block/peripheral_casing",
     "particle": "progressiveperipherals:block/peripheral_casing"

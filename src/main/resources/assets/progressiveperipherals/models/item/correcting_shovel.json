@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "progressiveperipherals:item/abstractium_shovel"
+    "layer0": "progressiveperipherals:item/correcting_shovel"
   }
 }

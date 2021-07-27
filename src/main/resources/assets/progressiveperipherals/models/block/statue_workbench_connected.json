@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/statue_workbench_side_connected",
+    "south": "progressiveperipherals:block/statue_workbench_side_connected",
+    "west": "progressiveperipherals:block/statue_workbench_side_connected",
+    "east": "progressiveperipherals:block/statue_workbench_side_connected",
+    "up": "progressiveperipherals:block/peripheral_casing",
+    "down": "progressiveperipherals:block/peripheral_casing",
+    "particle": "progressiveperipherals:block/peripheral_casing"
+  }
+}

@@ -1,7 +1,6 @@
 {
   "variants": {
-    "": {
-      "model": "progressiveperipherals:block/statue_workbench"
-    }
+    "connected=false": {"model": "progressiveperipherals:block/statue_workbench"},
+    "connected=true": {"model": "progressiveperipherals:block/statue_workbench_connected"}
   }
 }

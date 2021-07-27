@@ -31,6 +31,7 @@ import site.siredvin.progressiveperipherals.client.models.FlexibleStatueModelLoa
 import site.siredvin.progressiveperipherals.client.renderer.PedestalTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughPointTileRenderer;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
+import site.siredvin.progressiveperipherals.common.events.BlockEvents;
 import site.siredvin.progressiveperipherals.common.setup.*;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
@@ -65,11 +66,13 @@ public class ProgressivePeripherals {
         modEventBus.addListener(ConfigHandler::reloadConfigEvent);
         // Forge events
         forgeBus.addListener(this::biomeModification);
+        // Mod event listeners
+        BlockEvents.subscribe(forgeBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC);
         Registration.register();
         // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        forgeBus.register(this);
     }
 
     @SubscribeEvent
