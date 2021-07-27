@@ -71,10 +71,6 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
             level.destroyBlock(getBlockPos(), false);
     }
 
-    public int getEncryptLevels() {
-        return pointState.getEncryptLevels();
-    }
-
     public void decryptLevel() {
         pointState.decryptLevel();
     }
@@ -155,7 +151,7 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
         }
 
         public int getEncryptLevels() {
-            return tier.getEncryptLevels();
+            return encryptLevels;
         }
 
         public void decryptLevel() {

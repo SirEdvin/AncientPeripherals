@@ -25,6 +25,8 @@ public class ConfigHandler {
     private static void bakeCommon() {
         // Features
         ProgressivePeripheralsConfig.enableRealityForger = ConfigHolder.COMMON_CONFIG.ENABLE_REALITY_FORGER.get();
+        ProgressivePeripheralsConfig.enableStatueWorkbench = ConfigHolder.COMMON_CONFIG.ENABLE_STATUE_WORKBENCH.get();
+        ProgressivePeripheralsConfig.enableAbstractiumPedestal = ConfigHolder.COMMON_CONFIG.ENABLE_ABSTRACTIUM_PEDESTAL.get();
         ProgressivePeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableCuttingAxe = ConfigHolder.COMMON_CONFIG.ENABLE_CUTTING_AXE.get();
@@ -38,6 +40,12 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.furnaceBurnFuelCostRate = ConfigHolder.COMMON_CONFIG.SMELT_FUEL_COST_RATE.get();
         ProgressivePeripheralsConfig.cuttingAxeMaxBlockCount = ConfigHolder.COMMON_CONFIG.CUTTING_AXE_MAX_BLOCK_COUNT.get();
         ProgressivePeripheralsConfig.breakthroughPointSpawnChance = ConfigHolder.COMMON_CONFIG.BREAKTHROUGH_POINT_SPAWN_CHANCE.get();
+        // Machinery
+        ProgressivePeripheralsConfig.enableExtractor = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTOR.get();
+        ProgressivePeripheralsConfig.extractorConsumeAmount = ConfigHolder.COMMON_CONFIG.EXTRACTOR_CONSUME_AMOUNT.get();
+        ProgressivePeripheralsConfig.extractorProduceAmount = ConfigHolder.COMMON_CONFIG.EXTRACTOR_PRODUCE_AMOUNT.get();
+        // Puzzles
+        ProgressivePeripheralsConfig.linearSystemTimeLimit = ConfigHolder.COMMON_CONFIG.LINEAR_SYSTEM_TIME_LIMIT.get();
         // Automata Cores
         ProgressivePeripheralsConfig.enchantingAutomataCoreDisappearChance = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE.get();
     }

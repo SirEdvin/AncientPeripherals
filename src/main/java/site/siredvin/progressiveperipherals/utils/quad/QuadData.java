@@ -48,7 +48,6 @@ public class QuadData implements Serializable {
     }
 
     public float[] getUV() {
-        // TODO: side-depends?
         return new float[]{x1, z1, x2, z2};
     }
 

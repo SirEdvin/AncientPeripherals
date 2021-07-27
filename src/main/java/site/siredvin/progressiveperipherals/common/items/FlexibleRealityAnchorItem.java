@@ -7,6 +7,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
@@ -25,5 +26,7 @@ public class FlexibleRealityAnchorItem extends BaseBlockItem {
         CompoundNBT internalData = stack.getTagElement(BaseNBTBlock.INTERNAL_DATA_TAG);
         if (internalData != null && !internalData.isEmpty())
             tooltip.add(TranslationUtil.localization("configured"));
+        if (!ProgressivePeripheralsConfig.enableRealityForger)
+            tooltip.add(TranslationUtil.localization("disabled"));
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.tileentities.AbstractiumPedestalTileEntity;
 
 import java.util.Optional;
@@ -28,8 +29,7 @@ public class AbstractiumPedestalPeripheral extends BasePeripheral {
 
     @Override
     public boolean isEnabled() {
-        // TODO: settings
-        return true;
+        return ProgressivePeripheralsConfig.enableAbstractiumPedestal;
     }
 
     @LuaFunction

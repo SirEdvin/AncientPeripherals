@@ -49,7 +49,7 @@ public class RealityBreakthroughPointFeature extends Feature<NoFeatureConfig> {
             ProgressivePeripherals.LOGGER.warn(templateRL + " NTB does not exist!");
             return false;
         }
-        if (random.nextInt(ProgressivePeripheralsConfig.BREAKTHROUGH_SPAWN_LIMIT) <= ProgressivePeripheralsConfig.breakthroughPointSpawnChance)
+        if (random.nextInt(ProgressivePeripheralsConfig.BREAKTHROUGH_SPAWN_CHANCE_LIMIT) <= ProgressivePeripheralsConfig.breakthroughPointSpawnChance)
             return false;
         // Creates the well centered on our spot
         BlockPos offset = new BlockPos(-template.getSize().getX() / 2, -1, -template.getSize().getZ() / 2);

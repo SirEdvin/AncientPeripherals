@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
@@ -38,5 +39,7 @@ public class FlexibleStatueItem extends BaseBlockItem {
         } else {
             super.appendModHoverText(stack, worldIn, tooltip, flagIn);
         }
+        if (!ProgressivePeripheralsConfig.enableStatueWorkbench)
+            tooltip.add(TranslationUtil.localization("disabled"));
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LuaUtils {
-    private static final int MAX_QUAD_VECTOR = 48; // TODO: settings?
+    private static final int MAX_QUAD_VECTOR = 48;
 
     private static Vector3f buildVector(float x, float y, float z, float min, float max) throws LuaException {
         if (x < min || y < min || z < min)

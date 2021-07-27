@@ -1,5 +1,7 @@
 package site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
+import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;
 import site.siredvin.progressiveperipherals.common.puzzles.LinearSystem;
@@ -7,30 +9,26 @@ import site.siredvin.progressiveperipherals.common.puzzles.LinearSystem;
 import java.awt.*;
 import java.util.Random;
 
-// TODO: remake with config logic
-public enum RealityBreakthroughPointTier {
+public enum RealityBreakthroughPointTier implements IConfigHandler {
     COMMON(200, 400, Color.BLACK, 4, new LinearSystem(4));
 
-    private final int minPower;
-    private final int maxPower;
-    private final int encryptLevels;
+    private final int defaultMinPower;
+    private final int defaultMaxPower;
+    private final int defaultEncryptLevels;
+
+    private ForgeConfigSpec.IntValue minPower;
+    private ForgeConfigSpec.IntValue maxPower;
+    private ForgeConfigSpec.IntValue encryptLevels;
+
     private final Color color;
     private final IPuzzle puzzle;
 
-    RealityBreakthroughPointTier(int minPower, int maxPower, Color color, int encryptLevels, IPuzzle puzzle) {
-        this.minPower = minPower;
-        this.maxPower = maxPower;
+    RealityBreakthroughPointTier(int defaultMinPower, int defaultMaxPower, Color color, int encryptLevels, IPuzzle puzzle) {
+        this.defaultMinPower = defaultMinPower;
+        this.defaultMaxPower = defaultMaxPower;
         this.color = color;
         this.puzzle = puzzle;
-        this.encryptLevels  = encryptLevels;
-    }
-
-    public int getMaxPower() {
-        return maxPower;
-    }
-
-    public int getMinPower() {
-        return minPower;
+        this.defaultEncryptLevels = encryptLevels;
     }
 
     public @NotNull Color getColor() {
@@ -42,7 +40,7 @@ public enum RealityBreakthroughPointTier {
     }
 
     public int getEncryptLevels() {
-        return encryptLevels;
+        return encryptLevels.get();
     }
 
     public int getPowerLevel() {
@@ -50,6 +48,18 @@ public enum RealityBreakthroughPointTier {
     }
 
     public int getPowerLevel(Random rand) {
-        return rand.nextInt(maxPower - minPower) + minPower;
+        return rand.nextInt(maxPower.get() - minPower.get()) + minPower.get();
+    }
+
+    @Override
+    public String settingsPostfix() {
+        return "PointTier";
+    }
+
+    @Override
+    public void addToConfig(ForgeConfigSpec.Builder builder) {
+        minPower = builder.defineInRange(settingsName() + "MinPower", defaultMinPower, 1, Integer.MAX_VALUE);
+        maxPower = builder.defineInRange(settingsName() + "MaxPower", defaultMaxPower, 1, Integer.MAX_VALUE);
+        encryptLevels = builder.defineInRange(settingsName() + "EncryptLevels", defaultEncryptLevels, 1, Integer.MAX_VALUE);
     }
 }

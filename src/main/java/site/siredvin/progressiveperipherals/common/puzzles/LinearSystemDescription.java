@@ -7,6 +7,7 @@ import org.ejml.simple.SimpleMatrix;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzleTask;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 
 import java.util.HashMap;
@@ -75,7 +76,6 @@ public class LinearSystemDescription implements IPuzzleTask {
 
     @Override
     public int getTimeLimitInSeconds() {
-        // TODO: settings
-        return 2;
+        return ProgressivePeripheralsConfig.linearSystemTimeLimit;
     }
 }

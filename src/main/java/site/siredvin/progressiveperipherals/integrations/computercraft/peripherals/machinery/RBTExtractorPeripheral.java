@@ -8,12 +8,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryStructure;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTExtractorControllerTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+
+import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.FreeMachineryOperation.EXTRACT;
 
 public class RBTExtractorPeripheral extends GenericMachineryPeripheral<RBTExtractorControllerTileEntity> {
 
@@ -23,17 +27,24 @@ public class RBTExtractorPeripheral extends GenericMachineryPeripheral<RBTExtrac
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return ProgressivePeripheralsConfig.enableExtractor;
     }
 
     @Override
     public List<IPeripheralOperation<?>> possibleOperations() {
-        return Collections.singletonList(FreeMachineryOperation.EXTRACT);
+        return Collections.singletonList(EXTRACT);
+    }
+
+    @Override
+    public Map<String, Object> getPeripheralConfiguration() {
+        Map<String, Object> data = super.getPeripheralConfiguration();
+        data.put("produceAmount", ProgressivePeripheralsConfig.extractorProduceAmount);
+        data.put("consumeAmount", ProgressivePeripheralsConfig.extractorConsumeAmount);
+        return data;
     }
 
     @LuaFunction(mainThread = true)
     public final MethodResult extract() {
-        // TODO: add cooldown and power loss when cooldown is active
         World world = tileEntity.getLevel();
         Objects.requireNonNull(world);
         IMachineryStructure structure = tileEntity.getStructure();
@@ -45,15 +56,22 @@ public class RBTExtractorPeripheral extends GenericMachineryPeripheral<RBTExtrac
         RealityBreakthroughPointTileEntity point = (RealityBreakthroughPointTileEntity) pointEntity;
         if (!point.isDecrypted())
             return MethodResult.of(null, "Point should be decrypted");
+        if (point.getPowerLevel() < ProgressivePeripheralsConfig.extractorConsumeAmount)
+            return MethodResult.of(null, "Not enough power in point");
         if (!point.canProduceResource())
             return MethodResult.of(null, "Point cannot produce resource");
         Item producibleResource = point.getProducibleResource();
         if (producibleResource == null)
             return MethodResult.of(null, "Point cannot produce resource");
-        // TODO: add configuration for convertion rate
-        ItemStack productionResult = new ItemStack(producibleResource, 1);
+        int currentCooldown = getCurrentCooldown(EXTRACT);
+        if (currentCooldown > 0) {
+            point.consumePower(ProgressivePeripheralsConfig.extractorConsumeAmount);
+            return MethodResult.of(null, "You triggered production on cooldown, nothing will be produced by power will be consumed");
+        }
+        ItemStack productionResult = new ItemStack(producibleResource, ProgressivePeripheralsConfig.extractorProduceAmount);
         if (tileEntity.storeItem(productionResult, true).isEmpty())
-            point.consumePower(1);
+            point.consumePower(ProgressivePeripheralsConfig.extractorConsumeAmount);
+        trackOperation(EXTRACT, null);
         return MethodResult.of(true);
     }
 }
