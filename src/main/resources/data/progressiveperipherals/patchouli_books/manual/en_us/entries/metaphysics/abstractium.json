@@ -12,7 +12,8 @@
     },
     {
       "type": "crafting",
-      "recipe": "progressiveperipherals:abstractium_block"
+      "recipe": "progressiveperipherals:abstractium_block",
+      "recipe2": "progressiveperipherals:abstractium_ingot"
     },
     {
       "type": "text",

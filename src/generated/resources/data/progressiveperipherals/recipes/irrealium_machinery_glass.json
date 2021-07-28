@@ -1,0 +1,21 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "    ",
+    " IS ",
+    " SI ",
+    "    "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_block"
+    },
+    "S": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium_machinery_glass",
+    "count": 8
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "    ",
+    " IS ",
+    " SI ",
+    "    "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_block"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium_machinery_casing",
+    "count": 32
+  }
+}

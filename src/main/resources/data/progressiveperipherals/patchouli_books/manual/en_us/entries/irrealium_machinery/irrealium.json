@@ -11,8 +11,28 @@
       "text": "Irrealium is material from interworld dimension, that can be found near reality breakthrough points."
     },
     {
-      "type": "crafting",
-      "recipe": "progressiveperipherals:irrealium_block"
+      "type": "text",
+      "text": "Irrealium it self is perfect material for interworld machinery. Your scientific automata can craft many machinery blocks for you."
+    },
+    {
+      "type": "spotlight",
+      "title": "Irrealium casing",
+      "item": "progressiveperipherals:irrealium_machinery_casing",
+      "text": "Base casing block for irrealium machine! Can be used in any place of machine"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:irrealium_machinery_casing"
+    },
+    {
+      "type": "spotlight",
+      "title": "Irrealium glass",
+      "item": "progressiveperipherals:irrealium_machinery_glass",
+      "text": "Transparent casing block for irrealium machine! Cannot be used on corners of machine"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:irrealium_machinery_glass"
     }
   ]
 }
