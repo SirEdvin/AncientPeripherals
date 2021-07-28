@@ -1,0 +1,62 @@
+{
+  "name": "Breakthrough Point API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "isDecrypted",
+      "returns": [
+        ["boolean", "is point decrypted"]
+      ],
+      "description": "Generic function to check is point decrypted. If point is not decrypted, you can't interact with it."
+    },
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "getPowerLevel",
+      "returns": [
+        ["number", "Current point power level"]
+      ],
+      "description": "Generic function to check current point power level. If point power level will be less, that 1, point will be destroyed."
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getDecryptDescription",
+      "description": "Returns decrypt task description. You can use this to understand what task will suggest to you, because most of tasks are untyped"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string", "task description"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getNewDecryptTask",
+      "description": "Generate new decryption task"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["table | nil", "Table with task data or nil, in case of error"],
+        ["nil | string", "Nil or string with error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "checkSolution",
+      "description": "Check task solution. Take a note, that task often has time limit"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["table", "solution data"]
+      ],
+      "returns": [
+        ["true | nil", "true if solution are fine, nil otherwise"],
+        ["nil | string", "Nil or string error message"]
+      ]
+    }
+  ]
+}

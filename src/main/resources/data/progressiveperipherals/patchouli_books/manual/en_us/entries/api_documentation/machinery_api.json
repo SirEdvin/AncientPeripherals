@@ -1,0 +1,25 @@
+{
+  "name": "Machinery API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "isConnected",
+      "returns": [
+        ["boolean", "is machine configured for usage"]
+      ],
+      "description": "Generic function for machine state detection. If machine are not connected, nothing expect Machinery API will be accessible"
+    },
+    {
+      "type": "progressiveperipherals:lua_function",
+      "functionName": "connect",
+      "returns": [
+        ["boolean | nil", "is machine connected successful"],
+        ["nil | string", "Nil or string with error message"]
+      ],
+      "description": "Generic function for multiblock machine connection. In case of failure will describe problem.$(p)$(l)Note:$() after successful connection you need to wrap peripheral again!"
+    }
+  ]
+}

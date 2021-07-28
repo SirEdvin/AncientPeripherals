@@ -1,0 +1,23 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    " SS ",
+    "SCIS",
+    "SICS",
+    " SS "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:irrealium_machinery_casing"
+    },
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:reality_breakthrough_extractor_controller"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "name": "RBT extractor",
+  "icon": "progressiveperipherals:reality_breakthrough_extractor_controller",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "RBT extractor",
+      "item": "progressiveperipherals:reality_breakthrough_extractor_controller",
+      "text": "Reality breakthrough extractor controller (or RBT extractor) are first controller block that allows to extract materials from reality breakthrough points!$(p)Take a note, that reality point should be inside construction"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:reality_breakthrough_extractor_controller"
+    },
+    {
+      "type": "multiblock",
+      "text": "This is just and example, you can build any 3x3 structure that you want",
+      "multiblock": {
+        "mapping": {
+          "0": "progressiveperipherals:reality_breakthrough_extractor_controller",
+          "C": "progressiveperipherals:irrealium_machinery_casing",
+          "S": "progressiveperipherals:irrealium_machinery_storage",
+          "P": "progressiveperipherals:reality_breakthrough_point"
+        },
+        "pattern": [
+          [
+            "CCC",
+            "CCC",
+            "CCC"
+          ],
+          [
+            "CCC",
+            "CPS",
+            "CCC"
+          ],
+          [
+            "C0C",
+            "CCC",
+            "CCC"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "relations",
+      "title": "Available APIs",
+      "entries": [
+        "progressiveperipherals:api_documentation/machinery_api",
+        "progressiveperipherals:api_documentation/breakthrough_point_api",
+        "progressiveperipherals:api_documentation/operations"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "extract",
+      "description": "Function, that extract resource from point. Take a note, that on cooldown this function will works very unfair. Convertion rate can be obtained via $(configuration).$(p)Also, if no storage is present, item will be dropped near controller block",
+      "operationGroup": "extract"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["true | nil", "Is operation successful"],
+        ["nil | string", "Nil or string with error message"]
+      ]
+    }
+  ]
+}

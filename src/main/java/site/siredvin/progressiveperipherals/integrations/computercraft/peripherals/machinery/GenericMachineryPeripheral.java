@@ -45,12 +45,12 @@ public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<
     }
 
     @LuaFunction
-    public boolean isConnected() {
+    public final boolean isConnected() {
         return tileEntity.isConfigured();
     }
 
     @LuaFunction(mainThread = true)
-    public MethodResult connect() {
+    public final MethodResult connect() {
         Pair<Boolean, String> result = tileEntity.detectMultiBlock();
         return MethodResult.of(result.getLeft(), result.getRight());
     }
