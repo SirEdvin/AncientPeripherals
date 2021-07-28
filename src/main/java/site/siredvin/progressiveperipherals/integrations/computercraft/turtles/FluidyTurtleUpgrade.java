@@ -63,14 +63,9 @@ public class FluidyTurtleUpgrade extends ModelTransformingTurtle<FluidyAutomataC
 
     @NotNull
     @Override
-    public <T1> LazyOptional<T1> getCapability(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Capability<T1> capability) {
+    public <T1> LazyOptional<T1> createCapability(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Capability<T1> capability) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
             return LazyOptional.of(() -> new FluidCapability(turtle, side)).cast();
-        return super.getCapability(turtle, side, capability);
-    }
-
-    @Override
-    public void invalidateCaps(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        super.invalidateCaps(turtle, side);
+        return super.createCapability(turtle, side, capability);
     }
 }
