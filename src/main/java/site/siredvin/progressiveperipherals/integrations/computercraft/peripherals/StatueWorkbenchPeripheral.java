@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public class StatueWorkbenchPeripheral extends BasePeripheral {
+    private final static int MAX_QUAD_COUNT = 128;
+
     public <T extends TileEntity & IPeripheralTileEntity> StatueWorkbenchPeripheral(String type, T tileEntity) {
         super(type, tileEntity);
     }
@@ -95,6 +97,8 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
         QuadList quadList = LuaUtils.convertToQuadList(cubes);
+        if (quadList.list.size() > MAX_QUAD_COUNT)
+            return MethodResult.of(null, String.format("You cannot send more then %d quads", MAX_QUAD_COUNT));
         FlexibleStatueTileEntity tileEntity = opStatue.get();
         tileEntity.setBakedQuads(quadList);
         return MethodResult.of(true);
