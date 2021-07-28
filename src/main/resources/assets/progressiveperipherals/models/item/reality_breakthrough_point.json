@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "progressiveperipherals:misc/breakthrough_point"
+    "layer0": "progressiveperipherals:item/reality_breakthrough_point"
   }
 }

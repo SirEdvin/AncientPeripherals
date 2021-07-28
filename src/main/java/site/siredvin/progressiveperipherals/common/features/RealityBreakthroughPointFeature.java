@@ -1,7 +1,6 @@
 package site.siredvin.progressiveperipherals.common.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
@@ -18,6 +17,7 @@ import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class RealityBreakthroughPointFeature extends Feature<NoFeatureConfig> {
     private static final ResourceLocation templateRL = new ResourceLocation(ProgressivePeripherals.MOD_ID, "breakthrough_point");
@@ -37,11 +37,15 @@ public class RealityBreakthroughPointFeature extends Feature<NoFeatureConfig> {
         }
         mutable.move(Direction.DOWN);
 
-        // check to make sure spot is valid and not a single block ledge
-        Block block = world.getBlockState(mutable).getBlock();
-        if (!world.isEmptyBlock(mutable.above()) || !world.isEmptyBlock(mutable.above(2)))
-            return false;
-        if (!isDirt(block) && !BlockTags.SAND.contains(block) && !BlockTags.BASE_STONE_OVERWORLD.contains(block))
+        boolean terrainCheck = Stream.of(
+                world.getBlockState(mutable).getBlock(),
+                world.getBlockState(mutable.north()).getBlock(),
+                world.getBlockState(mutable.south()).getBlock(),
+                world.getBlockState(mutable.west()).getBlock(),
+                world.getBlockState(mutable.north()).getBlock()
+        ).allMatch(block -> isDirt(block) || BlockTags.SAND.contains(block) || BlockTags.BASE_STONE_OVERWORLD.contains(block));
+
+        if (!terrainCheck)
             return false;
         Template template = world.getLevel().getStructureManager().get(templateRL);
 
@@ -49,10 +53,10 @@ public class RealityBreakthroughPointFeature extends Feature<NoFeatureConfig> {
             ProgressivePeripherals.LOGGER.warn(templateRL + " NTB does not exist!");
             return false;
         }
-        if (random.nextInt(ProgressivePeripheralsConfig.BREAKTHROUGH_SPAWN_CHANCE_LIMIT) <= ProgressivePeripheralsConfig.breakthroughPointSpawnChance)
+        if (random.nextInt(ProgressivePeripheralsConfig.BREAKTHROUGH_SPAWN_CHANCE_LIMIT) > ProgressivePeripheralsConfig.breakthroughPointSpawnChance)
             return false;
         // Creates the well centered on our spot
-        BlockPos offset = new BlockPos(-template.getSize().getX() / 2, -1, -template.getSize().getZ() / 2);
+        BlockPos offset = new BlockPos(-template.getSize().getX() / 2, 1, -template.getSize().getZ() / 2);
         template.placeInWorldChunk(world, mutable.offset(offset), placementsettings, random);
         ProgressivePeripherals.LOGGER.info("Structure places {}", mutable.offset(offset));
         return true;

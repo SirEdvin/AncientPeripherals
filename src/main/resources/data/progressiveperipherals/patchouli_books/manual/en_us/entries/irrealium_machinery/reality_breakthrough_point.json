@@ -1,0 +1,19 @@
+{
+  "name": "Reality breakthrough points",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:irrealium_machinery",
+  "pages": [
+    {
+      "type": "image",
+      "images": [
+        "progressiveperipherals:textures/gui/patchouli/reality_breakthrough_point.png"
+      ],
+      "border": true,
+      "title": "Breakthrough point"
+    },
+    {
+      "type": "text",
+      "text": "In-world structure, that can find in overworld, produced by interworld fluctuations. Seems, this points forms strange metal around. Interesting, how it can be used?"
+    }
+  ]
+}
