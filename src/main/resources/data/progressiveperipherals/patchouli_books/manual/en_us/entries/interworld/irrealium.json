@@ -33,6 +33,26 @@
     {
       "type": "progressiveperipherals:automata",
       "recipe": "progressiveperipherals:irrealium_machinery_glass"
+    },
+    {
+      "type": "spotlight",
+      "title": "Machinery storage",
+      "item": "progressiveperipherals:irrealium_machinery_storage",
+      "text": "Machinery storage block! Can store up to 27 stacks of items. Also can be used as regular chest. Cannot be used on corners of machine"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:irrealium_machinery_storage"
+    },
+    {
+      "type": "spotlight",
+      "title": "Double machinery storage",
+      "item": "progressiveperipherals:irrealium_double_machinery_storage",
+      "text": "Machinery storage block! Can store up to 54 stacks of items. Also can be used as regular chest. Cannot be used on corners of machine"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:irrealium_double_machinery_storage"
     }
   ]
 }

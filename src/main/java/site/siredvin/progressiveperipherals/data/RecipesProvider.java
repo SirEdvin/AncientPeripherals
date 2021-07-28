@@ -143,6 +143,25 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern(" CC ")
                 .pattern("SSSS")
                 .save(consumer);
+
+        AutomataRecipeBuilder.start(Blocks.IRREALIUM_MACHINERY_STORAGE.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('C', net.minecraft.block.Blocks.CHEST)
+                .define('S', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .pattern("S  S")
+                .pattern("SICS")
+                .pattern("SCIS")
+                .pattern("S  S")
+                .save(consumer);
+
+        AutomataRecipeBuilder.start(Blocks.IRREALIUM_DOUBLE_MACHINERY_STORAGE.get())
+                .define('C', Blocks.IRREALIUM_MACHINERY_STORAGE.get())
+                .define('S', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .pattern("    ")
+                .pattern(" CS ")
+                .pattern(" SC ")
+                .pattern("    ")
+                .save(consumer);
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {

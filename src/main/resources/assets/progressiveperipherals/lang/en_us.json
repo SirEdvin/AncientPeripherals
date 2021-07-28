@@ -67,6 +67,8 @@
   "block.progressiveperipherals.irrealium_machinery_io_port.tooltip": "Functionality block for any irrealium machine. Have no use now.",
   "block.progressiveperipherals.irrealium_machinery_storage": "Irrealium machinery storage",
   "block.progressiveperipherals.irrealium_machinery_storage.tooltip": "Functionality block for any irrealium machine. Allows to store result items for machine. Also can be used as generic chest.",
+  "block.progressiveperipherals.irrealium_double_machinery_storage": "Irrealium double machinery storage",
+  "block.progressiveperipherals.irrealium_double_machinery_storage.tooltip": "Functionality block for any irrealium machine. Allows to store result items for machine. Also can be used as generic chest.",
   "block.progressiveperipherals.irrealium_machinery_creative_decryptor": "Irrealium creative decryptor",
   "block.progressiveperipherals.irrealium_machinery_creative_decryptor.tooltip": "Provide ability to decrypt any reality breakthrough point without puzzle solving. Very cheat item",
   "block.progressiveperipherals.reality_breakthrough_reactor_controller": "RBHReactor controller (WIP)",

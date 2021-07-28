@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/irrealium_double_machinery_storage",
+    "south": "progressiveperipherals:block/irrealium_double_machinery_storage",
+    "west": "progressiveperipherals:block/irrealium_double_machinery_storage",
+    "east": "progressiveperipherals:block/irrealium_double_machinery_storage",
+    "up": "progressiveperipherals:block/irrealium_machinery_casing",
+    "down": "progressiveperipherals:block/irrealium_machinery_casing",
+    "particle": "progressiveperipherals:block/irrealium_machinery_casing"
+  }
+}

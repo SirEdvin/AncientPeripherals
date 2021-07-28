@@ -16,6 +16,8 @@ import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
 public class MachineryStorageTileEntity extends LockableLootTileEntity implements ITileEntityDataProvider {
 
+    private static final String SIZE_TAG = "size";
+
     private NonNullList<ItemStack> items;
 
     public MachineryStorageTileEntity() {
@@ -29,12 +31,22 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
 
     @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
+        data.putInt(SIZE_TAG, items.size());
         ItemStackHelper.saveAllItems(data, items);
         return data;
     }
 
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+        int size = data.getInt(SIZE_TAG);
+        if (items.size() != size) {
+            int inflictedSize = Math.min(items.size(), size);
+            NonNullList<ItemStack> newItems = NonNullList.withSize(size, ItemStack.EMPTY);
+            for (int i = 0; i < inflictedSize; i++) {
+                newItems.set(i, items.get(i));
+            }
+            items = newItems;
+        }
         ItemStackHelper.loadAllItems(data, items);
     }
 
@@ -56,6 +68,8 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
 
     @Override
     protected Container createMenu(int p_213906_1_, PlayerInventory p_213906_2_) {
+        if (items.size() == 54)
+            return ChestContainer.sixRows(p_213906_1_, p_213906_2_, this);
         return ChestContainer.threeRows(p_213906_1_, p_213906_2_, this);
     }
 

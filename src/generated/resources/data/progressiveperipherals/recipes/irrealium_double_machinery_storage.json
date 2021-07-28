@@ -1,0 +1,20 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "    ",
+    " CS ",
+    " SC ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:irrealium_machinery_storage"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium_double_machinery_storage"
+  }
+}

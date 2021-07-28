@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "connected=false": {"model": "progressiveperipherals:block/irrealium_double_machinery_storage"},
+    "connected=true": {"model": "progressiveperipherals:block/irrealium_double_machinery_storage_connected"}
+  }
+}
