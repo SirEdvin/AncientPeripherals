@@ -28,6 +28,7 @@ public class CCRegistration {
             add(new ScientificTurtle());
             add(new EnchantingTurtle());
             add(new SmithingTurtle());
+            add(new FluidyTurtleUpgrade());
             add(new TurtleCuttingAxe());
             add(new TurtleExtractingPickaxe());
             add(TurtleCuttingAxe.enchant("silk_", Enchantments.SILK_TOUCH, 1));
