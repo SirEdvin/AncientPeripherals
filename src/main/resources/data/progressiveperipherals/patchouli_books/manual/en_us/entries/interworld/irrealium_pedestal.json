@@ -1,0 +1,18 @@
+{
+  "name": "Irrealium pedestal",
+  "icon": "progressiveperipherals:irrealium_pedestal",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Irrealium pedestal",
+      "item": "progressiveperipherals:irrealium_pedestal",
+      "text": "Irrealium pedestal are just able to hold a stack of any item. You can right click on it to put stack and left click with empty hand to click it.$(p)$(o)Simple and boring, but it works!$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:irrealium_pedestal"
+    }
+  ]
+}
