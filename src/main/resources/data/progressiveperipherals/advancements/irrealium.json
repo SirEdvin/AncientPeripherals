@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.obtain_irrealium"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.obtain_irrealium.description"
+    }
+  },
+  "parent": "progressiveperipherals:abstractium",
+  "criteria": {
+    "item_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:irrealium_ingot"
+          }
+        ]
+      }
+    },
+    "block_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:irrealium_block"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item_in_inventory",
+      "block_in_inventory"
+    ]
+  ]
+}

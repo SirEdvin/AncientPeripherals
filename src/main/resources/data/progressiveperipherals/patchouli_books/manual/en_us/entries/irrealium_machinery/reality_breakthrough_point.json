@@ -1,7 +1,7 @@
 {
   "name": "Reality breakthrough points",
   "icon": "minecraft:writable_book",
-  "category": "progressiveperipherals:irrealium_machinery",
+  "category": "progressiveperipherals:interworld",
   "pages": [
     {
       "type": "image",

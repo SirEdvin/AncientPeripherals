@@ -22,7 +22,7 @@ public class Items {
     // Automata cores
     public static final RegistryObject<Item> FORGED_AUTOMATA_CORE = Registration.ITEMS.register("forged_automata_core", ForgedAutomataCore::new);
     public static final RegistryObject<Item> SCIENTIFIC_AUTOMATA_CORE = Registration.ITEMS.register(
-            "scientific_automata_core", () -> new PeripheralItem(() -> true, ScientificTurtle.ID, null));
+            "scientific_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableScientificAutomataCore, ScientificTurtle.ID, null));
     public static final RegistryObject<Item> ENCHANTING_AUTOMATA_CORE = Registration.ITEMS.register(
             "enchanting_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableEnchantingAutomataCore, EnchantingTurtle.ID, null)
     );

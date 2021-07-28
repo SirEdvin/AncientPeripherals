@@ -29,6 +29,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableAbstractiumPedestal = ConfigHolder.COMMON_CONFIG.ENABLE_ABSTRACTIUM_PEDESTAL.get();
         ProgressivePeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
+        ProgressivePeripheralsConfig.enableScientificAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SCIENTIFIC_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableCuttingAxe = ConfigHolder.COMMON_CONFIG.ENABLE_CUTTING_AXE.get();
         ProgressivePeripheralsConfig.enableExtractingPickaxe = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTING_PICKAXE.get();
         ProgressivePeripheralsConfig.enableCorrectingShovel = ConfigHolder.COMMON_CONFIG.ENABLE_CORRECTING_SHOVEL.get();

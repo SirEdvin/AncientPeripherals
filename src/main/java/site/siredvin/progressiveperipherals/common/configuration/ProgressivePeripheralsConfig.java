@@ -21,6 +21,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableRealityForger;
     public static boolean enableStatueWorkbench;
     public static boolean enableAbstractiumPedestal;
+    public static boolean enableScientificAutomataCore;
     public static boolean enableEnchantingAutomataCore;
     public static boolean enableSmithingAutomataCore;
     public static boolean enableCuttingAxe;
@@ -51,6 +52,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_ABSTRACTIUM_PEDESTAL;
         final ForgeConfigSpec.BooleanValue ENABLE_ENCHATING_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_SMITHING_AUTOMATA_CORE;
+        final ForgeConfigSpec.BooleanValue ENABLE_SCIENTIFIC_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_CUTTING_AXE;
         final ForgeConfigSpec.BooleanValue ENABLE_EXTRACTING_PICKAXE;
         final ForgeConfigSpec.BooleanValue ENABLE_CORRECTING_SHOVEL;
@@ -85,6 +87,7 @@ public class ProgressivePeripheralsConfig {
             ENABLE_ABSTRACTIUM_PEDESTAL = builder.define("enableAbstractiumPedestal", true);
             ENABLE_ENCHATING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true);
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true);
+            ENABLE_SCIENTIFIC_AUTOMATA_CORE = builder.comment("Defines is scientific automata core is enabled. Do not disable it without understanding of mod progression logic!").define("enableScientificAutomataCore", true);
             ENABLE_CUTTING_AXE = builder.define("enableCuttingAxe", true);
             ENABLE_EXTRACTING_PICKAXE = builder.define("enableExtractingPickaxe", true);
             ENABLE_CORRECTING_SHOVEL = builder.define("enableCorrectingShovel", true);
