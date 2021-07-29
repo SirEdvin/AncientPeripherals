@@ -21,7 +21,7 @@ public class AutomataRecipeCategory implements IRecipeCategory<AutomataRecipe> {
     private final IDrawable icon;
 
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ProgressivePeripherals.MOD_ID, "textures/gui/jei/jei_automata.png");
-    public static final ResourceLocation UID = new ResourceLocation(ProgressivePeripherals.MOD_ID, AutomataRecipe.GROUP);
+    public static final ResourceLocation UID = new ResourceLocation(AutomataRecipe.GROUP);
 
     public AutomataRecipeCategory(IGuiHelper guiHelper) {
         icon = guiHelper.createDrawableIngredient(new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get()));
