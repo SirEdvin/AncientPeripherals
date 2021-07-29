@@ -28,7 +28,6 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     Pair<Boolean, String> detectMultiBlock();
     @Nullable IMachineryStructure getStructure();
     void forgetStructure();
-    @Nullable World getLevel();
     BlockPos getBlockPos();
     boolean isConfigured();
     void setConfigured(boolean configured);
@@ -36,6 +35,10 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     Predicate<BlockState> getCornerPredicate();
     Predicate<BlockState> getCenterPredicate();
     Predicate<BlockState> getInsidePredicate();
+
+    default @Nullable World getWorld() {
+        return getThis().getLevel();
+    }
 
     default boolean isBelongTo(BlockPos pos) {
         IMachineryStructure structure = getStructure();
@@ -45,7 +48,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     }
 
     default void deconstructMultiBlock() {
-        World world = getLevel();
+        World world = getWorld();
         Objects.requireNonNull(world); // should never happen
         if (!isConfigured())
             return;
@@ -78,7 +81,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     }
 
     default void rebuildPluginsAndMethods() {
-        World world = getLevel();
+        World world = getWorld();
         IMachineryStructure structure = getStructure();
         Objects.requireNonNull(structure);
         Objects.requireNonNull(world);
@@ -122,7 +125,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         IMachineryStructure structure = getStructure();
         if (structure == null)
             return stack;
-        World world = getLevel();
+        World world = getWorld();
         Objects.requireNonNull(world);
         ValueContainer<ItemStack> container = new ValueContainer<>(stack);
         structure.traverseInsideSides(blockPos -> {
@@ -147,7 +150,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         IMachineryStructure structure = getStructure();
         if (structure == null)
             return NonNullList.create();
-        World world = getLevel();
+        World world = getWorld();
         Objects.requireNonNull(world);
         NonNullList<BlockPos> list = NonNullList.create();
         structure.traverseInsideSides(blockPos -> {
@@ -162,7 +165,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     @Override
     default void tick() {
         IMachineryStructure structure = getStructure();
-        World world = getLevel();
+        World world = getWorld();
         if (world != null && !world.isClientSide && structure != null && !isConfigured())
             commonDetect();
     }

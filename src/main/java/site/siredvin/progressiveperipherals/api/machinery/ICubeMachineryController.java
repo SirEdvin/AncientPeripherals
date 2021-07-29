@@ -24,7 +24,7 @@ public interface ICubeMachineryController<T extends TileEntity & IMachineryContr
     }
 
     default Pair<Boolean, String> detectMultiBlock() {
-        World world = getLevel();
+        World world = getWorld();
         int size = getSize();
         Objects.requireNonNull(world); // should never happen
         if (isConfigured())
