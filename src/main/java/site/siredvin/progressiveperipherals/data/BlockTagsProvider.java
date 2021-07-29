@@ -5,6 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.TagsProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,6 +36,10 @@ public class BlockTagsProvider extends TagsProvider<Block> {
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(),
                 Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(),
                 Blocks.IRREALIUM_MACHINERY_CASING.get()
+        );
+        this.tag(Tags.Blocks.STORAGE_BLOCKS).add(
+                Blocks.IRREALIUM_MACHINERY_STORAGE.get(),
+                Blocks.IRREALIUM_DOUBLE_MACHINERY_STORAGE.get()
         );
     }
 

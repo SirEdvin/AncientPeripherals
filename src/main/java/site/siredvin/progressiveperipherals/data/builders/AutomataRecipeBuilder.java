@@ -81,6 +81,10 @@ public class AutomataRecipeBuilder {
         consumer.accept(new Result(resultID, this.result, this.count, this.group, this.rows, this.key));
     }
 
+    public void save(Consumer<IFinishedRecipe> consumer, String postfix) {
+        this.save(consumer, new ResourceLocation(Registry.ITEM.getKey(this.result) + "_" + postfix));
+    }
+
     private void ensureValid(ResourceLocation resultID) {
         if (this.rows.size() != 4) {
             throw new IllegalStateException("Automata recipe should contains 4 rows!");

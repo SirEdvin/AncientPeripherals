@@ -5,11 +5,13 @@ import net.minecraft.data.TagsProvider;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
+import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.common.tags.ItemTags;
 
 import java.nio.file.Path;
@@ -35,6 +37,15 @@ public class ItemTagsProvider extends TagsProvider<Item> {
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem(),
                 Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_CASING.get().asItem()
+        );
+        this.tag(Tags.Items.INGOTS).add(
+                Items.KNOWLEDGIUM_INGOT.get(),
+                Items.ABSTRACTIUM_INGOT.get(),
+                Items.IRREALIUM_INGOT.get()
+        );
+        this.tag(Tags.Items.STORAGE_BLOCKS).add(
+                Blocks.IRREALIUM_MACHINERY_STORAGE.get().asItem(),
+                Blocks.IRREALIUM_DOUBLE_MACHINERY_STORAGE.get().asItem()
         );
     }
 

@@ -172,11 +172,22 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("SICS")
                 .pattern(" SS ")
                 .save(consumer);
+
+        AutomataRecipeBuilder.start(Items.KNOWLEDGIUM_INGOT.get(), 16)
+                .define('A', Items.ABSTRACTIUM_INGOT.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('B', net.minecraft.item.Items.BOOK)
+                .pattern("B  B")
+                .pattern(" IA ")
+                .pattern(" AI ")
+                .pattern("B  B")
+                .save(consumer, "automata");
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
         buildBlockIngotRecipes(consumer, Blocks.ABSTRACTIUM_BLOCK.get(), Items.ABSTRACTIUM_INGOT.get());
         buildBlockIngotRecipes(consumer, Blocks.IRREALIUM_BLOCK.get(), Items.IRREALIUM_INGOT.get());
+        buildBlockIngotRecipes(consumer, Blocks.KNOWLEDGIUM_BLOCK.get(), Items.KNOWLEDGIUM_INGOT.get());
         TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_AXE.get())
                 .define('I', Items.ABSTRACTIUM_INGOT.get())
                 .define('S', net.minecraft.item.Items.STICK)

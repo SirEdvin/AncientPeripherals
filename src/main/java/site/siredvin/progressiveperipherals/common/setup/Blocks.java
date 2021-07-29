@@ -129,6 +129,12 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.IRREALIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Block> KNOWLEDGIUM_BLOCK = register(
+            "knowledgium_block",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.KNOWLEDGIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
+    );
+
     private static <T extends Block> RegistryObject<T> registerNoItem(String name, Supplier<T> block) {
         return Registration.BLOCKS.register(name, block);
     }

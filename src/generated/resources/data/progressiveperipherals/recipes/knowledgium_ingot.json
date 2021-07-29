@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:knowledgium_block"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:knowledgium_ingot",
+    "count": 9
+  }
+}

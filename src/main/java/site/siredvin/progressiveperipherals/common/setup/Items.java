@@ -85,6 +85,10 @@ public class Items {
             "irrealium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Item> KNOWLEDGIUM_INGOT = Registration.ITEMS.register(
+            "knowledgium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
+    );
+
     public static void register() {
     }
 

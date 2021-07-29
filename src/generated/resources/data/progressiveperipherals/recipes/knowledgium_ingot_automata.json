@@ -1,0 +1,24 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "B  B",
+    " IA ",
+    " AI ",
+    "B  B"
+  ],
+  "key": {
+    "A": {
+      "item": "progressiveperipherals:abstractium_ingot"
+    },
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "B": {
+      "item": "minecraft:book"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:knowledgium_ingot",
+    "count": 16
+  }
+}
