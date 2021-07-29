@@ -25,6 +25,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableScientificAutomataCore;
     public static boolean enableEnchantingAutomataCore;
     public static boolean enableSmithingAutomataCore;
+    public static boolean enableBrewingAutomataCore;
     public static boolean enableCuttingAxe;
     public static boolean enableExtractingPickaxe;
     public static boolean enableCorrectingShovel;
@@ -33,6 +34,7 @@ public class ProgressivePeripheralsConfig {
     public static int abstractiumXPPointsCost;
     public static int enchantLevelCost;
     public static int xpToFuelRate;
+    public static double brewingXPReward;
     public static double furnaceBurnFuelCostRate;
     public static int cuttingAxeMaxBlockCount;
     public static int breakthroughPointSpawnChance;
@@ -54,6 +56,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_RECIPE_REGISTRY;
         final ForgeConfigSpec.BooleanValue ENABLE_ENCHATING_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_SMITHING_AUTOMATA_CORE;
+        final ForgeConfigSpec.BooleanValue ENABLE_BREWING_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_SCIENTIFIC_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_CUTTING_AXE;
         final ForgeConfigSpec.BooleanValue ENABLE_EXTRACTING_PICKAXE;
@@ -65,6 +68,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.IntValue ABSTRACTIUM_XP_POINTS_COST;
         final ForgeConfigSpec.IntValue ENCHANT_LEVEL_COST;
         final ForgeConfigSpec.IntValue XP_TO_FUEL_RATE;
+        final ForgeConfigSpec.DoubleValue BREWING_XP_REWARD;
         final ForgeConfigSpec.DoubleValue SMELT_FUEL_COST_RATE;
         final ForgeConfigSpec.IntValue CUTTING_AXE_MAX_BLOCK_COUNT;
         final ForgeConfigSpec.IntValue BREAKTHROUGH_POINT_SPAWN_CHANCE;
@@ -90,6 +94,7 @@ public class ProgressivePeripheralsConfig {
             ENABLE_RECIPE_REGISTRY = builder.define("enableRecipeRegistry", true);
             ENABLE_ENCHATING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true);
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true);
+            ENABLE_BREWING_AUTOMATA_CORE = builder.define("enableBrewingAutomataCore", true);
             ENABLE_SCIENTIFIC_AUTOMATA_CORE = builder.comment("Defines is scientific automata core is enabled. Do not disable it without understanding of mod progression logic!").define("enableScientificAutomataCore", true);
             ENABLE_CUTTING_AXE = builder.define("enableCuttingAxe", true);
             ENABLE_EXTRACTING_PICKAXE = builder.define("enableExtractingPickaxe", true);
@@ -100,6 +105,7 @@ public class ProgressivePeripheralsConfig {
             REALITY_FORGER_RADIUS = builder.defineInRange("realityForgerRadius", 8, 1, 64);
             ABSTRACTIUM_XP_POINTS_COST = builder.defineInRange("abstractiumXPPointsCost", 20, 5, Integer.MAX_VALUE);
             XP_TO_FUEL_RATE = builder.defineInRange("xpToFuelRate", 10, 1, Integer.MAX_VALUE);
+            BREWING_XP_REWARD = builder.defineInRange("brewingXPReward", 0.8, 0, 64);
             ENCHANT_LEVEL_COST = builder.defineInRange("enchantLevelCost", 30, 1, Integer.MAX_VALUE);
             SMELT_FUEL_COST_RATE = builder.defineInRange("smeltFuelCostRate", 0.8, 0.1, 1.5);
             CUTTING_AXE_MAX_BLOCK_COUNT = builder

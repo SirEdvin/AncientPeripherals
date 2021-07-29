@@ -9,7 +9,9 @@ import java.util.Map;
 public enum SimpleOperation implements IPeripheralOperation<Object> {
     XP_TRANSFER(1_000, 1),
     ENCHANTMENT(5_000, 10),
-    SMITH(1_000, 1);
+    SMITH(1_000, 1),
+    BREW(1_000, 5),
+    THROW_POTION(1_000, 10);
 
     private ForgeConfigSpec.IntValue cooldown;
     private ForgeConfigSpec.IntValue cost;

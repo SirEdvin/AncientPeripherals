@@ -30,6 +30,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableRecipeRegistry = ConfigHolder.COMMON_CONFIG.ENABLE_RECIPE_REGISTRY.get();
         ProgressivePeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
+        ProgressivePeripheralsConfig.enableBrewingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_BREWING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableScientificAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SCIENTIFIC_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableCuttingAxe = ConfigHolder.COMMON_CONFIG.ENABLE_CUTTING_AXE.get();
         ProgressivePeripheralsConfig.enableExtractingPickaxe = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTING_PICKAXE.get();
@@ -38,6 +39,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.realityForgerRadius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_RADIUS.get();
         ProgressivePeripheralsConfig.abstractiumXPPointsCost = ConfigHolder.COMMON_CONFIG.ABSTRACTIUM_XP_POINTS_COST.get();
         ProgressivePeripheralsConfig.xpToFuelRate = ConfigHolder.COMMON_CONFIG.XP_TO_FUEL_RATE.get();
+        ProgressivePeripheralsConfig.brewingXPReward = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get();
         ProgressivePeripheralsConfig.enchantLevelCost = ConfigHolder.COMMON_CONFIG.ENCHANT_LEVEL_COST.get();
         ProgressivePeripheralsConfig.furnaceBurnFuelCostRate = ConfigHolder.COMMON_CONFIG.SMELT_FUEL_COST_RATE.get();
         ProgressivePeripheralsConfig.cuttingAxeMaxBlockCount = ConfigHolder.COMMON_CONFIG.CUTTING_AXE_MAX_BLOCK_COUNT.get();

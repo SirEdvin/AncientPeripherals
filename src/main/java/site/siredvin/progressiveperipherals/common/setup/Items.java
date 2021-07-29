@@ -29,6 +29,9 @@ public class Items {
     public static final RegistryObject<Item> SMITHING_AUTOMATA_CORE = Registration.ITEMS.register(
             "smithing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableSmithingAutomataCore, SmithingTurtle.ID, null)
     );
+    public static final RegistryObject<Item> BREWING_AUTOMATA_CORE = Registration.ITEMS.register(
+            "brewing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableBrewingAutomataCore, BrewingTurtle.ID, null)
+    );
 
     // Abstractium
     public static final RegistryObject<Item> ABSTRACTIUM_INGOT = Registration.ITEMS.register(

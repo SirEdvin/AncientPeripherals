@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Knowledgium material
 - [Recipe registry](https://github.com/SirEdvin/ProgressivePeripherals/issues/15)
+- [Brewing turtle](https://github.com/SirEdvin/ProgressivePeripherals/issues/11)
 
 ### Fixed
 
