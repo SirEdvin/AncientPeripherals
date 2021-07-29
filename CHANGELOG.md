@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- XP now store as double, not as integer
+
 ### Fixed
 
 - Client-server recipe serialization logic

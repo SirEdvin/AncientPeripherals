@@ -96,7 +96,7 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
             result.setCount(smeltCount);
             turtleInventory.setItem(realTargetSlot, result);
             limitedInventory.reduceCount(0, smeltCount);
-            adjustStoredXP((int) (smeltCount * recipe.getExperience()));
+            adjustStoredXP(smeltCount * recipe.getExperience());
             return MethodResult.of(true);
         }, null);
     }

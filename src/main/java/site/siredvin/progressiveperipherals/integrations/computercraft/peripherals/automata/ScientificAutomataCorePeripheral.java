@@ -48,9 +48,9 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
             throw new LuaException("Count should be positive integer");
         int requiredXPAmount = ingots_count * ProgressivePeripheralsConfig.abstractiumXPPointsCost;
         CompoundNBT data = owner.getDataStorage();
-        int currentAmount = _getStoredXP(data);
+        double currentAmount = _getStoredXP(data);
         if (currentAmount < requiredXPAmount)
-            return MethodResult.of(null, String.format("Not enough xp stored: %d/%d", currentAmount, requiredXPAmount));
+            return MethodResult.of(null, String.format("Not enough xp stored: %.2f/%d", currentAmount, requiredXPAmount));
         int freeSlot = -1;
         IInventory turtleInventory = turtle.getInventory();
         for (int slot = 0; slot < turtleInventory.getContainerSize(); slot++) {

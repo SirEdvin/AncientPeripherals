@@ -48,20 +48,20 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         }};
     }
 
-    protected int _getStoredXP() {
+    protected double _getStoredXP() {
         return _getStoredXP(owner.getDataStorage());
     }
 
-    protected int _getStoredXP(CompoundNBT data) {
-        return data.getInt(COLLECTED_XP_AMOUNT);
+    protected double _getStoredXP(CompoundNBT data) {
+        return data.getDouble(COLLECTED_XP_AMOUNT);
     }
 
-    protected void adjustStoredXP(int amount) {
+    protected void adjustStoredXP(double amount) {
         adjustStoredXP(amount, owner.getDataStorage());
     }
 
-    protected void adjustStoredXP(int amount, CompoundNBT data) {
-        data.putInt(COLLECTED_XP_AMOUNT, data.getInt(COLLECTED_XP_AMOUNT) + amount);
+    protected void adjustStoredXP(double amount, CompoundNBT data) {
+        data.putDouble(COLLECTED_XP_AMOUNT, data.getDouble(COLLECTED_XP_AMOUNT) + amount);
     }
 
     protected MethodResult withOperation(SimpleOperation operation, Function<Object, MethodResult> function) {
@@ -75,7 +75,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
             BlockPos pos = getPos();
             AxisAlignedBB searchBox = new AxisAlignedBB(pos).inflate(getInteractionRadius());
             CompoundNBT data = owner.getDataStorage();
-            int oldCount = _getStoredXP(data);
+            double oldCount = _getStoredXP(data);
             world.getEntitiesOfClass(ExperienceOrbEntity.class, searchBox).forEach(entity -> {
                 adjustStoredXP(entity.value, data);
                 entity.remove();
@@ -98,31 +98,31 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
     }
 
     @LuaFunction(mainThread = true)
-    public final int burnXP(int limit) throws LuaException {
+    public final double burnXP(double limit) throws LuaException {
         if (limit <= 0)
             throw new LuaException("Incorrect limit");
-        int burnAmount = Math.min(limit, _getStoredXP());
+        double burnAmount = Math.min(limit, _getStoredXP());
         adjustStoredXP(-burnAmount);
-        addFuel(burnAmount * ProgressivePeripheralsConfig.xpToFuelRate);
+        addFuel((int) (burnAmount * ProgressivePeripheralsConfig.xpToFuelRate));
         return burnAmount;
     }
 
     @LuaFunction(mainThread = true)
     public final MethodResult sendXPToOwner(int limit) {
         return withOperation(XP_TRANSFER, context -> {
-            int count = Math.min(limit, _getStoredXP());
+            double count = Math.min(limit, _getStoredXP());
             addRotationCycle();
             PlayerEntity player = owner.getOwner();
             if (player == null)
                 return MethodResult.of(null, "Cannot find owning player");
-            player.giveExperiencePoints(-count);
+            player.giveExperiencePoints((int) -count);
             adjustStoredXP(-count);
             return MethodResult.of(count);
         });
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult sendXP(Map<?, ?> rawBlockPos, int limit) throws LuaException {
+    public final MethodResult sendXP(Map<?, ?> rawBlockPos, double limit) throws LuaException {
         BlockPos pos = getPos();
         BlockPos targetPos = LuaUtils.convertToBlockPos(pos, rawBlockPos);
         return withOperation(XP_TRANSFER, context -> {
@@ -139,7 +139,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
             if (!(targetPeripheral instanceof ExperienceAutomataCorePeripheral)) {
                 return MethodResult.of(null, "Turtle should have upgrade that support XP transfering methods");
             }
-            int transferAmount = Math.min(_getStoredXP(), limit);
+            double transferAmount = Math.min(_getStoredXP(), limit);
             adjustStoredXP(-transferAmount);
             ((ExperienceAutomataCorePeripheral) targetPeripheral).adjustStoredXP(transferAmount);
             return MethodResult.of(transferAmount);
@@ -147,7 +147,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
     }
 
     @LuaFunction
-    public final int getStoredXP() {
+    public final double getStoredXP() {
         return _getStoredXP();
     }
 

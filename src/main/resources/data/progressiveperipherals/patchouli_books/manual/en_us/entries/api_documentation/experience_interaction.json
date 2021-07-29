@@ -29,7 +29,7 @@
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
-        ["number", "Limit of XP to burn, should be positive integer"]
+        ["number", "Limit of XP to burn, should be positive"]
       ],
       "returns": [
         ["number", "burned XP"],
@@ -94,7 +94,7 @@
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
         ["$(blockPos)", "target turtle"],
-        ["number", "transfer XP limit, must be positive integer"]
+        ["number", "transfer XP limit, must be positive"]
       ],
       "returns": [
         ["number | nil", "Transferred XP amount, nil if operation failed"],
