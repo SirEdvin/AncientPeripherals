@@ -1,0 +1,23 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "    ",
+    " CT ",
+    " TB ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:knowledgium_casing"
+    },
+    "B": {
+      "item": "minecraft:bookshelf"
+    },
+    "T": {
+      "item": "minecraft:crafting_table"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:recipe_registry"
+  }
+}

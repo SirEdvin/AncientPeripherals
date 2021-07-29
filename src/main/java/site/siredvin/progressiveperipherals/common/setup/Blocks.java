@@ -123,6 +123,7 @@ public class Blocks {
     );
 
     // Other
+
     public static final RegistryObject<Block> ABSTRACTIUM_BLOCK = register(
             "abstractium_block",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
@@ -139,6 +140,12 @@ public class Blocks {
             "knowledgium_block",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.KNOWLEDGIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> KNOWLEDGIUM_CASING = register(
+            "knowledgium_casing",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.KNOWLEDGIUM_CASING.get(), new Item.Properties().stacksTo(64))
     );
 
     private static <T extends Block> RegistryObject<T> registerNoItem(String name, Supplier<T> block) {

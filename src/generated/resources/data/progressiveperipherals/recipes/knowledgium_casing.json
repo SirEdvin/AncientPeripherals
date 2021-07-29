@@ -1,0 +1,23 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    " SS ",
+    "KB K",
+    "K  K",
+    " SS "
+  ],
+  "key": {
+    "K": {
+      "item": "progressiveperipherals:knowledgium_ingot"
+    },
+    "B": {
+      "item": "minecraft:bookshelf"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:knowledgium_casing"
+  }
+}

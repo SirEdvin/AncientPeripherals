@@ -182,6 +182,26 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern(" AI ")
                 .pattern("B  B")
                 .save(consumer, "automata");
+
+        AutomataRecipeBuilder.start(Blocks.KNOWLEDGIUM_CASING.get())
+                .define('K', Items.KNOWLEDGIUM_INGOT.get())
+                .define('B', net.minecraft.block.Blocks.BOOKSHELF)
+                .define('S', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .pattern(" SS ")
+                .pattern("KB K")
+                .pattern("K  K")
+                .pattern(" SS ")
+                .save(consumer);
+
+        AutomataRecipeBuilder.start(Blocks.RECIPE_REGISTRY.get())
+                .define('C', Blocks.KNOWLEDGIUM_CASING.get())
+                .define('B', net.minecraft.block.Blocks.BOOKSHELF)
+                .define('T', net.minecraft.block.Blocks.CRAFTING_TABLE)
+                .pattern("    ")
+                .pattern(" CT ")
+                .pattern(" TB ")
+                .pattern("    ")
+                .save(consumer);
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {
