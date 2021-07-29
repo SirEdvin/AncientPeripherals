@@ -20,6 +20,8 @@ import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 public class FluidyTurtleUpgrade extends ModelTransformingTurtle<FluidyAutomataCorePeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "fluidy_automata");
 
+    private static final String STORED_NBT_UPGRADE_DATA_TAG = "storedNBTUpgradeData";
+
     public static class FluidCapability extends FluidTank {
 
         private final static String FLUID_TANK_TAG = "fluidTank";
@@ -47,6 +49,11 @@ public class FluidyTurtleUpgrade extends ModelTransformingTurtle<FluidyAutomataC
     }
 
     @Override
+    public boolean isItemSuitable(@NotNull ItemStack stack) {
+        return stack.getItem() == Items.FLUIDY_AUTOMATA_CORE.get();
+    }
+
+    @Override
     protected ModelResourceLocation getLeftModel() {
         return null;
     }
@@ -59,6 +66,22 @@ public class FluidyTurtleUpgrade extends ModelTransformingTurtle<FluidyAutomataC
     @Override
     protected FluidyAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess iTurtleAccess, @NotNull TurtleSide turtleSide) {
         return new FluidyAutomataCorePeripheral("fluidyAutomataCore", iTurtleAccess, turtleSide);
+    }
+
+    @NotNull
+    @Override
+    public ItemStack mixUpgradeDataToStack(ItemStack stack, CompoundNBT upgradeData) {
+        CompoundNBT tag = stack.getOrCreateTag();
+        tag.put(STORED_NBT_UPGRADE_DATA_TAG, upgradeData);
+        return stack;
+    }
+
+    @Override
+    public void mixUpgradeDataToNBT(ItemStack stack, CompoundNBT upgradeData) {
+        CompoundNBT tag = stack.getTagElement(STORED_NBT_UPGRADE_DATA_TAG);
+        if (tag != null && !tag.isEmpty() && tag.contains(FluidCapability.FLUID_TANK_TAG)) {
+            upgradeData.put(FluidCapability.FLUID_TANK_TAG, tag.getCompound(FluidCapability.FLUID_TANK_TAG));
+        }
     }
 
     @NotNull
