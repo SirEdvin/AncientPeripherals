@@ -18,7 +18,7 @@ public class AutomataRecipePage extends PageDoubleRecipeRegistry<AutomataRecipe>
     public static final ResourceLocation craftingTexture = new ResourceLocation(ProgressivePeripherals.MOD_ID, "textures/gui/patchouli/automata_crafting.png");
 
     public AutomataRecipePage() {
-        super(AutomataRecipe.TYPE);
+        super(AutomataRecipe.TYPE());
     }
 
     public void renderScaledItemStack(MatrixStack ms, int x, int y, int mouseX, int mouseY, ItemStack stack, int size) {

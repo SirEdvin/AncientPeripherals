@@ -13,6 +13,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.common.setup.RecipeSerializers;
 
@@ -21,20 +22,17 @@ import java.util.Set;
 
 public class AutomataRecipe implements IRecipe<IInventory> {
 
-    protected static final int MAX_HEIGHT = 4;
-    protected static final int MAX_WIDTH = 4;
-
-    public final static String GROUP = "automata";
-    public final static IRecipeType<AutomataRecipe> TYPE = RecipeSerializers.registerRecipeType(GROUP);
+    public static final int MAX_HEIGHT = 4;
+    public static final int MAX_WIDTH = 4;
 
     private final NonNullList<Ingredient> recipeItems;
     private final ItemStack result;
     private final ResourceLocation id;
-    private final String group;
 
-    public AutomataRecipe(ResourceLocation id, String group, NonNullList<Ingredient> recipeItems, ItemStack result) {
+    public static final String GROUP = ProgressivePeripherals.MOD_ID + ":automata";
+
+    public AutomataRecipe(ResourceLocation id, NonNullList<Ingredient> recipeItems, ItemStack result) {
         this.id = id;
-        this.group = group;
         this.recipeItems = recipeItems;
         this.result = result;
     }
@@ -106,12 +104,12 @@ public class AutomataRecipe implements IRecipe<IInventory> {
 
     @Override
     public IRecipeType<?> getType() {
-        return TYPE;
+        return RecipeSerializers.AUTOMATA_CRAFTING.get().getRecipeType();
     }
 
     @Override
     public String getGroup() {
-        return this.group;
+        return GROUP;
     }
 
     @Override
@@ -122,7 +120,7 @@ public class AutomataRecipe implements IRecipe<IInventory> {
     // Parsing
 
     protected static NonNullList<Ingredient> dissolvePattern(String[] pattern, Map<String, Ingredient> keyMapping) {
-        NonNullList<Ingredient> nonnulllist = NonNullList.withSize(MAX_HEIGHT * MAX_WIDTH, Ingredient.EMPTY);
+        NonNullList<Ingredient> ingredients = NonNullList.withSize(MAX_HEIGHT * MAX_WIDTH, Ingredient.EMPTY);
         Set<String> set = Sets.newHashSet(keyMapping.keySet());
         set.remove(" ");
 
@@ -135,14 +133,14 @@ public class AutomataRecipe implements IRecipe<IInventory> {
                 }
 
                 set.remove(s);
-                nonnulllist.set(j + MAX_HEIGHT * i, ingredient);
+                ingredients.set(j + MAX_HEIGHT * i, ingredient);
             }
         }
 
         if (!set.isEmpty()) {
             throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + set);
         } else {
-            return nonnulllist;
+            return ingredients;
         }
     }
 
@@ -178,5 +176,9 @@ public class AutomataRecipe implements IRecipe<IInventory> {
         }
 
         return pattern;
+    }
+
+    public static IRecipeType<AutomataRecipe> TYPE() {
+        return RecipeSerializers.AUTOMATA_CRAFTING.get().getRecipeType();
     }
 }

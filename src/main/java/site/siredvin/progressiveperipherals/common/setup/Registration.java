@@ -23,7 +23,7 @@ public class Registration {
 
     public static void register() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+        
         ITEMS.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         TILE_ENTITIES.register(modEventBus);

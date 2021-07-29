@@ -70,7 +70,7 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
     @LuaFunction(mainThread = true)
     public final MethodResult craft() {
         IInventory inventory = turtle.getInventory();
-        Optional<AutomataRecipe> optRecipe = getWorld().getRecipeManager().getRecipeFor(AutomataRecipe.TYPE, inventory, getWorld());
+        Optional<AutomataRecipe> optRecipe = getWorld().getRecipeManager().getRecipeFor(AutomataRecipe.TYPE(), inventory, getWorld());
         if (!optRecipe.isPresent())
             return MethodResult.of(null, "Cannot find recipe");
         AutomataRecipe recipe = optRecipe.get();

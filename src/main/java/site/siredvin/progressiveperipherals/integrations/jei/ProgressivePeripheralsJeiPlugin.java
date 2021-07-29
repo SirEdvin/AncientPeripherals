@@ -11,9 +11,9 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.integrations.jei.automata.AutomataRecipeCategory;
 import site.siredvin.progressiveperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.progressiveperipherals.common.setup.Items;
+import site.siredvin.progressiveperipherals.integrations.jei.automata.AutomataRecipeCategory;
 
 import java.util.Objects;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class ProgressivePeripheralsJeiPlugin implements IModPlugin {
         Minecraft mc = Minecraft.getInstance();
         ClientWorld world = Objects.requireNonNull(mc.level);
 
-        Set<AutomataRecipe> automataRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(AutomataRecipe.TYPE));
+        Set<AutomataRecipe> automataRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(AutomataRecipe.TYPE()));
         registration.addRecipes(automataRecipes, AutomataRecipeCategory.UID);
     }
 
