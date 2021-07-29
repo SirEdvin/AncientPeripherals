@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.FreeMachineryOperation.EXTRACT;
+import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.EXTRACT;
 
 public class RBTExtractorPeripheral extends GenericMachineryPeripheral<RBTExtractorControllerTileEntity> {
 

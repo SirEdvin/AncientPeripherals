@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery;
+package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -6,13 +6,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum FreeMachineryOperation implements IPeripheralOperation<Object> {
-    EXTRACT(5_000);
+public enum FreeOperation implements IPeripheralOperation<Object> {
+    EXTRACT(5_000),
+    QUERY_REGISTRY(5_000);
 
     private ForgeConfigSpec.IntValue cooldown;
     private final int defaultCooldown;
 
-    FreeMachineryOperation(int defaultCooldown) {
+    FreeOperation(int defaultCooldown) {
         this.defaultCooldown = defaultCooldown;
     }
 

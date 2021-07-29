@@ -27,6 +27,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableRealityForger = ConfigHolder.COMMON_CONFIG.ENABLE_REALITY_FORGER.get();
         ProgressivePeripheralsConfig.enableStatueWorkbench = ConfigHolder.COMMON_CONFIG.ENABLE_STATUE_WORKBENCH.get();
         ProgressivePeripheralsConfig.enableAbstractiumPedestal = ConfigHolder.COMMON_CONFIG.ENABLE_ABSTRACTIUM_PEDESTAL.get();
+        ProgressivePeripheralsConfig.enableRecipeRegistry = ConfigHolder.COMMON_CONFIG.ENABLE_RECIPE_REGISTRY.get();
         ProgressivePeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableScientificAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SCIENTIFIC_AUTOMATA_CORE.get();

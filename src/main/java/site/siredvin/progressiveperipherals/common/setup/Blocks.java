@@ -53,6 +53,12 @@ public class Blocks {
             () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(), null, null, () -> ProgressivePeripheralsConfig.enableExtractor)
     );
 
+    public static final RegistryObject<Block> RECIPE_REGISTRY = register(
+            "recipe_registry",
+            () -> new GenericTileEntityBlock<>(TileEntityTypes.RECIPE_REGISTRY),
+            () -> new PeripheralBlockItem(Blocks.RECIPE_REGISTRY.get(), null, null, () -> ProgressivePeripheralsConfig.enableRecipeRegistry)
+    );
+
     // Utility
 
     public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(
