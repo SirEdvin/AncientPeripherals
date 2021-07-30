@@ -66,6 +66,12 @@ public class Blocks {
             () -> new PeripheralBlockItem(Blocks.RECIPE_REGISTRY.get(), null, null, () -> ProgressivePeripheralsConfig.enableRecipeRegistry)
     );
 
+    public static final RegistryObject<Block> EVENT_DISTRIBUTOR = register(
+            "event_distributor",
+            () -> new GenericTileEntityBlock<>(TileEntityTypes.EVENT_DISTRIBUTOR),
+            () -> new PeripheralBlockItem(Blocks.EVENT_DISTRIBUTOR.get(), null, null, () -> ProgressivePeripheralsConfig.enableEventDistributor)
+    );
+
     // Utility
 
     public static final RegistryObject<Block> FLEXIBLE_REALITY_ANCHOR = register(

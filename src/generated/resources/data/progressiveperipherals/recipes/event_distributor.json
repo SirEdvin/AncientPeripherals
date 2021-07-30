@@ -1,0 +1,23 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "ASSA",
+    "SI S",
+    "S  S",
+    "ASSA"
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_machinery_casing"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "A": {
+      "item": "minecraft:arrow"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:event_distributor"
+  }
+}

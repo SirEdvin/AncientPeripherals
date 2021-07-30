@@ -28,6 +28,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableStatueWorkbench = ConfigHolder.COMMON_CONFIG.ENABLE_STATUE_WORKBENCH.get();
         ProgressivePeripheralsConfig.enableAbstractiumPedestal = ConfigHolder.COMMON_CONFIG.ENABLE_ABSTRACTIUM_PEDESTAL.get();
         ProgressivePeripheralsConfig.enableRecipeRegistry = ConfigHolder.COMMON_CONFIG.ENABLE_RECIPE_REGISTRY.get();
+        ProgressivePeripheralsConfig.enableEventDistributor = ConfigHolder.COMMON_CONFIG.ENABLE_EVENT_DISTRIBUTOR.get();
         ProgressivePeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableBrewingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_BREWING_AUTOMATA_CORE.get();

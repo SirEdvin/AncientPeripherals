@@ -28,8 +28,14 @@ public class LuaFunctionRightPage extends BookPage {
             List<IVariable> parameterList = parameters.asList();
             for (IVariable parameter: parameterList) {
                 List<IVariable> parameterArray = parameter.asList();
-                builder.listElement().italic((IFormattableTextComponent) parameterArray.get(0).as(ITextComponent.class))
-                        .add(": ")
+                IFormattableTextComponent firstElement = (IFormattableTextComponent) parameterArray.get(0).as(ITextComponent.class);
+                TextBuilder.ListElementBuilder listElementBuilder;
+                if (firstElement.getString().equals("...")) {
+                    listElementBuilder = builder.prefixElement(firstElement);
+                } else {
+                    listElementBuilder = builder.listElement().italic(firstElement);
+                }
+                listElementBuilder.add(": ")
                         .add((IFormattableTextComponent) parameterArray.get(1).as(ITextComponent.class))
                         .finish();
             }

@@ -213,6 +213,15 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("S  S")
                 .save(consumer);
 
+        AutomataRecipeBuilder.start(Blocks.EVENT_DISTRIBUTOR.get())
+                .define('I', Blocks.IRREALIUM_MACHINERY_CASING.get())
+                .define('S', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .define('A', net.minecraft.item.Items.ARROW)
+                .pattern("ASSA")
+                .pattern("SI S")
+                .pattern("S  S")
+                .pattern("ASSA")
+                .save(consumer);
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {

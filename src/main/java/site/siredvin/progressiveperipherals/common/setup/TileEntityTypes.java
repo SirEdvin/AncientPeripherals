@@ -45,6 +45,11 @@ public class TileEntityTypes {
             () -> new TileEntityType<>(RecipeRegistryTileEntity::new, Sets.newHashSet(Blocks.RECIPE_REGISTRY.get()), null)
     );
 
+    public static final RegistryObject<TileEntityType<EventDistributorTileEntity>> EVENT_DISTRIBUTOR = Registration.TILE_ENTITIES.register(
+            "event_distributor",
+            () -> new TileEntityType<>(EventDistributorTileEntity::new, Sets.newHashSet(Blocks.EVENT_DISTRIBUTOR.get()), null)
+    );
+
     // Utility
 
     public static final RegistryObject<TileEntityType<FlexibleRealityAnchorTileEntity>> FLEXIBLE_REALITY_ANCHOR = Registration.TILE_ENTITIES.register(

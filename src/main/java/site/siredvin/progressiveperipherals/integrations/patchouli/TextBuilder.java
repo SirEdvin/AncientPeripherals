@@ -88,6 +88,11 @@ public class TextBuilder {
         return new ListElementBuilder(this);
     }
 
+    public ListElementBuilder prefixElement(IFormattableTextComponent prefix) {
+        buffer = buffer.append(LIST_SPACING).append(prefix);
+        return new ListElementBuilder(this);
+    }
+
     public TextBuilder addBulletListElement(String name) {
         return add("$(li)").add(name);
     }

@@ -57,6 +57,8 @@
   "block.progressiveperipherals.reality_forger_mk2.tooltip": "§7Upgraded version of reality forger, with bigger interaction radius",
   "block.progressiveperipherals.statue_workbench": "Statue workbench",
   "block.progressiveperipherals.statue_workbench.tooltip": "§7Special peripheral, that allow you to shape statues via computers!",
+  "block.progressiveperipherals.event_distributor": "Event distributor",
+  "block.progressiveperipherals.event_distributor.tooltip": "§7Peripheral, that allow you queue event for all connected computers in wired network!",
   "block.progressiveperipherals.abstractium_block": "Abstractium block",
   "block.progressiveperipherals.abstractium_block.tooltip": "§7XP, reforged by scientific automata collected into block",
   "block.progressiveperipherals.flexible_statue": "Flexible statue",

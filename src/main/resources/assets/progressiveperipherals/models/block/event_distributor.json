@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/event_distributor_side",
+    "south": "progressiveperipherals:block/event_distributor_side",
+    "west": "progressiveperipherals:block/event_distributor_side",
+    "east": "progressiveperipherals:block/event_distributor_side",
+    "up": "progressiveperipherals:block/irrealium_machinery_casing",
+    "down": "progressiveperipherals:block/irrealium_machinery_casing",
+    "particle": "progressiveperipherals:block/irrealium_machinery_casing"
+  }
+}

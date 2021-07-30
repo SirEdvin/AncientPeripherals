@@ -1,0 +1,80 @@
+{
+  "name": "Event distributor",
+  "icon": "progressiveperipherals:event_distributor",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Event distributor",
+      "item": "progressiveperipherals:event_distributor",
+      "text": "Irrealium can be used not only for machinery. Do you even what to have ability to spread events in wired network? Now you can.$(p)$(o)Isn't this are real useless box?$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:event_distributor"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "broadcastEvent",
+      "description": "Function, that will send event to every computerized item (even turtles) in network",
+      "throw": [
+        "Incorrect arguments"
+      ],
+      "operationGroup": "queue_event"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "Event name"],
+        ["...", "Any other argument expect first will be used as event data argument"]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Nil if operation successful or error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "sendEventByID",
+      "description": "Allows to send event to single computer. If network has several computer with same ID, only one will receive event.$(p)If no computer will be found, operation will be considered as failed.",
+      "throw": [
+        "Incorrect arguments"
+      ],
+      "operationGroup": "queue_event"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "Computer ID, should be positive integer"],
+        ["string", "Event name"],
+        ["...", "Any other argument expect first will be used as event data argument"]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Nil if operation successful or error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "sendEventByLabel",
+      "description": "Allows to send event to single computer. If network has several computer with same label, only one will receive event.$(p)If no computer will be found, operation will be considered as failed.",
+      "throw": [
+        "Incorrect arguments"
+      ],
+      "operationGroup": "queue_event"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "Computer label"],
+        ["string", "Event name"],
+        ["...", "Any other argument expect first will be used as event data argument"]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Nil if operation successful or error message"]
+      ]
+    }
+  ]
+}
