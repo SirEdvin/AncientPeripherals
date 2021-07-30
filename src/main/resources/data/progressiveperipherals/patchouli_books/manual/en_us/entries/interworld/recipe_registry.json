@@ -1,0 +1,46 @@
+{
+  "name": "Recipe registry",
+  "icon": "progressiveperipherals:recipe_registry",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:knowledgium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Recipe registry",
+      "item": "progressiveperipherals:recipe_registry",
+      "text": "Knowledgium researching finally give some useful results. World become more and more understandable. With this registry you can extract information about any recipe in world!"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:recipe_registry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getRecipeTypes",
+      "description": "Generic function to receive all recipe types registered in game",
+      "operationGroup": "query_registry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{string}", "List of recipe types, decoded are strings, for example $(o)minecraft:crafting$()"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getRecipeFor",
+      "description": "Function, that allow you to search recipe for specific item. Please, take a note, then this function may work very unexpected for recipe types from another modifications",
+      "operationGroup": "query_registry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "Recipe type name, like $(o)minecraft:crafting$()"],
+        ["string", "Minecraft ID of item, like $(o)minecraft:oak_planks$()"]
+      ],
+      "returns": [
+        ["table", "Recipe representation. For minecraft recipes it will be close to json model, otherwise it can be anything, useful or not"]
+      ]
+    }
+  ]
+}
