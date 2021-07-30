@@ -29,6 +29,12 @@ public class Blocks {
             () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
     );
 
+    public static final RegistryObject<Block> REALITY_FORGER_MK2 = register(
+            "reality_forger_mk2",
+            () -> new GenericTileEntityBlock<>(TileEntityTypes.REALITY_FORGER),
+            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER_MK2.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
+    );
+
     public static final RegistryObject<Block> STATUE_WORKBENCH = register(
             "statue_workbench",
             StatueWorkbench::new,

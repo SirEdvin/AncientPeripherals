@@ -202,6 +202,17 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern(" TB ")
                 .pattern("    ")
                 .save(consumer);
+
+        AutomataRecipeBuilder.start(Blocks.REALITY_FORGER_MK2.get())
+                .define('O', Blocks.REALITY_FORGER.get())
+                .define('I', Blocks.IRREALIUM_MACHINERY_CASING.get())
+                .define('S', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .pattern("S  S")
+                .pattern(" OI ")
+                .pattern("    ")
+                .pattern("S  S")
+                .save(consumer);
+
     }
 
     protected void buildCraftingRecipes(Consumer<IFinishedRecipe> consumer) {

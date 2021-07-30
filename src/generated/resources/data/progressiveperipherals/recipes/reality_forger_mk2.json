@@ -1,0 +1,23 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "S  S",
+    " OI ",
+    "    ",
+    "S  S"
+  ],
+  "key": {
+    "O": {
+      "item": "progressiveperipherals:reality_forger"
+    },
+    "I": {
+      "item": "progressiveperipherals:irrealium_machinery_casing"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:reality_forger_mk2"
+  }
+}

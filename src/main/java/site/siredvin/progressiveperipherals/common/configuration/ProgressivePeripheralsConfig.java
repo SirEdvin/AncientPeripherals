@@ -31,6 +31,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableCorrectingShovel;
     // Restictions
     public static int realityForgerRadius;
+    public static int realityForgerMK2Radius;
     public static int abstractiumXPPointsCost;
     public static int enchantLevelCost;
     public static int xpToFuelRate;
@@ -65,6 +66,7 @@ public class ProgressivePeripheralsConfig {
         // Restrictions
 
         final ForgeConfigSpec.IntValue REALITY_FORGER_RADIUS;
+        final ForgeConfigSpec.IntValue REALITY_FORGER_MK2_RADIUS;
         final ForgeConfigSpec.IntValue ABSTRACTIUM_XP_POINTS_COST;
         final ForgeConfigSpec.IntValue ENCHANT_LEVEL_COST;
         final ForgeConfigSpec.IntValue XP_TO_FUEL_RATE;
@@ -103,6 +105,7 @@ public class ProgressivePeripheralsConfig {
 
             builder.comment("").push("Restrictions");
             REALITY_FORGER_RADIUS = builder.defineInRange("realityForgerRadius", 8, 1, 64);
+            REALITY_FORGER_MK2_RADIUS = builder.defineInRange("realityForgerMK2Radius", 64, 1, 256);
             ABSTRACTIUM_XP_POINTS_COST = builder.defineInRange("abstractiumXPPointsCost", 20, 5, Integer.MAX_VALUE);
             XP_TO_FUEL_RATE = builder.defineInRange("xpToFuelRate", 10, 1, Integer.MAX_VALUE);
             BREWING_XP_REWARD = builder.defineInRange("brewingXPReward", 0.8, 0, 64);

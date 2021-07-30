@@ -18,7 +18,11 @@ public class TileEntityTypes {
 
     public static final RegistryObject<TileEntityType<RealityForgerTileEntity>> REALITY_FORGER = Registration.TILE_ENTITIES.register(
             "reality_forger",
-            () -> new TileEntityType<>(RealityForgerTileEntity::new, Sets.newHashSet(Blocks.REALITY_FORGER.get()), null)
+            () -> new TileEntityType<>(
+                    RealityForgerTileEntity::new,
+                    Sets.newHashSet(Blocks.REALITY_FORGER.get(), Blocks.REALITY_FORGER_MK2.get()),
+                    null
+            )
     );
 
     public static final RegistryObject<TileEntityType<StatueWorkbenchTileEntity>> STATUE_WORKBENCH = Registration.TILE_ENTITIES.register(

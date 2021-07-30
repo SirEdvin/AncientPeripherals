@@ -51,6 +51,8 @@
   "block.progressiveperipherals.flexible_reality_anchor.tooltip": "§7Flexible block, that can be changed via reality forger",
   "block.progressiveperipherals.reality_forger": "Reality forger",
   "block.progressiveperipherals.reality_forger.tooltip": "§7Now you can decide, how reality looks like. Control render for any flexible reality anchor blocks!",
+  "block.progressiveperipherals.reality_forger_mk2": "Reality forger MK2",
+  "block.progressiveperipherals.reality_forger_mk2.tooltip": "§7Upgraded version of reality forger, with bigger interaction radius",
   "block.progressiveperipherals.statue_workbench": "Statue workbench",
   "block.progressiveperipherals.statue_workbench.tooltip": "§7Special peripheral, that allow you to shape statues via computers!",
   "block.progressiveperipherals.abstractium_block": "Abstractium block",

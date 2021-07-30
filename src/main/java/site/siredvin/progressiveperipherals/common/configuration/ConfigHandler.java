@@ -37,6 +37,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableCorrectingShovel = ConfigHolder.COMMON_CONFIG.ENABLE_CORRECTING_SHOVEL.get();
         // Restrictions
         ProgressivePeripheralsConfig.realityForgerRadius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_RADIUS.get();
+        ProgressivePeripheralsConfig.realityForgerMK2Radius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_MK2_RADIUS.get();
         ProgressivePeripheralsConfig.abstractiumXPPointsCost = ConfigHolder.COMMON_CONFIG.ABSTRACTIUM_XP_POINTS_COST.get();
         ProgressivePeripheralsConfig.xpToFuelRate = ConfigHolder.COMMON_CONFIG.XP_TO_FUEL_RATE.get();
         ProgressivePeripheralsConfig.brewingXPReward = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get();
