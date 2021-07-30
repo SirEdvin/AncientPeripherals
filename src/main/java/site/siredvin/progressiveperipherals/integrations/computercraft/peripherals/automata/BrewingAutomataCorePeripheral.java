@@ -144,7 +144,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
                 if (component.getCount() == 1) {
                     turtleInventory.setItem(selectedSlot, ItemStack.EMPTY);
                 } else {
-                    component.setCount(component.getCount() - 1);
+                    component.shrink(1);
                 }
             return MethodResult.of(usedForBrewing);
         });
@@ -152,8 +152,12 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
 
     @LuaFunction
     public final MethodResult throwPotion(@NotNull IArguments arguments) throws LuaException {
-        double power = arguments.optFiniteDouble(0, 1);
-        double uncertainty = arguments.optFiniteDouble(1, 1);
+        double power = Math.min(arguments.optFiniteDouble(0, 1), 16);
+        double uncertainty = Math.min(arguments.optFiniteDouble(1, 1), 16);
+        if (power == 0)
+            throw new LuaException("Power multiplicator cannot be 0");
+        if (uncertainty == 0)
+            throw new LuaException("Uncertainty multiplicator cannot be 0");
         return withOperation(THROW_POTION, context -> {
             int selectedSlot = turtle.getSelectedSlot();
             IInventory turtleInventory = turtle.getInventory();

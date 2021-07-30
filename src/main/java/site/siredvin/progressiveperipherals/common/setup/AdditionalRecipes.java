@@ -15,6 +15,7 @@ public class AdditionalRecipes {
         ForgedAutomataCore.addForgedSoulRecipe(Villagers.COMPUTER_SCIENTIST.get(), Items.SCIENTIFIC_AUTOMATA_CORE.get());
         ForgedAutomataCore.addForgedSoulRecipe(VillagerProfession.LIBRARIAN, Items.ENCHANTING_AUTOMATA_CORE.get());
         ForgedAutomataCore.addForgedSoulRecipe(VillagerProfession.TOOLSMITH, Items.SMITHING_AUTOMATA_CORE.get());
+        ForgedAutomataCore.addForgedSoulRecipe(VillagerProfession.CLERIC, Items.BREWING_AUTOMATA_CORE.get());
     }
 
     private static void registerCorrectingRecipes() {

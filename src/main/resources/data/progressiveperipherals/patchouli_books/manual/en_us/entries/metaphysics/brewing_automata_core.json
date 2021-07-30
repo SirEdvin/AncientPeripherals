@@ -1,0 +1,24 @@
+{
+  "name": "Brewing automata core",
+  "icon": "progressiveperipherals:brewing_automata_core",
+  "category": "advancedperipherals:metaphysics",
+  "advancement": "progressiveperipherals:brewing_automata_core",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Brewing automata core",
+      "item": "progressiveperipherals:brewing_automata_core",
+      "text": "After consuming cleric soul, automata core can interact with potions! It can brew potions faster and cheaper then brewing stand and also can throw them!"
+    },
+    {
+      "type": "relations",
+      "title": "Available APIs",
+      "entries": [
+        "progressiveperipherals:api_documentation/fuel_consumption",
+        "progressiveperipherals:api_documentation/operations",
+        "progressiveperipherals:api_documentation/experience_interaction",
+        "progressiveperipherals:api_documentation/brewing_api"
+      ]
+    }
+  ]
+}

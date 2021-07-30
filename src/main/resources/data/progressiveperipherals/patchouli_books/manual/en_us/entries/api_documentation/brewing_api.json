@@ -1,0 +1,47 @@
+{
+  "name": "Brewing API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "progressiveperipherals:brewing_automata_core",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "brew",
+      "description": "Perform brewing operation on turtle inventory, considering selected slot as ingredient and rest slots as potions.$(p)If at least one operation will be performed, ingredient will be consumed",
+      "operationGroup": "brew"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["boolean | nil", "Boolean is brewing performed, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "throwPotion",
+      "description": "Tries to throw potion from selected slot in direction of turtle facing",
+      "operationGroup": "throw_potion",
+      "throw": [
+        "Incorrect argument format"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        [
+          "[number]",
+          "Throw power multiplicator. Optional argument, should be between 0 and 16, but not 0"
+        ],
+        [
+          "[number]",
+          "Throw uncertainty multiplicator. Optional argument, should be between 0 and 16, but not 0"
+        ]
+      ],
+      "returns": [
+        ["true | nil", "True if operation successful, nil otherwise"],
+        ["nil | string", "Error message"]
+      ]
+    }
+  ]
+}
