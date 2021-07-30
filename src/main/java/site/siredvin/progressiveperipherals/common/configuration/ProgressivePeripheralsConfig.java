@@ -29,6 +29,8 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableCuttingAxe;
     public static boolean enableExtractingPickaxe;
     public static boolean enableCorrectingShovel;
+    // Creative features
+    public static boolean enableCreativeItemDuplicator;
     // Restictions
     public static int realityForgerRadius;
     public static int realityForgerMK2Radius;
@@ -62,6 +64,10 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_CUTTING_AXE;
         final ForgeConfigSpec.BooleanValue ENABLE_EXTRACTING_PICKAXE;
         final ForgeConfigSpec.BooleanValue ENABLE_CORRECTING_SHOVEL;
+
+        // Creative features
+
+        final ForgeConfigSpec.BooleanValue ENABLE_CREATIVE_ITEM_DUPLICATOR;
 
         // Restrictions
 
@@ -101,6 +107,10 @@ public class ProgressivePeripheralsConfig {
             ENABLE_CUTTING_AXE = builder.define("enableCuttingAxe", true);
             ENABLE_EXTRACTING_PICKAXE = builder.define("enableExtractingPickaxe", true);
             ENABLE_CORRECTING_SHOVEL = builder.define("enableCorrectingShovel", true);
+            builder.pop();
+
+            builder.comment("").push("Creative features");
+            ENABLE_CREATIVE_ITEM_DUPLICATOR = builder.define("enableCreativeItemDuplicator", true);
             builder.pop();
 
             builder.comment("").push("Restrictions");

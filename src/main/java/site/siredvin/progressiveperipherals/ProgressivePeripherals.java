@@ -98,6 +98,7 @@ public class ProgressivePeripherals {
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.REALITY_BREAKTHROUGH_POINT.get(), RealityBreakthroughPointTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.ABSTRACTIUM_PEDESTAL.get(), PedestalTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.IRREALIUM_PEDESTAL.get(), PedestalTileRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypes.CREATIVE_ITEM_DUPLICATOR.get(), PedestalTileRenderer::new);
 
         if (ModList.get().isLoaded("patchouli")) {
             ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "automata"), AutomataRecipePage.class);

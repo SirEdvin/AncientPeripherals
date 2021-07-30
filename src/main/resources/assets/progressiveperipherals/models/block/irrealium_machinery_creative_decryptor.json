@@ -5,8 +5,8 @@
     "south": "progressiveperipherals:block/irrealium_machinery_creative_decryptor",
     "west": "progressiveperipherals:block/irrealium_machinery_creative_decryptor",
     "east": "progressiveperipherals:block/irrealium_machinery_creative_decryptor",
-    "up": "progressiveperipherals:block/irrealium_machinery_casing",
-    "down": "progressiveperipherals:block/irrealium_machinery_casing",
-    "particle": "progressiveperipherals:block/irrealium_machinery_casing"
+    "up": "progressiveperipherals:block/irrealium_machinery_creative_casing",
+    "down": "progressiveperipherals:block/irrealium_machinery_creative_casing",
+    "particle": "progressiveperipherals:block/irrealium_machinery_creative_casing"
   }
 }

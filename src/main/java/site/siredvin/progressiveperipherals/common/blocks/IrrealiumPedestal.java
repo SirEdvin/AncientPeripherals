@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackContainer;
 import site.siredvin.progressiveperipherals.common.blocks.base.BasePedestal;
 import site.siredvin.progressiveperipherals.common.tileentities.IrrealiumPedestalTileEntity;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
@@ -32,8 +33,8 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
         ItemStack itemInHand = player.getItemInHand(hand);
         if (!itemInHand.isEmpty()) {
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof IrrealiumPedestalTileEntity) {
-                IrrealiumPedestalTileEntity pedestalTileEntity = (IrrealiumPedestalTileEntity) tileEntity;
+            if (tileEntity instanceof ITileEntityStackContainer) {
+                ITileEntityStackContainer pedestalTileEntity = (ITileEntityStackContainer) tileEntity;
                 if (!pedestalTileEntity.hasStoredStack()) {
                     player.setItemInHand(hand, ItemStack.EMPTY);
                     pedestalTileEntity.setStoredStack(itemInHand);
@@ -49,8 +50,8 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileEntity = world.getBlockEntity(blockPos);
-            if (tileEntity instanceof IrrealiumPedestalTileEntity) {
-                IrrealiumPedestalTileEntity pedestalTileEntity = (IrrealiumPedestalTileEntity) tileEntity;
+            if (tileEntity instanceof ITileEntityStackContainer) {
+                ITileEntityStackContainer pedestalTileEntity = (ITileEntityStackContainer) tileEntity;
                 if (pedestalTileEntity.hasStoredStack())
                     InventoryHelper.dropItemStack(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), pedestalTileEntity.getStoredStack());
             }
@@ -63,8 +64,8 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
         ItemStack itemInHand = player.getItemInHand(Hand.MAIN_HAND);
         if (itemInHand.isEmpty()) {
             TileEntity tileEntity = world.getBlockEntity(pos);
-            if (tileEntity instanceof IrrealiumPedestalTileEntity) {
-                IrrealiumPedestalTileEntity pedestalTileEntity = (IrrealiumPedestalTileEntity) tileEntity;
+            if (tileEntity instanceof ITileEntityStackContainer) {
+                ITileEntityStackContainer pedestalTileEntity = (ITileEntityStackContainer) tileEntity;
                 if (pedestalTileEntity.hasStoredStack()) {
                     ItemStack storedStack = pedestalTileEntity.getStoredStack();
                     pedestalTileEntity.setStoredStack(ItemStack.EMPTY);

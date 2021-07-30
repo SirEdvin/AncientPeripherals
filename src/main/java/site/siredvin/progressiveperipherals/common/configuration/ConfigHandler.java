@@ -35,6 +35,8 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableCuttingAxe = ConfigHolder.COMMON_CONFIG.ENABLE_CUTTING_AXE.get();
         ProgressivePeripheralsConfig.enableExtractingPickaxe = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTING_PICKAXE.get();
         ProgressivePeripheralsConfig.enableCorrectingShovel = ConfigHolder.COMMON_CONFIG.ENABLE_CORRECTING_SHOVEL.get();
+        // Creative features
+        ProgressivePeripheralsConfig.enableCreativeItemDuplicator = ConfigHolder.COMMON_CONFIG.ENABLE_CREATIVE_ITEM_DUPLICATOR.get();
         // Restrictions
         ProgressivePeripheralsConfig.realityForgerRadius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_RADIUS.get();
         ProgressivePeripheralsConfig.realityForgerMK2Radius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_MK2_RADIUS.get();

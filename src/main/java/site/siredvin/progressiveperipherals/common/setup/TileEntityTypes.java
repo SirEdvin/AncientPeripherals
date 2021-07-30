@@ -35,6 +35,11 @@ public class TileEntityTypes {
             () -> new TileEntityType<>(AbstractiumPedestalTileEntity::new, Sets.newHashSet(Blocks.ABSTRACTIUM_PEDESTAL.get()), null)
     );
 
+    public static final RegistryObject<TileEntityType<CreativeItemDuplicatorTileEntity>> CREATIVE_ITEM_DUPLICATOR = Registration.TILE_ENTITIES.register(
+            "creative_item_duplicator",
+            () -> new TileEntityType<>(CreativeItemDuplicatorTileEntity::new, Sets.newHashSet(Blocks.CREATIVE_ITEM_DUPLICATOR.get()), null)
+    );
+
     public static final RegistryObject<TileEntityType<RecipeRegistryTileEntity>> RECIPE_REGISTRY = Registration.TILE_ENTITIES.register(
             "recipe_registry",
             () -> new TileEntityType<>(RecipeRegistryTileEntity::new, Sets.newHashSet(Blocks.RECIPE_REGISTRY.get()), null)
@@ -57,12 +62,12 @@ public class TileEntityTypes {
             () -> new TileEntityType<>(RealityBreakthroughPointTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_POINT.get()), null)
     );
 
-    // Machinery
-
     public static final RegistryObject<TileEntityType<IrrealiumPedestalTileEntity>> IRREALIUM_PEDESTAL = Registration.TILE_ENTITIES.register(
             "irrealium_pedestal",
             () -> new TileEntityType<>(IrrealiumPedestalTileEntity::new, Sets.newHashSet(Blocks.IRREALIUM_PEDESTAL.get()), null)
     );
+
+    // Machinery
     public static final RegistryObject<TileEntityType<RBTRectorControllerTileEntity>> REALITY_BREAKTHROUGH_REACTOR_CONTROLLER = Registration.TILE_ENTITIES.register(
             "reality_breakthrough_reactor_controller",
             () -> new TileEntityType<>(RBTRectorControllerTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get()), null)

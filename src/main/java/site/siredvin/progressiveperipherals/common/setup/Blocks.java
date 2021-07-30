@@ -81,6 +81,12 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.IRREALIUM_PEDESTAL.get())
     );
 
+    public static final RegistryObject<Block> CREATIVE_ITEM_DUPLICATOR = register(
+            "creative_item_duplicator",
+            CreativeItemDuplicatorBlock::new,
+            () -> new BaseBlockItem(Blocks.CREATIVE_ITEM_DUPLICATOR.get())
+    );
+
     // machinery
 
     public static final RegistryObject<Block> IRREALIUM_MACHINERY_CASING = register(

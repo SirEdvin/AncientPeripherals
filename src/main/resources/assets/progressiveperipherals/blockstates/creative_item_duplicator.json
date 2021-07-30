@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=north": {"model": "progressiveperipherals:block/creative_item_duplicator", "x":  90, "y": 0},
+    "facing=east": {"model": "progressiveperipherals:block/creative_item_duplicator", "x":  90, "y": 90},
+    "facing=west": {"model": "progressiveperipherals:block/creative_item_duplicator", "x":  90, "y": 270},
+    "facing=south": {"model": "progressiveperipherals:block/creative_item_duplicator", "x":  90, "y": 180},
+    "facing=up": {"model": "progressiveperipherals:block/creative_item_duplicator"},
+    "facing=down": {"model": "progressiveperipherals:block/creative_item_duplicator", "x": 180}
+  }
+}

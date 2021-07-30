@@ -73,6 +73,8 @@
   "block.progressiveperipherals.recipe_registry.tooltip": "§7Peripheral, that allow to access information about any recipe in game",
   "block.progressiveperipherals.irrealium_pedestal": "Irrealium pedestal",
   "block.progressiveperipherals.irrealium_pedestal.tooltip": "§7Pedestal, that can store items. Maybe it has additional uses?",
+  "block.progressiveperipherals.creative_item_duplicator": "Creative item duplicator",
+  "block.progressiveperipherals.creative_item_duplicator.tooltip": "§7Pedestal, that can duplicate item, stored on top of it as peripheral",
   "block.progressiveperipherals.irrealium_machinery_casing": "Irrealium machinery casing",
   "block.progressiveperipherals.irrealium_machinery_casing.tooltip": "Casing block for any irrealium machine. Safety for decorations",
   "block.progressiveperipherals.irrealium_machinery_glass": "Irrealium machinery glass",
