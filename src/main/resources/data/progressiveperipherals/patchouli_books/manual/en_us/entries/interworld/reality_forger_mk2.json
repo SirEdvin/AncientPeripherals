@@ -1,0 +1,18 @@
+{
+  "name": "Reality forger MK2",
+  "icon": "progressiveperipherals:reality_forger_mk2",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Reality forger MK2",
+      "item": "progressiveperipherals:reality_forger_mk2",
+      "text": "Improved $(l:progressiveperipherals:metaphysics/reality_forger)Reality Forger$() with bigger radius"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:reality_forger_mk2"
+    }
+  ]
+}
