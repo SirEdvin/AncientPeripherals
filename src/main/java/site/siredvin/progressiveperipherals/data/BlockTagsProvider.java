@@ -28,6 +28,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
                 Blocks.IRREALIUM_MACHINERY_GLASS.get(),
                 Blocks.IRREALIUM_MACHINERY_IO_PORT.get(),
                 Blocks.IRREALIUM_MACHINERY_STORAGE.get(),
+                Blocks.IRREALIUM_DOUBLE_MACHINERY_STORAGE.get(),
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(),
                 Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(),
                 Blocks.IRREALIUM_MACHINERY_CREATIVE_DECRYPTOR.get(),

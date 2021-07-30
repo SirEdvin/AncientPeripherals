@@ -29,6 +29,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
                 Blocks.IRREALIUM_MACHINERY_GLASS.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_IO_PORT.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_STORAGE.get().asItem(),
+                Blocks.IRREALIUM_DOUBLE_MACHINERY_STORAGE.get().asItem(),
                 Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get().asItem(),
                 Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get().asItem(),
                 Blocks.IRREALIUM_MACHINERY_CREATIVE_DECRYPTOR.get().asItem(),
