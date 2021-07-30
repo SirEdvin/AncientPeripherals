@@ -72,6 +72,33 @@
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setLightLevel",
+      "description": "Setter for statue light level property"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["number", "new light level, should be from 0 to 15"]
+      ],
+      "returns": [
+        ["boolean", "If operation successful"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getLightLevel",
+      "description": "Getter for statue light level property"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["number | nil", "Current statue light level or nil if statue name is missed or statue not present"],
+        ["nil | string", "error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
       "functionName": "setAuthor",
       "description": "Setter for statue author property"
     },

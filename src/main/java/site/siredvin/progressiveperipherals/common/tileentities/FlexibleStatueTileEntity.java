@@ -27,12 +27,15 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
     public static final String BAKED_QUADS_TAG = "bakedQuads";
     public static final String NAME_TAG = "statueName";
     public static final String AUTHOR_TAG = "statueAuthor";
+    public static final String LIGHT_LEVEL_TAG = "lightLevel";
+
     public static final ModelProperty<QuadList> BAKED_QUADS = new ModelProperty<>();
 
     private @Nullable QuadList bakedQuads;
     private @Nullable VoxelShape blockShape;
     private @Nullable String name;
     private @Nullable String author;
+    private int lightLevel = 0;
 
     public FlexibleStatueTileEntity() {
         super(TileEntityTypes.FLEXIBLE_STATUE.get());
@@ -60,6 +63,8 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
             setName(tag.getString(NAME_TAG));
         if (tag.contains(AUTHOR_TAG))
             setAuthor(tag.getString(AUTHOR_TAG));
+        if (tag.contains(LIGHT_LEVEL_TAG))
+            setLightLevel(tag.getInt(LIGHT_LEVEL_TAG));
     }
 
     public CompoundNBT saveInternalData(CompoundNBT tag) {
@@ -74,6 +79,8 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
         if (author != null) {
             tag.putString(AUTHOR_TAG, author);
         }
+        if (lightLevel != 0)
+            tag.putInt(LIGHT_LEVEL_TAG, lightLevel);
         return tag;
     }
 
@@ -96,12 +103,20 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
         this.author = author;
     }
 
+    public void setLightLevel(int lightLevel) {
+        this.lightLevel = Math.max(0, Math.min(lightLevel, 15));
+    }
+
     public @Nullable String getName() {
         return name;
     }
 
     public @Nullable String getAuthor() {
         return author;
+    }
+
+    public int getLightLevel() {
+        return lightLevel;
     }
 
     public void clear(boolean skipUpdate) {

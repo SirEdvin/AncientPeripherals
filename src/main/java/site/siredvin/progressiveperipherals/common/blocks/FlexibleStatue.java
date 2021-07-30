@@ -62,4 +62,17 @@ public class FlexibleStatue extends BaseNBTBlock<FlexibleStatueTileEntity> {
             return shape;
         return super.getShape(state, world, pos, context);
     }
+
+    @Override
+    public boolean useShapeForLightOcclusion(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+        FlexibleStatueTileEntity tileEntity = (FlexibleStatueTileEntity) world.getBlockEntity(pos);
+        if (tileEntity != null)
+            return tileEntity.getLightLevel();
+        return 0;
+    }
 }

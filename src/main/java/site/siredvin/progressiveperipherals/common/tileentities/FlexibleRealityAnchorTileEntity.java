@@ -16,9 +16,13 @@ import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTT
 
 public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implements ITileEntityDataProvider {
 
+    private static final String MIMIC_TAG = "mimic";
+    private static final String LIGHT_LEVEL_TAG = "lightLevel";
+
     public static final ModelProperty<BlockState> MIMIC = new ModelProperty<>();
 
     private BlockState mimic;
+    private int lightLevel = 0;
     private @Nullable BlockState pendingState;
 
     public FlexibleRealityAnchorTileEntity() {
@@ -57,6 +61,14 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
         pendingState = pendingState.setValue(stateValue, value);
     }
 
+    public void setLightLevel(int lightLevel) {
+        this.lightLevel = Math.max(0, Math.min(lightLevel, 15));
+    }
+
+    public int getLightLevel() {
+        return lightLevel;
+    }
+
     @Override
     public IModelData getModelData() {
         return new ModelDataMap.Builder()
@@ -67,17 +79,21 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
     @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         if (mimic != null) {
-            data.put("mimic", NBTUtil.writeBlockState(mimic));
+            data.put(MIMIC_TAG, NBTUtil.writeBlockState(mimic));
         }
+        if (lightLevel != 0)
+            data.putInt(LIGHT_LEVEL_TAG, lightLevel);
         return data;
     }
 
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
-        if (data.contains("mimic")) {
-            setMimic(NBTUtil.readBlockState(data.getCompound("mimic")), state, true);
+        if (data.contains(MIMIC_TAG)) {
+            setMimic(NBTUtil.readBlockState(data.getCompound(MIMIC_TAG)), state, true);
             if (!skipUpdate)
                 pushState();
         }
+        if (data.contains(LIGHT_LEVEL_TAG))
+            setLightLevel(data.getInt(LIGHT_LEVEL_TAG));
     }
 }

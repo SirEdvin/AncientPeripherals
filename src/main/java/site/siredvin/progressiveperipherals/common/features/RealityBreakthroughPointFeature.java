@@ -55,7 +55,6 @@ public class RealityBreakthroughPointFeature extends Feature<NoFeatureConfig> {
         }
         if (random.nextInt(ProgressivePeripheralsConfig.BREAKTHROUGH_SPAWN_CHANCE_LIMIT) > ProgressivePeripheralsConfig.breakthroughPointSpawnChance)
             return false;
-        // Creates the well centered on our spot
         BlockPos offset = new BlockPos(-template.getSize().getX() / 2, 1, -template.getSize().getZ() / 2);
         template.placeInWorldChunk(world, mutable.offset(offset), placementsettings, random);
         ProgressivePeripherals.LOGGER.info("Structure places {}", mutable.offset(offset));

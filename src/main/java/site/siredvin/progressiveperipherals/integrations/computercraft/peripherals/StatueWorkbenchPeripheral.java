@@ -80,6 +80,26 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
+    public final MethodResult setLightLevel(int lightLevel) {
+        Optional<FlexibleStatueTileEntity> opStatue = getStatue();
+        if (!opStatue.isPresent())
+            return MethodResult.of(null, "Cannot find statue on top of workbench");
+        opStatue.ifPresent(statue -> {
+            statue.setLightLevel(lightLevel);
+        });
+        return MethodResult.of(true);
+    }
+
+    @LuaFunction(mainThread = true)
+    public final MethodResult getLightLevel() {
+        Optional<FlexibleStatueTileEntity> opStatue = getStatue();
+        if (!opStatue.isPresent())
+            return MethodResult.of(null, "Cannot find statue on top of workbench");
+        FlexibleStatueTileEntity tileEntity = opStatue.get();
+        return MethodResult.of(tileEntity.getLightLevel());
+    }
+
+    @LuaFunction(mainThread = true)
     public final MethodResult getCubes() {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())

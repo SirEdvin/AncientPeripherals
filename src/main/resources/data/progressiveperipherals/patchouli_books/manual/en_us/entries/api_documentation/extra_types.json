@@ -30,7 +30,11 @@
       "type": "text",
       "title": "BlockVisual",
       "anchor": "BlockVisual",
-      "text": "BlockVisual is table then $(o)may$() contains next keys:$(br)$(o)string $()$(l)block$(): minecraft block id, for texture reference$(br)$(o)$(l:progressiveperipherals:api_documentation/extra_types#BlockState)BlockState$() $(l)attrs$(): minecraft block state$(br)$(o)boolean $()$(l)playerPassable$(): can player pass block$(br)$(o)boolean $()$(l)lightPassable$(): can light pass block$(br)$(o)boolean $()$(l)skyLightPassable$(): can sky light pass block$(br)$(o)boolean $()$(l)invisible$(): is block invisible"
+      "text": "BlockVisual is table then $(o)may$() contains next keys:$(br)$(o)string $()$(l)block$(): minecraft block id, for texture reference$(br)$(o)$(l:progressiveperipherals:api_documentation/extra_types#BlockState)BlockState$() $(l)attrs$(): minecraft block state$(br)$(o)boolean $()$(l)playerPassable$(): can player pass block$(br)$(o)boolean $()$(l)lightPassable$(): can light pass block$(br)"
+    },
+    {
+      "type": "text",
+      "text": "$(o)boolean $()$(l)skyLightPassable$(): can sky light pass block$(br)$(o)boolean $()$(l)invisible$(): is block invisible$(br)$(o)number $()$(l)lightLevel$(): defines light level from 0 to 15"
     },
     {
       "type": "text",

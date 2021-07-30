@@ -106,11 +106,13 @@ public class RealityForgerPeripheral extends BasePeripheral {
         if (applyState)
             realityMirror.setMimic(targetState, true);
         flags.forEach((key, value) -> {
-            BooleanProperty targetProperty = FLAG_MAPPING.get(key.toString());
             if (value instanceof Boolean) {
+                BooleanProperty targetProperty = FLAG_MAPPING.get(key.toString());
                 if (targetProperty != null) {
                     realityMirror.setBooleanStateValue(targetProperty, (Boolean) value);
                 }
+            } else if (key.equals("lightLevel") && value instanceof Number) {
+                realityMirror.setLightLevel(((Number) value).intValue());
             }
         });
         realityMirror.pushStackedState();

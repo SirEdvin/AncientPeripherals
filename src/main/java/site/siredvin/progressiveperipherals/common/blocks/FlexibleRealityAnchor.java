@@ -3,12 +3,10 @@ package site.siredvin.progressiveperipherals.common.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -31,7 +29,6 @@ import java.util.List;
 public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTileEntity> {
     public static final BooleanProperty CONFIGURED = BooleanProperty.create("configured");
     public static final BooleanProperty PLAYER_PASSABLE = BooleanProperty.create("player_passable");
-    public static final IntegerProperty LIGHT_LEVEL = IntegerProperty.create("light_level",0,15);
     public static final BooleanProperty LIGHT_PASSABLE = BooleanProperty.create("light_passable");
     public static final BooleanProperty SKY_LIGHT_PASSABLE = BooleanProperty.create("sky_light_passable");
     public static final BooleanProperty INVISIBLE = BooleanProperty.create("invisible");
@@ -39,7 +36,6 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
     private static final List<Property<?>> SAVABLE_PROPERTIES = new ArrayList<Property<?>>() {{
         add(PLAYER_PASSABLE);
         add(LIGHT_PASSABLE);
-        add(LIGHT_LEVEL);
         add(SKY_LIGHT_PASSABLE);
         add(INVISIBLE);
     }};
@@ -48,7 +44,6 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
         super(BlockUtils.decoration().dynamicShape());
         this.registerDefaultState(
                 this.getStateDefinition().any()
-                        .setValue(LIGHT_LEVEL, 0)
                         .setValue(CONFIGURED, false)
                         .setValue(PLAYER_PASSABLE, false)
                         .setValue(LIGHT_PASSABLE, false)
@@ -60,7 +55,6 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(LIGHT_LEVEL);
         builder.add(CONFIGURED);
         builder.add(PLAYER_PASSABLE);
         builder.add(LIGHT_PASSABLE);
@@ -70,10 +64,10 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        if (state.getValue(LIGHT_LEVEL) > 15) {
-            return 15;
-        }
-        return state.getValue(LIGHT_LEVEL);
+        FlexibleRealityAnchorTileEntity tileEntity = (FlexibleRealityAnchorTileEntity) world.getBlockEntity(pos);
+        if (tileEntity != null)
+            return tileEntity.getLightLevel();
+        return 0;
     }
 
     @Override
