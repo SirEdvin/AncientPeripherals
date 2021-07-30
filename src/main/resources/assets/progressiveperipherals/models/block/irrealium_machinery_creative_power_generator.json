@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/irrealium_machinery_creative_power_generator",
+    "south": "progressiveperipherals:block/irrealium_machinery_creative_power_generator",
+    "west": "progressiveperipherals:block/irrealium_machinery_creative_power_generator",
+    "east": "progressiveperipherals:block/irrealium_machinery_creative_power_generator",
+    "up": "progressiveperipherals:block/irrealium_machinery_creative_casing",
+    "down": "progressiveperipherals:block/irrealium_machinery_creative_casing",
+    "particle": "progressiveperipherals:block/irrealium_machinery_creative_casing"
+  }
+}

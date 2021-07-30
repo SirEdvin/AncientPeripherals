@@ -13,6 +13,7 @@ import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
+import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
@@ -123,6 +124,12 @@ public class Blocks {
             "irrealium_machinery_creative_decryptor",
             () -> new MachineryPluggableBlock(BlockUtils.defaultProperties(), new CreativeDecryptPlugin<>()),
             () -> new BaseBlockItem(Blocks.IRREALIUM_MACHINERY_CREATIVE_DECRYPTOR.get(), new Item.Properties().stacksTo(1))
+    );
+
+    public static final RegistryObject<Block> IRREALIUM_MACHINERY_CREATIVE_POWER_GENERATOR = register(
+            "irrealium_machinery_creative_power_generator",
+            () -> new MachineryPluggableBlock(BlockUtils.defaultProperties(), new CreativePowerGeneratorPlugin<>()),
+            () -> new BaseBlockItem(Blocks.IRREALIUM_MACHINERY_CREATIVE_POWER_GENERATOR.get(), new Item.Properties().stacksTo(1))
     );
 
 

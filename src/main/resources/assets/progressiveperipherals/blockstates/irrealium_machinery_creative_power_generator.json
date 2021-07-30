@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "connected=false": {"model": "progressiveperipherals:block/irrealium_machinery_creative_power_generator"},
+    "connected=true": {"model": "progressiveperipherals:block/irrealium_machinery_creative_power_generator_connected"}
+  }
+}

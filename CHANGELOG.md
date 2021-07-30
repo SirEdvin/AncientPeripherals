@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reality Forger MK2 peripheral
 - Creative item duplicator
 - Documentation for Recipe Registry and Brewing automata core
+- Creative RBT point power generator
 
 ## [0.0.3] - 2021-07-29
 
