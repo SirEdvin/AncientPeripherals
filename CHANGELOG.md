@@ -6,10 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4] - 2021-07-30
+
 ### Added
 
 - Reality Forger MK2 peripheral
 - Creative item duplicator
+- Documentation for Recipe Registry and Brewing automata core
 
 ## [0.0.3] - 2021-07-29
 
@@ -17,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Knowledgium material
 - [Recipe registry](https://github.com/SirEdvin/ProgressivePeripherals/issues/15)
-- [Brewing turtle](https://github.com/SirEdvin/ProgressivePeripherals/issues/11)
+- [Brewing automata core](https://github.com/SirEdvin/ProgressivePeripherals/issues/11)
 
 ### Fixed
 
