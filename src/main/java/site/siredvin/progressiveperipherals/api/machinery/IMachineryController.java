@@ -28,7 +28,6 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     Pair<Boolean, String> detectMultiBlock();
     @Nullable IMachineryStructure getStructure();
     void forgetStructure();
-    BlockPos getBlockPos();
     boolean isConfigured();
     void setConfigured(boolean configured);
     Predicate<BlockState> getCasingPredicate();
@@ -38,6 +37,10 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
 
     default @Nullable World getWorld() {
         return getThis().getLevel();
+    }
+
+    default BlockPos getPosition() {
+        return getThis().getBlockPos();
     }
 
     default boolean isBelongTo(BlockPos pos) {
@@ -138,7 +141,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
                 );
             }
         });
-        BlockPos pos = getBlockPos();
+        BlockPos pos = getPosition();
         if (allowDrop && !container.getValue().isEmpty()) {
             InventoryHelper.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), container.getValue());
             return ItemStack.EMPTY;

@@ -33,4 +33,11 @@ public class QuadList implements Serializable {
         }
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "QuadList{" +
+                "list=" + list +
+                '}';
+    }
 }

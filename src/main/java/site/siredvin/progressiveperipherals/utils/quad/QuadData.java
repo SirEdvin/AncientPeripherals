@@ -75,4 +75,17 @@ public class QuadData implements Serializable {
         data.put("colorRGB", color.getRGB());
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "QuadData{" +
+                "x1=" + x1 +
+                ", y1=" + y1 +
+                ", z1=" + z1 +
+                ", x2=" + x2 +
+                ", y2=" + y2 +
+                ", z2=" + z2 +
+                ", color=" + color +
+                '}';
+    }
 }

@@ -94,6 +94,7 @@ public class ProgressivePeripherals {
     @SubscribeEvent
     public void clientSetup(FMLClientSetupEvent event) {
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_STATUE.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.IRREALIUM_MACHINERY_GLASS.get(), RenderType.translucent());
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.REALITY_BREAKTHROUGH_POINT.get(), RealityBreakthroughPointTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.ABSTRACTIUM_PEDESTAL.get(), PedestalTileRenderer::new);

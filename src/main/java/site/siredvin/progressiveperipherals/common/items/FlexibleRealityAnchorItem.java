@@ -17,7 +17,7 @@ import java.util.List;
 public class FlexibleRealityAnchorItem extends BaseBlockItem {
 
     public FlexibleRealityAnchorItem() {
-        super(Blocks.FLEXIBLE_REALITY_ANCHOR.get());
+        super(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), new Properties().stacksTo(64));
     }
 
     @Override

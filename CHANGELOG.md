@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation for Recipe Registry and Brewing automata core
 - Creative RBT point power generator
 
+### Fixed
+
+- Crash for machinery connect
+- Model render update delay
+
 ## [0.0.3] - 2021-07-29
 
 ### Added

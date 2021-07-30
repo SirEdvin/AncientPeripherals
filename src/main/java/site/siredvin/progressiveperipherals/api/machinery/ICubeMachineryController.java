@@ -29,7 +29,7 @@ public interface ICubeMachineryController<T extends TileEntity & IMachineryContr
         Objects.requireNonNull(world); // should never happen
         if (isConfigured())
             return Pair.onlyLeft(true);
-        BlockPos pos = getBlockPos();
+        BlockPos pos = getPosition();
         BlockPos lowestPoint = MachineryStructureUtil.findLowestPoint(world, pos, getCasingPredicate(), size + 1);
         if (lowestPoint == null)
             return Pair.of(false, "Cannot find lowest point ...");
