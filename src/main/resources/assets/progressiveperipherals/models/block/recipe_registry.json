@@ -1,10 +1,10 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "north": "progressiveperipherals:block/knowledgium_casing",
-    "south": "progressiveperipherals:block/knowledgium_casing",
-    "west": "progressiveperipherals:block/knowledgium_casing",
-    "east": "progressiveperipherals:block/knowledgium_casing",
+    "north": "progressiveperipherals:block/recipe_registry_side",
+    "south": "progressiveperipherals:block/recipe_registry_side",
+    "west": "progressiveperipherals:block/recipe_registry_side",
+    "east": "progressiveperipherals:block/recipe_registry_side",
     "up": "progressiveperipherals:block/knowledgium_casing",
     "down": "progressiveperipherals:block/knowledgium_casing",
     "particle": "progressiveperipherals:block/knowledgium_casing"
