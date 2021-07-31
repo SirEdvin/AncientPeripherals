@@ -101,13 +101,14 @@ public class NetworkElementTool {
     }
 
     public static @Nullable ActionResultType handleUse(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
-        switch (hand) {
-            case MAIN_HAND:
-                if (!world.isClientSide && NetworkElementTool.handleNetworkSetup(hand, player, (ServerWorld) world, pos))
-                    return ActionResultType.SUCCESS;
-            case OFF_HAND:
-                if (NetworkElementTool.handleNetworkDisplay(player, world, pos, hand))
-                    return ActionResultType.SUCCESS;
+        ItemStack mainHandItem = player.getMainHandItem();
+        if (!mainHandItem.isEmpty() && hand == Hand.MAIN_HAND) {
+            if (!world.isClientSide && handleNetworkSetup(hand, player, (ServerWorld) world, pos))
+                return ActionResultType.SUCCESS;
+        } else {
+            ItemStack offhandItem = player.getOffhandItem();
+            if (isNetworkManager(offhandItem) && world.isClientSide && handleNetworkDisplay(player, world, pos, Hand.OFF_HAND))
+                return ActionResultType.SUCCESS;
         }
         return null;
     }
