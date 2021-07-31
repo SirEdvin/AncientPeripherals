@@ -7,6 +7,7 @@ import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.*;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
 import site.siredvin.progressiveperipherals.common.blocks.machinery.*;
+import site.siredvin.progressiveperipherals.common.blocks.network.EnderwireNetworkConnectorBlock;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorItem;
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
@@ -136,6 +137,14 @@ public class Blocks {
             "irrealium_machinery_creative_power_generator",
             () -> new MachineryPluggableBlock(BlockUtils.defaultProperties(), new CreativePowerGeneratorPlugin<>()),
             () -> new BaseBlockItem(Blocks.IRREALIUM_MACHINERY_CREATIVE_POWER_GENERATOR.get(), new Item.Properties().stacksTo(1))
+    );
+
+    // Enderwire network
+
+    public static final RegistryObject<Block> ENDERWIRE_NETWORK_CONNECTOR = register(
+            "enderwire_network_connector",
+            EnderwireNetworkConnectorBlock::new,
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
     );
 
 

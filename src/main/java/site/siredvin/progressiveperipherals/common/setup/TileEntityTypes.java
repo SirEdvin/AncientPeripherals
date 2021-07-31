@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.tileentities.*;
+import site.siredvin.progressiveperipherals.common.tileentities.network.NetworkConnectorTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.MachineryStorageTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTExtractorControllerTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
@@ -84,5 +85,12 @@ public class TileEntityTypes {
     public static final RegistryObject<TileEntityType<MachineryStorageTileEntity>> MACHINERY_STORAGE = Registration.TILE_ENTITIES.register(
             "machinery_storage",
             () -> new TileEntityType<>(MachineryStorageTileEntity::new, Sets.newHashSet(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get()), null)
+    );
+
+    // Enderwire network
+
+    public static final RegistryObject<TileEntityType<NetworkConnectorTileEntity>> ENDERWIRE_NETWORK_CONNECTOR = Registration.TILE_ENTITIES.register(
+            "enderwire_network_connector",
+            () -> new TileEntityType<>(NetworkConnectorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get()), null)
     );
 }
