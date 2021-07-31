@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkAccessingTool;
+import site.siredvin.progressiveperipherals.extra.network.tools.NetworkAccessingTool;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 
 import java.util.Collections;

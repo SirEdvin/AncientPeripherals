@@ -1,10 +1,12 @@
-package site.siredvin.progressiveperipherals.extra.network;
+package site.siredvin.progressiveperipherals.extra.network.tools;
 
 import dan200.computercraft.api.lua.MethodResult;
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
+import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 
 public class NetworkAccessingTool {
     private static final String SELECTED_NETWORK_TAG = "selectedNetwork";

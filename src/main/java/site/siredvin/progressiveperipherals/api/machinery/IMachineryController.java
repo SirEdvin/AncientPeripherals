@@ -13,6 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.api.base.ITrickedTileEntity;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 import site.siredvin.progressiveperipherals.utils.ValueContainer;
@@ -21,9 +22,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public interface IMachineryController<T extends TileEntity & IMachineryController<T>> extends ITickableTileEntity {
-    // strange default logic
-    T getThis();
+public interface IMachineryController<T extends TileEntity & IMachineryController<T>> extends ITickableTileEntity, ITrickedTileEntity<T> {
     // multi-block structure logic
     Pair<Boolean, String> detectMultiBlock();
     @Nullable IMachineryStructure getStructure();
@@ -34,14 +33,6 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
     Predicate<BlockState> getCornerPredicate();
     Predicate<BlockState> getCenterPredicate();
     Predicate<BlockState> getInsidePredicate();
-
-    default @Nullable World getWorld() {
-        return getThis().getLevel();
-    }
-
-    default BlockPos getPosition() {
-        return getThis().getBlockPos();
-    }
 
     default boolean isBelongTo(BlockPos pos) {
         IMachineryStructure structure = getStructure();

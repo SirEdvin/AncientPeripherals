@@ -4,7 +4,8 @@ import com.google.common.collect.Sets;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.tileentities.*;
-import site.siredvin.progressiveperipherals.common.tileentities.network.NetworkConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.MachineryStorageTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTExtractorControllerTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
@@ -89,8 +90,13 @@ public class TileEntityTypes {
 
     // Enderwire network
 
-    public static final RegistryObject<TileEntityType<NetworkConnectorTileEntity>> ENDERWIRE_NETWORK_CONNECTOR = Registration.TILE_ENTITIES.register(
+    public static final RegistryObject<TileEntityType<EnderwireConnectorTileEntity>> ENDERWIRE_NETWORK_CONNECTOR = Registration.TILE_ENTITIES.register(
             "enderwire_network_connector",
-            () -> new TileEntityType<>(NetworkConnectorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get()), null)
+            () -> new TileEntityType<>(EnderwireConnectorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get()), null)
+    );
+
+    public static final RegistryObject<TileEntityType<EnderwireSensorTileEntity>> ENDERWIRE_SENSOR = Registration.TILE_ENTITIES.register(
+            "enderwire_sensor",
+            () -> new TileEntityType<>(EnderwireSensorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_LEVER.get()), null)
     );
 }

@@ -15,18 +15,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import site.siredvin.progressiveperipherals.common.tileentities.network.NetworkConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireConnectorTileEntity;
 
 import java.util.Objects;
 
-public class EnderwireElementTileRenderer extends TileEntityRenderer<NetworkConnectorTileEntity> {
+public class EnderwireElementTileRenderer extends TileEntityRenderer<EnderwireConnectorTileEntity> {
 
     public EnderwireElementTileRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
         super(rendererDispatcherIn);
     }
 
     @Override
-    public void render(NetworkConnectorTileEntity tileEntity, float partialTicks, MatrixStack matrixStackIn,
+    public void render(EnderwireConnectorTileEntity tileEntity, float partialTicks, MatrixStack matrixStackIn,
                        IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
 
         String attachedNetwork = tileEntity.getAttachedNetwork();

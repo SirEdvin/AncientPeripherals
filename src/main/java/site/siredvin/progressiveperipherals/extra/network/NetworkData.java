@@ -5,6 +5,8 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
+import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,25 +70,36 @@ public class NetworkData {
         this.password = PasswordUtil.generateSecurePassword(password, this.salt);
     }
 
+    public @Nullable NetworkElementData getElement(UUID elementUUID) {
+        if (elements == null)
+            return null;
+        return elements.get(elementUUID);
+    }
+
     public @Nullable Map<UUID, NetworkElementData> getElements() {
         return elements;
     }
 
-    public void addNetworkElement(NetworkElementData element) {
+    protected void addNetworkElementNoEvent(NetworkElementData element) {
         if (elements == null)
             elements = new HashMap<>();
         elements.put(element.getUUID(), element);
     }
 
-    public void removeNetworkElement(NetworkElementData element) {
-        if (elements != null) {
-            elements.remove(element.getUUID());
-        }
+    public void addNetworkElement(NetworkElementData element) {
+        addNetworkElementNoEvent(element);
+        NetworkEventTool.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
+    }
+
+    public @Nullable NetworkElementData removeNetworkElement(NetworkElementData element) {
+        return removeNetworkElementByUUID(element.getUUID());
     }
 
     public @Nullable NetworkElementData removeNetworkElementByUUID(UUID uuid) {
         if (elements != null) {
-            return elements.remove(uuid);
+            NetworkElementData removed = elements.remove(uuid);
+            if (removed != null)
+                NetworkEventTool.fireNetworkEvent(name, EnderwireNetworkEvent.removedElements(removed));
         }
         return null;
     }
@@ -100,9 +113,10 @@ public class NetworkData {
         if (tag.contains(SALT_TAG))
             salt = tag.getString(SALT_TAG);
         if (tag.contains(ELEMENTS_TAG)) {
+
             ListNBT elements = tag.getList(ELEMENTS_TAG, tag.getId());
             for (int i = 0; i < elements.size(); i++) {
-                addNetworkElement(NetworkElementData.fromCompound(elements.getCompound(i)));
+                addNetworkElementNoEvent(NetworkElementData.fromCompound(elements.getCompound(i)));
             }
         }
     }

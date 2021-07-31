@@ -7,6 +7,7 @@ import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.*;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
 import site.siredvin.progressiveperipherals.common.blocks.machinery.*;
+import site.siredvin.progressiveperipherals.common.blocks.network.EnderwireLever;
 import site.siredvin.progressiveperipherals.common.blocks.network.EnderwireNetworkConnectorBlock;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorItem;
@@ -145,6 +146,12 @@ public class Blocks {
             "enderwire_network_connector",
             EnderwireNetworkConnectorBlock::new,
             () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_LEVER = register(
+            "enderwire_lever",
+            EnderwireLever::new,
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
     );
 
 
