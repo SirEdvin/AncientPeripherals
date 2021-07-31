@@ -14,7 +14,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 import site.siredvin.progressiveperipherals.utils.ValueContainer;
 
 import java.util.List;

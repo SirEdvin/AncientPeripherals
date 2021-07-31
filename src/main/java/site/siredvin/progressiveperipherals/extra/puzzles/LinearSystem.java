@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.puzzles;
+package site.siredvin.progressiveperipherals.extra.puzzles;
 
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;

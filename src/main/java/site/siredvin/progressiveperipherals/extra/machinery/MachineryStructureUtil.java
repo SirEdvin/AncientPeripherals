@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.machinery;
+package site.siredvin.progressiveperipherals.extra.machinery;
 
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.block.BlockState;

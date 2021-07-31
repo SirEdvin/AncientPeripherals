@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.machinery;
+package site.siredvin.progressiveperipherals.extra.machinery;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;

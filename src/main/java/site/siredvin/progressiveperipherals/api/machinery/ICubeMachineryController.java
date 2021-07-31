@@ -6,8 +6,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.common.machinery.CubeMachineryStructure;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryStructureUtil;
+import site.siredvin.progressiveperipherals.extra.machinery.CubeMachineryStructure;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryStructureUtil;
 import site.siredvin.progressiveperipherals.utils.RepresentationUtils;
 
 import java.util.ArrayList;

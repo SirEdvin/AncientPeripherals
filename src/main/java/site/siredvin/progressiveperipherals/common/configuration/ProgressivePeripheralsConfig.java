@@ -3,10 +3,10 @@ package site.siredvin.progressiveperipherals.common.configuration;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTier;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.AutomataCoreTier;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.CountOperation;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation;
 
 public class ProgressivePeripheralsConfig {
 
@@ -48,7 +48,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableExtractor;
     // Puzzles
     public static int linearSystemTimeLimit;
-    // Configuration
+    // Automata cores
     public static double enchantingAutomataCoreDisappearChance;
 
     public static class CommonConfig {
@@ -93,7 +93,7 @@ public class ProgressivePeripheralsConfig {
 
         final ForgeConfigSpec.IntValue LINEAR_SYSTEM_TIME_LIMIT;
 
-        // Mechanic souls
+        // Automata cores
         final ForgeConfigSpec.DoubleValue ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE;
 
         CommonConfig(final ForgeConfigSpec.Builder builder) {

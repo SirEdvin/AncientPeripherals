@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryStructureUtil;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryStructureUtil;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTRectorControllerTileEntity;
 
 public class MachineryBlock extends BaseBlock {

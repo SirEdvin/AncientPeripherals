@@ -4,7 +4,7 @@ import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHan
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;
-import site.siredvin.progressiveperipherals.common.puzzles.LinearSystem;
+import site.siredvin.progressiveperipherals.extra.puzzles.LinearSystem;
 
 import java.awt.*;
 import java.util.Random;

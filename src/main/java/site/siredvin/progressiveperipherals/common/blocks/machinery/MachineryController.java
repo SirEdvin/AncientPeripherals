@@ -19,7 +19,7 @@ import net.minecraftforge.fml.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
 import site.siredvin.progressiveperipherals.common.blocks.GenericTileEntityBlock;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 
 public class MachineryController<T extends TileEntity & IMachineryController<T>> extends GenericTileEntityBlock<T> {
     public static final BooleanProperty CONNECTED = MachineryBlockProperties.CONNECTED;

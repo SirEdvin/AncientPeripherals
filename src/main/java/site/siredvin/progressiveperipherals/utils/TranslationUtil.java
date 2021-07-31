@@ -12,6 +12,10 @@ public class TranslationUtil {
         return String.format("turtle.%s.%s", ProgressivePeripherals.MOD_ID, name);
     }
 
+    public static String pocket(String name) {
+        return String.format("pocket.%s.%s", ProgressivePeripherals.MOD_ID, name);
+    }
+
     public static TranslationTextComponent localization(String name) {
         return  new TranslationTextComponent(String.format("text.%s.%s", ProgressivePeripherals.MOD_ID, name));
     }

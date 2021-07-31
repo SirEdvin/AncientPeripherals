@@ -6,7 +6,7 @@ import net.minecraft.world.IWorld;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 
 public class BlockEvents {

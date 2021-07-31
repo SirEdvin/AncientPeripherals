@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.puzzles;
+package site.siredvin.progressiveperipherals.extra.puzzles;
 
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
