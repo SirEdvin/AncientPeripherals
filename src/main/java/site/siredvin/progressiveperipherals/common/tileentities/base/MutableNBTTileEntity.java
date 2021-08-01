@@ -14,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
 public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends OptionalPeripheralTileEntity<T> implements ITileEntityDataProvider {
+    // TODO: rework this logic, with proper callback
+    // skipUpdate are useless, handleInternalDataChange are to complex and misused
     public MutableNBTTileEntity(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
@@ -49,11 +51,11 @@ public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends Opt
         return super.save(tag);
     }
 
-    public void pushState() {
-        pushState(getBlockState());
+    public void handleInternalDataChange() {
+        handleInternalDataChange(getBlockState());
     }
 
-    public void pushState(BlockState state) {
+    public void handleInternalDataChange(BlockState state) {
         World world = getLevel();
         if (world != null) {
             if (world.isClientSide) {

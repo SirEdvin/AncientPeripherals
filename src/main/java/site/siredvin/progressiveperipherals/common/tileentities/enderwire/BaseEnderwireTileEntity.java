@@ -3,6 +3,7 @@ package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.server.ServerWorld;
@@ -13,12 +14,14 @@ import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 
 import java.util.UUID;
 
-public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends BasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T> {
+public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends BasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T>, ITickableTileEntity {
     private static final String ATTACHED_NETWORK_TAG = "attachedNetwork";
     private static final String ELEMENT_UUID_TAG = "elementUUID";
 
     protected @Nullable String attachedNetwork;
     protected UUID elementUUID;
+
+    private boolean requireNetworkCheck = false;
 
     public BaseEnderwireTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
@@ -33,7 +36,7 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
     @Override
     public void setAttachedNetwork(@Nullable String attachedNetwork) {
         this.attachedNetwork = attachedNetwork;
-        pushState();
+        handleInternalDataChange();
     }
 
     @Override
@@ -52,14 +55,25 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
         elementUUID = data.getUUID(ELEMENT_UUID_TAG);
-        if (data.contains(ATTACHED_NETWORK_TAG))
+        if (data.contains(ATTACHED_NETWORK_TAG)) {
             attachedNetwork = data.getString(ATTACHED_NETWORK_TAG);
-        if (level != null && !level.isClientSide && attachedNetwork != null) {
-            GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) level);
-            if (!networksData.networkExists(attachedNetwork)) {
-                attachedNetwork = null;
-                pushState();
+        } else {
+            attachedNetwork = null;
+        }
+        // queue network check
+        requireNetworkCheck = true;
+    }
+
+    @Override
+    public void tick() {
+        if (requireNetworkCheck) {
+            if (level != null && !level.isClientSide && attachedNetwork != null) {
+                GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) level);
+                if (!networksData.networkExists(attachedNetwork)) {
+                    setAttachedNetwork(null);
+                }
             }
+            requireNetworkCheck = false;
         }
     }
 }

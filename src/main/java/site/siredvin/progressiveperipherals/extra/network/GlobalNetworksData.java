@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.extra.network;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import org.jetbrains.annotations.NotNull;
@@ -49,11 +50,14 @@ public class GlobalNetworksData extends WorldSavedData {
                 }
             }
             removeTargets.forEach(networkElement -> {
-                IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) serverWorld.getBlockEntity(networkElement.getPos());
-                if (enderwireElement != null) {
-                    enderwireElement.changeAttachedNetwork(null);
-                } else {
-                    throw new IllegalArgumentException("Network remove logic should be called from world thread!");
+                BlockPos pos = networkElement.getPos();
+                if (!serverWorld.isEmptyBlock(pos)) {
+                    IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) serverWorld.getBlockEntity(networkElement.getPos());
+                    if (enderwireElement != null) {
+                        enderwireElement.changeAttachedNetwork(null);
+                    } else {
+                        throw new IllegalArgumentException("Network remove logic should be called from world thread!");
+                    }
                 }
             });
         }
@@ -124,7 +128,7 @@ public class GlobalNetworksData extends WorldSavedData {
     }
 
     public static @NotNull GlobalNetworksData get(@NotNull ServerWorld world) {
-        GlobalNetworksData instance = world.getDataStorage().computeIfAbsent(GlobalNetworksData::new, DATA_NAME);
+        GlobalNetworksData instance = world.getServer().overworld().getDataStorage().computeIfAbsent(GlobalNetworksData::new, DATA_NAME);
         instance.setServerWorld(world);
         return instance;
     }

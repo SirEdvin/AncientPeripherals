@@ -18,12 +18,14 @@ public class NetworkElementData {
     private final BlockPos pos;
     private final EnderwireElementType elementType;
     private final String deviceType;
+    private final String dimension;
 
-    public NetworkElementData(UUID uuid, BlockPos pos, EnderwireElementType elementType, String deviceType) {
+    public NetworkElementData(UUID uuid, BlockPos pos, EnderwireElementType elementType, String deviceType, String dimension) {
         this.uuid = uuid;
         this.pos = pos;
         this.elementType = elementType;
         this.deviceType = deviceType;
+        this.dimension = dimension;
     }
 
     public BlockPos getPos() {
@@ -56,7 +58,8 @@ public class NetworkElementData {
                 UUID.fromString(tag.getString(UUID_TAG)),
                 NBTUtil.readBlockPos(tag.getCompound(POS_TAG)),
                 EnderwireElementType.valueOf(tag.getString(ELEMENT_TYPE_TAG)),
-                tag.getString(DEVICE_TYPE_TAG)
+                tag.getString(DEVICE_TYPE_TAG),
+                "kekwhat"
         );
     }
 

@@ -57,7 +57,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
                     clear(true);
                 }
                 if (!skipUpdate)
-                    pushState();
+                    handleInternalDataChange();
             }
         }
         if (tag.contains(NAME_TAG))
@@ -93,7 +93,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         this.bakedQuads = bakedQuads;
         refreshShape();
         if (!skipUpdate)
-            pushState(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
+            handleInternalDataChange(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
     }
 
     public void setName(@NotNull String name) {
@@ -124,7 +124,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         bakedQuads = null;
         refreshShape();
         if (!skipUpdate)
-            pushState(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
+            handleInternalDataChange(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
     }
 
     public void refreshShape() {

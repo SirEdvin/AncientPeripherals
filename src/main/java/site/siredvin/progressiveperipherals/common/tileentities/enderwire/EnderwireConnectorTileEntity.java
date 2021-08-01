@@ -42,6 +42,7 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
 
     @Override
     public void tick() {
+        super.tick();
         if (attachedNetwork != null) {
             lastComputerEventMessage = NetworkEventTool.traverseComputerEvents(attachedNetwork, lastComputerEventMessage, event -> {
                 getConnectedComputers().forEach(computer -> computer.queueEvent("enderwire_computer_event", event.getName(), event.getData()));

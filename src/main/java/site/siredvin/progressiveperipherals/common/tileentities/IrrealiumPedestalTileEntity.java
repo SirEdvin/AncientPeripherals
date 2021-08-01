@@ -20,7 +20,7 @@ public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity<BasePeriph
 
     public void setStoredStack(@NotNull ItemStack storedStack) {
         this.storedStack = storedStack;
-        pushState();
+        handleInternalDataChange();
     }
 
     public @NotNull ItemStack getStoredStack() {
@@ -44,7 +44,7 @@ public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity<BasePeriph
         if (data.contains(ITEM_STACK_TAG)) {
             storedStack = ItemStack.of(data.getCompound(ITEM_STACK_TAG));
             if (!skipUpdate)
-                pushState();
+                handleInternalDataChange();
         }
     }
 }

@@ -19,7 +19,7 @@ public class NetworkPeripheralTool {
         return function.apply(data, owner);
     }
 
-    public static <T extends BasePeripheral> MethodResult withNetworks(World world, Function<GlobalNetworksData, MethodResult> function) {
+    public static MethodResult withNetworks(World world, Function<GlobalNetworksData, MethodResult> function) {
         ServerWorld serverWorld = (ServerWorld) world;
         GlobalNetworksData data = GlobalNetworksData.get(serverWorld);
         return function.apply(data);

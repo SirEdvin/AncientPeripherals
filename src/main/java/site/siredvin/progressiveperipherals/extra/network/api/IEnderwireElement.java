@@ -8,6 +8,7 @@ import site.siredvin.progressiveperipherals.api.base.ITrickedTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> extends ITrickedTileEntity<T> {
@@ -24,7 +25,7 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
     }
 
     default NetworkElementData generateElementData() {
-        return new NetworkElementData(getElementUUID(), getPosition(), getElementType(), getDeviceType());
+        return new NetworkElementData(getElementUUID(), getPosition(), getElementType(), getDeviceType(), Objects.requireNonNull(getWorld()).dimension().location().toString());
     }
 
     UUID getElementUUID();
