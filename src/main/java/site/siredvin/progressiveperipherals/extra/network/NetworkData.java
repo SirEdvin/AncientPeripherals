@@ -5,6 +5,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
 import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
 

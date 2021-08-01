@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements ITileEntityDataProvider, IProbeable {
+public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider, IProbeable {
     public static final String BAKED_QUADS_TAG = "bakedQuads";
     public static final String NAME_TAG = "statueName";
     public static final String AUTHOR_TAG = "statueAuthor";

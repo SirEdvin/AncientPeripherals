@@ -29,8 +29,12 @@ public class NetworkAccessingTool {
         return Pair.onlyLeft(MethodResult.of(null, "Cannot get access to network"));
     }
 
-    public static void writeSelectedNetwork(CompoundNBT tag, NetworkData network) {
-        tag.putString(SELECTED_NETWORK_TAG, network.getName());
+    public static void writeSelectedNetwork(CompoundNBT tag, @Nullable NetworkData network) {
+        if (network == null) {
+            tag.remove(SELECTED_NETWORK_TAG);
+        } else {
+            tag.putString(SELECTED_NETWORK_TAG, network.getName());
+        }
     }
 
     public static @Nullable NetworkData getSelectedNetwork(GlobalNetworksData data, CompoundNBT tag) {

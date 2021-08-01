@@ -137,7 +137,7 @@ dependencies {
     compileOnly "org.jetbrains:annotations:${jb_annotations}"
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation fg.deobf("org.squiddev:cc-tweaked-${cc_version}")
-    implementation fg.deobf("curse.maven:AdvancedPeripherals-${ap_version}")
+    implementation fg.deobf("de.srendi.advancedperipherals:AdvancedPeripherals:${ap_version}")
     implementation fg.deobf("mezz.jei:jei-${jei_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 

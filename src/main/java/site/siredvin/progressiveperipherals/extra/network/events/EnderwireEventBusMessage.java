@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class EnderwireEventBusMessage<T> {
+public class EnderwireEventBusMessage<T extends IEpochEvent> {
     private final long number;
     private final @NotNull T event;
 

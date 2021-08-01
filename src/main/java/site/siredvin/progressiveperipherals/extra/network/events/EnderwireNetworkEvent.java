@@ -2,15 +2,19 @@ package site.siredvin.progressiveperipherals.extra.network.events;
 
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 
-public class EnderwireNetworkEvent {
+public class EnderwireNetworkEvent implements IEpochEvent {
     private final NetworkElementData[] removedElements;
     private final NetworkElementData[] addedElements;
+    private final long epoch;
 
     EnderwireNetworkEvent(NetworkElementData[] removedElements, NetworkElementData[] addedElements) {
         this.removedElements = removedElements;
         this.addedElements = addedElements;
+        this.epoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
     }
 
     public NetworkElementData[] getAddedElements() {
@@ -19,6 +23,10 @@ public class EnderwireNetworkEvent {
 
     public NetworkElementData[] getRemovedElements() {
         return removedElements;
+    }
+
+    public long getEpoch() {
+        return epoch;
     }
 
     public static EnderwireNetworkEvent addedElements(NetworkElementData... elements) {

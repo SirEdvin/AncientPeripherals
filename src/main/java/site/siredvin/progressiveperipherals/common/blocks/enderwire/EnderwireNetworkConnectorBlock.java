@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.blocks.network;
+package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;

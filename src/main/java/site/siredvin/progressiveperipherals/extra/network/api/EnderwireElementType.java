@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.extra.network;
+package site.siredvin.progressiveperipherals.extra.network.api;
 
 public enum EnderwireElementType {
     SENSOR(false, false),

@@ -1,19 +1,21 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.extra.network.IEnderwireElement;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 
 import java.util.UUID;
 
-public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>> extends MutableNBTTileEntity implements IEnderwireElement<T> {
+public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends BasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T> {
     private static final String ATTACHED_NETWORK_TAG = "attachedNetwork";
     private static final String ELEMENT_UUID_TAG = "elementUUID";
-    private static final String OWNER_UUID_TAG = "ownerUUID";
 
     protected @Nullable String attachedNetwork;
     protected UUID elementUUID;
@@ -52,5 +54,12 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
         elementUUID = data.getUUID(ELEMENT_UUID_TAG);
         if (data.contains(ATTACHED_NETWORK_TAG))
             attachedNetwork = data.getString(ATTACHED_NETWORK_TAG);
+        if (level != null && !level.isClientSide && attachedNetwork != null) {
+            GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) level);
+            if (!networksData.networkExists(attachedNetwork)) {
+                attachedNetwork = null;
+                pushState();
+            }
+        }
     }
 }

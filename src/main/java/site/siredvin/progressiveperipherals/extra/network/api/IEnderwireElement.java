@@ -1,10 +1,11 @@
-package site.siredvin.progressiveperipherals.extra.network;
+package site.siredvin.progressiveperipherals.extra.network.api;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.base.ITrickedTileEntity;
+import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
 import java.util.UUID;
@@ -23,8 +24,9 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
     }
 
     default NetworkElementData generateElementData() {
-        return new NetworkElementData(getElementUUID(), getPosition(), getElementType());
+        return new NetworkElementData(getElementUUID(), getPosition(), getElementType(), getDeviceType());
     }
 
     UUID getElementUUID();
+    String getDeviceType();
 }

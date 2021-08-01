@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Items;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.network.NetworkManagerPeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkManagerPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class NetworkManagementPocket extends BasePocket<NetworkManagerPeripheral> {
+public class NetworkManagementPocket extends BasePocket<EnderwireNetworkManagerPeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "network_manager_pocket");
 
     public NetworkManagementPocket() {
@@ -23,8 +23,8 @@ public class NetworkManagementPocket extends BasePocket<NetworkManagerPeripheral
     }
 
     @Override
-    protected NetworkManagerPeripheral getPeripheral(IPocketAccess pocket) {
-        return new NetworkManagerPeripheral("networkManager", pocket);
+    protected EnderwireNetworkManagerPeripheral getPeripheral(IPocketAccess pocket) {
+        return new EnderwireNetworkManagerPeripheral("networkManager", pocket);
     }
 
     @Override

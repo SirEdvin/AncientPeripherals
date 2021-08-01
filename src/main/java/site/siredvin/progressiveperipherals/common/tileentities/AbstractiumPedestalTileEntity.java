@@ -7,16 +7,21 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackContainer;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
-import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.AbstractiumPedestalPeripheral;
 
 
-public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntity<AbstractiumPedestalPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
+public class AbstractiumPedestalTileEntity extends MutableNBTTileEntity<AbstractiumPedestalPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
     private static final String ITEM_STACK_TAG = "itemStackTag";
     private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 
     public AbstractiumPedestalTileEntity() {
         super(TileEntityTypes.ABSTRACTIUM_PEDESTAL.get());
+    }
+
+    @Override
+    protected boolean hasPeripheral() {
+        return true;
     }
 
     @Override

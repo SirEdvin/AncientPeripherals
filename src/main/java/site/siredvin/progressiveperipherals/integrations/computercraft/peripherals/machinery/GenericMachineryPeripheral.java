@@ -10,11 +10,12 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
+import site.siredvin.progressiveperipherals.common.tileentities.base.OptionalPeripheralTileEntity;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<?> & IMachineryController<T>> extends OperationPeripheral implements IDynamicPeripheral {
+public abstract class GenericMachineryPeripheral<T extends OptionalPeripheralTileEntity<?> & IMachineryController<T>> extends OperationPeripheral implements IDynamicPeripheral {
     protected final T tileEntity;
     private final Map<String, IPluggableLuaMethod<T>> methodMap;
     private final String[] methodNames;

@@ -10,12 +10,12 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.api.machinery.ICubeMachineryController;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryStructure;
-import site.siredvin.progressiveperipherals.extra.machinery.CubeMachineryStructure;
-import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tags.BlockTags;
-import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
+import site.siredvin.progressiveperipherals.extra.machinery.CubeMachineryStructure;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.RBTReactorControllerPeripheral;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.GeneralBreakthroughPointPlugin;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntity<RBTReactorControllerPeripheral> implements ICubeMachineryController<RBTRectorControllerTileEntity> {
+public class RBTRectorControllerTileEntity extends MutableNBTTileEntity<RBTReactorControllerPeripheral> implements ICubeMachineryController<RBTRectorControllerTileEntity> {
     public final static int SIZE = 5;
 
     private final static String CONFIGURED_TAG = "configured";
@@ -43,6 +43,11 @@ public class RBTRectorControllerTileEntity extends MutableNBTPeripheralTileEntit
 
     public RBTRectorControllerTileEntity() {
         super(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get());
+    }
+
+    @Override
+    protected boolean hasPeripheral() {
+        return true;
     }
 
     @Override

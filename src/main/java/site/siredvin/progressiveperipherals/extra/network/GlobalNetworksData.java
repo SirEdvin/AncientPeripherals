@@ -7,11 +7,10 @@ import net.minecraft.world.storage.WorldSavedData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GlobalNetworksData extends WorldSavedData {
@@ -19,10 +18,15 @@ public class GlobalNetworksData extends WorldSavedData {
     private static final String NETWORKS_TAG = "networks";
 
     private final Map<String, NetworkData> networks;
+    private ServerWorld serverWorld;
 
     public GlobalNetworksData() {
         super(DATA_NAME);
         networks = new HashMap<>();
+    }
+
+    public void setServerWorld(ServerWorld serverWorld) {
+        this.serverWorld = serverWorld;
     }
 
     public @Nullable NetworkData getNetwork(String name) {
@@ -30,12 +34,32 @@ public class GlobalNetworksData extends WorldSavedData {
     }
 
     public @Nullable NetworkData removeNetwork(String name, UUID playerUUID) {
+        Objects.requireNonNull(serverWorld);
         NetworkData network = getNetwork(name);
         if (network == null)
             return null;
         if (!playerUUID.equals(network.getOwnerUUID()))
             throw new IllegalArgumentException("Network cannot be removed by not owner!");
-        return networks.remove(name);
+        Map<UUID, NetworkElementData> elements = network.getElements();
+        if (elements != null) {
+            List<NetworkElementData> removeTargets = new ArrayList<>();
+            for (NetworkElementData networkElement : elements.values()) {
+                if (serverWorld.isLoaded(networkElement.getPos())) {
+                    removeTargets.add(networkElement);
+                }
+            }
+            removeTargets.forEach(networkElement -> {
+                IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) serverWorld.getBlockEntity(networkElement.getPos());
+                if (enderwireElement != null) {
+                    enderwireElement.changeAttachedNetwork(null);
+                } else {
+                    throw new IllegalArgumentException("Network remove logic should be called from world thread!");
+                }
+            });
+        }
+        NetworkData removed = networks.remove(name);
+        setDirty();
+        return removed;
     }
 
     public boolean isOwner(String name, UUID playerUUID) {
@@ -100,6 +124,8 @@ public class GlobalNetworksData extends WorldSavedData {
     }
 
     public static @NotNull GlobalNetworksData get(@NotNull ServerWorld world) {
-        return world.getDataStorage().computeIfAbsent(GlobalNetworksData::new, DATA_NAME);
+        GlobalNetworksData instance = world.getDataStorage().computeIfAbsent(GlobalNetworksData::new, DATA_NAME);
+        instance.setServerWorld(world);
+        return instance;
     }
 }

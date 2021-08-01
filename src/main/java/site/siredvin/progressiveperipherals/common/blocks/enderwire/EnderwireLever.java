@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.blocks.network;
+package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -15,12 +15,14 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
-import site.siredvin.progressiveperipherals.extra.network.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireComputerEvent;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireComputerEventType;
 import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
-public class EnderwireLever extends LeverBlock {
+public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock {
     public EnderwireLever() {
         super(AbstractBlock.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD));
     }
@@ -37,10 +39,10 @@ public class EnderwireLever extends LeverBlock {
                 boolean leverState = state.cycle(POWERED).getValue(POWERED);
                 String attachedNetwork = te.getAttachedNetwork();
                 if (attachedNetwork != null) {
-                    String eventName = "lever_enabled";
+                    EnderwireComputerEventType eventName = EnderwireComputerEventType.LEVER_ENABLED;
                     if (!leverState)
-                        eventName = "lever_disabled";
-                    NetworkEventTool.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.of(eventName, te.getElementUUID().toString()));
+                        eventName = EnderwireComputerEventType.LEVER_DISABLED;
+                    NetworkEventTool.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(eventName, te.getElementUUID().toString()));
                 }
             }
         }
@@ -56,5 +58,10 @@ public class EnderwireLever extends LeverBlock {
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new EnderwireSensorTileEntity();
+    }
+
+    @Override
+    public String getDeviceType() {
+        return "enderwireLever";
     }
 }

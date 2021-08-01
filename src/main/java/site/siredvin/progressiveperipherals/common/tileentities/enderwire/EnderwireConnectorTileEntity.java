@@ -4,24 +4,25 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireElementType;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.network.EnderwireNetworkConnectorPeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkConnectorPeripheral;
 
-public class EnderwireConnectorTileEntity extends BaseEnderwirePeripheralTileEntity<EnderwireConnectorTileEntity, EnderwireNetworkConnectorPeripheral> implements ITickableTileEntity {
+public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<EnderwireConnectorTileEntity, EnderwireNetworkConnectorPeripheral> implements ITickableTileEntity {
 
-    private long lastConsumedMessage;
+    private long lastComputerEventMessage;
 
     public EnderwireConnectorTileEntity() {
         super(TileEntityTypes.ENDERWIRE_NETWORK_CONNECTOR.get());
-        lastConsumedMessage = -1;
+        lastComputerEventMessage = -1;
     }
 
     @Override
     public void setAttachedNetwork(@Nullable String attachedNetwork) {
         super.setAttachedNetwork(attachedNetwork);
-        if (this.attachedNetwork != null)
-            lastConsumedMessage = NetworkEventTool.getComputerEventsStart(attachedNetwork);
+        if (this.attachedNetwork != null) {
+            lastComputerEventMessage = NetworkEventTool.getComputerEventsStart(attachedNetwork);
+        }
     }
 
     @Override
@@ -35,12 +36,22 @@ public class EnderwireConnectorTileEntity extends BaseEnderwirePeripheralTileEnt
     }
 
     @Override
+    public String getDeviceType() {
+        return "enderwireConnector";
+    }
+
+    @Override
     public void tick() {
         if (attachedNetwork != null) {
-            lastConsumedMessage = NetworkEventTool.traverseComputerEvents(attachedNetwork, lastConsumedMessage, event -> {
-                getConnectedComputers().forEach(computer -> computer.queueEvent(event.getName(), event.getData()));
+            lastComputerEventMessage = NetworkEventTool.traverseComputerEvents(attachedNetwork, lastComputerEventMessage, event -> {
+                getConnectedComputers().forEach(computer -> computer.queueEvent("enderwire_computer_event", event.getName(), event.getData()));
             });
         }
+    }
+
+    @Override
+    protected boolean hasPeripheral() {
+        return true;
     }
 
     @Override

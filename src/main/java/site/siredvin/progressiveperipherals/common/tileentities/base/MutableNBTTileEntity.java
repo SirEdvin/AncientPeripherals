@@ -1,15 +1,19 @@
 package site.siredvin.progressiveperipherals.common.tileentities.base;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
-public abstract class MutableNBTTileEntity extends TileEntity implements ITileEntityDataProvider {
+public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends OptionalPeripheralTileEntity<T> implements ITileEntityDataProvider {
     public MutableNBTTileEntity(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
@@ -50,7 +54,24 @@ public abstract class MutableNBTTileEntity extends TileEntity implements ITileEn
     }
 
     public void pushState(BlockState state) {
-        MutableNBTTileEntityEmbed.pushState(this, state);
+        World world = getLevel();
+        if (world != null) {
+            if (world.isClientSide) {
+                requestModelDataUpdate();
+                BlockPos pos = getBlockPos();
+                // Basically, just world.setBlocksDirty with bypass model block state check
+                Minecraft.getInstance().levelRenderer.setBlocksDirty(
+                        pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ()
+                );
+            } else {
+                setChanged();
+                world.setBlockAndUpdate(getBlockPos(), state);
+                world.sendBlockUpdated(
+                        getBlockPos(), getBlockState(), getBlockState(),
+                        Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.NOTIFY_NEIGHBORS
+                );
+            }
+        }
     }
 
 }

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.NetworkManagementPocket;
@@ -62,12 +62,14 @@ public class NetworkElementTool {
         ItemStack itemInHand = player.getItemInHand(playerHand);
         if (isNetworkManager(itemInHand)) {
             NetworkData selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get(world), ItemPocketComputer.getUpgradeInfo(itemInHand));
-            if (selectedNetwork != null) {
-                IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
-                if (te != null) {
-                    te.setAttachedNetwork(selectedNetwork.getName());
-                    return true;
+            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
+            if (te != null) {
+                if (selectedNetwork != null) {
+                    te.changeAttachedNetwork(selectedNetwork.getName());
+                } else {
+                    te.changeAttachedNetwork(null);
                 }
+                return true;
             }
         }
         return false;

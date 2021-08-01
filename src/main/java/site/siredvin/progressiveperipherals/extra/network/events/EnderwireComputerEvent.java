@@ -2,28 +2,46 @@ package site.siredvin.progressiveperipherals.extra.network.events;
 
 import org.jetbrains.annotations.NotNull;
 
-public class EnderwireComputerEvent {
-    private final @NotNull String name;
-    private final @NotNull Object[] data;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
-    public EnderwireComputerEvent(@NotNull String name, @NotNull Object[] data) {
-        this.name = name;
+public class EnderwireComputerEvent implements IEpochEvent {
+    private final @NotNull EnderwireComputerEventType type;
+    private final @NotNull Object[] data;
+    private final long epoch;
+
+
+    public EnderwireComputerEvent(@NotNull EnderwireComputerEventType type, @NotNull Object[] data, long epoch) {
+        this.type = type;
         this.data = data;
+        this.epoch = epoch;
     }
 
-    public EnderwireComputerEvent(@NotNull String name) {
-        this(name, new Object[0]);
+    public EnderwireComputerEvent(@NotNull EnderwireComputerEventType type) {
+        this(type, new Object[0], LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+    }
+
+    public @NotNull EnderwireComputerEventType getType() {
+        return type;
     }
 
     public @NotNull String getName() {
-        return name;
+        return type.computerName();
     }
 
     public @NotNull Object[] getData() {
         return data;
     }
 
-    public static EnderwireComputerEvent of(@NotNull String name, Object... data) {
-        return new EnderwireComputerEvent(name, data);
+    public long getEpoch() {
+        return epoch;
+    }
+
+    public static EnderwireComputerEvent timed(@NotNull EnderwireComputerEventType type, Object... data) {
+        Object[] eventData = new Object[data.length + 1];
+        long epoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        eventData[0] = epoch;
+        System.arraycopy(data, 0, eventData, 1, data.length);
+        return new EnderwireComputerEvent(type, eventData, epoch);
     }
 }

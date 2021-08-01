@@ -1,4 +1,4 @@
-package site.siredvin.progressiveperipherals.common.blocks.network;
+package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.extra.network.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.common.blocks.base.TileEntityBlock;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
