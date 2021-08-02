@@ -4,7 +4,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
-import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkConnectorPeripheral;
 
 public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<EnderwireConnectorTileEntity, EnderwireNetworkConnectorPeripheral> implements ITickableTileEntity {
@@ -19,7 +19,7 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
     @Override
     public void onAttachedNetworkChange() {
         if (this.attachedNetwork != null) {
-            lastComputerEventMessage = NetworkEventTool.getComputerEventsStart(attachedNetwork);
+            lastComputerEventMessage = EnderwireNetworkBusHub.getComputerEventsStart(attachedNetwork);
         }
     }
 
@@ -42,7 +42,7 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
     public void tick() {
         super.tick();
         if (attachedNetwork != null) {
-            lastComputerEventMessage = NetworkEventTool.traverseComputerEvents(attachedNetwork, lastComputerEventMessage, event -> {
+            lastComputerEventMessage = EnderwireNetworkBusHub.traverseComputerEvents(attachedNetwork, lastComputerEventMessage, event -> {
                 getConnectedComputers().forEach(computer -> computer.queueEvent("enderwire_computer_event", event.getName(), event.getData()));
             });
         }

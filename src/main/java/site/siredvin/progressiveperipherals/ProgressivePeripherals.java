@@ -33,7 +33,7 @@ import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughP
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.events.BlockEvents;
 import site.siredvin.progressiveperipherals.common.setup.*;
-import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionPage;
@@ -67,7 +67,7 @@ public class ProgressivePeripherals {
         modEventBus.addListener(ConfigHandler::reloadConfigEvent);
         // Forge events
         forgeBus.addListener(this::biomeModification);
-        forgeBus.addListener(NetworkEventTool::performCleanup);
+        forgeBus.addListener(EnderwireNetworkBusHub::performCleanup);
         // Mod event listeners
         BlockEvents.subscribe(forgeBus);
 

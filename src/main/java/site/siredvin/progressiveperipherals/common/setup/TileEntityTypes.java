@@ -97,6 +97,6 @@ public class TileEntityTypes {
 
     public static final RegistryObject<TileEntityType<EnderwireSensorTileEntity>> ENDERWIRE_SENSOR = Registration.TILE_ENTITIES.register(
             "enderwire_sensor",
-            () -> new TileEntityType<>(EnderwireSensorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_LEVER.get()), null)
+            () -> new TileEntityType<>(EnderwireSensorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_LEVER.get(), Blocks.ENDERWIRE_BUTTON.get()), null)
     );
 }

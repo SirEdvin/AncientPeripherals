@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class NetworkEventTool {
+public class EnderwireNetworkBusHub {
     private static final Map<String, EnderwireEventBus<EnderwireNetworkEvent>> networkEvents = new HashMap<>();
     private static final Map<String, EnderwireEventBus<EnderwireComputerEvent>> computerEvents = new HashMap<>();
 

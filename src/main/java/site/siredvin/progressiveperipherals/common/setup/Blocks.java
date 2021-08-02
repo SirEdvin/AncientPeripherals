@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.blocks.*;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
+import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireButton;
 import site.siredvin.progressiveperipherals.common.blocks.machinery.*;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLever;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireNetworkConnectorBlock;
@@ -148,12 +149,6 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
     );
 
-    public static final RegistryObject<Block> ENDERWIRE_LEVER = register(
-            "enderwire_lever",
-            EnderwireLever::new,
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
-    );
-
     public static final RegistryObject<Block> ENDERWIRE_BLOCK = register(
             "enderwire_block",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
@@ -164,6 +159,18 @@ public class Blocks {
             "enderwire_casing",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.ENDERWIRE_CASING.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_LEVER = register(
+            "enderwire_lever",
+            EnderwireLever::new,
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_BUTTON = register(
+            "enderwire_button",
+            EnderwireButton::new,
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_BUTTON.get(), new Item.Properties().stacksTo(64))
     );
 
 

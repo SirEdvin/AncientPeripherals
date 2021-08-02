@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
-import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +89,7 @@ public class NetworkData {
 
     public void addNetworkElement(NetworkElementData element) {
         addNetworkElementNoEvent(element);
-        NetworkEventTool.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
+        EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
     }
 
     public @Nullable NetworkElementData removeNetworkElement(NetworkElementData element) {
@@ -100,7 +100,7 @@ public class NetworkData {
         if (elements != null) {
             NetworkElementData removed = elements.remove(uuid);
             if (removed != null)
-                NetworkEventTool.fireNetworkEvent(name, EnderwireNetworkEvent.removedElements(removed));
+                EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.removedElements(removed));
         }
         return null;
     }

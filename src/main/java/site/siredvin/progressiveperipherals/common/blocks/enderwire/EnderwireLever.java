@@ -17,11 +17,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
-import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireComputerEvent;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireComputerEventType;
-import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkProducer;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
 import java.util.Random;
@@ -49,39 +46,26 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         builder.add(CONNECTED);
     }
 
-    @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
-        if (handledUse != null)
-            return handledUse;
-        ActionResultType superResult;
+    public ActionResultType overwrittenOriginalUse(BlockState state, World world, BlockPos pos) {
         if (world.isClientSide) {
             BlockState blockstate1 = state.cycle(POWERED);
             if (blockstate1.getValue(POWERED)) {
                 makeParticle(blockstate1, world, pos, 1.0F);
             }
+            return ActionResultType.SUCCESS;
+        }
+        BlockState blockstate = this.pull(state, world, pos);
+        float f = blockstate.getValue(POWERED) ? 0.6F : 0.5F;
+        world.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
+        return ActionResultType.CONSUME;
+    }
 
-            superResult = ActionResultType.SUCCESS;
-        } else {
-            BlockState blockstate = this.pull(state, world, pos);
-            float f = blockstate.getValue(POWERED) ? 0.6F : 0.5F;
-            world.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
-            superResult = ActionResultType.CONSUME;
-        }
-        if (!world.isClientSide) {
-            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
-            if (te != null) {
-                boolean leverState = state.cycle(POWERED).getValue(POWERED);
-                String attachedNetwork = te.getAttachedNetwork();
-                if (attachedNetwork != null) {
-                    EnderwireComputerEventType eventName = EnderwireComputerEventType.LEVER_ENABLED;
-                    if (!leverState)
-                        eventName = EnderwireComputerEventType.LEVER_DISABLED;
-                    NetworkEventTool.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(eventName, te.getElementUUID().toString()));
-                }
-            }
-        }
-        return superResult;
+    @Override
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
+        if (handledUse != null)
+            return handledUse;
+        return overwrittenOriginalUse(state, world, pos);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -89,7 +73,12 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         if (p_180655_1_.getValue(POWERED) && p_180655_4_.nextFloat() < 0.25F) {
             makeParticle(p_180655_1_, p_180655_2_, p_180655_3_, 0.5F);
         }
+    }
 
+    @Override
+    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+        EnderwireNetworkProducer.firePoweredLeverEvent(state, newState, world, blockPos);
+        super.onRemove(state, world, blockPos, newState, isMoving);
     }
 
     @Override
