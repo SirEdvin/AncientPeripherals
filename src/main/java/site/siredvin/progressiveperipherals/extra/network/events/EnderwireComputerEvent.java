@@ -4,32 +4,31 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnderwireComputerEvent implements IEpochEvent {
-    private final @NotNull EnderwireComputerEventType type;
-    private final @NotNull Object[] data;
+    private final @NotNull String name;
+    private final @NotNull Map<String, Object> data;
     private final long epoch;
 
 
-    public EnderwireComputerEvent(@NotNull EnderwireComputerEventType type, @NotNull Object[] data, long epoch) {
-        this.type = type;
+    public EnderwireComputerEvent(@NotNull String name, @NotNull Map<String, Object> data, long epoch) {
+        this.name = name;
         this.data = data;
         this.epoch = epoch;
     }
 
-    public EnderwireComputerEvent(@NotNull EnderwireComputerEventType type) {
-        this(type, new Object[0], LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
-    }
-
-    public @NotNull EnderwireComputerEventType getType() {
-        return type;
+    public EnderwireComputerEvent(@NotNull String name) {
+        this(name, new HashMap<>(), LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
     }
 
     public @NotNull String getName() {
-        return type.computerName();
+        return name;
     }
 
-    public @NotNull Object[] getData() {
+    public @NotNull Map<String, Object> getData() {
         return data;
     }
 
@@ -37,11 +36,14 @@ public class EnderwireComputerEvent implements IEpochEvent {
         return epoch;
     }
 
-    public static EnderwireComputerEvent timed(@NotNull EnderwireComputerEventType type, Object... data) {
-        Object[] eventData = new Object[data.length + 1];
-        long epoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        eventData[0] = epoch;
-        System.arraycopy(data, 0, eventData, 1, data.length);
-        return new EnderwireComputerEvent(type, eventData, epoch);
+    public static EnderwireComputerEvent timed(@NotNull String name, Map<String, Object> data) {
+        LocalDateTime now = LocalDateTime.now();
+        long epoch = now.toEpochSecond(ZoneOffset.UTC);
+
+        data.put("datetime", now.format(DateTimeFormatter.ISO_DATE_TIME));
+        data.put("epoch", epoch);
+        data.put("event", name);
+
+        return new EnderwireComputerEvent(name, data, epoch);
     }
 }

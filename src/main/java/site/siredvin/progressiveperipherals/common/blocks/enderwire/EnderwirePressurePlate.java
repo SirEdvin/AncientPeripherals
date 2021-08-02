@@ -1,13 +1,17 @@
 package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
-import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
@@ -20,13 +24,17 @@ import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetwor
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
-public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSensorBlock {
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class EnderwirePressurePlate extends PressurePlateBlock implements IEnderwireSensorBlock {
+
     public static final BooleanProperty CONNECTED = BaseEnderwireBlock.CONNECTED;
 
     private final boolean verbose;
 
-    public EnderwireButton(boolean verbose) {
-        super(false, BlockUtils.decoration());
+    public EnderwirePressurePlate(boolean verbose) {
+        super(Sensitivity.EVERYTHING, BlockUtils.decoration());
         this.registerDefaultState(this.stateDefinition.any().setValue(CONNECTED, false).setValue(POWERED, false));
         this.verbose = verbose;
     }
@@ -38,36 +46,39 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-        if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
-            EnderwireNetworkProducer.firePoweredButtonEvent(false, world, blockPos, null, this.verbose);
-        super.onRemove(state, world, blockPos, newState, isMoving);
-    }
-
-    @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
         if (handledUse != null)
             return handledUse;
-        if (state.getValue(POWERED)) {
-            return ActionResultType.CONSUME;
-        } else {
-            if (!world.isClientSide)
-                EnderwireNetworkProducer.firePoweredButtonEvent(true, world, pos, player, this.verbose);
-            this.press(state, world, pos);
-            this.playSound(player, world, pos, true);
-            return ActionResultType.sidedSuccess(world.isClientSide);
-        }
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Override
-    protected SoundEvent getSound(boolean p_196369_1_) {
-        return p_196369_1_ ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF;
+    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+        if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
+            EnderwireNetworkProducer.firePoweredPlateEvent(false, world, blockPos, null, this.verbose);
+        super.onRemove(state, world, blockPos, newState, isMoving);
     }
 
     @Override
     public boolean hasTileEntity(BlockState state) {
         return true;
+    }
+
+    protected void collidingTrigger(World world, BlockPos pos) {
+        AxisAlignedBB axisalignedbb = TOUCH_AABB.move(pos);
+        List<? extends Entity> list;
+        // Only works now with Sensitivity.EVERYTHING
+        list = world.getEntities(null, axisalignedbb).stream().filter(entity -> !entity.isIgnoringBlockTriggers()).collect(Collectors.toList());
+
+        if (!list.isEmpty())
+            EnderwireNetworkProducer.firePoweredPlateEvent(true, world, pos, list, this.verbose);
+    }
+
+    @Override
+    protected void checkPressed(World world, BlockPos pos, BlockState state, int currentPower) {
+        super.checkPressed(world, pos, state, currentPower);
+        collidingTrigger(world, pos);
     }
 
     @Nullable
@@ -78,7 +89,7 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
 
     @Override
     public EnderwireNetworkComponent getComponentType() {
-        return EnderwireNetworkComponent.BUTTON;
+        return EnderwireNetworkComponent.PLATE;
     }
 
     public int getSignal(BlockState p_180656_1_, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {

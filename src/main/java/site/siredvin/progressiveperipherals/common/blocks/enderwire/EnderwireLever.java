@@ -17,6 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkProducer;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
@@ -25,6 +26,8 @@ import java.util.Random;
 
 public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock {
     public static final BooleanProperty CONNECTED = BaseEnderwireBlock.CONNECTED;
+
+    private final boolean verbose;
 
     private static void makeParticle(BlockState p_196379_0_, IWorld p_196379_1_, BlockPos p_196379_2_, float p_196379_3_) {
         Direction direction = p_196379_0_.getValue(FACING).getOpposite();
@@ -35,9 +38,10 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         p_196379_1_.addParticle(new RedstoneParticleData(0.65F, 0.4F, 0.21F, p_196379_3_), d0, d1, d2, 0.0D, 0.0D, 0.0D);
     }
 
-    public EnderwireLever() {
+    public EnderwireLever(boolean verbose) {
         super(AbstractBlock.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD));
         this.registerDefaultState(this.stateDefinition.any().setValue(CONNECTED, false));
+        this.verbose = verbose;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         builder.add(CONNECTED);
     }
 
-    public ActionResultType overwrittenOriginalUse(BlockState state, World world, BlockPos pos) {
+    public ActionResultType overwrittenOriginalUse(BlockState state, World world, BlockPos pos, PlayerEntity player) {
         if (world.isClientSide) {
             BlockState blockstate1 = state.cycle(POWERED);
             if (blockstate1.getValue(POWERED)) {
@@ -55,6 +59,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
             return ActionResultType.SUCCESS;
         }
         BlockState blockstate = this.pull(state, world, pos);
+        EnderwireNetworkProducer.firePoweredLeverEvent(blockstate.getValue(POWERED), world, pos, player, verbose);
         float f = blockstate.getValue(POWERED) ? 0.6F : 0.5F;
         world.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
         return ActionResultType.CONSUME;
@@ -65,7 +70,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
         if (handledUse != null)
             return handledUse;
-        return overwrittenOriginalUse(state, world, pos);
+        return overwrittenOriginalUse(state, world, pos, player);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -73,12 +78,6 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         if (p_180655_1_.getValue(POWERED) && p_180655_4_.nextFloat() < 0.25F) {
             makeParticle(p_180655_1_, p_180655_2_, p_180655_3_, 0.5F);
         }
-    }
-
-    @Override
-    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
-        EnderwireNetworkProducer.firePoweredLeverEvent(state, newState, world, blockPos);
-        super.onRemove(state, world, blockPos, newState, isMoving);
     }
 
     @Override
@@ -93,8 +92,8 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     }
 
     @Override
-    public String getDeviceType() {
-        return "enderwireLever";
+    public EnderwireNetworkComponent getComponentType() {
+        return EnderwireNetworkComponent.LEVER;
     }
 
     public int getSignal(BlockState p_180656_1_, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {

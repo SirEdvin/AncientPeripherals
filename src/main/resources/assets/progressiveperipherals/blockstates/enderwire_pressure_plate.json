@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "connected=false,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/pressure_plate"
+    },
+    "connected=false,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/pressure_plate_down"
+    },
+    "connected=true,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/pressure_plate_connected"
+    },
+    "connected=true,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/pressure_plate_connected_down"
+    }
+  }
+}

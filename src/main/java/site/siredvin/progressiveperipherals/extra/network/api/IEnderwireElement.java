@@ -25,9 +25,12 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
     }
 
     default NetworkElementData generateElementData() {
-        return new NetworkElementData(getElementUUID(), getPosition(), getElementType(), getDeviceType(), Objects.requireNonNull(getWorld()).dimension().location().toString());
+        return new NetworkElementData(
+                getElementUUID(), getPosition(), getElementType(),
+                getComponentType().name().toLowerCase(), Objects.requireNonNull(getWorld()).dimension().location().toString()
+        );
     }
 
     UUID getElementUUID();
-    String getDeviceType();
+    EnderwireNetworkComponent getComponentType();
 }

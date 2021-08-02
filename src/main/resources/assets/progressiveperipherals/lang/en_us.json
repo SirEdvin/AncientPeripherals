@@ -105,6 +105,8 @@
   "block.progressiveperipherals.enderwire_lever.tooltip": "§7Enderwire element, that will send enable/disable events to attached network",
   "block.progressiveperipherals.enderwire_button": "Enderwire button",
   "block.progressiveperipherals.enderwire_button.tooltip": "§7Enderwire element, that will send enable/disable events to attached network",
+  "block.progressiveperipherals.enderwire_pressure_plate": "Enderwire pressure plate",
+  "block.progressiveperipherals.enderwire_pressure_plate.tooltip": "§7Enderwire element, that will send enable/disable events to attached network",
   "block.progressiveperipherals.enderwire_network_connector": "Enderwire network connector",
   "block.progressiveperipherals.enderwire_network_connector.tooltip": "§7Enderwire element, that will populate network events to connected computers in network",
   "block.progressiveperipherals.enderwire_block": "Enderwire block",
