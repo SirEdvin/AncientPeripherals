@@ -13,7 +13,7 @@ import site.siredvin.progressiveperipherals.common.items.base.ItemTier;
 import site.siredvin.progressiveperipherals.common.items.*;
 import site.siredvin.progressiveperipherals.common.items.peripheral.EnchantablePeripheralItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralItem;
-import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.NetworkManagementPocket;
+import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.HashSet;
@@ -100,8 +100,12 @@ public class Items {
 
     // Network
 
-    public static final RegistryObject<Item> NETWORK_MANAGER = Registration.ITEMS.register(
-            "network_manager", () -> new PeripheralItem(() -> true, null, NetworkManagementPocket.ID)
+    public static final RegistryObject<Item> ENDERWIRE_POWDER = Registration.ITEMS.register(
+            "enderwire_powder", () -> new BaseItem(new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Item> ENDERWIRE_NETWORK_MANAGER = Registration.ITEMS.register(
+            "enderwire_network_manager", () -> new PeripheralItem(() -> true, null, EnderwireNetworkManagementPocket.ID)
     );
 
     public static void register() {

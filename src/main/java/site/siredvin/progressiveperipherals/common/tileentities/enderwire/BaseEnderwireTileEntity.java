@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.blocks.enderwire.BaseEnderwireBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
@@ -33,10 +34,19 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
         return attachedNetwork;
     }
 
+    public BlockState handleAttachedNetwork(@Nullable String attachedNetwork) {
+        return getBlockState().setValue(BaseEnderwireBlock.CONNECTED, attachedNetwork != null);
+    }
+
+    public void onAttachedNetworkChange() {
+
+    }
+
     @Override
-    public void setAttachedNetwork(@Nullable String attachedNetwork) {
+    public final void setAttachedNetwork(@Nullable String attachedNetwork) {
         this.attachedNetwork = attachedNetwork;
-        handleInternalDataChange();
+        handleInternalDataChange(handleAttachedNetwork(attachedNetwork));
+        onAttachedNetworkChange();
     }
 
     @Override

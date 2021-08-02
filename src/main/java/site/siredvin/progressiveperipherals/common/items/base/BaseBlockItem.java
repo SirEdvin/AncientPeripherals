@@ -28,7 +28,9 @@ public class BaseBlockItem extends BlockItem {
     }
 
     public void appendModHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(EnumColor.buildTextComponent(getModDescription()));
+        ITextComponent modDescription = getModDescription();
+        if (!modDescription.getString().isEmpty())
+            tooltip.add(EnumColor.buildTextComponent(modDescription));
         if (!isEnabled())
             tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.disabled")));
     }

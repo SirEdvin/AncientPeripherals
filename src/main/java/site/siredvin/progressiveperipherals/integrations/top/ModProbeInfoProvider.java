@@ -1,16 +1,16 @@
 package site.siredvin.progressiveperipherals.integrations.top;
 
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.IProbeInfoProvider;
-import mcjty.theoneprobe.api.ProbeMode;
+import mcjty.theoneprobe.api.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
+import site.siredvin.progressiveperipherals.common.setup.Items;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 
 public class ModProbeInfoProvider implements IProbeInfoProvider {
 
@@ -29,6 +29,16 @@ public class ModProbeInfoProvider implements IProbeInfoProvider {
             if (probeMode != ProbeMode.NORMAL) {
                 for (ITextComponent text: ((IProbeable) tile).extraProbeData(blockState))
                     iProbeInfo.text(text);
+            }
+        }
+
+        if (tile instanceof IEnderwireElement) {
+            String attachedNetwork = ((IEnderwireElement<?>) tile).getAttachedNetwork();
+
+            if (attachedNetwork != null) {
+                iProbeInfo.horizontal().item(new ItemStack(Items.ENDERWIRE_POWDER.get()), iProbeInfo.defaultItemStyle().width(14).height(14)).text(CompoundText.createLabelInfo("Attached to: ", attachedNetwork));
+            } else {
+                iProbeInfo.horizontal().item(new ItemStack(Items.ENDERWIRE_POWDER.get()), iProbeInfo.defaultItemStyle().width(14).height(14)).text(CompoundText.create().text("Not attached to anything"));
             }
         }
     }

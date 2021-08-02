@@ -15,16 +15,16 @@ import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkManagerPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class NetworkManagementPocket extends BasePocket<EnderwireNetworkManagerPeripheral> {
-    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "network_manager_pocket");
+public class EnderwireNetworkManagementPocket extends BasePocket<EnderwireNetworkManagerPeripheral> {
+    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_network_manager_pocket");
 
-    public NetworkManagementPocket() {
-        super(ID, TranslationUtil.pocket("network_manager"), Items.NETWORK_MANAGER);
+    public EnderwireNetworkManagementPocket() {
+        super(ID, TranslationUtil.pocket("enderwire_network_manager"), Items.ENDERWIRE_NETWORK_MANAGER);
     }
 
     @Override
     protected EnderwireNetworkManagerPeripheral getPeripheral(IPocketAccess pocket) {
-        return new EnderwireNetworkManagerPeripheral("networkManager", pocket);
+        return new EnderwireNetworkManagerPeripheral("enderwireNetworkManager", pocket);
     }
 
     @Override

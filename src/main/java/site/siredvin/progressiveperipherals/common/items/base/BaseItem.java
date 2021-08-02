@@ -37,7 +37,9 @@ public class BaseItem extends Item {
     }
 
     public void appendModHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(EnumColor.buildTextComponent(getModDescription()));
+        ITextComponent modDescription = getModDescription();
+        if (!modDescription.getString().isEmpty())
+            tooltip.add(EnumColor.buildTextComponent(modDescription));
         if (!isEnabled())
             tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.disabled")));
     }

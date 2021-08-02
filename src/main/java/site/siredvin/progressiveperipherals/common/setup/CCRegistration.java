@@ -6,7 +6,7 @@ import dan200.computercraft.api.turtle.AbstractTurtleUpgrade;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.fml.common.Mod;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.NetworkManagementPocket;
+import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class CCRegistration {
 
     private static void registerPocketUpgrades() {
         pocketUpgrades = new ArrayList<AbstractPocketUpgrade>() {{
-            add(new NetworkManagementPocket());
+            add(new EnderwireNetworkManagementPocket());
         }};
         pocketUpgrades.forEach(ComputerCraftAPI::registerPocketUpgrade);
     }

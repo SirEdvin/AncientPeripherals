@@ -1,18 +1,20 @@
 package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeverBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.RedstoneParticleData;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
@@ -22,9 +24,29 @@ import site.siredvin.progressiveperipherals.extra.network.events.EnderwireComput
 import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
+import java.util.Random;
+
 public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock {
+    public static final BooleanProperty CONNECTED = BaseEnderwireBlock.CONNECTED;
+
+    private static void makeParticle(BlockState p_196379_0_, IWorld p_196379_1_, BlockPos p_196379_2_, float p_196379_3_) {
+        Direction direction = p_196379_0_.getValue(FACING).getOpposite();
+        Direction direction1 = getConnectedDirection(p_196379_0_).getOpposite();
+        double d0 = (double)p_196379_2_.getX() + 0.5D + 0.1D * (double)direction.getStepX() + 0.2D * (double)direction1.getStepX();
+        double d1 = (double)p_196379_2_.getY() + 0.5D + 0.1D * (double)direction.getStepY() + 0.2D * (double)direction1.getStepY();
+        double d2 = (double)p_196379_2_.getZ() + 0.5D + 0.1D * (double)direction.getStepZ() + 0.2D * (double)direction1.getStepZ();
+        p_196379_1_.addParticle(new RedstoneParticleData(0.65F, 0.4F, 0.21F, p_196379_3_), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+    }
+
     public EnderwireLever() {
         super(AbstractBlock.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD));
+        this.registerDefaultState(this.stateDefinition.any().setValue(CONNECTED, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(CONNECTED);
     }
 
     @Override
@@ -32,7 +54,20 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
         if (handledUse != null)
             return handledUse;
-        ActionResultType superResult = super.use(state, world, pos, player, hand, hit);
+        ActionResultType superResult;
+        if (world.isClientSide) {
+            BlockState blockstate1 = state.cycle(POWERED);
+            if (blockstate1.getValue(POWERED)) {
+                makeParticle(blockstate1, world, pos, 1.0F);
+            }
+
+            superResult = ActionResultType.SUCCESS;
+        } else {
+            BlockState blockstate = this.pull(state, world, pos);
+            float f = blockstate.getValue(POWERED) ? 0.6F : 0.5F;
+            world.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
+            superResult = ActionResultType.CONSUME;
+        }
         if (!world.isClientSide) {
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
@@ -49,6 +84,14 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         return superResult;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
+        if (p_180655_1_.getValue(POWERED) && p_180655_4_.nextFloat() < 0.25F) {
+            makeParticle(p_180655_1_, p_180655_2_, p_180655_3_, 0.5F);
+        }
+
+    }
+
     @Override
     public boolean hasTileEntity(BlockState state) {
         return true;
@@ -63,5 +106,18 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     @Override
     public String getDeviceType() {
         return "enderwireLever";
+    }
+
+    public int getSignal(BlockState p_180656_1_, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {
+        return 0;
+    }
+
+    public int getDirectSignal(BlockState p_176211_1_, IBlockReader p_176211_2_, BlockPos p_176211_3_, Direction p_176211_4_) {
+        return 0;
+    }
+
+    @Override
+    public boolean isSignalSource(BlockState p_149744_1_) {
+        return false;
     }
 }

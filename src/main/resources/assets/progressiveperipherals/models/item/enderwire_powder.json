@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "progressiveperipherals:block/enderwire/lever"
+    "layer0": "progressiveperipherals:item/enderwire/powder"
   }
 }

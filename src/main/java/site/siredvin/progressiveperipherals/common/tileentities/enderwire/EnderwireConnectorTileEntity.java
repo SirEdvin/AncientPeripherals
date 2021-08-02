@@ -2,7 +2,6 @@ package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
 import net.minecraft.tileentity.ITickableTileEntity;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.events.NetworkEventTool;
@@ -18,8 +17,7 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
     }
 
     @Override
-    public void setAttachedNetwork(@Nullable String attachedNetwork) {
-        super.setAttachedNetwork(attachedNetwork);
+    public void onAttachedNetworkChange() {
         if (this.attachedNetwork != null) {
             lastComputerEventMessage = NetworkEventTool.getComputerEventsStart(attachedNetwork);
         }

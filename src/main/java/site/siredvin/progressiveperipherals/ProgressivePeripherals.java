@@ -28,7 +28,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import site.siredvin.progressiveperipherals.client.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.progressiveperipherals.client.models.FlexibleStatueModelLoader;
-import site.siredvin.progressiveperipherals.client.network.EnderwireElementTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.PedestalTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughPointTileRenderer;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
@@ -103,7 +102,6 @@ public class ProgressivePeripherals {
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.ABSTRACTIUM_PEDESTAL.get(), PedestalTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.IRREALIUM_PEDESTAL.get(), PedestalTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.CREATIVE_ITEM_DUPLICATOR.get(), PedestalTileRenderer::new);
-        ClientRegistry.bindTileEntityRenderer(TileEntityTypes.ENDERWIRE_NETWORK_CONNECTOR.get(), EnderwireElementTileRenderer::new);
 
         if (ModList.get().isLoaded("patchouli")) {
             ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "automata"), AutomataRecipePage.class);

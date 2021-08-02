@@ -154,6 +154,18 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Block> ENDERWIRE_BLOCK = register(
+            "enderwire_block",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_BLOCK.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_CASING = register(
+            "enderwire_casing",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_CASING.get(), new Item.Properties().stacksTo(64))
+    );
+
 
     // World feature
 

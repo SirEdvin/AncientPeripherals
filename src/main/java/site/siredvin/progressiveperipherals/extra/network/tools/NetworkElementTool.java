@@ -19,7 +19,7 @@ import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
-import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.NetworkManagementPocket;
+import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 
 public class NetworkElementTool {
     public static <T extends TileEntity & IEnderwireElement<T>> void changeAttachedNetwork(@Nullable String oldNetwork, @Nullable String newNetwork, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
@@ -55,10 +55,10 @@ public class NetworkElementTool {
     }
 
     public static boolean isNetworkManager(ItemStack stack) {
-        return !stack.isEmpty() && stack.getItem() instanceof ItemPocketComputer && ItemPocketComputer.getUpgrade(stack) instanceof NetworkManagementPocket;
+        return !stack.isEmpty() && stack.getItem() instanceof ItemPocketComputer && ItemPocketComputer.getUpgrade(stack) instanceof EnderwireNetworkManagementPocket;
     }
 
-    public static boolean handleNetworkSetup(Hand playerHand, PlayerEntity player, ServerWorld world, BlockPos pos) {
+    public static void handleNetworkSetup(Hand playerHand, PlayerEntity player, ServerWorld world, BlockPos pos) {
         ItemStack itemInHand = player.getItemInHand(playerHand);
         if (isNetworkManager(itemInHand)) {
             NetworkData selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get(world), ItemPocketComputer.getUpgradeInfo(itemInHand));
@@ -69,13 +69,11 @@ public class NetworkElementTool {
                 } else {
                     te.changeAttachedNetwork(null);
                 }
-                return true;
             }
         }
-        return false;
     }
 
-    public static boolean handleNetworkDisplay(PlayerEntity player, World world, BlockPos pos, Hand hand) {
+    public static void handleNetworkDisplay(PlayerEntity player, World world, BlockPos pos, Hand hand) {
         ItemStack itemInHand = player.getItemInHand(hand);
         if (isNetworkManager(itemInHand)) {
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
@@ -96,21 +94,23 @@ public class NetworkElementTool {
                             true
                     );
                 }
-                return true;
             }
         }
-        return false;
     }
 
     public static @Nullable ActionResultType handleUse(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         ItemStack mainHandItem = player.getMainHandItem();
-        if (!mainHandItem.isEmpty() && hand == Hand.MAIN_HAND) {
-            if (!world.isClientSide && handleNetworkSetup(hand, player, (ServerWorld) world, pos))
-                return ActionResultType.SUCCESS;
+        if (!mainHandItem.isEmpty() && hand == Hand.MAIN_HAND && isNetworkManager(mainHandItem)) {
+            if (!world.isClientSide)
+                handleNetworkSetup(hand, player, (ServerWorld) world, pos);
+            return ActionResultType.SUCCESS;
         } else {
             ItemStack offhandItem = player.getOffhandItem();
-            if (isNetworkManager(offhandItem) && world.isClientSide && handleNetworkDisplay(player, world, pos, Hand.OFF_HAND))
+            if (isNetworkManager(offhandItem)) {
+                if (world.isClientSide)
+                    handleNetworkDisplay(player, world, pos, Hand.OFF_HAND);
                 return ActionResultType.SUCCESS;
+            }
         }
         return null;
     }

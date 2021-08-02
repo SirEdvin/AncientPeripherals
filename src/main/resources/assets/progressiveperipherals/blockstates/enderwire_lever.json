@@ -1,108 +1,214 @@
 {
   "variants": {
-    "face=ceiling,facing=east,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=ceiling,facing=east,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=east,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=ceiling,facing=east,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=north,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=ceiling,facing=north,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=north,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=ceiling,facing=north,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=south,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=ceiling,facing=south,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 180
     },
-    "face=ceiling,facing=south,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=ceiling,facing=south,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 180
     },
-    "face=ceiling,facing=west,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=ceiling,facing=west,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 180,
       "y": 90
     },
-    "face=ceiling,facing=west,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=ceiling,facing=west,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 180,
       "y": 90
     },
-    "face=floor,facing=east,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=floor,facing=east,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "y": 90
     },
-    "face=floor,facing=east,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=floor,facing=east,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "y": 90
     },
-    "face=floor,facing=north,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on"
+    "connected=false,face=floor,facing=north,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on"
     },
-    "face=floor,facing=north,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever"
+    "connected=false,face=floor,facing=north,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever"
     },
-    "face=floor,facing=south,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=floor,facing=south,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "y": 180
     },
-    "face=floor,facing=south,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=floor,facing=south,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "y": 180
     },
-    "face=floor,facing=west,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=floor,facing=west,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "y": 270
     },
-    "face=floor,facing=west,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=floor,facing=west,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "y": 270
     },
-    "face=wall,facing=east,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=wall,facing=east,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=east,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=wall,facing=east,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=north,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=wall,facing=north,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 90
     },
-    "face=wall,facing=north,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=wall,facing=north,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 90
     },
-    "face=wall,facing=south,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=wall,facing=south,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=south,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=wall,facing=south,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=west,powered=false": {
-      "model": "progressiveperipherals:block/enderwire_lever_on",
+    "connected=false,face=wall,facing=west,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_on",
       "x": 90,
       "y": 270
     },
-    "face=wall,facing=west,powered=true": {
-      "model": "progressiveperipherals:block/enderwire_lever",
+    "connected=false,face=wall,facing=west,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever",
+      "x": 90,
+      "y": 270
+    },
+    "connected=true,face=ceiling,facing=east,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 180,
+      "y": 270
+    },
+    "connected=true,face=ceiling,facing=east,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 180,
+      "y": 270
+    },
+    "connected=true,face=ceiling,facing=north,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 180,
+      "y": 180
+    },
+    "connected=true,face=ceiling,facing=north,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 180,
+      "y": 180
+    },
+    "connected=true,face=ceiling,facing=south,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 180
+    },
+    "connected=true,face=ceiling,facing=south,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 180
+    },
+    "connected=true,face=ceiling,facing=west,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 180,
+      "y": 90
+    },
+    "connected=true,face=ceiling,facing=west,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 180,
+      "y": 90
+    },
+    "connected=true,face=floor,facing=east,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "y": 90
+    },
+    "connected=true,face=floor,facing=east,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "y": 90
+    },
+    "connected=true,face=floor,facing=north,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on"
+    },
+    "connected=true,face=floor,facing=north,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected"
+    },
+    "connected=true,face=floor,facing=south,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "y": 180
+    },
+    "connected=true,face=floor,facing=south,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "y": 180
+    },
+    "connected=true,face=floor,facing=west,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "y": 270
+    },
+    "connected=true,face=floor,facing=west,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "y": 270
+    },
+    "connected=true,face=wall,facing=east,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 90,
+      "y": 90
+    },
+    "connected=true,face=wall,facing=east,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 90,
+      "y": 90
+    },
+    "connected=true,face=wall,facing=north,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 90
+    },
+    "connected=true,face=wall,facing=north,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 90
+    },
+    "connected=true,face=wall,facing=south,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 90,
+      "y": 180
+    },
+    "connected=true,face=wall,facing=south,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
+      "x": 90,
+      "y": 180
+    },
+    "connected=true,face=wall,facing=west,powered=false": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected_on",
+      "x": 90,
+      "y": 270
+    },
+    "connected=true,face=wall,facing=west,powered=true": {
+      "model": "progressiveperipherals:block/enderwire/lever_connected",
       "x": 90,
       "y": 270
     }
