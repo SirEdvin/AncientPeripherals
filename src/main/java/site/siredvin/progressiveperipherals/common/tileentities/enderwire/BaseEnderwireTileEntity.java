@@ -45,7 +45,7 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
     @Override
     public final void setAttachedNetwork(@Nullable String attachedNetwork) {
         this.attachedNetwork = attachedNetwork;
-        handleInternalDataChange(handleAttachedNetwork(attachedNetwork));
+        pushInternalDataChangeToClient(handleAttachedNetwork(attachedNetwork));
         onAttachedNetworkChange();
     }
 
@@ -63,7 +63,7 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         elementUUID = data.getUUID(ELEMENT_UUID_TAG);
         if (data.contains(ATTACHED_NETWORK_TAG)) {
             attachedNetwork = data.getString(ATTACHED_NETWORK_TAG);

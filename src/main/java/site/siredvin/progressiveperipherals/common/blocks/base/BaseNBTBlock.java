@@ -74,7 +74,9 @@ public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvide
                     }
                 }
                 if (data.contains(INTERNAL_DATA_TAG)) {
-                    ((ITileEntityDataProvider) tileentity).loadInternalData(state, data.getCompound(INTERNAL_DATA_TAG), false);
+                    ((ITileEntityDataProvider) tileentity).loadInternalData(state, data.getCompound(INTERNAL_DATA_TAG));
+                    ((ITileEntityDataProvider) tileentity).pushInternalDataChangeToClient();
+
                 }
             }
         }

@@ -99,7 +99,10 @@ public class TileEntityTypes {
             "enderwire_sensor",
             () -> new TileEntityType<>(
                     EnderwireSensorTileEntity::new,
-                    Sets.newHashSet(Blocks.ENDERWIRE_LEVER.get(), Blocks.ENDERWIRE_BUTTON.get(), Blocks.ENDERWIRE_PRESSURE_PLATE.get()),
+                    Sets.newHashSet(
+                            Blocks.ENDERWIRE_LEVER.get(), Blocks.ENDERWIRE_BUTTON.get(), Blocks.ENDERWIRE_PRESSURE_PLATE.get(),
+                            Blocks.ADVANCED_ENDERWIRE_BUTTON.get(), Blocks.ADVANCED_ENDERWIRE_LEVER.get(), Blocks.ADVANCED_ENDERWIRE_PRESSURE_PLATE.get()
+                    ),
                     null
             )
     );

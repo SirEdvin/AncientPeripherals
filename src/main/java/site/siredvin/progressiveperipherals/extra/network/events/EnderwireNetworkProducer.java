@@ -1,6 +1,5 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
-import de.srendi.advancedperipherals.common.util.LuaConverter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -12,6 +11,7 @@ import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.utils.ExtraLuaConverter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +66,7 @@ public class EnderwireNetworkProducer {
                     Map<String, Object> data = new HashMap<>();
                     data.put("element", te.getElementUUID().toString());
                     if (extendedData && collidingEntities != null)
-                        data.put("entities", collidingEntities.stream().map(LuaConverter::entityToLua).collect(Collectors.toList()));
+                        data.put("entities", collidingEntities.stream().map(ExtraLuaConverter::classifyEntity).collect(Collectors.toList()));
                     EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(
                             eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
                             world.dimension().location().toString(), pos, data

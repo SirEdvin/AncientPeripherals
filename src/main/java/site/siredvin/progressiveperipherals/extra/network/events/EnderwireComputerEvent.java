@@ -11,16 +11,16 @@ import java.util.Map;
 public class EnderwireComputerEvent implements IEpochEvent {
     private final @NotNull String name;
     private final @NotNull Map<String, Object> data;
-    private final int reachableRange;
+    private final int reachableRangeSqr;
     private final boolean interdimensional;
     private final String originalDimension;
     private final BlockPos pos;
     private final long epoch;
 
 
-    public EnderwireComputerEvent(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, @NotNull Map<String, Object> data, long epoch) {
+    protected EnderwireComputerEvent(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, @NotNull Map<String, Object> data, long epoch) {
         this.name = name;
-        this.reachableRange = reachableRange;
+        this.reachableRangeSqr = reachableRange * reachableRange;
         this.interdimensional = interdimensional;
         this.originalDimension = originalDimension;
         this.pos = pos;
@@ -41,7 +41,7 @@ public class EnderwireComputerEvent implements IEpochEvent {
     }
 
     public boolean isValid(BlockPos receiverPos, String receiverDimension) {
-        return reachableRange * reachableRange <= receiverPos.distSqr(pos) && (receiverDimension.equals(originalDimension) || interdimensional);
+        return reachableRangeSqr >= receiverPos.distSqr(pos) && (receiverDimension.equals(originalDimension) || interdimensional);
     }
 
     public static EnderwireComputerEvent timed(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, Map<String, Object> data) {

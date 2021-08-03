@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -16,6 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
@@ -54,6 +58,14 @@ public class EnderwirePressurePlate extends PressurePlateBlock implements IEnder
     }
 
     @Override
+    public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
+        super.setPlacedBy(world, pos, state, entity, stack);
+        if (!world.isClientSide && entity instanceof PlayerEntity) {
+            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, (ServerWorld) world, pos);
+        }
+    }
+
+    @Override
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
             EnderwireNetworkProducer.firePoweredPlateEvent(false, world, blockPos, null, this.verbose);
@@ -65,20 +77,22 @@ public class EnderwirePressurePlate extends PressurePlateBlock implements IEnder
         return true;
     }
 
-    protected void collidingTrigger(World world, BlockPos pos) {
-        AxisAlignedBB axisalignedbb = TOUCH_AABB.move(pos);
-        List<? extends Entity> list;
-        // Only works now with Sensitivity.EVERYTHING
-        list = world.getEntities(null, axisalignedbb).stream().filter(entity -> !entity.isIgnoringBlockTriggers()).collect(Collectors.toList());
+    protected void collidingTrigger(World world, BlockPos pos, BlockState stateBeforeColliding) {
+        if (!stateBeforeColliding.getValue(POWERED)) {
+            AxisAlignedBB axisalignedbb = TOUCH_AABB.move(pos);
+            List<? extends Entity> list;
+            // Only works now with Sensitivity.EVERYTHING
+            list = world.getEntities(null, axisalignedbb).stream().filter(entity -> !entity.isIgnoringBlockTriggers()).collect(Collectors.toList());
 
-        if (!list.isEmpty())
-            EnderwireNetworkProducer.firePoweredPlateEvent(true, world, pos, list, this.verbose);
+            if (!list.isEmpty())
+                EnderwireNetworkProducer.firePoweredPlateEvent(true, world, pos, list, this.verbose);
+        }
     }
 
     @Override
     protected void checkPressed(World world, BlockPos pos, BlockState state, int currentPower) {
         super.checkPressed(world, pos, state, currentPower);
-        collidingTrigger(world, pos);
+        collidingTrigger(world, pos, state);
     }
 
     @Nullable

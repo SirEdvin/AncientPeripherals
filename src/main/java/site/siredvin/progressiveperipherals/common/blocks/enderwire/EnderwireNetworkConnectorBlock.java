@@ -23,7 +23,7 @@ public class EnderwireNetworkConnectorBlock extends BaseEnderwireBlock<Enderwire
 
     public EnderwireNetworkConnectorBlock() {
         super(BlockUtils.defaultProperties());
-        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(CONNECTED, false));
     }
 
     @Override

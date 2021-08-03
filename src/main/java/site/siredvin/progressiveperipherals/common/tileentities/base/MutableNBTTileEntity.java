@@ -57,34 +57,41 @@ public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends Opt
     }
 
     @OnlyIn(Dist.DEDICATED_SERVER)
+    @Override
     public void pushInternalDataChangeToClient() {
         pushInternalDataChangeToClient(getBlockState());
     }
 
-    @OnlyIn(Dist.DEDICATED_SERVER)
+    @Override
     public void pushInternalDataChangeToClient(BlockState state) {
         World world = getLevel();
         Objects.requireNonNull(world);
-        setChanged();
-        world.setBlockAndUpdate(getBlockPos(), state);
-        world.sendBlockUpdated(
-                getBlockPos(), getBlockState(), getBlockState(),
-                Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.NOTIFY_NEIGHBORS
-        );
+        if (!world.isClientSide) {
+            setChanged();
+            world.setBlockAndUpdate(getBlockPos(), state);
+            world.sendBlockUpdated(
+                    getBlockPos(), getBlockState(), getBlockState(),
+                    Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.NOTIFY_NEIGHBORS
+            );
+        }
     }
 
     public boolean isRequiredRenderUpdate() {
         return false;
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Override
     public void triggerRenderUpdate() {
-        requestModelDataUpdate();
-        BlockPos pos = getBlockPos();
-        // Basically, just world.setBlocksDirty with bypass model block state check
-        Minecraft.getInstance().levelRenderer.setBlocksDirty(
-                pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ()
-        );
+        World world = getLevel();
+        Objects.requireNonNull(world);
+        if (world.isClientSide) {
+            requestModelDataUpdate();
+            BlockPos pos = getBlockPos();
+            // Basically, just world.setBlocksDirty with bypass model block state check
+            Minecraft.getInstance().levelRenderer.setBlocksDirty(
+                    pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ()
+            );
+        }
     }
 
 }

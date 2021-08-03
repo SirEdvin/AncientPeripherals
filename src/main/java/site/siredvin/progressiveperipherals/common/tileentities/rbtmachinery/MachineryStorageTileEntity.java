@@ -10,11 +10,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class MachineryStorageTileEntity extends LockableLootTileEntity implements ITileEntityDataProvider {
+public class MachineryStorageTileEntity extends LockableLootTileEntity {
 
     private static final String SIZE_TAG = "size";
 
@@ -29,14 +28,12 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
         this.items = NonNullList.withSize(size, ItemStack.EMPTY);
     }
 
-    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.putInt(SIZE_TAG, items.size());
         ItemStackHelper.saveAllItems(data, items);
         return data;
     }
 
-    @Override
     public void loadInternalData(BlockState state, CompoundNBT data) {
         int size = data.getInt(SIZE_TAG);
         if (items.size() != size) {

@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;
-import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class RealityBreakthroughPointTileEntity extends TileEntity implements ITileEntityDataProvider, IProbeable {
+public class RealityBreakthroughPointTileEntity extends TileEntity implements IProbeable {
 
     private static final String POINT_STATE_TAG = "state";
 
@@ -30,13 +29,11 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
         setTier(RealityBreakthroughPointTier.COMMON);
     }
 
-    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.put(POINT_STATE_TAG, pointState.serializeNBT());
         return data;
     }
 
-    @Override
     public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(POINT_STATE_TAG))
             pointState.deserializeNBT(data.getCompound(POINT_STATE_TAG));

@@ -180,6 +180,24 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.ENDERWIRE_PRESSURE_PLATE.get(), new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Block> ADVANCED_ENDERWIRE_LEVER = register(
+            "advanced_enderwire_lever",
+            () -> new EnderwireLever(true),
+            () -> new BaseBlockItem(Blocks.ADVANCED_ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ADVANCED_ENDERWIRE_BUTTON = register(
+            "advanced_enderwire_button",
+            () -> new EnderwireButton(true),
+            () -> new BaseBlockItem(Blocks.ADVANCED_ENDERWIRE_BUTTON.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ADVANCED_ENDERWIRE_PRESSURE_PLATE = register(
+            "advanced_enderwire_pressure_plate",
+            () -> new EnderwirePressurePlate(true),
+            () -> new BaseBlockItem(Blocks.ADVANCED_ENDERWIRE_PRESSURE_PLATE.get(), new Item.Properties().stacksTo(64))
+    );
+
 
     // World feature
 

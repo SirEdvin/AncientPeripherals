@@ -2,7 +2,9 @@ package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -13,8 +15,10 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
@@ -40,7 +44,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
 
     public EnderwireLever(boolean verbose) {
         super(AbstractBlock.Properties.of(Material.DECORATION).noCollission().strength(0.5F).sound(SoundType.WOOD));
-        this.registerDefaultState(this.stateDefinition.any().setValue(CONNECTED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(CONNECTED, false).setValue(POWERED, false));
         this.verbose = verbose;
     }
 
@@ -63,6 +67,14 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         float f = blockstate.getValue(POWERED) ? 0.6F : 0.5F;
         world.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
         return ActionResultType.CONSUME;
+    }
+
+    @Override
+    public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
+        super.setPlacedBy(world, pos, state, entity, stack);
+        if (!world.isClientSide && entity instanceof PlayerEntity) {
+            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, (ServerWorld) world, pos);
+        }
     }
 
     @Override
