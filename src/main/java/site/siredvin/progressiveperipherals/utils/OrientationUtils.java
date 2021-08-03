@@ -6,21 +6,7 @@ import net.minecraft.util.Direction;
 
 public class OrientationUtils {
 
-    protected static ComputerSide toSideFloor(Direction facing, Direction offset) {
-        if (offset == Direction.UP)
-            return ComputerSide.BOTTOM;
-        if (offset == Direction.DOWN)
-            return ComputerSide.TOP;
-        if (facing.equals(offset))
-            return ComputerSide.BACK;
-        if (facing.equals(offset.getOpposite()))
-            return ComputerSide.FRONT;
-        if (facing.equals(offset.getClockWise()))
-            return ComputerSide.RIGHT;
-        return ComputerSide.LEFT;
-    }
-
-    protected static ComputerSide toSideCelling(Direction facing, Direction offset) {
+    protected static ComputerSide toSideHorizontal(Direction facing, Direction offset) {
         if (offset == Direction.UP)
             return ComputerSide.BOTTOM;
         if (offset == Direction.DOWN)
@@ -55,14 +41,56 @@ public class OrientationUtils {
             case WALL:
                 return toSideWall(facing, offset);
             case CEILING:
-                return toSideCelling(facing, offset);
             case FLOOR:
-                return toSideFloor(facing, offset);
+                return toSideHorizontal(facing, offset);
         }
         return toSideWall(facing, offset);
     }
 
-    public static Direction toOffset(Direction facing, ComputerSide side) {
-        return Direction.UP;
+    protected static Direction toOffsetHorizontal(Direction facing, ComputerSide side) {
+        switch (side) {
+            case BOTTOM:
+                return Direction.UP;
+            case TOP:
+                return Direction.DOWN;
+            case BACK:
+                return facing;
+            case FRONT:
+                return facing.getOpposite();
+            case RIGHT:
+                return facing.getClockWise();
+            case LEFT:
+                return facing.getCounterClockWise();
+        }
+        return facing;
+    }
+
+    protected static Direction toOffsetWall(Direction facing, ComputerSide side) {
+        switch (side) {
+            case BACK:
+                return Direction.UP;
+            case FRONT:
+                return Direction.DOWN;
+            case RIGHT:
+                return facing.getCounterClockWise();
+            case LEFT:
+                return facing.getClockWise();
+            case TOP:
+                return facing.getOpposite();
+            case BOTTOM:
+                return facing;
+        }
+        return facing;
+    }
+
+    public static Direction toOffset(Direction facing, AttachFace face, ComputerSide side) {
+        switch (face) {
+            case WALL:
+                return toOffsetWall(facing, side);
+            case CEILING:
+            case FLOOR:
+                return toOffsetHorizontal(facing, side);
+        }
+        return toOffsetWall(facing, side);
     }
 }
