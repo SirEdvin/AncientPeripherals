@@ -5,8 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
+import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 
@@ -22,7 +25,9 @@ public class EnderwireNetworkProducer {
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
-                if (attachedNetwork != null) {
+                GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) world);
+                NetworkData currentNetwork = networksData.getNetwork(attachedNetwork);
+                if (attachedNetwork != null && currentNetwork != null) {
                     String eventName = component.getEnableEventName();
                     if (!isEnabled)
                         eventName = component.getDisableEventName();
@@ -30,7 +35,10 @@ public class EnderwireNetworkProducer {
                     data.put("element", te.getElementUUID().toString());
                     if (extendedData && player != null)
                         data.put("player", player.getName().getString());
-                    EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(eventName, data));
+                    EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(
+                            eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
+                            world.dimension().location().toString(), pos, data
+                    ));
                 }
             }
         }
@@ -49,7 +57,9 @@ public class EnderwireNetworkProducer {
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
-                if (attachedNetwork != null) {
+                GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) world);
+                NetworkData currentNetwork = networksData.getNetwork(attachedNetwork);
+                if (attachedNetwork != null && currentNetwork != null) {
                     String eventName = EnderwireNetworkComponent.PLATE.getEnableEventName();
                     if (!isEnabled)
                         eventName = EnderwireNetworkComponent.PLATE.getDisableEventName();
@@ -57,7 +67,10 @@ public class EnderwireNetworkProducer {
                     data.put("element", te.getElementUUID().toString());
                     if (extendedData && collidingEntities != null)
                         data.put("entities", collidingEntities.stream().map(LuaConverter::entityToLua).collect(Collectors.toList()));
-                    EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(eventName, data));
+                    EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(
+                            eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
+                            world.dimension().location().toString(), pos, data
+                    ));
                 }
             }
         }

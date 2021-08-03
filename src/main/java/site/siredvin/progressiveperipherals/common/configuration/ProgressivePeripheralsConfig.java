@@ -50,6 +50,9 @@ public class ProgressivePeripheralsConfig {
     public static int linearSystemTimeLimit;
     // Automata cores
     public static double enchantingAutomataCoreDisappearChance;
+    // Enderwire network
+    public static int enderwireNetworkRangeStep = 64;
+    public static boolean enderwireNetworkEnabled = true;
 
     public static class CommonConfig {
 

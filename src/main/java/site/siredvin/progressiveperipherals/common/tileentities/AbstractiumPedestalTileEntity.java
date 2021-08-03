@@ -31,7 +31,7 @@ public class AbstractiumPedestalTileEntity extends MutableNBTTileEntity<Abstract
 
     public void setStoredStack(@NotNull ItemStack storedStack) {
         this.storedStack = storedStack;
-        handleInternalDataChange();
+        pushInternalDataChangeToClient();
     }
 
     public @NotNull ItemStack getStoredStack() {
@@ -51,11 +51,9 @@ public class AbstractiumPedestalTileEntity extends MutableNBTTileEntity<Abstract
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(ITEM_STACK_TAG)) {
             storedStack = ItemStack.of(data.getCompound(ITEM_STACK_TAG));
-            if (!skipUpdate)
-                handleInternalDataChange();
         }
     }
 }

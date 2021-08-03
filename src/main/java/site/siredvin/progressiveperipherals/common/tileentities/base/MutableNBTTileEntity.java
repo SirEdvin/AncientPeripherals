@@ -9,13 +9,16 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
+import java.util.Objects;
+
 public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends OptionalPeripheralTileEntity<T> implements ITileEntityDataProvider {
-    // TODO: rework this logic, with proper callback
-    // skipUpdate are useless, handleInternalDataChange are to complex and misused
+
     public MutableNBTTileEntity(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
     }
@@ -36,13 +39,15 @@ public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends Opt
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         CompoundNBT tag = pkt.getTag();
-        loadInternalData(getBlockState(), tag, false);
+        loadInternalData(getBlockState(), tag);
+        if (isRequiredRenderUpdate())
+            triggerRenderUpdate();
     }
 
     @Override
     public void load(BlockState state, CompoundNBT tag) {
         super.load(state, tag);
-        loadInternalData(state, tag, true);
+        loadInternalData(state, tag);
     }
 
     @Override
@@ -51,29 +56,35 @@ public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends Opt
         return super.save(tag);
     }
 
-    public void handleInternalDataChange() {
-        handleInternalDataChange(getBlockState());
+    @OnlyIn(Dist.DEDICATED_SERVER)
+    public void pushInternalDataChangeToClient() {
+        pushInternalDataChangeToClient(getBlockState());
     }
 
-    public void handleInternalDataChange(BlockState state) {
+    @OnlyIn(Dist.DEDICATED_SERVER)
+    public void pushInternalDataChangeToClient(BlockState state) {
         World world = getLevel();
-        if (world != null) {
-            if (world.isClientSide) {
-                requestModelDataUpdate();
-                BlockPos pos = getBlockPos();
-                // Basically, just world.setBlocksDirty with bypass model block state check
-                Minecraft.getInstance().levelRenderer.setBlocksDirty(
-                        pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ()
-                );
-            } else {
-                setChanged();
-                world.setBlockAndUpdate(getBlockPos(), state);
-                world.sendBlockUpdated(
-                        getBlockPos(), getBlockState(), getBlockState(),
-                        Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.NOTIFY_NEIGHBORS
-                );
-            }
-        }
+        Objects.requireNonNull(world);
+        setChanged();
+        world.setBlockAndUpdate(getBlockPos(), state);
+        world.sendBlockUpdated(
+                getBlockPos(), getBlockState(), getBlockState(),
+                Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.NOTIFY_NEIGHBORS
+        );
+    }
+
+    public boolean isRequiredRenderUpdate() {
+        return false;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public void triggerRenderUpdate() {
+        requestModelDataUpdate();
+        BlockPos pos = getBlockPos();
+        // Basically, just world.setBlocksDirty with bypass model block state check
+        Minecraft.getInstance().levelRenderer.setBlocksDirty(
+                pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ()
+        );
     }
 
 }

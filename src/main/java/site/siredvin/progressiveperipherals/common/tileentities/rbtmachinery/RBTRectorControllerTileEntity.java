@@ -80,7 +80,7 @@ public class RBTRectorControllerTileEntity extends MutableNBTTileEntity<RBTReact
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         configured = data.getBoolean(CONFIGURED_TAG);
         if (data.contains(NORTH_WEST_LOWEST_POS_TAG)) {
             BlockPos northWestLowest = NBTUtil.readBlockPos(data.getCompound(NORTH_WEST_LOWEST_POS_TAG));

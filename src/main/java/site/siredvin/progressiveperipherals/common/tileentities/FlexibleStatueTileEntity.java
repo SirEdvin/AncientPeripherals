@@ -47,7 +47,12 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         return new ModelDataMap.Builder().withInitial(BAKED_QUADS, bakedQuads).build();
     }
 
-    public void loadInternalData(BlockState state, CompoundNBT tag, boolean skipUpdate) {
+    @Override
+    public boolean isRequiredRenderUpdate() {
+        return true;
+    }
+
+    public void loadInternalData(BlockState state, CompoundNBT tag) {
         if (tag.contains(BAKED_QUADS_TAG)) {
             QuadList newBakedQuads = NBTUtils.readQuadList(tag.getByteArray(BAKED_QUADS_TAG));
             if (!Objects.equals(bakedQuads, newBakedQuads)) {
@@ -56,8 +61,6 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
                 } else {
                     clear(true);
                 }
-                if (!skipUpdate)
-                    handleInternalDataChange();
             }
         }
         if (tag.contains(NAME_TAG))
@@ -93,7 +96,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         this.bakedQuads = bakedQuads;
         refreshShape();
         if (!skipUpdate)
-            handleInternalDataChange(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
+            pushInternalDataChangeToClient(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
     }
 
     public void setName(@NotNull String name) {
@@ -124,7 +127,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         bakedQuads = null;
         refreshShape();
         if (!skipUpdate)
-            handleInternalDataChange(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
+            pushInternalDataChangeToClient(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
     }
 
     public void refreshShape() {

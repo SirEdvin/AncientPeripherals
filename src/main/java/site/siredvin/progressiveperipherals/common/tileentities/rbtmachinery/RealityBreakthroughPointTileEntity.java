@@ -37,7 +37,7 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(POINT_STATE_TAG))
             pointState.deserializeNBT(data.getCompound(POINT_STATE_TAG));
     }
@@ -50,7 +50,7 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
     @Override
     public void load(BlockState state, CompoundNBT tag) {
         super.load(state, tag);
-        loadInternalData(state, tag, true);
+        loadInternalData(state, tag);
     }
 
     public @NotNull Color getColor() {

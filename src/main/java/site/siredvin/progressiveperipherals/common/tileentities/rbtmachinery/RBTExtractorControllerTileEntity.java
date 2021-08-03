@@ -77,7 +77,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTTileEntity<RBTEx
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(NORTH_WEST_LOWEST_POS_TAG)) {
             BlockPos northWestLowest = NBTUtil.readBlockPos(data.getCompound(NORTH_WEST_LOWEST_POS_TAG));
             structure = new CubeMachineryStructure(northWestLowest, SIZE);

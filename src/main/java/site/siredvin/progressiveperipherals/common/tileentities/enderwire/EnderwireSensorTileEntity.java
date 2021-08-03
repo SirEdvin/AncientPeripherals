@@ -2,10 +2,14 @@ package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.Block;
+import net.minecraft.state.properties.BlockStateProperties;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnderwireSensorTileEntity extends BaseEnderwireTileEntity<EnderwireSensorTileEntity, BasePeripheral> {
     public EnderwireSensorTileEntity() {
@@ -24,11 +28,16 @@ public class EnderwireSensorTileEntity extends BaseEnderwireTileEntity<Enderwire
 
     @Override
     public EnderwireNetworkComponent getComponentType() {
-        if (level == null)
-            return EnderwireNetworkComponent.UNKNOWN;
-        Block block = level.getBlockState(worldPosition).getBlock();
+        Block block = getBlockState().getBlock();
         if (block instanceof IEnderwireSensorBlock)
             return ((IEnderwireSensorBlock) block).getComponentType();
         return EnderwireNetworkComponent.UNKNOWN;
+    }
+
+    @Override
+    public Map<String, Object> getCurrentState() {
+        return new HashMap<String, Object>() {{
+            put("powered", getBlockState().getValue(BlockStateProperties.POWERED));
+        }};
     }
 }

@@ -5,9 +5,10 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,12 +30,16 @@ public class NetworkData {
     private @Nullable String salt;
     private @Nullable Map<UUID, NetworkElementData> elements;
 
+    private int reachableRange;
+    private boolean interdimensional;
+
     protected NetworkData(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
         this.type = type;
         this.ownerUUID = ownerUUID;
         this.name = name;
         if (password != null)
             setPassword(password);
+        recalculateNetworkStats();
     }
 
     protected NetworkData(String name, NetworkType type, UUID ownerUUID) {
@@ -55,6 +60,31 @@ public class NetworkData {
 
     public UUID getOwnerUUID() {
         return ownerUUID;
+    }
+
+    public int getReachableRange() {
+        return reachableRange;
+    }
+
+    public boolean isInterdimensional() {
+        return interdimensional;
+    }
+
+    protected void recalculateNetworkStats() {
+        reachableRange = ProgressivePeripheralsConfig.enderwireNetworkRangeStep;
+        interdimensional = false;
+        if (elements != null) {
+            elements.values().forEach(networkElement -> {
+                switch (networkElement.getNetworkAmplifier()) {
+                    case EXTEND_RANGE:
+                        reachableRange += ProgressivePeripheralsConfig.enderwireNetworkRangeStep;
+                        break;
+                    case MAKE_INTERDIMENSIONAL:
+                        interdimensional = true;
+                        break;
+                }
+            });
+        }
     }
 
     public boolean testPassword(@Nullable String password) {
@@ -89,6 +119,7 @@ public class NetworkData {
 
     public void addNetworkElement(NetworkElementData element) {
         addNetworkElementNoEvent(element);
+        recalculateNetworkStats();
         EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
     }
 
@@ -99,8 +130,11 @@ public class NetworkData {
     public @Nullable NetworkElementData removeNetworkElementByUUID(UUID uuid) {
         if (elements != null) {
             NetworkElementData removed = elements.remove(uuid);
-            if (removed != null)
+            if (removed != null) {
+                recalculateNetworkStats();
                 EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.removedElements(removed));
+            }
+            return removed;
         }
         return null;
     }
@@ -119,6 +153,7 @@ public class NetworkData {
             for (int i = 0; i < elements.size(); i++) {
                 addNetworkElementNoEvent(NetworkElementData.fromCompound(elements.getCompound(i)));
             }
+            recalculateNetworkStats();
         }
     }
 

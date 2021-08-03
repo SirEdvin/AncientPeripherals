@@ -8,6 +8,10 @@ import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkCo
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkConnectorPeripheral;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<EnderwireConnectorTileEntity, EnderwireNetworkConnectorPeripheral> implements ITickableTileEntity {
 
     private long lastComputerEventMessage;
@@ -40,11 +44,20 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
     }
 
     @Override
+    public Map<String, Object> getCurrentState() {
+        return new HashMap<>();
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (attachedNetwork != null) {
             lastComputerEventMessage = EnderwireNetworkBusHub.traverseComputerEvents(attachedNetwork, lastComputerEventMessage, event -> {
-                getConnectedComputers().forEach(computer -> computer.queueEvent("enderwire_computer_event", event.getData()));
+                if (event.isValid(getBlockPos(), Objects.requireNonNull(getWorld()).dimension().location().toString())) {
+                    getConnectedComputers().forEach(computer -> computer.queueEvent("enderwire_computer_event", event.getData()));
+                } else {
+                    getConnectedComputers().forEach(computer -> computer.queueEvent("malformed_enderwire_event"));
+                }
             });
         }
     }

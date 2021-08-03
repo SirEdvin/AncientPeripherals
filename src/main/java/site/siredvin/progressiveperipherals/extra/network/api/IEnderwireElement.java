@@ -3,11 +3,13 @@ package site.siredvin.progressiveperipherals.extra.network.api;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.base.ITrickedTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,6 +17,9 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
     @Nullable String getAttachedNetwork();
     void setAttachedNetwork(@Nullable String name);
     EnderwireElementType getElementType();
+    UUID getElementUUID();
+    EnderwireNetworkComponent getComponentType();
+    Map<String, Object> getCurrentState();
 
     default void changeAttachedNetwork(@Nullable String newNetwork) {
         World world = getWorld();
@@ -26,11 +31,12 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
 
     default NetworkElementData generateElementData() {
         return new NetworkElementData(
-                getElementUUID(), getPosition(), getElementType(),
-                getComponentType().name().toLowerCase(), Objects.requireNonNull(getWorld()).dimension().location().toString()
+                getElementUUID(), getPosition(), getElementType(), getComponentType().name().toLowerCase(),
+                Objects.requireNonNull(getWorld()).dimension().location().toString(), getAmplifier()
         );
     }
 
-    UUID getElementUUID();
-    EnderwireNetworkComponent getComponentType();
+    default @NotNull NetworkAmplifier getAmplifier() {
+        return NetworkAmplifier.NONE;
+    }
 }

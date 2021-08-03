@@ -37,7 +37,7 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         int size = data.getInt(SIZE_TAG);
         if (items.size() != size) {
             int inflictedSize = Math.min(items.size(), size);
@@ -58,7 +58,7 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
     @Override
     public void load(BlockState state, CompoundNBT data) {
         super.load(state, data);
-        loadInternalData(state, data, true);
+        loadInternalData(state, data);
     }
 
     @Override

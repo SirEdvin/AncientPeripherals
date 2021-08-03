@@ -32,7 +32,7 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
 
     public void pushStackedState() {
         if (pendingState != null) {
-            handleInternalDataChange(pendingState);
+            pushInternalDataChangeToClient(pendingState);
             pendingState = null;
         }
     }
@@ -44,7 +44,7 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
     public void setMimic(@Nullable BlockState mimic, @NotNull BlockState state, boolean skipUpdate) {
         this.mimic = mimic;
         if (!skipUpdate) {
-            handleInternalDataChange(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));
+            pushInternalDataChangeToClient(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));
         } else {
             if (pendingState == null)
                 pendingState = state;
@@ -88,11 +88,14 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public boolean isRequiredRenderUpdate() {
+        return true;
+    }
+
+    @Override
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(MIMIC_TAG)) {
             setMimic(NBTUtil.readBlockState(data.getCompound(MIMIC_TAG)), state, true);
-            if (!skipUpdate)
-                handleInternalDataChange();
         }
         if (data.contains(LIGHT_LEVEL_TAG))
             setLightLevel(data.getInt(LIGHT_LEVEL_TAG));
