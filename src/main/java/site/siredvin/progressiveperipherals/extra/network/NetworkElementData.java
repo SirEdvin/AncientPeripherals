@@ -54,6 +54,10 @@ public class NetworkElementData {
         return networkAmplifier;
     }
 
+    public String getDimension() {
+        return dimension;
+    }
+
     public CompoundNBT toNBT() {
         CompoundNBT tag = new CompoundNBT();
         tag.putString(UUID_TAG, uuid.toString());
