@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
@@ -8,12 +9,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireRedstoneSensorBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.utils.ExtraLuaConverter;
+import site.siredvin.progressiveperipherals.utils.OrientationUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +40,7 @@ public class EnderwireNetworkProducer {
         }
     }
 
-    public static void firePoweredEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @NotNull EnderwireNetworkComponent component, @Nullable PlayerEntity player, boolean extendedData) {
+    public static void firePoweredEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @NotNull EnderwireElementType component, @Nullable PlayerEntity player, boolean extendedData) {
         eventEnvironment(world, pos, (te, currentNetwork) -> {
             String eventName = component.getEnableEventName();
             if (!isEnabled)
@@ -54,18 +57,18 @@ public class EnderwireNetworkProducer {
     }
 
     public static void firePoweredLeverEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @Nullable PlayerEntity player, boolean extendedData) {
-        firePoweredEvent(isEnabled, world, pos, EnderwireNetworkComponent.LEVER, player, extendedData);
+        firePoweredEvent(isEnabled, world, pos, EnderwireElementType.LEVER, player, extendedData);
     }
 
     public static void firePoweredButtonEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @Nullable PlayerEntity player, boolean extendedData) {
-        firePoweredEvent(isEnabled, world, pos, EnderwireNetworkComponent.BUTTON, player, extendedData);
+        firePoweredEvent(isEnabled, world, pos, EnderwireElementType.BUTTON, player, extendedData);
     }
 
     public static void firePoweredPlateEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @Nullable List<? extends Entity> collidingEntities, boolean extendedData) {
         eventEnvironment(world, pos, (te, currentNetwork) -> {
-            String eventName = EnderwireNetworkComponent.PLATE.getEnableEventName();
+            String eventName = EnderwireElementType.PLATE.getEnableEventName();
             if (!isEnabled)
-                eventName = EnderwireNetworkComponent.PLATE.getDisableEventName();
+                eventName = EnderwireElementType.PLATE.getDisableEventName();
             Map<String, Object> data = new HashMap<>();
             data.put("element", te.getElementUUID().toString());
             if (extendedData && collidingEntities != null)
@@ -80,10 +83,15 @@ public class EnderwireNetworkProducer {
     public static void fireRedstoneSensorEvent(int signal, Direction neighbor, @NotNull World world, @NotNull BlockPos pos) {
         eventEnvironment(world, pos, (BiConsumer<EnderwireRedstoneSensorTileEntity, NetworkData>) (te, currentNetwork) -> {
             if (te.getPower(neighbor) != signal) {
-                String eventName = EnderwireNetworkComponent.REDSTONE_SENSOR.getChangeEventName();
+                String eventName = EnderwireElementType.REDSTONE_SENSOR.getChangeEventName();
+                BlockState state = world.getBlockState(pos);
                 Map<String, Object> data = new HashMap<>();
                 data.put("element", te.getElementUUID().toString());
-                data.put("neighbor", neighbor.name().toLowerCase());
+                data.put("side", OrientationUtils.toSide(
+                        state.getValue(EnderwireRedstoneSensorBlock.FACING),
+                        state.getValue(EnderwireRedstoneSensorBlock.FACE),
+                        neighbor
+                ).name().toLowerCase());
                 data.put("power", signal);
                 te.setPower(neighbor, signal);
                 EnderwireNetworkBusHub.fireComputerEvent(currentNetwork.getName(), EnderwireComputerEvent.timed(

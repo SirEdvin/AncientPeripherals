@@ -4,7 +4,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkConnectorPeripheral;
 
@@ -36,11 +35,6 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
     @Override
     public EnderwireElementType getElementType() {
         return EnderwireElementType.CONNECTOR;
-    }
-
-    @Override
-    public EnderwireNetworkComponent getComponentType() {
-        return EnderwireNetworkComponent.CONNECTOR;
     }
 
     @Override

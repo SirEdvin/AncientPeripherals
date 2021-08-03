@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementCategory;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkAmplifier;
 
 import java.util.Objects;
@@ -20,12 +20,12 @@ public class NetworkElementData {
 
     private final @NotNull UUID uuid;
     private final @NotNull BlockPos pos;
-    private final @NotNull EnderwireElementType elementType;
+    private final @NotNull EnderwireElementCategory elementType;
     private final @NotNull String deviceType;
     private final @NotNull String dimension;
     private final @NotNull NetworkAmplifier networkAmplifier;
 
-    public NetworkElementData(@NotNull UUID uuid, @NotNull BlockPos pos, @NotNull EnderwireElementType elementType, @NotNull String deviceType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
+    public NetworkElementData(@NotNull UUID uuid, @NotNull BlockPos pos, @NotNull EnderwireElementCategory elementType, @NotNull String deviceType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
         this.uuid = uuid;
         this.pos = pos;
         this.elementType = elementType;
@@ -42,7 +42,7 @@ public class NetworkElementData {
         return uuid;
     }
 
-    public EnderwireElementType getElementType() {
+    public EnderwireElementCategory getElementType() {
         return elementType;
     }
 
@@ -73,7 +73,7 @@ public class NetworkElementData {
         return new NetworkElementData(
                 UUID.fromString(tag.getString(UUID_TAG)),
                 NBTUtil.readBlockPos(tag.getCompound(POS_TAG)),
-                EnderwireElementType.valueOf(tag.getString(ELEMENT_TYPE_TAG)),
+                EnderwireElementCategory.valueOf(tag.getString(ELEMENT_TYPE_TAG)),
                 tag.getString(DEVICE_TYPE_TAG),
                 tag.getString(DIMENSION_TAG),
                 NetworkAmplifier.valueOf(tag.getString(NETWORK_AMPLIFIER_TAG))

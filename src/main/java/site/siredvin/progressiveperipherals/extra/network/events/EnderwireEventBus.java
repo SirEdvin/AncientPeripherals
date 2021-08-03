@@ -14,7 +14,7 @@ public class EnderwireEventBus<T extends IEpochEvent> {
     private static final long ALLOWED_DELAY_IN_SECONDS = 60 * 15;
 
     private long counter;
-    private EvictingQueue<EnderwireEventBusMessage<T>> queue;
+    private final EvictingQueue<EnderwireEventBusMessage<T>> queue;
 
     public EnderwireEventBus() {
         this.counter = 0;
@@ -25,7 +25,7 @@ public class EnderwireEventBus<T extends IEpochEvent> {
         return counter;
     }
 
-    public void handleEvent(@NotNull T event) {
+    public synchronized void handleEvent(@NotNull T event) {
         queue.add(new EnderwireEventBusMessage<>(counter, event));
         counter++;
     }
@@ -34,7 +34,7 @@ public class EnderwireEventBus<T extends IEpochEvent> {
         return queue.isEmpty();
     }
 
-    public void cleanup () {
+    public synchronized void cleanup () {
         long currentEpoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         List<EnderwireEventBusMessage<T>> removeList = new ArrayList<>();
         for (EnderwireEventBusMessage<T> message: queue) {
@@ -44,7 +44,7 @@ public class EnderwireEventBus<T extends IEpochEvent> {
         removeList.forEach(queue::remove);
     }
 
-    public long traverse(long lastConsumedMessage, Consumer<T> consumer) {
+    public synchronized long traverse(long lastConsumedMessage, Consumer<T> consumer) {
         for (EnderwireEventBusMessage<T> message : queue) {
             if (message.getNumber() <= lastConsumedMessage)
                 continue;

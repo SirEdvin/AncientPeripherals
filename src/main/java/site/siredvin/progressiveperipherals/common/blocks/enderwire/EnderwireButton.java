@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -18,14 +17,15 @@ import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkProducer;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
+import static site.siredvin.progressiveperipherals.common.blocks.enderwire.BaseEnderwireBlock.CONNECTED;
+
 public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSensorBlock {
-    public static final BooleanProperty CONNECTED = BaseEnderwireBlock.CONNECTED;
 
     private final boolean verbose;
 
@@ -89,8 +89,8 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
     }
 
     @Override
-    public EnderwireNetworkComponent getComponentType() {
-        return EnderwireNetworkComponent.BUTTON;
+    public EnderwireElementType getComponentType() {
+        return EnderwireElementType.BUTTON;
     }
 
     public int getSignal(BlockState p_180656_1_, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {

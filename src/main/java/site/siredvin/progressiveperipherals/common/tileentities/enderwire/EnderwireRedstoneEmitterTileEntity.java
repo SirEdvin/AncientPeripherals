@@ -10,29 +10,35 @@ import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementTy
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnderwireRedstoneSensorTileEntity extends BaseEnderwireTileEntity<EnderwireRedstoneSensorTileEntity, BasePeripheral> {
+public class EnderwireRedstoneEmitterTileEntity extends BaseEnderwireTileEntity<EnderwireRedstoneEmitterTileEntity, BasePeripheral> {
 
     private final static String POWER_BUFFER_TAG = "powerBuffer";
 
     private int[] powerBuffer;
 
-    public EnderwireRedstoneSensorTileEntity() {
-        super(TileEntityTypes.ENDERWIRE_REDSTONE_SENSOR.get());
+    public EnderwireRedstoneEmitterTileEntity() {
+        super(TileEntityTypes.ENDERWIRE_REDSTONE_EMITTER.get());
         powerBuffer = new int[6];
     }
 
     @Override
-    public EnderwireRedstoneSensorTileEntity getThis() {
+    public EnderwireRedstoneEmitterTileEntity getThis() {
         return this;
     }
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.REDSTONE_SENSOR;
+        return EnderwireElementType.REDSTONE_EMITTER;
+    }
+
+    @Override
+    public Map<String, Object> getCurrentState() {
+        return new HashMap<>();
     }
 
     public void setPower(Direction direction, int power) {
         powerBuffer[direction.ordinal()] = power;
+        pushInternalDataChangeToClient();
     }
 
     public int getPower(Direction direction) {
@@ -50,13 +56,5 @@ public class EnderwireRedstoneSensorTileEntity extends BaseEnderwireTileEntity<E
         data = super.saveInternalData(data);
         data.putIntArray(POWER_BUFFER_TAG, powerBuffer);
         return data;
-    }
-
-    @Override
-    public Map<String, Object> getCurrentState() {
-        return new HashMap<String, Object>() {{
-            for (Direction direction: Direction.values())
-                put(direction.name().toLowerCase(), powerBuffer[direction.ordinal()]);
-        }};
     }
 }

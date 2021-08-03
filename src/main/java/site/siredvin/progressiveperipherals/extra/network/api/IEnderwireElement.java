@@ -16,9 +16,8 @@ import java.util.UUID;
 public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> extends ITrickedTileEntity<T> {
     @Nullable String getAttachedNetwork();
     void setAttachedNetwork(@Nullable String name);
-    EnderwireElementType getElementType();
     UUID getElementUUID();
-    EnderwireNetworkComponent getComponentType();
+    EnderwireElementType getElementType();
     Map<String, Object> getCurrentState();
 
     default void changeAttachedNetwork(@Nullable String newNetwork) {
@@ -31,7 +30,7 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
 
     default NetworkElementData generateElementData() {
         return new NetworkElementData(
-                getElementUUID(), getPosition(), getElementType(), getComponentType().name().toLowerCase(),
+                getElementUUID(), getPosition(), getElementType().getCategory(), getElementType().name().toLowerCase(),
                 Objects.requireNonNull(getWorld()).dimension().location().toString(), getAmplifier()
         );
     }

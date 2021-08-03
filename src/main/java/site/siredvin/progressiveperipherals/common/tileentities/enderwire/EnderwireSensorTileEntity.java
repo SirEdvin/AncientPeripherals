@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.state.properties.BlockStateProperties;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
 
 import java.util.HashMap;
@@ -23,15 +22,10 @@ public class EnderwireSensorTileEntity extends BaseEnderwireTileEntity<Enderwire
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.SENSOR;
-    }
-
-    @Override
-    public EnderwireNetworkComponent getComponentType() {
         Block block = getBlockState().getBlock();
         if (block instanceof IEnderwireSensorBlock)
             return ((IEnderwireSensorBlock) block).getComponentType();
-        return EnderwireNetworkComponent.UNKNOWN;
+        return EnderwireElementType.UNKNOWN;
     }
 
     @Override

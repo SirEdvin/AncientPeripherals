@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.tileentities.*;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneEmitterTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneSensorTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.MachineryStorageTileEntity;
@@ -101,7 +102,8 @@ public class TileEntityTypes {
             () -> new TileEntityType<>(
                     EnderwireSensorTileEntity::new,
                     Sets.newHashSet(
-                            Blocks.ENDERWIRE_REDSTONE_SENSOR.get()
+                            Blocks.ENDERWIRE_BUTTON.get(), Blocks.ENDERWIRE_PRESSURE_PLATE.get(), Blocks.ENDERWIRE_LEVER.get(),
+                            Blocks.ADVANCED_ENDERWIRE_BUTTON.get(), Blocks.ADVANCED_ENDERWIRE_PRESSURE_PLATE.get(), Blocks.ADVANCED_ENDERWIRE_LEVER.get()
                     ),
                     null
             )
@@ -113,6 +115,17 @@ public class TileEntityTypes {
                     EnderwireRedstoneSensorTileEntity::new,
                     Sets.newHashSet(
                             Blocks.ENDERWIRE_REDSTONE_SENSOR.get()
+                    ),
+                    null
+            )
+    );
+
+    public static final RegistryObject<TileEntityType<EnderwireRedstoneEmitterTileEntity>> ENDERWIRE_REDSTONE_EMITTER = Registration.TILE_ENTITIES.register(
+            "enderwire_redstone_emitter",
+            () -> new TileEntityType<>(
+                    EnderwireRedstoneEmitterTileEntity::new,
+                    Sets.newHashSet(
+                            Blocks.ENDERWIRE_REDSTONE_EMITTER.get()
                     ),
                     null
             )
