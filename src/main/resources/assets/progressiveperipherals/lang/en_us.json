@@ -113,6 +113,8 @@
   "block.progressiveperipherals.advanced_enderwire_button.tooltip": "§7Enderwire element, that will send enable/disable events to attached network and track entity, that fired event",
   "block.progressiveperipherals.advanced_enderwire_pressure_plate": "Advanced enderwire pressure plate",
   "block.progressiveperipherals.advanced_enderwire_pressure_plate.tooltip": "§7Enderwire element, that will send enable/disable events to attached network and track entity, that fired event",
+  "block.progressiveperipherals.enderwire_redstone_sensor": "Enderwire redstone sensor",
+  "block.progressiveperipherals.enderwire_redstone_sensor.tooltip": "§7Enderwire element, that will send redstone power change events to attached network",
   "block.progressiveperipherals.enderwire_network_connector": "Enderwire network connector",
   "block.progressiveperipherals.enderwire_network_connector.tooltip": "§7Enderwire element, that will populate network events to connected computers in network",
   "block.progressiveperipherals.enderwire_block": "Enderwire block",

@@ -2,11 +2,13 @@ package site.siredvin.progressiveperipherals.extra.network.events;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireNetworkComponent;
@@ -16,32 +18,39 @@ import site.siredvin.progressiveperipherals.utils.ExtraLuaConverter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 public class EnderwireNetworkProducer {
 
-    public static void firePoweredEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @NotNull EnderwireNetworkComponent component, @Nullable PlayerEntity player, boolean extendedData) {
+    protected static <T extends IEnderwireElement<?>> void eventEnvironment(@NotNull World world, @NotNull BlockPos pos, BiConsumer<T, NetworkData> consumer) {
         if (!world.isClientSide) {
-            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
+            T te = (T) world.getBlockEntity(pos);
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
                 GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) world);
                 NetworkData currentNetwork = networksData.getNetwork(attachedNetwork);
                 if (attachedNetwork != null && currentNetwork != null) {
-                    String eventName = component.getEnableEventName();
-                    if (!isEnabled)
-                        eventName = component.getDisableEventName();
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("element", te.getElementUUID().toString());
-                    if (extendedData && player != null)
-                        data.put("player", player.getName().getString());
-                    EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(
-                            eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
-                            world.dimension().location().toString(), pos, data
-                    ));
+                    consumer.accept(te, currentNetwork);
                 }
             }
         }
+    }
+
+    public static void firePoweredEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @NotNull EnderwireNetworkComponent component, @Nullable PlayerEntity player, boolean extendedData) {
+        eventEnvironment(world, pos, (te, currentNetwork) -> {
+            String eventName = component.getEnableEventName();
+            if (!isEnabled)
+                eventName = component.getDisableEventName();
+            Map<String, Object> data = new HashMap<>();
+            data.put("element", te.getElementUUID().toString());
+            if (extendedData && player != null)
+                data.put("player", player.getName().getString());
+            EnderwireNetworkBusHub.fireComputerEvent(currentNetwork.getName(), EnderwireComputerEvent.timed(
+                    eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
+                    world.dimension().location().toString(), pos, data
+            ));
+        });
     }
 
     public static void firePoweredLeverEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @Nullable PlayerEntity player, boolean extendedData) {
@@ -53,26 +62,35 @@ public class EnderwireNetworkProducer {
     }
 
     public static void firePoweredPlateEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @Nullable List<? extends Entity> collidingEntities, boolean extendedData) {
-        if (!world.isClientSide) {
-            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
-            if (te != null) {
-                String attachedNetwork = te.getAttachedNetwork();
-                GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) world);
-                NetworkData currentNetwork = networksData.getNetwork(attachedNetwork);
-                if (attachedNetwork != null && currentNetwork != null) {
-                    String eventName = EnderwireNetworkComponent.PLATE.getEnableEventName();
-                    if (!isEnabled)
-                        eventName = EnderwireNetworkComponent.PLATE.getDisableEventName();
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("element", te.getElementUUID().toString());
-                    if (extendedData && collidingEntities != null)
-                        data.put("entities", collidingEntities.stream().map(ExtraLuaConverter::classifyEntity).collect(Collectors.toList()));
-                    EnderwireNetworkBusHub.fireComputerEvent(attachedNetwork, EnderwireComputerEvent.timed(
-                            eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
-                            world.dimension().location().toString(), pos, data
-                    ));
-                }
+        eventEnvironment(world, pos, (te, currentNetwork) -> {
+            String eventName = EnderwireNetworkComponent.PLATE.getEnableEventName();
+            if (!isEnabled)
+                eventName = EnderwireNetworkComponent.PLATE.getDisableEventName();
+            Map<String, Object> data = new HashMap<>();
+            data.put("element", te.getElementUUID().toString());
+            if (extendedData && collidingEntities != null)
+                data.put("entities", collidingEntities.stream().map(ExtraLuaConverter::classifyEntity).collect(Collectors.toList()));
+            EnderwireNetworkBusHub.fireComputerEvent(currentNetwork.getName(), EnderwireComputerEvent.timed(
+                    eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
+                    world.dimension().location().toString(), pos, data
+            ));
+        });
+    }
+
+    public static void fireRedstoneSensorEvent(int signal, Direction neighbor, @NotNull World world, @NotNull BlockPos pos) {
+        eventEnvironment(world, pos, (BiConsumer<EnderwireRedstoneSensorTileEntity, NetworkData>) (te, currentNetwork) -> {
+            if (te.getPower(neighbor) != signal) {
+                String eventName = EnderwireNetworkComponent.REDSTONE_SENSOR.getChangeEventName();
+                Map<String, Object> data = new HashMap<>();
+                data.put("element", te.getElementUUID().toString());
+                data.put("neighbor", neighbor.name().toLowerCase());
+                data.put("power", signal);
+                te.setPower(neighbor, signal);
+                EnderwireNetworkBusHub.fireComputerEvent(currentNetwork.getName(), EnderwireComputerEvent.timed(
+                        eventName, currentNetwork.getReachableRange(), currentNetwork.isInterdimensional(),
+                        world.dimension().location().toString(), pos, data
+                ));
             }
-        }
+        });
     }
 }

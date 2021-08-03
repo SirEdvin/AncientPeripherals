@@ -1,0 +1,7 @@
+{
+	"parent": "progressiveperipherals:block/enderwire/redstone_sensor",
+	"textures": {
+		"0": "progressiveperipherals:block/enderwire/redstone_sensor_casing",
+		"particle": "progressiveperipherals:block/enderwire/redstone_sensor_casing"
+	}
+}

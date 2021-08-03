@@ -26,7 +26,11 @@ public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElemen
 
     public BaseEnderwireBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(CONNECTED, false));
+        this.registerDefaultState(generateDefaultState(this.getStateDefinition().any()));
+    }
+
+    public BlockState generateDefaultState(BlockState parentDefaultState) {
+        return parentDefaultState.setValue(CONNECTED, false);
     }
 
     @Override
