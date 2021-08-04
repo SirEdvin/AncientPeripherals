@@ -15,9 +15,14 @@ public class EnderwireRedstoneEmitterBlock extends BaseEnderwirePlate<EnderwireR
 
     @Override
     public int getSignal(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
+        return getDirectSignal(state, world, pos, direction);
+    }
+
+    @Override
+    public int getDirectSignal(BlockState state, IBlockReader world, BlockPos pos, Direction direction) {
         EnderwireRedstoneEmitterTileEntity te = (EnderwireRedstoneEmitterTileEntity) world.getBlockEntity(pos);
         if (te != null)
-            return te.getPower(direction);
+            return te.getPower(direction.getOpposite());
         return 0;
     }
 

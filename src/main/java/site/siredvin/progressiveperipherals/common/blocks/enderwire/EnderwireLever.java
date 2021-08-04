@@ -78,6 +78,13 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     }
 
     @Override
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!newState.is(this)) // new block are not this block
+            NetworkElementTool.handleRemove(world, pos);
+        super.onRemove(state, world, pos, newState, isMoving);
+    }
+
+    @Override
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
         if (handledUse != null)

@@ -40,6 +40,13 @@ public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElemen
     }
 
     @Override
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!newState.is(this)) // new block are not this block
+            NetworkElementTool.handleRemove(world, pos);
+        super.onRemove(state, world, pos, newState, isMoving);
+    }
+
+    @Override
     public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
         super.setPlacedBy(world, pos, state, entity, stack);
         if (!world.isClientSide && entity instanceof PlayerEntity) {

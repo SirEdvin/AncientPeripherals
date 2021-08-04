@@ -1,5 +1,7 @@
 package site.siredvin.progressiveperipherals.extra.network.api;
 
+import dan200.computercraft.api.lua.LuaException;
+import dan200.computercraft.api.lua.MethodResult;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -37,5 +39,9 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
 
     default @NotNull NetworkAmplifier getAmplifier() {
         return NetworkAmplifier.NONE;
+    }
+
+    default MethodResult configure(Map<?, ?> data) throws LuaException {
+        return MethodResult.of(null, "This element are not configurable");
     }
 }

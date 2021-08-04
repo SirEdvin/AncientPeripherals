@@ -16,29 +16,37 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 
 public class NetworkElementTool {
+
+    public static <T extends TileEntity & IEnderwireElement<T>> @Nullable NetworkElementData removeFromNetwork(@NotNull GlobalNetworksData globalData, @NotNull String networkName, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
+        NetworkData network = globalData.getNetwork(networkName);
+        if (network != null) {
+            NetworkElementData elementData = network.getElement(element.getElementUUID());
+            if (elementData == null) {
+                ProgressivePeripherals.LOGGER.error(String.format("Element %s is not in network %s, this shouldn't happened!", element.getElementUUID(), networkName));
+            } else {
+                network.removeNetworkElement(elementData);
+                return elementData;
+            }
+        } else {
+            ProgressivePeripherals.LOGGER.error(String.format("Missing network %s, this shouldn't happened!", networkName));
+        }
+        return null;
+    }
+
     public static <T extends TileEntity & IEnderwireElement<T>> void changeAttachedNetwork(@Nullable String oldNetwork, @Nullable String newNetwork, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
         GlobalNetworksData globalData = GlobalNetworksData.get(world);
         boolean dirtyGlobalData = false;
         NetworkElementData elementData = null;
         if (oldNetwork != null) {
-            NetworkData network = globalData.getNetwork(oldNetwork);
-            if (network != null) {
-                elementData = network.getElement(element.getElementUUID());
-                if (elementData == null) {
-                    ProgressivePeripherals.LOGGER.error(String.format("Element %s is not in network %s, this shouldn't happened!", element.getElementUUID(), oldNetwork));
-                } else {
-                    network.removeNetworkElement(elementData);
-                    dirtyGlobalData = true;
-                }
-            } else {
-                ProgressivePeripherals.LOGGER.error(String.format("Missing network %s, this shouldn't happened!", oldNetwork));
-            }
+            elementData = removeFromNetwork(globalData, oldNetwork, element, world);
+            if (elementData != null)
+                dirtyGlobalData = true;
         }
         if (newNetwork != null) {
             NetworkData network = globalData.getNetwork(newNetwork);
@@ -113,5 +121,15 @@ public class NetworkElementTool {
             }
         }
         return null;
+    }
+
+    public static void handleRemove(@NotNull World world, @NotNull BlockPos pos) {
+        if (!world.isClientSide) {
+            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
+            if (te != null && te.getAttachedNetwork() != null) {
+                ServerWorld serverWorld = (ServerWorld) world;
+                removeFromNetwork(GlobalNetworksData.get(serverWorld), te.getAttachedNetwork(), te, serverWorld);
+            }
+        }
     }
 }

@@ -5,9 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class NetworkRepresentationTool {
     public static Map<String, Object> shortRepresentation(NetworkData network) {
@@ -21,8 +19,8 @@ public class NetworkRepresentationTool {
         Map<String, Object> representation = shortRepresentation(network);
         Map<UUID, NetworkElementData> elements = network.getElements();
         if (elements != null) {
-            Map<String, Object> elementsRepresentation = new HashMap<>();
-            elements.values().forEach(networkElement -> elementsRepresentation.put(networkElement.getUUID().toString(), elementRepresentation(networkElement, center)));
+            List<Object> elementsRepresentation = new ArrayList<>();
+            elements.values().forEach(networkElement -> elementsRepresentation.add(elementRepresentation(networkElement, center)));
             representation.put("elements", elementsRepresentation);
         } else {
             representation.put("elements", null);

@@ -76,6 +76,13 @@ public abstract class BaseEnderwirePlate<T extends TileEntity> extends Horizonta
     }
 
     @Override
+    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!newState.is(this)) // new block are not this block
+            NetworkElementTool.handleRemove(world, pos);
+        super.onRemove(state, world, pos, newState, isMoving);
+    }
+
+    @Override
     public @NotNull ActionResultType use(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity playerEntity, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, playerEntity, hand, hit);
         if (handledUse != null)

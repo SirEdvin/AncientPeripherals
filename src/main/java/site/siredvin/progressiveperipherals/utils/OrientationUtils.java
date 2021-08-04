@@ -54,9 +54,9 @@ public class OrientationUtils {
             case TOP:
                 return Direction.DOWN;
             case BACK:
-                return facing;
-            case FRONT:
                 return facing.getOpposite();
+            case FRONT:
+                return facing;
             case RIGHT:
                 return facing.getClockWise();
             case LEFT:

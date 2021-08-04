@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.base;
 
+import dan200.computercraft.shared.util.RedstoneUtil;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -7,14 +8,14 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends OptionalPeripheralTileEntity<T> implements ITileEntityDataProvider {
@@ -56,7 +57,6 @@ public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends Opt
         return super.save(tag);
     }
 
-    @OnlyIn(Dist.DEDICATED_SERVER)
     @Override
     public void pushInternalDataChangeToClient() {
         pushInternalDataChangeToClient(getBlockState());
@@ -71,8 +71,19 @@ public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends Opt
             world.setBlockAndUpdate(getBlockPos(), state);
             world.sendBlockUpdated(
                     getBlockPos(), getBlockState(), getBlockState(),
-                    Constants.BlockFlags.BLOCK_UPDATE | Constants.BlockFlags.NOTIFY_NEIGHBORS
+                    Constants.BlockFlags.DEFAULT
             );
+        }
+    }
+
+    public void pushNeighborUpdate(List<Direction> neighbors) {
+        World world = getLevel();
+        Objects.requireNonNull(world);
+        if (!world.isClientSide) {
+            BlockPos pos = getBlockPos();
+            for (Direction neighbor : neighbors) {
+                RedstoneUtil.propagateRedstoneOutput(world, pos, neighbor);
+            }
         }
     }
 

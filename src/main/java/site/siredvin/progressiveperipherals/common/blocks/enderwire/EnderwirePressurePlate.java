@@ -68,6 +68,8 @@ public class EnderwirePressurePlate extends PressurePlateBlock implements IEnder
     public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
             EnderwireNetworkProducer.firePoweredPlateEvent(false, world, blockPos, null, this.verbose);
+        if (!newState.is(this)) // new block are not this block
+            NetworkElementTool.handleRemove(world, blockPos);
         super.onRemove(state, world, blockPos, newState, isMoving);
     }
 
