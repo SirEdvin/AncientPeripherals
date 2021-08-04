@@ -4,10 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.common.tileentities.*;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireConnectorTileEntity;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneEmitterTileEntity;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneSensorTileEntity;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.*;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.MachineryStorageTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTExtractorControllerTileEntity;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
@@ -126,6 +123,17 @@ public class TileEntityTypes {
                     EnderwireRedstoneEmitterTileEntity::new,
                     Sets.newHashSet(
                             Blocks.ENDERWIRE_REDSTONE_EMITTER.get()
+                    ),
+                    null
+            )
+    );
+
+    public static final RegistryObject<TileEntityType<EnderwireLightEmitterTileEntity>> ENDERWIRE_LIGHT_EMITTER = Registration.TILE_ENTITIES.register(
+            "enderwire_light_emitter",
+            () -> new TileEntityType<>(
+                    EnderwireLightEmitterTileEntity::new,
+                    Sets.newHashSet(
+                            Blocks.ENDERWIRE_LIGHT_EMITTER.get()
                     ),
                     null
             )

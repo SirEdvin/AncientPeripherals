@@ -28,6 +28,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import site.siredvin.progressiveperipherals.client.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.progressiveperipherals.client.models.FlexibleStatueModelLoader;
+import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitterTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.PedestalTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughPointTileRenderer;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
@@ -98,10 +99,12 @@ public class ProgressivePeripherals {
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_STATUE.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.IRREALIUM_MACHINERY_GLASS.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(Blocks.ENDERWIRE_LIGHT_EMITTER.get(), RenderType.cutoutMipped());
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.REALITY_BREAKTHROUGH_POINT.get(), RealityBreakthroughPointTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.ABSTRACTIUM_PEDESTAL.get(), PedestalTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.IRREALIUM_PEDESTAL.get(), PedestalTileRenderer::new);
         ClientRegistry.bindTileEntityRenderer(TileEntityTypes.CREATIVE_ITEM_DUPLICATOR.get(), PedestalTileRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(TileEntityTypes.ENDERWIRE_LIGHT_EMITTER.get(), EnderwireLightEmitterTileRenderer::new);
 
         if (ModList.get().isLoaded("patchouli")) {
             ClientBookRegistry.INSTANCE.pageTypes.put(new ResourceLocation(MOD_ID, "automata"), AutomataRecipePage.class);

@@ -207,6 +207,12 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.ENDERWIRE_REDSTONE_EMITTER.get(), new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Block> ENDERWIRE_LIGHT_EMITTER = register(
+            "enderwire_light_emitter",
+            EnderwireLightEmitterBlock::new,
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_LIGHT_EMITTER.get(), new Item.Properties().stacksTo(64))
+    );
+
 
     // World feature
 
