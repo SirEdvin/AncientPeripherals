@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.extra.network.events;
 
 import com.google.common.collect.EvictingQueue;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class EnderwireEventBus<T extends IEpochEvent> {
-    private static final int NETWORK_BUS_QUEUE_SIZE = 150;
     private static final long ALLOWED_DELAY_IN_SECONDS = 60 * 15;
 
     private long counter;
@@ -18,7 +18,7 @@ public class EnderwireEventBus<T extends IEpochEvent> {
 
     public EnderwireEventBus() {
         this.counter = 0;
-        this.queue = EvictingQueue.create(NETWORK_BUS_QUEUE_SIZE);
+        this.queue = EvictingQueue.create(ProgressivePeripheralsConfig.enderwireNetworkComputerBusSize);
     }
 
     public long getCounter() {

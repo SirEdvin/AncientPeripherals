@@ -52,6 +52,7 @@ public class ProgressivePeripheralsConfig {
     public static double enchantingAutomataCoreDisappearChance;
     // Enderwire network
     public static int enderwireNetworkRangeStep = 64;
+    public static int enderwireNetworkComputerBusSize = 256;
     public static boolean enderwireNetworkEnabled = true;
 
     public static class CommonConfig {
