@@ -16,16 +16,16 @@ public enum EnderwireElementType {
         return category;
     }
 
-    public String getDisableEventName() {
-        return name().toLowerCase() + "_disable";
+    public String getDisabledEventName() {
+        return name().toLowerCase() + "_disabled";
     }
 
-    public String getEnableEventName() {
-        return name().toLowerCase() + "_enable";
+    public String getEnabledEventName() {
+        return name().toLowerCase() + "_enabled";
     }
 
-    public String getChangeEventName() {
-        return name().toLowerCase() + "_change";
+    public String getChangedEventName() {
+        return name().toLowerCase() + "_changed";
     }
 
 }

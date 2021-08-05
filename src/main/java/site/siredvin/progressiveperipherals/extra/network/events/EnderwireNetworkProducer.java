@@ -42,9 +42,9 @@ public class EnderwireNetworkProducer {
 
     public static void firePoweredEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @NotNull EnderwireElementType component, @Nullable PlayerEntity player, boolean extendedData) {
         eventEnvironment(world, pos, (te, currentNetwork) -> {
-            String eventName = component.getEnableEventName();
+            String eventName = component.getEnabledEventName();
             if (!isEnabled)
-                eventName = component.getDisableEventName();
+                eventName = component.getDisabledEventName();
             Map<String, Object> data = new HashMap<>();
             data.put("element", te.getElementUUID().toString());
             if (extendedData && player != null)
@@ -66,9 +66,9 @@ public class EnderwireNetworkProducer {
 
     public static void firePoweredPlateEvent(boolean isEnabled, @NotNull World world, @NotNull BlockPos pos, @Nullable List<? extends Entity> collidingEntities, boolean extendedData) {
         eventEnvironment(world, pos, (te, currentNetwork) -> {
-            String eventName = EnderwireElementType.PLATE.getEnableEventName();
+            String eventName = EnderwireElementType.PLATE.getEnabledEventName();
             if (!isEnabled)
-                eventName = EnderwireElementType.PLATE.getDisableEventName();
+                eventName = EnderwireElementType.PLATE.getDisabledEventName();
             Map<String, Object> data = new HashMap<>();
             data.put("element", te.getElementUUID().toString());
             if (extendedData && collidingEntities != null)
@@ -83,7 +83,7 @@ public class EnderwireNetworkProducer {
     public static void fireRedstoneSensorEvent(int signal, Direction neighbor, @NotNull World world, @NotNull BlockPos pos) {
         eventEnvironment(world, pos, (BiConsumer<EnderwireRedstoneSensorTileEntity, NetworkData>) (te, currentNetwork) -> {
             if (te.getPower(neighbor) != signal) {
-                String eventName = EnderwireElementType.REDSTONE_SENSOR.getChangeEventName();
+                String eventName = EnderwireElementType.REDSTONE_SENSOR.getChangedEventName();
                 BlockState state = world.getBlockState(pos);
                 Map<String, Object> data = new HashMap<>();
                 data.put("element", te.getElementUUID().toString());
