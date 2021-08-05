@@ -2,7 +2,6 @@ package site.siredvin.progressiveperipherals.common.blocks.enderwire;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,16 +9,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireLightEmitterTileEntity;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
-public class EnderwireLightEmitterBlock extends BaseEnderwireBlock<EnderwireLightEmitterTileEntity> implements IBlockColor {
+public class EnderwireLightEmitterBlock extends BaseEnderwireBlock<EnderwireLightEmitterTileEntity> {
     private static final VoxelShape SHAPE = VoxelShapes.or(
             Block.box(4, 0, 4, 12, 1, 12),
             Block.box(5, 1, 5, 11, 7, 11)
@@ -62,10 +59,5 @@ public class EnderwireLightEmitterBlock extends BaseEnderwireBlock<EnderwireLigh
     @Override
     public @NotNull TileEntity createTileEntity(BlockState state, IBlockReader world) {
         return new EnderwireLightEmitterTileEntity();
-    }
-
-    @Override
-    public int getColor(BlockState p_getColor_1_, @Nullable IBlockDisplayReader p_getColor_2_, @Nullable BlockPos p_getColor_3_, int p_getColor_4_) {
-        return 0;
     }
 }

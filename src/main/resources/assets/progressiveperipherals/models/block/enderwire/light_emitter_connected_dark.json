@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "progressiveperipherals:block/enderwire/light_emitter_connected_dark"
-  }
-}

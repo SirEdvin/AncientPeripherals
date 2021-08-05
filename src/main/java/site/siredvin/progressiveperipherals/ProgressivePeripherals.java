@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +32,7 @@ import site.siredvin.progressiveperipherals.client.models.FlexibleStatueModelLoa
 import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitterTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.PedestalTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughPointTileRenderer;
+import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.events.BlockEvents;
 import site.siredvin.progressiveperipherals.common.setup.*;
@@ -64,6 +66,7 @@ public class ProgressivePeripherals {
         modEventBus.addListener(this::modelSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::interModComms);
+        modEventBus.addListener(this::registerBlockColors);
         modEventBus.addListener(ConfigHandler::configEvent);
         modEventBus.addListener(ConfigHandler::reloadConfigEvent);
         // Forge events
@@ -124,6 +127,12 @@ public class ProgressivePeripherals {
     public void biomeModification(final BiomeLoadingEvent event) {
         if (BiomeUtils.isOverworldBiome(event) && event.getCategory() != Biome.Category.OCEAN)
             event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> ConfiguredFeatures.REALITY_BREAKTHROUGH_POINT);
+    }
+
+    @SubscribeEvent
+    public void registerBlockColors(final ColorHandlerEvent.Block event)
+    {
+        event.getBlockColors().register(new EnderwireLightEmitterBlockColor(), Blocks.ENDERWIRE_LIGHT_EMITTER.get());
     }
 
 }

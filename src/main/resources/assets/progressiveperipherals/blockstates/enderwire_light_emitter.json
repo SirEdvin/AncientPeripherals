@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "progressiveperipherals:block/enderwire/light_emitter_lamp"
+    "connected=true": {
+      "model": "progressiveperipherals:block/enderwire/light_emitter_connected"
+    },
+    "connected=false": {
+      "model": "progressiveperipherals:block/enderwire/light_emitter_empty"
     }
   }
 }

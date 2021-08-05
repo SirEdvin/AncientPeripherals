@@ -48,6 +48,11 @@ public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<End
     }
 
     @Override
+    public boolean isRequiredRenderUpdate() {
+        return true;
+    }
+
+    @Override
     public void loadInternalData(BlockState state, CompoundNBT data) {
         super.loadInternalData(state, data);
         color = new Color(data.getInt(COLOR_TAG));
@@ -64,15 +69,21 @@ public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<End
     public MethodResult configure(Map<?, ?> data) throws LuaException {
         Object enabled = data.get("enabled");
         Object colorRaw = data.get("color");
+        BlockState pushState = getBlockState();
+        boolean isConfigured = false;
         if (colorRaw != null) {
             Color newColor = LuaUtils.convertToColor(colorRaw);
             color = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), 125);
+            isConfigured = true;
         }
         if (enabled != null) {
             if (!(enabled instanceof Boolean))
                 throw new LuaException("enabled should be boolean");
-            pushInternalDataChangeToClient(getBlockState().setValue(EnderwireLightEmitterBlock.ENABLED, (Boolean) enabled));
+            pushState = pushState.setValue(EnderwireLightEmitterBlock.ENABLED, (Boolean) enabled);
+            isConfigured = true;
         }
+        if (isConfigured)
+            pushInternalDataChangeToClient(pushState);
         return MethodResult.of(true);
     }
 }

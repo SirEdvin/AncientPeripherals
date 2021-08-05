@@ -18,26 +18,28 @@ import java.awt.*;
 public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<EnderwireLightEmitterTileEntity> {
     public static final ResourceLocation MAIN = new ResourceLocation(ProgressivePeripherals.MOD_ID,"textures/misc/full_white.png");
 
+    private static final float step = 0.0625f;
+    private static final float half_step = step / 2;
+
     public EnderwireLightEmitterTileRenderer(TileEntityRendererDispatcher p_i226006_1_) {
         super(p_i226006_1_);
     }
 
     @Override
     public void render(EnderwireLightEmitterTileEntity entity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
-        Color color = entity.getColor();
-        boolean isLightEmitter = entity.isEnabled();
-        if (!isLightEmitter)
-            color = color.darker().darker().darker();
-        drawCubeQuads(stack, buffer, color, combinedLightIn);
+        if (entity.isEnabled()) {
+            Color color = entity.getColor();
+            drawCubeQuads(stack, buffer, color, combinedLightIn, half_step);
+        }
     }
 
     /**
      * Draw a cube from [0,0,0] to [1,1,1], same texture on all sides, using a supplied texture
      */
     private static void drawCubeQuads(MatrixStack matrixStack, IRenderTypeBuffer renderBuffer,
-                                      Color color, int combinedLight) {
+                                      Color color, int combinedLight, float closeStep) {
 
-        IVertexBuilder vertexBuilderBlockQuads = renderBuffer.getBuffer(RenderType.entitySolid(MAIN));
+        IVertexBuilder vertexBuilderBlockQuads = renderBuffer.getBuffer(RenderType.entityTranslucent(MAIN));
         // other typical RenderTypes used by TER are:
         // getEntityCutout, getBeaconBeam (which has translucency),
 
@@ -46,33 +48,30 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
 
         // we use the whole texture
         float dirtyDelta = 0.007f;
-        Vector2f bottomLeftUV = new Vector2f(1F/16F - dirtyDelta, 15.0F/16.0F + dirtyDelta);
-        float UVwidth = 14F/16F + dirtyDelta;
-        float UVheight = 14F/16F + dirtyDelta;
+        Vector2f bottomLeftUV = new Vector2f(0.25f + half_step, 0.75f - half_step);
+        float UVwidth = 0.5f;
+        float UVheight = 0.5f;
 
         // all faces have the same height and width
         final float WIDTH = UVwidth;
         final float HEIGHT = UVheight;
 
-        final Vector3d EAST_FACE_MIDPOINT = new Vector3d(1.0, 0.5, 0.5);
-        final Vector3d WEST_FACE_MIDPOINT = new Vector3d(0.0, 0.5, 0.5);
-        final Vector3d NORTH_FACE_MIDPOINT = new Vector3d(0.5, 0.5, 0.0);
-        final Vector3d SOUTH_FACE_MIDPOINT = new Vector3d(0.5, 0.5, 1.0);
-        final Vector3d UP_FACE_MIDPOINT = new Vector3d(0.5, 1.0, 0.5);
-        final Vector3d DOWN_FACE_MIDPOINT = new Vector3d(0.5, 0.0, 0.5);
+        final Vector3d EAST_FACE_MIDPOINT = new Vector3d(0.75 - closeStep, 0.25 + half_step, 0.5);
+        final Vector3d WEST_FACE_MIDPOINT = new Vector3d(0.25 + closeStep, 0.25 + half_step, 0.5);
+        final Vector3d NORTH_FACE_MIDPOINT = new Vector3d(0.5, 0.25 + half_step, 0.25 + closeStep);
+        final Vector3d SOUTH_FACE_MIDPOINT = new Vector3d(0.5, 0.25 + half_step, 0.75 - closeStep);
+        final Vector3d UP_FACE_MIDPOINT = new Vector3d(0.5, 0.5, 0.5);
 
         addFace(Direction.EAST, matrixPos, matrixNormal, vertexBuilderBlockQuads,
-                color, EAST_FACE_MIDPOINT, WIDTH, HEIGHT, bottomLeftUV, UVwidth, UVheight, combinedLight);
+                color, EAST_FACE_MIDPOINT, WIDTH - closeStep * 2, HEIGHT - EnderwireLightEmitterTileRenderer.half_step * 2, bottomLeftUV, UVwidth, UVheight, combinedLight);
         addFace(Direction.WEST, matrixPos, matrixNormal, vertexBuilderBlockQuads,
-                color, WEST_FACE_MIDPOINT, WIDTH, HEIGHT, bottomLeftUV, UVwidth, UVheight, combinedLight);
+                color, WEST_FACE_MIDPOINT, WIDTH - closeStep * 2, HEIGHT - EnderwireLightEmitterTileRenderer.half_step * 2, bottomLeftUV, UVwidth, UVheight, combinedLight);
         addFace(Direction.NORTH, matrixPos, matrixNormal, vertexBuilderBlockQuads,
-                color, NORTH_FACE_MIDPOINT, WIDTH, HEIGHT, bottomLeftUV, UVwidth, UVheight, combinedLight);
+                color, NORTH_FACE_MIDPOINT, WIDTH - closeStep * 2, HEIGHT - EnderwireLightEmitterTileRenderer.half_step * 2, bottomLeftUV, UVwidth, UVheight, combinedLight);
         addFace(Direction.SOUTH, matrixPos, matrixNormal, vertexBuilderBlockQuads,
-                color, SOUTH_FACE_MIDPOINT, WIDTH, HEIGHT, bottomLeftUV, UVwidth, UVheight, combinedLight);
+                color, SOUTH_FACE_MIDPOINT, WIDTH - closeStep * 2, HEIGHT - EnderwireLightEmitterTileRenderer.half_step * 2, bottomLeftUV, UVwidth, UVheight, combinedLight);
         addFace(Direction.UP, matrixPos, matrixNormal, vertexBuilderBlockQuads,
-                color, UP_FACE_MIDPOINT, WIDTH, HEIGHT, bottomLeftUV, UVwidth, UVheight, combinedLight);
-        addFace(Direction.DOWN, matrixPos, matrixNormal, vertexBuilderBlockQuads,
-                color, DOWN_FACE_MIDPOINT, WIDTH, HEIGHT, bottomLeftUV, UVwidth, UVheight, combinedLight);
+                color, UP_FACE_MIDPOINT, WIDTH - closeStep * 2, HEIGHT - closeStep * 2, bottomLeftUV, UVwidth, UVheight, combinedLight);
     }
 
     private static void addFace(Direction whichFace,
@@ -192,7 +191,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                                       Vector3f pos, Vector2f texUV,
                                       Vector3f normalVector, Color color, int lightmapValue) {
         renderBuffer.vertex(matrixPos, pos.x(), pos.y(), pos.z()) // position coordinate
-                .color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha())        // color
+                .color(color.getRed(), color.getGreen(), color.getBlue(), 50)        // color
                 .uv(texUV.x, texUV.y)                     // texel coordinate
                 .overlayCoords(OverlayTexture.NO_OVERLAY)  // only relevant for rendering Entities (Living)
                 .uv2(lightmapValue)             // lightmap with full brightness
