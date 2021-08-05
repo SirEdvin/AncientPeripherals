@@ -15,6 +15,10 @@ public class ColorUtils {
         return !isLight(color);
     }
 
+    public static Color swapAlpha(Color color, int newAlpha) {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), newAlpha);
+    }
+
 //    public Color brighter() {
 //        int var1 = this.getRed();
 //        int var2 = this.getGreen();
