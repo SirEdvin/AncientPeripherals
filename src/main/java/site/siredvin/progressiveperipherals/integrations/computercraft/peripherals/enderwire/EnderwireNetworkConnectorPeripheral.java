@@ -84,4 +84,49 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
             return elementTE.configure(configuration);
         });
     }
-}
+
+    @LuaFunction
+    public final MethodResult isElementLoaded(String elementUUID) throws LuaException  {
+        World world = getWorld();
+        return withNetwork(getWorld(), tileEntity, network -> {
+            NetworkElementData element = network.getElement(UUID.fromString(elementUUID));
+            if (element == null)
+                return MethodResult.of(null, "Cannot find element");
+            return MethodResult.of(world.isLoaded(element.getPos()));
+        });
+    }
+
+    @LuaFunction(mainThread = true)
+    public final MethodResult configureElements(Map<?, ?> configurations) throws LuaException {
+        World world = getWorld();
+        return withNetwork(getWorld(), tileEntity, network -> {
+            for (Map.Entry<?, ?> configurationEntry: configurations.entrySet()) {
+                Object uuidKey = configurationEntry.getKey();
+                Object configuration = configurationEntry.getValue();
+                UUID elementUUID;
+                try {
+                    elementUUID = UUID.fromString(uuidKey.toString());
+                } catch (IllegalArgumentException ignored) {
+                    throw new LuaException("Configurations key should be element UUID");
+                }
+                if (!(configuration instanceof Map))
+                    throw new LuaException("Configurations value should be maps");
+                NetworkElementData element = network.getElement(elementUUID);
+                if (element == null)
+                    return MethodResult.of(null, String.format("Cannot find element with uuid %s", elementUUID));
+                if (!world.isLoaded(element.getPos()))
+                    return MethodResult.of(null, "Element is not loaded ...");
+                IEnderwireElement<?> elementTE = (IEnderwireElement<?>) world.getBlockEntity(element.getPos());
+                if (elementTE == null)
+                    return MethodResult.of(null, "This shouldn't happen, but there is no tile entity");
+                MethodResult configureResult = elementTE.configure((Map<?, ?>) configuration);
+                Object[] result = configureResult.getResult();
+                if (result == null || result.length == 0)
+                    return MethodResult.of(null, "Blame developer, incorrect method implementation here");
+                if (result[0] == null)
+                    return configureResult;
+            }
+            return MethodResult.of(true);
+        });
+    }
+ }
