@@ -13,9 +13,11 @@ import site.siredvin.progressiveperipherals.common.tileentities.enderwire.Enderw
 import site.siredvin.progressiveperipherals.utils.ColorUtils;
 import site.siredvin.progressiveperipherals.utils.TERUtils;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<EnderwireLightEmitterTileEntity> {
+
+    public static final int REQUIRED_COLOR_ALPHA = 50;
 
     private static final float step = 0.0625f;
     private static final float half_step = step / 2;
@@ -54,7 +56,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                     switch (facing) {
                         case NORTH:
                             TERUtils.drawCubeWithoutSide(
-                                    stack, buffer, ColorUtils.swapAlpha(color, 50), combinedLightIn,
+                                    stack, buffer, color, combinedLightIn,
                                     NORTH_START,
                                     NORTH_END,
                                     Direction.SOUTH
@@ -62,7 +64,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                             break;
                         case SOUTH:
                             TERUtils.drawCubeWithoutSide(
-                                    stack, buffer, ColorUtils.swapAlpha(color, 50), combinedLightIn,
+                                    stack, buffer, color, combinedLightIn,
                                     SOUTH_START,
                                     SOUTH_END,
                                     Direction.NORTH
@@ -70,7 +72,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                             break;
                         case WEST:
                             TERUtils.drawCubeWithoutSide(
-                                    stack, buffer, ColorUtils.swapAlpha(color, 50), combinedLightIn,
+                                    stack, buffer, color, combinedLightIn,
                                     WEST_START,
                                     WEST_END,
                                     Direction.EAST
@@ -78,7 +80,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                             break;
                         case EAST:
                             TERUtils.drawCubeWithoutSide(
-                                    stack, buffer, ColorUtils.swapAlpha(color, 50), combinedLightIn,
+                                    stack, buffer, color, combinedLightIn,
                                     EAST_START,
                                     EAST_END,
                                     Direction.WEST

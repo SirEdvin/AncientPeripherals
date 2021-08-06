@@ -5,6 +5,7 @@ import dan200.computercraft.api.lua.MethodResult;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitterTileRenderer;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlock;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
@@ -72,8 +73,7 @@ public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<End
         BlockState pushState = getBlockState();
         boolean isConfigured = false;
         if (colorRaw != null) {
-            Color newColor = LuaUtils.convertToColor(colorRaw);
-            color = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue(), 125);
+            color = LuaUtils.convertToColor(colorRaw,  EnderwireLightEmitterTileRenderer.REQUIRED_COLOR_ALPHA);
             isConfigured = true;
         }
         if (enabled != null) {
