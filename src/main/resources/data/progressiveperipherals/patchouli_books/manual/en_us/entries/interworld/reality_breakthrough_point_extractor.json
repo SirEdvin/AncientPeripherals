@@ -8,7 +8,7 @@
       "type": "spotlight",
       "title": "RBT extractor",
       "item": "progressiveperipherals:reality_breakthrough_extractor_controller",
-      "text": "Reality breakthrough extractor controller (or RBT extractor) are first controller block that allows to extract materials from reality breakthrough points!$(p)Take a note, that reality point should be inside construction"
+      "text": "Reality breakthrough extractor controller (or RBT extractor) is the first controller block that allows to extract materials from reality breakthrough points!$(p)Take note, that reality points should be inside structure"
     },
     {
       "type": "progressiveperipherals:automata",

@@ -8,7 +8,7 @@
       "type": "spotlight",
       "title": "Reality forger MK2",
       "item": "progressiveperipherals:reality_forger_mk2",
-      "text": "Improved $(l:progressiveperipherals:metaphysics/reality_forger)Reality Forger$() with bigger radius"
+      "text": "Improved $(l:progressiveperipherals:metaphysics/reality_forger)Reality Forger$() with a bigger radius"
     },
     {
       "type": "progressiveperipherals:automata",
