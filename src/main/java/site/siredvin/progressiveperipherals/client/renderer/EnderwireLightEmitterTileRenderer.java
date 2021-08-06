@@ -10,10 +10,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireLightEmitterTileEntity;
-import site.siredvin.progressiveperipherals.utils.ColorUtils;
 import site.siredvin.progressiveperipherals.utils.TERUtils;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<EnderwireLightEmitterTileEntity> {
 
@@ -90,7 +89,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                     break;
                 case CEILING:
                     TERUtils.drawCubeWithoutSide(
-                            stack, buffer, ColorUtils.swapAlpha(color, 50), combinedLightIn,
+                            stack, buffer, color, combinedLightIn,
                             CELLING_START,
                             CELLING_END,
                             Direction.UP
@@ -98,7 +97,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
                     break;
                 case FLOOR:
                     TERUtils.drawCubeWithoutSide(
-                            stack, buffer, ColorUtils.swapAlpha(color, 50), combinedLightIn,
+                            stack, buffer, color, combinedLightIn,
                             FLOOR_START,
                             FLOOR_END,
                             Direction.DOWN

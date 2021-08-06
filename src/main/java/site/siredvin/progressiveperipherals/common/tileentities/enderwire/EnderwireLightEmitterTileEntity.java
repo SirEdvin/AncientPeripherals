@@ -9,6 +9,7 @@ import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitte
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlock;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
+import site.siredvin.progressiveperipherals.utils.ColorUtils;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 
 import java.awt.*;
@@ -56,7 +57,7 @@ public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<End
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data) {
         super.loadInternalData(state, data);
-        color = new Color(data.getInt(COLOR_TAG));
+        color = ColorUtils.swapAlpha(new Color(data.getInt(COLOR_TAG)), EnderwireLightEmitterTileRenderer.REQUIRED_COLOR_ALPHA);
     }
 
     @Override
