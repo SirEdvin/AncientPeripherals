@@ -41,6 +41,7 @@ import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecip
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionRightPage;
+import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 import site.siredvin.progressiveperipherals.utils.BiomeUtils;
 import site.siredvin.progressiveperipherals.utils.Platform;
 import vazkii.patchouli.client.book.ClientBookRegistry;
@@ -72,6 +73,7 @@ public class ProgressivePeripherals {
         // Forge events
         forgeBus.addListener(this::biomeModification);
         forgeBus.addListener(EnderwireNetworkBusHub::performCleanup);
+        forgeBus.addListener(SingleTickScheduler::tick);
         // Mod event listeners
         BlockEvents.subscribe(forgeBus);
 

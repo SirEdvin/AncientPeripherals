@@ -11,30 +11,31 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<EnderwireConnectorTileEntity, EnderwireNetworkConnectorPeripheral> implements ITickableTileEntity {
+public class EnderwireNetworkListenerTileEntity extends BaseEnderwireTileEntity<EnderwireNetworkListenerTileEntity, EnderwireNetworkConnectorPeripheral> implements ITickableTileEntity {
 
-    private long lastComputerEventMessage;
+    private long lastComputerEventMessage = -1;
 
-    public EnderwireConnectorTileEntity() {
-        super(TileEntityTypes.ENDERWIRE_NETWORK_CONNECTOR.get());
-        lastComputerEventMessage = -1;
+    public EnderwireNetworkListenerTileEntity() {
+        super(TileEntityTypes.ENDERWIRE_NETWORK_LISTENER.get());
     }
 
     @Override
-    public void onAttachedNetworkChange() {
-        if (this.attachedNetwork != null) {
-            lastComputerEventMessage = EnderwireNetworkBusHub.getComputerEventsStart(attachedNetwork);
+    public void onAttachedNetworkChange(String oldNetworkName, String newNetworkName) {
+        if (level != null && !level.isClientSide) {
+            if (newNetworkName != null) {
+                lastComputerEventMessage = EnderwireNetworkBusHub.getComputerEventsStart(attachedNetwork);
+            }
         }
     }
 
     @Override
-    public EnderwireConnectorTileEntity getThis() {
+    public EnderwireNetworkListenerTileEntity getThis() {
         return this;
     }
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.CONNECTOR;
+        return EnderwireElementType.LISTENER;
     }
 
     @Override
@@ -44,10 +45,9 @@ public class EnderwireConnectorTileEntity extends BaseEnderwireTileEntity<Enderw
 
     @Override
     public void tick() {
-        super.tick();
-        if (attachedNetwork != null) {
+        if (attachedNetwork != null && level != null && !level.isClientSide) {
             lastComputerEventMessage = EnderwireNetworkBusHub.traverseComputerEvents(attachedNetwork, lastComputerEventMessage, event -> {
-                if (event.isValid(getBlockPos(), Objects.requireNonNull(getWorld()).dimension().location().toString())) {
+                if (event.IsNotMalformed(getBlockPos(), Objects.requireNonNull(getWorld()).dimension().location().toString())) {
                     getConnectedComputers().forEach(computer -> computer.queueEvent("enderwire_computer_event", event.getData()));
                 } else {
                     getConnectedComputers().forEach(computer -> computer.queueEvent("malformed_enderwire_event"));

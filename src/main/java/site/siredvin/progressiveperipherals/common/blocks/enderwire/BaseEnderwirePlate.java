@@ -4,13 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import site.siredvin.progressiveperipherals.utils.ShapeUtils;
 
-public abstract class BaseEnderwirePlate<T extends TileEntity> extends BaseEnderwireHorizontalBlock<T> {
+public abstract class BaseEnderwirePlate<T extends TileEntity> extends BaseEnderwireHorizontalFaceBlock<T> {
 
     private static final VoxelShape DOWN_ATTACHED = Block.box(0, 0, 0, 16, 2, 16);
     private static final VoxelShape UP_ATTACHED = Block.box(0, 14, 0, 16, 16, 16);
@@ -21,6 +23,18 @@ public abstract class BaseEnderwirePlate<T extends TileEntity> extends BaseEnder
 
     public BaseEnderwirePlate() {
         super();
+    }
+
+    @Override
+    public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
+        // Rotation can cause strange problem, so avoiding it
+        return p_185499_1_;
+    }
+
+    @Override
+    public BlockState mirror(BlockState p_185471_1_, Mirror p_185471_2_) {
+        // Rotation can cause strange problem, so avoiding it
+        return p_185471_1_;
     }
 
     @Override

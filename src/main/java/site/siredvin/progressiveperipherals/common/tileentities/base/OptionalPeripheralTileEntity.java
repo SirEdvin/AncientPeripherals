@@ -3,7 +3,7 @@ package site.siredvin.progressiveperipherals.common.tileentities.base;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.Capabilities;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,7 +19,7 @@ import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import java.util.Collections;
 import java.util.List;
 
-public class OptionalPeripheralTileEntity<T extends BasePeripheral> extends TileEntity implements IPeripheralTileEntity {
+public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends TileEntity implements IPeripheralTileEntity {
 
     private static final String PERIPHERAL_DATA_TAG = "peripheralData";
 

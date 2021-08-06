@@ -13,18 +13,23 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.api.tileentity.IBlockObservingTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
+import javax.annotation.Nonnull;
+import java.util.Random;
+
 import static site.siredvin.progressiveperipherals.common.blocks.enderwire.BaseEnderwireBlock.CONNECTED;
 
-public abstract class BaseEnderwireHorizontalBlock<T extends TileEntity> extends HorizontalFaceBlock {
+public abstract class BaseEnderwireHorizontalFaceBlock<T extends TileEntity> extends HorizontalFaceBlock {
 
-    public BaseEnderwireHorizontalBlock() {
+    public BaseEnderwireHorizontalFaceBlock() {
         super(BlockUtils.decoration());
         this.registerDefaultState(generateDefaultState(this.getStateDefinition().any()));
     }
@@ -49,9 +54,23 @@ public abstract class BaseEnderwireHorizontalBlock<T extends TileEntity> extends
 
     @Override
     public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!newState.is(this)) // new block are not this block
+        boolean isBlockRemoved = !newState.is(this);
+        if (isBlockRemoved) // new block are not this block
             NetworkElementTool.handleRemove(world, pos);
+        TileEntity tile = world.getBlockEntity(pos);
         super.onRemove(state, world, pos, newState, isMoving);
+        if (isBlockRemoved && tile instanceof IBlockObservingTileEntity)
+            ((IBlockObservingTileEntity) tile).destroy();
+    }
+
+    @Override
+    public void onPlace(BlockState state, World world, BlockPos pos, BlockState newState, boolean bool) {
+        super.onPlace(state, world, pos, newState, bool);
+        if (newState.getBlock() == this) {
+            TileEntity te = world.getBlockEntity(pos);
+            if (te instanceof IBlockObservingTileEntity)
+                ((IBlockObservingTileEntity) te).placed();
+        }
     }
 
     @Override
@@ -73,4 +92,30 @@ public abstract class BaseEnderwireHorizontalBlock<T extends TileEntity> extends
     }
 
     public abstract T newTileEntity(BlockState state, IBlockReader world);
+
+    @Override
+    @Deprecated
+    public void neighborChanged(@Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull Block neighbourBlock, @Nonnull BlockPos neighbourPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, neighbourBlock, neighbourPos, isMoving);
+        TileEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof IBlockObservingTileEntity)
+            ((IBlockObservingTileEntity) tile).onNeighbourChange(neighbourPos);
+    }
+
+    @Override
+    public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbour) {
+        super.onNeighborChange(state, world, pos, neighbour);
+        TileEntity tile = world.getBlockEntity(pos);
+        if (tile instanceof IBlockObservingTileEntity)
+            ((IBlockObservingTileEntity) tile).onNeighbourTileEntityChange(neighbour);
+    }
+
+    @Override
+    @Deprecated
+    public void tick(@Nonnull BlockState state, ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random rand) {
+        super.tick(state, world, pos, rand);
+        TileEntity te = world.getBlockEntity(pos);
+        if (te instanceof IBlockObservingTileEntity)
+            ((IBlockObservingTileEntity) te).blockTick();
+    }
 }

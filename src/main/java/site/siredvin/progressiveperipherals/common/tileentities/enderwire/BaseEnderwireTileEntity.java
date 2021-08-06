@@ -1,28 +1,29 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.api.tileentity.IBlockObservingTileEntity;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.BaseEnderwireBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 
 import java.util.UUID;
 
-public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends BasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T>, ITickableTileEntity {
+public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends IBasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T>, IBlockObservingTileEntity {
     private static final String ATTACHED_NETWORK_TAG = "attachedNetwork";
     private static final String ELEMENT_UUID_TAG = "elementUUID";
 
     protected @Nullable String attachedNetwork;
     protected UUID elementUUID;
 
-    private boolean requireNetworkCheck = false;
+    private boolean requireNetworkCheck = true;
 
     public BaseEnderwireTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
@@ -38,15 +39,16 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
         return getBlockState().setValue(BaseEnderwireBlock.CONNECTED, attachedNetwork != null);
     }
 
-    public void onAttachedNetworkChange() {
+    public void onAttachedNetworkChange(String oldNetwork, String newNetwork) {
 
     }
 
     @Override
     public final void setAttachedNetwork(@Nullable String attachedNetwork) {
+        String oldNetwork = this.attachedNetwork;
         this.attachedNetwork = attachedNetwork;
         pushInternalDataChangeToClient(handleAttachedNetwork(attachedNetwork));
-        onAttachedNetworkChange();
+        onAttachedNetworkChange(oldNetwork, this.attachedNetwork);
     }
 
     @Override
@@ -72,10 +74,11 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
         }
         // queue network check
         requireNetworkCheck = true;
+        SingleTickScheduler.schedule(this);
     }
 
     @Override
-    public void tick() {
+    public void blockTick() {
         if (requireNetworkCheck) {
             if (level != null && !level.isClientSide && attachedNetwork != null) {
                 GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) level);

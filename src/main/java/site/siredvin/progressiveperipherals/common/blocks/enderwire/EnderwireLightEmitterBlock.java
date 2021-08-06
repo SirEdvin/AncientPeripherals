@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireLightEmitterTileEntity;
 import site.siredvin.progressiveperipherals.utils.ShapeUtils;
 
-public class EnderwireLightEmitterBlock extends BaseEnderwireHorizontalBlock<EnderwireLightEmitterTileEntity> {
+public class EnderwireLightEmitterBlock extends BaseEnderwireHorizontalFaceBlock<EnderwireLightEmitterTileEntity> {
 
     private static final VoxelShape FLOOR_SHAPE = VoxelShapes.or(
             Block.box(4, 0, 4, 12, 1, 12),

@@ -1,7 +1,7 @@
 package site.siredvin.progressiveperipherals.common.tileentities.base;
 
 import dan200.computercraft.shared.util.RedstoneUtil;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
@@ -18,7 +18,7 @@ import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvid
 import java.util.List;
 import java.util.Objects;
 
-public abstract class MutableNBTTileEntity<T extends BasePeripheral> extends OptionalPeripheralTileEntity<T> implements ITileEntityDataProvider {
+public abstract class MutableNBTTileEntity<T extends IBasePeripheral> extends OptionalPeripheralTileEntity<T> implements ITileEntityDataProvider {
 
     public MutableNBTTileEntity(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);

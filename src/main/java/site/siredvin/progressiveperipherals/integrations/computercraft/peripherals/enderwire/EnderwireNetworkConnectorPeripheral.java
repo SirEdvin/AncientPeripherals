@@ -6,7 +6,7 @@ import dan200.computercraft.api.lua.MethodResult;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkListenerTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
@@ -18,8 +18,8 @@ import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPe
 import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetwork;
 
 public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
-    private final EnderwireConnectorTileEntity tileEntity;
-    public EnderwireNetworkConnectorPeripheral(String type, EnderwireConnectorTileEntity tileEntity) {
+    private final EnderwireNetworkListenerTileEntity tileEntity;
+    public EnderwireNetworkConnectorPeripheral(String type, EnderwireNetworkListenerTileEntity tileEntity) {
         super(type, tileEntity);
         this.tileEntity = tileEntity;
     }

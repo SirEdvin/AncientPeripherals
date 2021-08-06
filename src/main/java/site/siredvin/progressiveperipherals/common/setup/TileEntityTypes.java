@@ -89,9 +89,9 @@ public class TileEntityTypes {
 
     // Enderwire network
 
-    public static final RegistryObject<TileEntityType<EnderwireConnectorTileEntity>> ENDERWIRE_NETWORK_CONNECTOR = Registration.TILE_ENTITIES.register(
-            "enderwire_network_connector",
-            () -> new TileEntityType<>(EnderwireConnectorTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get()), null)
+    public static final RegistryObject<TileEntityType<EnderwireNetworkListenerTileEntity>> ENDERWIRE_NETWORK_LISTENER = Registration.TILE_ENTITIES.register(
+            "enderwire_network_listener",
+            () -> new TileEntityType<>(EnderwireNetworkListenerTileEntity::new, Sets.newHashSet(Blocks.ENDERWIRE_NETWORK_LISTENER.get()), null)
     );
 
     public static final RegistryObject<TileEntityType<EnderwireSensorTileEntity>> ENDERWIRE_SENSOR = Registration.TILE_ENTITIES.register(
@@ -134,6 +134,28 @@ public class TileEntityTypes {
                     EnderwireLightEmitterTileEntity::new,
                     Sets.newHashSet(
                             Blocks.ENDERWIRE_LIGHT_EMITTER.get()
+                    ),
+                    null
+            )
+    );
+
+    public static final RegistryObject<TileEntityType<EnderwirePeripheralConnectorTileEntity>> ENDERWIRE_PERIPHERAL_CONNECTOR = Registration.TILE_ENTITIES.register(
+            "enderwire_peripheral_connector",
+            () -> new TileEntityType<>(
+                    EnderwirePeripheralConnectorTileEntity::new,
+                    Sets.newHashSet(
+                            Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get()
+                    ),
+                    null
+            )
+    );
+
+    public static final RegistryObject<TileEntityType<EnderwireNetworkConnectorTileEntity>> ENDERWIRE_NETWORK_CONNECTOR = Registration.TILE_ENTITIES.register(
+            "enderwire_network_connector",
+            () -> new TileEntityType<>(
+                    EnderwireNetworkConnectorTileEntity::new,
+                    Sets.newHashSet(
+                            Blocks.ENDERWIRE_NETWORK_CONNECTOR.get()
                     ),
                     null
             )

@@ -13,6 +13,9 @@ import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorIt
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkListenerTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwirePeripheralConnectorTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
@@ -141,10 +144,10 @@ public class Blocks {
 
     // Enderwire network
 
-    public static final RegistryObject<Block> ENDERWIRE_NETWORK_CONNECTOR = register(
-            "enderwire_network_connector",
-            EnderwireNetworkConnectorBlock::new,
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+    public static final RegistryObject<Block> ENDERWIRE_NETWORK_LISTENER = register(
+            "enderwire_network_listener",
+            () -> new EnderwireHorizontalBlock(EnderwireNetworkListenerTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_LISTENER.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_BLOCK = register(
@@ -211,6 +214,18 @@ public class Blocks {
             "enderwire_light_emitter",
             EnderwireLightEmitterBlock::new,
             () -> new BaseBlockItem(Blocks.ENDERWIRE_LIGHT_EMITTER.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_PERIPHERAL_CONNECTOR = register(
+            "enderwire_peripheral_connector",
+            () -> new EnderwireDirectionalBlock(EnderwirePeripheralConnectorTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_NETWORK_CONNECTOR = register(
+            "enderwire_network_connector",
+            () -> new EnderwireHorizontalBlock(EnderwireNetworkConnectorTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
     );
 
 

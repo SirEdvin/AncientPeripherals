@@ -129,6 +129,8 @@ public class NetworkData {
         EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
     }
 
+
+    @SuppressWarnings("UnusedReturnValue")
     public @Nullable NetworkElementData removeNetworkElement(NetworkElementData element) {
         return removeNetworkElementByUUID(element.getUUID());
     }

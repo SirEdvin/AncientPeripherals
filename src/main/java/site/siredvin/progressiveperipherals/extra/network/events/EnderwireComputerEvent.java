@@ -40,7 +40,7 @@ public class EnderwireComputerEvent implements IEpochEvent {
         return epoch;
     }
 
-    public boolean isValid(BlockPos receiverPos, String receiverDimension) {
+    public boolean IsNotMalformed(BlockPos receiverPos, String receiverDimension) {
         return reachableRangeSqr >= receiverPos.distSqr(pos) && (receiverDimension.equals(originalDimension) || interdimensional);
     }
 

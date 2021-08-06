@@ -15,20 +15,25 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkListenerTileEntity;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
-public class EnderwireNetworkConnectorBlock extends BaseEnderwireBlock<EnderwireConnectorTileEntity> {
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+import java.util.function.Supplier;
 
-    public EnderwireNetworkConnectorBlock() {
+public class EnderwireDirectionalBlock extends BaseEnderwireBlock<EnderwireNetworkListenerTileEntity> {
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+
+    private final Supplier<TileEntity> tileEntitySupplier;
+
+    public EnderwireDirectionalBlock(Supplier<TileEntity> tileEntitySupplier) {
         super(BlockUtils.defaultProperties());
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(CONNECTED, false));
+        this.tileEntitySupplier = tileEntitySupplier;
     }
 
     @Override
     public @NotNull TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new EnderwireConnectorTileEntity();
+        return tileEntitySupplier.get();
     }
 
     @Override
@@ -50,6 +55,6 @@ public class EnderwireNetworkConnectorBlock extends BaseEnderwireBlock<Enderwire
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState().setValue(FACING, context.getClickedFace().getOpposite());
     }
 }
