@@ -15,6 +15,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -110,10 +111,9 @@ public class TERUtils {
         addVertex(matrixPos, matrixNormal, renderBuffer, topLeftPos, uvpos, normalVector, color, lightmapValue);
     }
 
-
-
-    public static void drawBottomlessCube(MatrixStack matrixStack, IRenderTypeBuffer renderBuffer, Color color, int combinedLight, Vector3f start, Vector3f end) {
-        List<Direction> sides = Arrays.asList(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP);
+    public static void drawCubeWithoutSide(MatrixStack matrixStack, IRenderTypeBuffer renderBuffer, Color color, int combinedLight, Vector3f start, Vector3f end, Direction side) {
+        List<Direction> sides = new ArrayList<>(Arrays.asList(Direction.values()));
+        sides.remove(side);
         drawCube(matrixStack, renderBuffer, color, combinedLight, start, end, sides);
     }
 
