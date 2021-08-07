@@ -18,3 +18,4 @@ Documentation can be found in game via [Patchouli](https://www.curseforge.com/mi
 ## Credits
 
 [SirEdvin](https://github.com/SirEdvin) - Author
+
