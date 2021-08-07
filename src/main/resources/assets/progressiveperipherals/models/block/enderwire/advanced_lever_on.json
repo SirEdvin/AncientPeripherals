@@ -1,5 +1,5 @@
 {
-    "parent": "block/lever_on",
+    "parent": "progressiveperipherals:block/enderwire/up_lever",
     "textures": {
         "particle": "progressiveperipherals:block/enderwire/advanced_lever_casing",
         "base": "progressiveperipherals:block/enderwire/advanced_lever_casing",

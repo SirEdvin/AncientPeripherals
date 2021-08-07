@@ -2,7 +2,7 @@
     "parent": "block/lever_on",
     "textures": {
         "particle": "progressiveperipherals:block/enderwire/lever_casing",
-        "base": "progressiveperipherals:block/enderwire/lever_casing_connected",
+        "base": "progressiveperipherals:block/enderwire/lever_casing",
         "lever": "progressiveperipherals:block/enderwire/lever"
     }
 }

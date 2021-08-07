@@ -55,6 +55,8 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     }
 
     public ActionResultType overwrittenOriginalUse(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        if (!state.getValue(CONNECTED))
+            return ActionResultType.PASS;
         if (world.isClientSide) {
             BlockState blockstate1 = state.cycle(POWERED);
             if (blockstate1.getValue(POWERED)) {
