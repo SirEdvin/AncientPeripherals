@@ -1,7 +1,8 @@
 package site.siredvin.progressiveperipherals.extra.network.api;
 
 public enum EnderwireElementType {
-    LISTENER(EnderwireElementCategory.SERVICE), PERIPHERAL_CONNECTOR(EnderwireElementCategory.SERVICE), NETWORK_CONNECTOR(EnderwireElementCategory.SERVICE),
+    SENSOR_MANAGER(EnderwireElementCategory.SERVICE), PERIPHERAL_CONNECTOR(EnderwireElementCategory.SERVICE), NETWORK_CONNECTOR(EnderwireElementCategory.SERVICE),
+    NETWORK_AMPLIFIER(EnderwireElementCategory.MODIFICATION), DIMENSION_BREAKER(EnderwireElementCategory.MODIFICATION),
     LEVER(EnderwireElementCategory.SENSOR), BUTTON(EnderwireElementCategory.SENSOR), PLATE(EnderwireElementCategory.SENSOR), REDSTONE_SENSOR(EnderwireElementCategory.SENSOR),
     REDSTONE_EMITTER(EnderwireElementCategory.EMITTER), LIGHT_EMITTER(EnderwireElementCategory.EMITTER),
     UNKNOWN(EnderwireElementCategory.NONE);

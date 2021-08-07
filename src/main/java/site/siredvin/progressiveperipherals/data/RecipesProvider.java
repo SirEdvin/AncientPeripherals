@@ -228,6 +228,7 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
         buildBlockIngotRecipes(consumer, Blocks.ABSTRACTIUM_BLOCK.get(), Items.ABSTRACTIUM_INGOT.get());
         buildBlockIngotRecipes(consumer, Blocks.IRREALIUM_BLOCK.get(), Items.IRREALIUM_INGOT.get());
         buildBlockIngotRecipes(consumer, Blocks.KNOWLEDGIUM_BLOCK.get(), Items.KNOWLEDGIUM_INGOT.get());
+        buildBlockIngotRecipes(consumer, Blocks.ENREDIUM_BLOCK.get(), Items.ENREDIUM_INGOT.get());
         TweakedShapedRecipeBuilder.shaped(Items.ABSTRACTIUM_AXE.get())
                 .define('I', Items.ABSTRACTIUM_INGOT.get())
                 .define('S', net.minecraft.item.Items.STICK)

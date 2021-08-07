@@ -3,6 +3,7 @@ package site.siredvin.progressiveperipherals.extra.network.api;
 public enum EnderwireElementCategory {
     SENSOR(false, false, false, false),
     SERVICE(true, true, false, true),
+    MODIFICATION(false, false, false, false),
     EMITTER(false, false, true, false),
     NONE(false, false, false, false);
 

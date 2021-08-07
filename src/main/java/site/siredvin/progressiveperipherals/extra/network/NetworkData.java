@@ -3,6 +3,8 @@ package site.siredvin.progressiveperipherals.extra.network;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3i;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
@@ -69,6 +71,10 @@ public class NetworkData {
 
     public boolean isInterdimensional() {
         return interdimensional;
+    }
+
+    public boolean canReach(NetworkElementData element, BlockPos target, String targetDimension) {
+        return canReach(reachableRange, interdimensional, element.getPos(), target, element.getDimension(), targetDimension);
     }
 
     protected void recalculateNetworkStats() {
@@ -192,5 +198,18 @@ public class NetworkData {
     @Override
     public int hashCode() {
         return Objects.hash(type, name, ownerUUID, elements);
+    }
+
+    public static boolean canReach(int reachableRange, boolean interdimensional, BlockPos source, BlockPos target, String sourceDimension, String targetDimension) {
+        final int reachableRangeSqr = reachableRange * reachableRange;
+        if (!sourceDimension.equals(targetDimension)) {
+            if (!interdimensional)
+                return false;
+            double distanceToTargetSpawn = Math.sqrt(target.distSqr(Vector3i.ZERO));
+            double distanceToSourceSpawn = Math.sqrt(source.distSqr(Vector3i.ZERO));
+            double reachableRangeSqrt = Math.sqrt(reachableRange);
+            return distanceToSourceSpawn / distanceToTargetSpawn < reachableRangeSqrt && distanceToTargetSpawn / distanceToSourceSpawn < reachableRangeSqrt;
+        }
+        return reachableRangeSqr >= source.distSqr(target);
     }
 }

@@ -13,9 +13,7 @@ import site.siredvin.progressiveperipherals.common.items.FlexibleRealityAnchorIt
 import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkListenerTileEntity;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkConnectorTileEntity;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwirePeripheralConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.*;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
@@ -144,88 +142,100 @@ public class Blocks {
 
     // Enderwire network
 
-    public static final RegistryObject<Block> ENDERWIRE_NETWORK_LISTENER = register(
-            "enderwire_network_listener",
-            () -> new EnderwireHorizontalBlock(EnderwireNetworkListenerTileEntity::new),
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_LISTENER.get(), new Item.Properties().stacksTo(64))
+    public static final RegistryObject<Block> ENREDIUM_BLOCK = register(
+            "enredium_block",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.ENREDIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
     );
 
-    public static final RegistryObject<Block> ENDERWIRE_BLOCK = register(
-            "enderwire_block",
-            () -> new BaseBlock(BlockUtils.defaultProperties()),
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_BLOCK.get(), new Item.Properties().stacksTo(64))
+    public static final RegistryObject<Block> ENDERWIRE_NETWORK_CONNECTOR = register(
+            "enderwire/network_connector",
+            () -> new EnderwireHorizontalBlock(EnderwireNetworkConnectorTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_NETWORK_AMPLIFIER = register(
+            "enderwire/network_amplifier",
+            () -> new EnderwireHorizontalBlock(EnderwireNetworkAmplifierTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_AMPLIFIER.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_DIMENSION_BREAKER = register(
+            "enderwire/dimension_breaker",
+            () -> new EnderwireHorizontalBlock(EnderwireDimensionBreakerTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_DIMENSION_BREAKER.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_CASING = register(
-            "enderwire_casing",
+            "enderwire/casing",
             () -> new BaseBlock(BlockUtils.defaultProperties()),
             () -> new BaseBlockItem(Blocks.ENDERWIRE_CASING.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_LEVER = register(
-            "enderwire_lever",
+            "enderwire/lever",
             () -> new EnderwireLever(false),
             () -> new BaseBlockItem(Blocks.ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_BUTTON = register(
-            "enderwire_button",
+            "enderwire/button",
             () -> new EnderwireButton(false),
             () -> new BaseBlockItem(Blocks.ENDERWIRE_BUTTON.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_PRESSURE_PLATE = register(
-            "enderwire_pressure_plate",
+            "enderwire/pressure_plate",
             () -> new EnderwirePressurePlate(false),
             () -> new BaseBlockItem(Blocks.ENDERWIRE_PRESSURE_PLATE.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ADVANCED_ENDERWIRE_LEVER = register(
-            "advanced_enderwire_lever",
+            "enderwire/advanced_lever",
             () -> new EnderwireLever(true),
             () -> new BaseBlockItem(Blocks.ADVANCED_ENDERWIRE_LEVER.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ADVANCED_ENDERWIRE_BUTTON = register(
-            "advanced_enderwire_button",
+            "enderwire/advanced_button",
             () -> new EnderwireButton(true),
             () -> new BaseBlockItem(Blocks.ADVANCED_ENDERWIRE_BUTTON.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ADVANCED_ENDERWIRE_PRESSURE_PLATE = register(
-            "advanced_enderwire_pressure_plate",
+            "enderwire/advanced_pressure_plate",
             () -> new EnderwirePressurePlate(true),
             () -> new BaseBlockItem(Blocks.ADVANCED_ENDERWIRE_PRESSURE_PLATE.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_REDSTONE_SENSOR = register(
-            "enderwire_redstone_sensor",
+            "enderwire/redstone_sensor",
             EnderwireRedstoneSensorBlock::new,
             () -> new BaseBlockItem(Blocks.ENDERWIRE_REDSTONE_SENSOR.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_REDSTONE_EMITTER = register(
-            "enderwire_redstone_emitter",
+            "enderwire/redstone_emitter",
             EnderwireRedstoneEmitterBlock::new,
             () -> new BaseBlockItem(Blocks.ENDERWIRE_REDSTONE_EMITTER.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_LIGHT_EMITTER = register(
-            "enderwire_light_emitter",
+            "enderwire/light_emitter",
             EnderwireLightEmitterBlock::new,
             () -> new BaseBlockItem(Blocks.ENDERWIRE_LIGHT_EMITTER.get(), new Item.Properties().stacksTo(64))
     );
 
-    public static final RegistryObject<Block> ENDERWIRE_PERIPHERAL_CONNECTOR = register(
-            "enderwire_peripheral_connector",
-            () -> new EnderwireDirectionalBlock(EnderwirePeripheralConnectorTileEntity::new),
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+    public static final RegistryObject<Block> ENDERWIRE_PERIPHERAL_SHARING = register(
+            "enderwire/peripheral_sharing",
+            () -> new EnderwireDirectionalBlock(EnderwirePeripheralSharingTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_PERIPHERAL_SHARING.get(), new Item.Properties().stacksTo(64))
     );
 
-    public static final RegistryObject<Block> ENDERWIRE_NETWORK_CONNECTOR = register(
-            "enderwire_network_connector",
-            () -> new EnderwireHorizontalBlock(EnderwireNetworkConnectorTileEntity::new),
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_NETWORK_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+    public static final RegistryObject<Block> ENDERWIRE_PERIPHERAL_CONNECTOR = register(
+            "enderwire/peripheral_connector",
+            () -> new EnderwireHorizontalBlock(EnderwirePeripheralConnectorTileEntity::new),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get(), new Item.Properties().stacksTo(64))
     );
 
 

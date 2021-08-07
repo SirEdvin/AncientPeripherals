@@ -15,12 +15,12 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkListenerTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkConnectorTileEntity;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
 
-public class EnderwireHorizontalBlock extends BaseEnderwireBlock<EnderwireNetworkListenerTileEntity> {
+public class EnderwireHorizontalBlock extends BaseEnderwireBlock<EnderwireNetworkConnectorTileEntity> {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     private final Supplier<TileEntity> tileEntitySupplier;

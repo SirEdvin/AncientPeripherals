@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.extra.network.events;
 
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class EnderwireComputerEvent implements IEpochEvent {
     private final @NotNull String name;
     private final @NotNull Map<String, Object> data;
-    private final int reachableRangeSqr;
+    private final int reachableRange;
     private final boolean interdimensional;
     private final String originalDimension;
     private final BlockPos pos;
@@ -20,7 +21,7 @@ public class EnderwireComputerEvent implements IEpochEvent {
 
     protected EnderwireComputerEvent(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, @NotNull Map<String, Object> data, long epoch) {
         this.name = name;
-        this.reachableRangeSqr = reachableRange * reachableRange;
+        this.reachableRange = reachableRange;
         this.interdimensional = interdimensional;
         this.originalDimension = originalDimension;
         this.pos = pos;
@@ -41,7 +42,7 @@ public class EnderwireComputerEvent implements IEpochEvent {
     }
 
     public boolean IsNotMalformed(BlockPos receiverPos, String receiverDimension) {
-        return reachableRangeSqr >= receiverPos.distSqr(pos) && (receiverDimension.equals(originalDimension) || interdimensional);
+        return NetworkData.canReach(reachableRange, interdimensional, pos, receiverPos, originalDimension, receiverDimension);
     }
 
     public static EnderwireComputerEvent timed(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, Map<String, Object> data) {

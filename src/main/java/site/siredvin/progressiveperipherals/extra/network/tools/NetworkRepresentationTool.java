@@ -17,6 +17,8 @@ public class NetworkRepresentationTool {
 
     public static Map<String, Object> fullRepresentation(NetworkData network, BlockPos center) {
         Map<String, Object> representation = shortRepresentation(network);
+        representation.put("range", network.getReachableRange());
+        representation.put("interdimensional", network.isInterdimensional());
         Map<UUID, NetworkElementData> elements = network.getElements();
         if (elements != null) {
             List<Object> elementsRepresentation = new ArrayList<>();

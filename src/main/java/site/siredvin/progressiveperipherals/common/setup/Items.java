@@ -98,14 +98,14 @@ public class Items {
             "knowledgium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
     );
 
-    // Network
+    // Enderwire network
 
-    public static final RegistryObject<Item> ENDERWIRE_POWDER = Registration.ITEMS.register(
-            "enderwire_powder", () -> new BaseItem(new Item.Properties().stacksTo(64))
+    public static final RegistryObject<Item> ENREDIUM_INGOT = Registration.ITEMS.register(
+            "enredium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Item> ENDERWIRE_NETWORK_MANAGER = Registration.ITEMS.register(
-            "enderwire_network_manager", () -> new PeripheralItem(() -> true, null, EnderwireNetworkManagementPocket.ID)
+            "enderwire/network_manager", () -> new PeripheralItem(() -> true, null, EnderwireNetworkManagementPocket.ID)
     );
 
     public static void register() {

@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    {
+      "item": "progressiveperipherals:enredium_ingot"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:enredium_block"
+  }
+}

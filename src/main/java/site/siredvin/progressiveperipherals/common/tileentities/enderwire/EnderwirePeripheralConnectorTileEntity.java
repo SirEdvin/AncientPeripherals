@@ -1,65 +1,29 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
-import dan200.computercraft.api.peripheral.IPeripheral;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireDirectionalBlock;
+import dan200.computercraft.api.network.wired.IWiredNode;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.server.ServerWorld;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
+import site.siredvin.progressiveperipherals.extra.network.NetworkData;
+import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 
-import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTileEntity<EnderwirePeripheralConnectorTileEntity> {
+import static dan200.computercraft.shared.Capabilities.CAPABILITY_WIRED_ELEMENT;
+
+public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTileEntity<EnderwirePeripheralConnectorTileEntity> implements ITickableTileEntity {
+    private long lastNetworkEventMessage = -1;
+    private boolean initialized = false;
 
     public EnderwirePeripheralConnectorTileEntity() {
         super(TileEntityTypes.ENDERWIRE_PERIPHERAL_CONNECTOR.get());
-    }
-
-    @Override
-    public void onNeighbourChange(@Nonnull BlockPos neighbour) {
-        onNeighbourTileEntityChange(neighbour);
-    }
-
-    public Direction getLookingDirection() {
-        BlockState state = getBlockState();
-        return state.getValue(EnderwireDirectionalBlock.FACING);
-    }
-
-    @Override
-    public void onNeighbourTileEntityChange(@Nonnull BlockPos neighbour) {
-        Objects.requireNonNull(level);
-        if (!level.isClientSide) {
-            Direction facing = getLookingDirection();
-            if (getBlockPos().relative(facing).equals(neighbour))
-                refreshPeripheral();
-        }
-    }
-
-    @Override
-    protected void refreshPeripheral() {
-        if (level != null && !isRemoved() && localPeripheral.attach(level, getBlockPos(), getLookingDirection())) {
-            updateConnectedPeripherals();
-        }
-    }
-
-    @Override
-    public void blockTick() {
-        super.blockTick();
-        if (!initialized) {
-            refreshPeripheral();
-            initialized = true;
-        }
-    }
-
-    private void updateConnectedPeripherals() {
-        Map<String, IPeripheral> peripherals = localPeripheral.toMap();
-        node.updatePeripherals(peripherals);
     }
 
     @Override
@@ -67,9 +31,65 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
         return this;
     }
 
+    public void populateElement(NetworkElementData element) {
+        Objects.requireNonNull(level);
+        if (element.getElementType().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getUUID().equals(getElementUUID())) {
+            GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
+            NetworkData network = networks.getNetwork(attachedNetwork);
+            Objects.requireNonNull(network);
+            if (network.canReach(element, getPosition(), level.dimension().location().toString())) {
+                TileEntity te = level.getBlockEntity(element.getPos());
+                if (te != null)
+                    te.getCapability(CAPABILITY_WIRED_ELEMENT).ifPresent(remoteWiredElement -> {
+                        IWiredNode remoteNode = remoteWiredElement.getNode();
+                        if (!remoteNode.equals(node))
+                            node.connectTo(remoteNode);
+                    });
+            }
+        }
+    }
+
+    public void depopulateElement(NetworkElementData element) {
+        Objects.requireNonNull(level);
+        if (element.getElementType().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getUUID().equals(getElementUUID())) {
+            TileEntity te = level.getBlockEntity(element.getPos());
+            if (te != null)
+                te.getCapability(CAPABILITY_WIRED_ELEMENT).ifPresent(remoteWiredElement -> {
+                    IWiredNode remoteNode = remoteWiredElement.getNode();
+                    if (!remoteNode.equals(node))
+                        node.disconnectFrom(remoteNode);
+                });
+        }
+    }
+
+    @Override
+    public void tick() {
+        if (attachedNetwork != null && level != null && !level.isClientSide) {
+            lastNetworkEventMessage = EnderwireNetworkBusHub.traverseNetworkEvents(attachedNetwork, lastNetworkEventMessage, event -> {
+                Arrays.stream(event.getAddedElements()).forEach(this::populateElement);
+                Arrays.stream(event.getRemovedElements()).forEach(this::depopulateElement);
+            });
+        }
+    }
+
+    @Override
+    public void onAttachedNetworkChange(String oldNetworkName, String newNetworkName) {
+        if (level != null && !level.isClientSide) {
+            GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
+            NetworkData oldNetwork = networks.getNetwork(oldNetworkName);
+            NetworkData newNetwork = networks.getNetwork(newNetworkName);
+            if (oldNetwork != null)
+                oldNetwork.traverseElements(this::depopulateElement);
+            if (newNetworkName != null && newNetwork != null) {
+                lastNetworkEventMessage = EnderwireNetworkBusHub.getNetworkEventsStart(attachedNetwork);
+                newNetwork.traverseElements(this::populateElement);
+            }
+        }
+    }
+
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.PERIPHERAL_CONNECTOR;
+        return EnderwireElementType.NETWORK_CONNECTOR;
     }
 
     @Override
@@ -78,8 +98,16 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
     }
 
     @Override
-    public @NotNull Vector3d getWiredPosition() {
-        BlockPos pos = getBlockPos().relative(getLookingDirection());
-        return new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+    public void blockTick() {
+        super.blockTick();
+        String attachedNetwork = getAttachedNetwork();
+        if (!initialized && level != null && !level.isClientSide && attachedNetwork != null) {
+            initialized = true;
+            GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
+            NetworkData network = networks.getNetwork(attachedNetwork);
+            if (network != null) {
+                network.traverseElements(this::populateElement);
+            }
+        }
     }
 }
