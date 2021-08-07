@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [0.0.5] - 2021-08-08
+
 ### Added
 
 - [Event distributor](https://github.com/SirEdvin/ProgressivePeripherals/issues/13)
@@ -13,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Added `lightLevel` support for Flexible statue and Flexible reality anchor
+
+### Fixed
+
+- [SendXPToOwner removed XP from player](https://github.com/SirEdvin/ProgressivePeripherals/issues/24)
 
 ## [0.0.4] - 2021-07-30
 

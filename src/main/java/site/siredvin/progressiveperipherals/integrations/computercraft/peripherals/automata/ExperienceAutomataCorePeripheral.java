@@ -115,7 +115,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
             PlayerEntity player = owner.getOwner();
             if (player == null)
                 return MethodResult.of(null, "Cannot find owning player");
-            player.giveExperiencePoints((int) -count);
+            player.giveExperiencePoints((int) count);
             adjustStoredXP(-count);
             return MethodResult.of(count);
         });
