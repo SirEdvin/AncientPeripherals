@@ -86,7 +86,10 @@ public class RealityForgerPeripheral extends BasePeripheral {
         boolean applyBlock = false;
         BlockState targetState = null;
         if (table.containsKey("block")) {
-            Optional<Block> blockOptional = Registry.BLOCK.getOptional(new ResourceLocation(table.get("block").toString()));
+            String blockID = table.get("block").toString();
+            if (ProgressivePeripheralsConfig.realityForgerBlacklist.contains(blockID))
+                throw new LuaException("You cannot use this block, is blacklisted");
+            Optional<Block> blockOptional = Registry.BLOCK.getOptional(new ResourceLocation(blockID));
             if (!blockOptional.isPresent())
                 throw new LuaException(String.format("Cannot find block %s", table.get("block")));
             Block block = blockOptional.get();

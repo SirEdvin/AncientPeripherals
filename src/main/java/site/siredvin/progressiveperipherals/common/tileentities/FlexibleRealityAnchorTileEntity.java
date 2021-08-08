@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleRealityAnchor;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 
@@ -42,6 +43,8 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
     }
 
     public void setMimic(@Nullable BlockState mimic, @NotNull BlockState state, boolean skipUpdate) {
+        if (mimic != null && ProgressivePeripheralsConfig.realityForgerBlacklist.contains(mimic.getBlock().getRegistryName().toString()))
+            return;
         this.mimic = mimic;
         if (!skipUpdate) {
             pushInternalDataChangeToClient(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));
