@@ -32,6 +32,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
 
     public static final ModelProperty<QuadList> BAKED_QUADS = new ModelProperty<>();
 
+    private @Nullable BlockState pendingState;
     private @Nullable QuadList bakedQuads;
     private @Nullable VoxelShape blockShape;
     private @Nullable String name;
@@ -45,6 +46,16 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
     @Override
     public IModelData getModelData() {
         return new ModelDataMap.Builder().withInitial(BAKED_QUADS, bakedQuads).build();
+    }
+
+    @Override
+    public void pushInternalDataChangeToClient() {
+        if (pendingState != null) {
+            pushInternalDataChangeToClient(pendingState);
+            pendingState = null;
+        } else {
+            pushInternalDataChangeToClient(getBlockState());
+        }
     }
 
     @Override
@@ -63,9 +74,9 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
             QuadList newBakedQuads = NBTUtils.readQuadList(tag.getByteArray(BAKED_QUADS_TAG));
             if (!Objects.equals(bakedQuads, newBakedQuads)) {
                 if (newBakedQuads != null) {
-                    setBakedQuads(newBakedQuads);
+                    setBakedQuads(newBakedQuads, true);
                 } else {
-                    clear(false);
+                    clear(true);
                 }
             }
         }
@@ -88,15 +99,16 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         return tag;
     }
 
-    public void setBakedQuads(@NotNull QuadList bakedQuads) {
-        setBakedQuads(bakedQuads, false);
-    }
-
     public void setBakedQuads(@NotNull QuadList bakedQuads, boolean skipUpdate) {
         this.bakedQuads = bakedQuads;
         refreshShape();
-        if (!skipUpdate)
+        if (!skipUpdate) {
             pushInternalDataChangeToClient(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
+        } else {
+            if (pendingState == null)
+                pendingState = getBlockState();
+            pendingState = pendingState.setValue(FlexibleStatue.CONFIGURED, true);
+        }
     }
 
     public void setName(@NotNull String name) {
@@ -126,8 +138,13 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
     public void clear(boolean skipUpdate) {
         bakedQuads = null;
         refreshShape();
-        if (!skipUpdate)
+        if (!skipUpdate) {
             pushInternalDataChangeToClient(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
+        } else {
+            if (pendingState == null)
+                pendingState = getBlockState();
+            pendingState = pendingState.setValue(FlexibleStatue.CONFIGURED, false);
+        }
     }
 
     public void refreshShape() {

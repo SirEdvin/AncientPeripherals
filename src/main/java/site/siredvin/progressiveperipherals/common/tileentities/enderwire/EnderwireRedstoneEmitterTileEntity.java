@@ -93,7 +93,7 @@ public class EnderwireRedstoneEmitterTileEntity extends BaseEnderwireTileEntity<
                 }
             }
         }
-        pushNeighborUpdate(updatedSides);
+        pushRedstoneUpdate(updatedSides);
         return MethodResult.of(true);
     }
 }

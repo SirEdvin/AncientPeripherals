@@ -76,7 +76,7 @@ public abstract class MutableNBTTileEntity<T extends IBasePeripheral> extends Op
         }
     }
 
-    public void pushNeighborUpdate(List<Direction> neighbors) {
+    public void pushRedstoneUpdate(List<Direction> neighbors) {
         World world = getLevel();
         Objects.requireNonNull(world);
         if (!world.isClientSide) {

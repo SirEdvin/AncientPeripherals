@@ -120,7 +120,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         if (quadList.list.size() > MAX_QUAD_COUNT)
             return MethodResult.of(null, String.format("You cannot send more then %d quads", MAX_QUAD_COUNT));
         FlexibleStatueTileEntity tileEntity = opStatue.get();
-        tileEntity.setBakedQuads(quadList);
+        tileEntity.setBakedQuads(quadList, false);
         return MethodResult.of(true);
     }
 }
