@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [0.0.6] - 2021-08-08
+
 ### Fixed
 
 - Crashes with reality forger [first](https://github.com/SirEdvin/ProgressivePeripherals/issues/27), [second](https://github.com/SirEdvin/ProgressivePeripherals/issues/26) by blacklist introducing
