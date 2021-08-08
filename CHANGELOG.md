@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Crashes with reality forger [first](https://github.com/SirEdvin/ProgressivePeripherals/issues/27), [second](https://github.com/SirEdvin/ProgressivePeripherals/issues/26) by blacklist introducing
+- Flexible statue loot [dup](https://github.com/SirEdvin/ProgressivePeripherals/issues/28)
+- Flexible reality anchor loot [dup](https://github.com/SirEdvin/ProgressivePeripherals/issues/25)
+
 ### [0.0.5] - 2021-08-08
 
 ### Added
