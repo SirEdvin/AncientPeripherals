@@ -31,10 +31,13 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
         super(TileEntityTypes.FLEXIBLE_REALITY_ANCHOR.get());
     }
 
-    public void pushStackedState() {
+    @Override
+    public void pushInternalDataChangeToClient() {
         if (pendingState != null) {
             pushInternalDataChangeToClient(pendingState);
             pendingState = null;
+        } else {
+            pushInternalDataChangeToClient(getBlockState());
         }
     }
 

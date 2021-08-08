@@ -118,7 +118,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
                 realityMirror.setLightLevel(((Number) value).intValue());
             }
         });
-        realityMirror.pushStackedState();
+        realityMirror.pushInternalDataChangeToClient();
     }
 
     @LuaFunction
