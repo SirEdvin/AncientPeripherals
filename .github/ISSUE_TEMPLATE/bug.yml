@@ -22,13 +22,16 @@ body:
         2. Then hit this...
         3. Then...
     validations:
-      required: true
+      required: false
   - type: dropdown
     attributes:
       label: Version
       description: What version of progressive peripherals are you using?
       multiple: false
       options:
+        - 0.0.4
+        - 0.0.5
+        - 0.0.6
         - Own compiled build
     validations:
       required: true
@@ -38,7 +41,7 @@ body:
       description: What version of Forge and Minecraft do you use?
       placeholder: Forge 36.1.32 Minecraft 1.16.5
     validations:
-      required: true
+      required: false
   - type: input
     attributes:
       label: Screenshots or Videos
