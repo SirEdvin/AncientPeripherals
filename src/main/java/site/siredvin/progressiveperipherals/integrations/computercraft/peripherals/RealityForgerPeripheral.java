@@ -87,20 +87,20 @@ public class RealityForgerPeripheral extends BasePeripheral {
         BlockState targetState = null;
         if (table.containsKey("block")) {
             String blockID = table.get("block").toString();
-            if (!ProgressivePeripheralsConfig.realityForgerBlacklist.contains(blockID)) {
-                Optional<Block> blockOptional = Registry.BLOCK.getOptional(new ResourceLocation(blockID));
-                if (!blockOptional.isPresent())
-                    throw new LuaException(String.format("Cannot find block %s", table.get("block")));
-                Block block = blockOptional.get();
-                targetState = block.defaultBlockState();
-                if (table.containsKey("attrs")) {
-                    Object blockAttrs = table.get("attrs");
-                    if (!(blockAttrs instanceof Map))
-                        throw new LuaException("attrs should be a table");
-                    targetState = applyBlockAttrs(targetState, (Map<?, ?>) blockAttrs);
-                }
-                applyBlock = true;
+            if (ProgressivePeripheralsConfig.realityForgerBlacklist.contains(blockID))
+                throw new LuaException("You cannot use this block, is blacklisted");
+            Optional<Block> blockOptional = Registry.BLOCK.getOptional(new ResourceLocation(blockID));
+            if (!blockOptional.isPresent())
+                throw new LuaException(String.format("Cannot find block %s", table.get("block")));
+            Block block = blockOptional.get();
+            targetState = block.defaultBlockState();
+            if (table.containsKey("attrs")) {
+                Object blockAttrs = table.get("attrs");
+                if (!(blockAttrs instanceof Map))
+                    throw new LuaException("attrs should be a table");
+                targetState = applyBlockAttrs(targetState, (Map<?, ?>) blockAttrs);
             }
+            applyBlock = true;
         }
         return Pair.of(applyBlock, targetState);
     }

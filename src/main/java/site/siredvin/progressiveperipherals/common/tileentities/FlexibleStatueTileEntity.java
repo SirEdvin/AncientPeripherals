@@ -47,24 +47,26 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
     }
 
     public void loadInternalData(BlockState state, CompoundNBT tag, boolean skipUpdate) {
-        if (tag.contains(BAKED_QUADS_TAG)) {
-            QuadList newBakedQuads = NBTUtils.readQuadList(tag.getByteArray(BAKED_QUADS_TAG));
-            if (!Objects.equals(bakedQuads, newBakedQuads)) {
-                if (newBakedQuads != null) {
-                    setBakedQuads(newBakedQuads, true);
-                } else {
-                    clear(true);
-                }
-                if (!skipUpdate)
-                    pushState();
-            }
-        }
         if (tag.contains(NAME_TAG))
             setName(tag.getString(NAME_TAG));
         if (tag.contains(AUTHOR_TAG))
             setAuthor(tag.getString(AUTHOR_TAG));
         if (tag.contains(LIGHT_LEVEL_TAG))
             setLightLevel(tag.getInt(LIGHT_LEVEL_TAG));
+        boolean quadUpdated = false;
+        if (tag.contains(BAKED_QUADS_TAG)) {
+            QuadList newBakedQuads = NBTUtils.readQuadList(tag.getByteArray(BAKED_QUADS_TAG));
+            if (!Objects.equals(bakedQuads, newBakedQuads)) {
+                quadUpdated = true;
+                if (newBakedQuads != null) {
+                    setBakedQuads(newBakedQuads, skipUpdate);
+                } else {
+                    clear(skipUpdate);
+                }
+            }
+        }
+        if (!quadUpdated)
+            pushState();
     }
 
     public CompoundNBT saveInternalData(CompoundNBT tag) {

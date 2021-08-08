@@ -94,7 +94,7 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
         if (data.contains(MIMIC_TAG)) {
             setMimic(NBTUtil.readBlockState(data.getCompound(MIMIC_TAG)), state, true);
             if (!skipUpdate)
-                pushState();
+                pushStackedState();
         }
         if (data.contains(LIGHT_LEVEL_TAG))
             setLightLevel(data.getInt(LIGHT_LEVEL_TAG));
