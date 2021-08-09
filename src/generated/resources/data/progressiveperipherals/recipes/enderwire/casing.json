@@ -1,0 +1,24 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "I  R",
+    " SS ",
+    " SS ",
+    "R  I"
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:enredium_ingot"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/casing",
+    "count": 8
+  }
+}

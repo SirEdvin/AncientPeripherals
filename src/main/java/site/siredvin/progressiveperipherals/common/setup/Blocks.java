@@ -148,6 +148,18 @@ public class Blocks {
             () -> new BaseBlockItem(Blocks.ENREDIUM_BLOCK.get(), new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Block> ENDERWIRE_CASING = register(
+            "enderwire/casing",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_CASING.get(), new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Block> ENDERWIRE_PERIPHERAL_CASING = register(
+            "enderwire/peripheral_casing",
+            () -> new BaseBlock(BlockUtils.defaultProperties()),
+            () -> new BaseBlockItem(Blocks.ENDERWIRE_PERIPHERAL_CASING.get(), new Item.Properties().stacksTo(64))
+    );
+
     public static final RegistryObject<Block> ENDERWIRE_NETWORK_CONNECTOR = register(
             "enderwire/network_connector",
             () -> new EnderwireHorizontalBlock(EnderwireNetworkConnectorTileEntity::new),
@@ -164,12 +176,6 @@ public class Blocks {
             "enderwire/dimension_breaker",
             () -> new EnderwireHorizontalBlock(EnderwireDimensionBreakerTileEntity::new),
             () -> new BaseBlockItem(Blocks.ENDERWIRE_DIMENSION_BREAKER.get(), new Item.Properties().stacksTo(64))
-    );
-
-    public static final RegistryObject<Block> ENDERWIRE_CASING = register(
-            "enderwire/casing",
-            () -> new BaseBlock(BlockUtils.defaultProperties()),
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_CASING.get(), new Item.Properties().stacksTo(64))
     );
 
     public static final RegistryObject<Block> ENDERWIRE_LEVER = register(

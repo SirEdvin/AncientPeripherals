@@ -1,0 +1,21 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "RRRR",
+    "RCCR",
+    "RCCR",
+    "RRRR"
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/casing"
+    },
+    "R": {
+      "item": "minecraft:glowstone_dust"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/light_emitter",
+    "count": 4
+  }
+}

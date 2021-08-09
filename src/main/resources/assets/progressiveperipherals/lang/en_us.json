@@ -131,6 +131,8 @@
   "block.progressiveperipherals.enderwire.peripheral_connector.tooltip": "§7Enderwire element, that will serve like modem for enderwire network, allow to access all peripheral in range",
   "block.progressiveperipherals.enderwire.casing": "Enderwire casing",
   "block.progressiveperipherals.enderwire.casing.tooltip": "",
+  "block.progressiveperipherals.enderwire.peripheral_casing": "Enderwire peripheral casing",
+  "block.progressiveperipherals.enderwire.peripheral_casing.tooltip": "§7Empty casing for any powerful peripheral to expand enderwire network possibilities",
   "block.progressiveperipherals.enredium_block": "Enredium block",
   "block.progressiveperipherals.enredium_block.tooltip": "",
   "itemGroup.progressiveperipherals": "Progressive Peripherals",

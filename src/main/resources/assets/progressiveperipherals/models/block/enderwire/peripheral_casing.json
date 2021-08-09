@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "progressiveperipherals:block/enderwire/peripheral_casing"
+  }
+}
