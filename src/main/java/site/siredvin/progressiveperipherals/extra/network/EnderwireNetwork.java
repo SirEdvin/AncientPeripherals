@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
@@ -18,7 +17,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class NetworkData {
+public class EnderwireNetwork {
     private static final String TYPE_TAG = "type";
     private static final String NAME_TAG = "name";
     private static final String OWNER_UUID_TAG = "ownerUUID";
@@ -31,12 +30,12 @@ public class NetworkData {
     private UUID ownerUUID;
     private @Nullable String password;
     private @Nullable String salt;
-    private @Nullable Map<UUID, NetworkElementData> elements;
+    private @Nullable Map<UUID, EnderwireNetworkElement> elements;
 
     private int reachableRange;
     private boolean interdimensional;
 
-    protected NetworkData(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
+    protected EnderwireNetwork(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
         this.type = type;
         this.ownerUUID = ownerUUID;
         this.name = name;
@@ -45,11 +44,11 @@ public class NetworkData {
         recalculateNetworkStats();
     }
 
-    protected NetworkData(String name, NetworkType type, UUID ownerUUID) {
+    protected EnderwireNetwork(String name, NetworkType type, UUID ownerUUID) {
         this(name, type, ownerUUID, null);
     }
 
-    protected NetworkData() {
+    protected EnderwireNetwork() {
         this("temporary_dummy", NetworkType.PUBLIC, Util.NIL_UUID);
     }
 
@@ -73,7 +72,11 @@ public class NetworkData {
         return interdimensional;
     }
 
-    public boolean canReach(NetworkElementData element, BlockPos target, String targetDimension) {
+    public boolean canReach(EnderwireNetworkElement first, EnderwireNetworkElement second) {
+        return canReach(reachableRange, interdimensional, first.getPos(), second.getPos(), first.getDimension(), second.getDimension());
+    }
+
+    public boolean canReach(EnderwireNetworkElement element, BlockPos target, String targetDimension) {
         return canReach(reachableRange, interdimensional, element.getPos(), target, element.getDimension(), targetDimension);
     }
 
@@ -108,28 +111,28 @@ public class NetworkData {
         this.password = PasswordUtil.generateSecurePassword(password, this.salt);
     }
 
-    public @Nullable NetworkElementData getElement(UUID elementUUID) {
+    public @Nullable EnderwireNetworkElement getElement(UUID elementUUID) {
         if (elements == null)
             return null;
         return elements.get(elementUUID);
     }
 
-    public @Nullable Map<UUID, NetworkElementData> getElements() {
+    public @Nullable Map<UUID, EnderwireNetworkElement> getElements() {
         return elements;
     }
 
-    public void traverseElements(Consumer<NetworkElementData> consumer) {
+    public void traverseElements(Consumer<EnderwireNetworkElement> consumer) {
         if (elements != null)
             elements.values().forEach(consumer);
     }
 
-    protected void addNetworkElementNoEvent(NetworkElementData element) {
+    protected void addNetworkElementNoEvent(EnderwireNetworkElement element) {
         if (elements == null)
             elements = new HashMap<>();
         elements.put(element.getUUID(), element);
     }
 
-    public void addNetworkElement(NetworkElementData element) {
+    public void addNetworkElement(EnderwireNetworkElement element) {
         addNetworkElementNoEvent(element);
         recalculateNetworkStats();
         EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
@@ -137,13 +140,13 @@ public class NetworkData {
 
 
     @SuppressWarnings("UnusedReturnValue")
-    public @Nullable NetworkElementData removeNetworkElement(NetworkElementData element) {
+    public @Nullable EnderwireNetworkElement removeNetworkElement(EnderwireNetworkElement element) {
         return removeNetworkElementByUUID(element.getUUID());
     }
 
-    public @Nullable NetworkElementData removeNetworkElementByUUID(UUID uuid) {
+    public @Nullable EnderwireNetworkElement removeNetworkElementByUUID(UUID uuid) {
         if (elements != null) {
-            NetworkElementData removed = elements.remove(uuid);
+            EnderwireNetworkElement removed = elements.remove(uuid);
             if (removed != null) {
                 recalculateNetworkStats();
                 EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.removedElements(removed));
@@ -165,7 +168,7 @@ public class NetworkData {
 
             ListNBT elements = tag.getList(ELEMENTS_TAG, tag.getId());
             for (int i = 0; i < elements.size(); i++) {
-                addNetworkElementNoEvent(NetworkElementData.fromCompound(elements.getCompound(i)));
+                addNetworkElementNoEvent(EnderwireNetworkElement.fromCompound(elements.getCompound(i)));
             }
             recalculateNetworkStats();
         }
@@ -190,8 +193,8 @@ public class NetworkData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof NetworkData)) return false;
-        NetworkData that = (NetworkData) o;
+        if (!(o instanceof EnderwireNetwork)) return false;
+        EnderwireNetwork that = (EnderwireNetwork) o;
         return type == that.type && name.equals(that.name) && ownerUUID.equals(that.ownerUUID) && Objects.equals(elements, that.elements);
     }
 
@@ -201,15 +204,11 @@ public class NetworkData {
     }
 
     public static boolean canReach(int reachableRange, boolean interdimensional, BlockPos source, BlockPos target, String sourceDimension, String targetDimension) {
+        if (interdimensional)
+            return true;
+        if (!sourceDimension.equals(targetDimension))
+            return false;
         final int reachableRangeSqr = reachableRange * reachableRange;
-        if (!sourceDimension.equals(targetDimension)) {
-            if (!interdimensional)
-                return false;
-            double distanceToTargetSpawn = Math.sqrt(target.distSqr(Vector3i.ZERO));
-            double distanceToSourceSpawn = Math.sqrt(source.distSqr(Vector3i.ZERO));
-            double reachableRangeSqrt = Math.sqrt(reachableRange);
-            return distanceToSourceSpawn / distanceToTargetSpawn < reachableRangeSqrt && distanceToTargetSpawn / distanceToSourceSpawn < reachableRangeSqrt;
-        }
         return reachableRangeSqr >= source.distSqr(target);
     }
 }

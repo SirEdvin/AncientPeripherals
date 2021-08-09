@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:enderwire/network_amplifier"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.enderwire.network_amplifier"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.enderwire.network_amplifier.description"
+    }
+  },
+  "parent": "progressiveperipherals:enderwire_manager",
+  "criteria": {
+    "lamp_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/network_amplifier"
+          }
+        ]
+      }
+    }
+  }
+}

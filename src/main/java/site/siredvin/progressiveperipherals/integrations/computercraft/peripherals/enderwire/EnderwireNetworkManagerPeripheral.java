@@ -9,7 +9,7 @@ import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPer
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
 import de.srendi.advancedperipherals.common.util.Pair;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.extra.network.NetworkData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkAccessingTool;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkRepresentationTool;
 
@@ -38,7 +38,7 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
     @LuaFunction(mainThread = true)
     public final MethodResult createPublicNetwork(String name) throws LuaException {
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
-            NetworkData existingNetwork = data.getNetwork(name);
+            EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
             data.addPublicNetwork(name, player.getUUID());
@@ -49,7 +49,7 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
     @LuaFunction(mainThread = true)
     public final MethodResult createPrivateNetwork(String name) throws LuaException {
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
-            NetworkData existingNetwork = data.getNetwork(name);
+            EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
             data.addPrivateNetwork(name, player.getUUID());
@@ -60,7 +60,7 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
     @LuaFunction(mainThread = true)
     public final MethodResult createEncryptedNetwork(String name, String password) throws LuaException {
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
-            NetworkData existingNetwork = data.getNetwork(name);
+            EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
             data.addEncryptedNetwork(name, player.getUUID(), password);
@@ -71,14 +71,14 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
     @LuaFunction(mainThread = true)
     public final MethodResult removeNetwork(String name) throws LuaException {
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
-            NetworkData existingNetwork = data.getNetwork(name);
+            EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork == null)
                 return MethodResult.of(null, "Cannot find network");
             if (!existingNetwork.getOwnerUUID().equals(player.getUUID()))
                 return MethodResult.of(null, "You are not owner of this network");
             boolean removeNetworkResult = data.removeNetwork(name, player.getUUID()) != null;
             if (removeNetworkResult) {
-                NetworkData selectedNetwork = NetworkAccessingTool.getSelectedNetwork(data, owner.getDataStorage());
+                EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(data, owner.getDataStorage());
                 if (selectedNetwork != null && selectedNetwork.getName().equals(name))
                     NetworkAccessingTool.writeSelectedNetwork(owner.getDataStorage(), null);
             }
@@ -91,7 +91,7 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
         String name = arguments.getString(0);
         String password = arguments.optString(1, null);
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
-            Pair<MethodResult, NetworkData> accessResult = NetworkAccessingTool.accessNetwork(data, name, player, password);
+            Pair<MethodResult, EnderwireNetwork> accessResult = NetworkAccessingTool.accessNetwork(data, name, player, password);
             if (accessResult.leftPresent())
                 return accessResult.getLeft();
             NetworkAccessingTool.writeSelectedNetwork(owner.getDataStorage(), accessResult.getRight());
@@ -107,7 +107,7 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
     @LuaFunction(mainThread = true)
     public final MethodResult getSelectedNetwork() throws LuaException {
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
-            NetworkData network = NetworkAccessingTool.getSelectedNetwork(data, owner.getDataStorage());
+            EnderwireNetwork network = NetworkAccessingTool.getSelectedNetwork(data, owner.getDataStorage());
             if (network == null)
                 return MethodResult.of((Object) null);
             return MethodResult.of(network.getName());

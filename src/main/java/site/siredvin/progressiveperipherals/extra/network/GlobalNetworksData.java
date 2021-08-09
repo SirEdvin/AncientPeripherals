@@ -18,7 +18,7 @@ public class GlobalNetworksData extends WorldSavedData {
     private static final String DATA_NAME = ProgressivePeripherals.MOD_ID + "_NetworkData";
     private static final String NETWORKS_TAG = "networks";
 
-    private final Map<String, NetworkData> networks;
+    private final Map<String, EnderwireNetwork> networks;
     private ServerWorld serverWorld;
 
     public GlobalNetworksData() {
@@ -30,21 +30,21 @@ public class GlobalNetworksData extends WorldSavedData {
         this.serverWorld = serverWorld;
     }
 
-    public @Nullable NetworkData getNetwork(String name) {
+    public @Nullable EnderwireNetwork getNetwork(String name) {
         return networks.get(name);
     }
 
-    public @Nullable NetworkData removeNetwork(String name, UUID playerUUID) {
+    public @Nullable EnderwireNetwork removeNetwork(String name, UUID playerUUID) {
         Objects.requireNonNull(serverWorld);
-        NetworkData network = getNetwork(name);
+        EnderwireNetwork network = getNetwork(name);
         if (network == null)
             return null;
         if (!playerUUID.equals(network.getOwnerUUID()))
             throw new IllegalArgumentException("Network cannot be removed by not owner!");
-        Map<UUID, NetworkElementData> elements = network.getElements();
+        Map<UUID, EnderwireNetworkElement> elements = network.getElements();
         if (elements != null) {
-            List<NetworkElementData> removeTargets = new ArrayList<>();
-            for (NetworkElementData networkElement : elements.values()) {
+            List<EnderwireNetworkElement> removeTargets = new ArrayList<>();
+            for (EnderwireNetworkElement networkElement : elements.values()) {
                 if (serverWorld.isLoaded(networkElement.getPos())) {
                     removeTargets.add(networkElement);
                 }
@@ -61,13 +61,13 @@ public class GlobalNetworksData extends WorldSavedData {
                 }
             });
         }
-        NetworkData removed = networks.remove(name);
+        EnderwireNetwork removed = networks.remove(name);
         setDirty();
         return removed;
     }
 
     public boolean isOwner(String name, UUID playerUUID) {
-        NetworkData network = getNetwork(name);
+        EnderwireNetwork network = getNetwork(name);
         if (network == null)
             return false;
         return playerUUID.equals(network.getOwnerUUID());
@@ -77,11 +77,11 @@ public class GlobalNetworksData extends WorldSavedData {
         return networks.containsKey(name);
     }
 
-    public List<NetworkData> getOwnerNetworks(UUID playerUUID) {
+    public List<EnderwireNetwork> getOwnerNetworks(UUID playerUUID) {
         return networks.values().stream().filter(network -> network.getOwnerUUID().equals(playerUUID)).collect(Collectors.toList());
     }
 
-    public List<NetworkData> getVisibleNetworks(UUID playerUUID) {
+    public List<EnderwireNetwork> getVisibleNetworks(UUID playerUUID) {
         return networks.values().stream().filter(network -> network.getType() != NetworkType.PRIVATE || network.getOwnerUUID().equals(playerUUID)).collect(Collectors.toList());
     }
 
@@ -100,12 +100,12 @@ public class GlobalNetworksData extends WorldSavedData {
     public void addNetwork(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
         if (networks.containsKey(name))
             throw new IllegalArgumentException("Cannot add network with same name!");
-        NetworkData newNetwork = new NetworkData(name, type, ownerUUID, password);
+        EnderwireNetwork newNetwork = new EnderwireNetwork(name, type, ownerUUID, password);
         addNetworkWithoutUpdate(newNetwork);
         setDirty();
     }
 
-    protected void addNetworkWithoutUpdate(NetworkData network) {
+    protected void addNetworkWithoutUpdate(EnderwireNetwork network) {
         networks.put(network.getName(), network);
     }
 
@@ -113,7 +113,7 @@ public class GlobalNetworksData extends WorldSavedData {
     public void load(CompoundNBT tag) {
         ListNBT elements = tag.getList(NETWORKS_TAG, tag.getId());
         for (int i = 0; i < elements.size(); i++) {
-            NetworkData network = new NetworkData();
+            EnderwireNetwork network = new EnderwireNetwork();
             network.load(elements.getCompound(i));
             addNetworkWithoutUpdate(network);
         }

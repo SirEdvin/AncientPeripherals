@@ -16,17 +16,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 
 public class NetworkElementTool {
 
-    public static <T extends TileEntity & IEnderwireElement<T>> @Nullable NetworkElementData removeFromNetwork(@NotNull GlobalNetworksData globalData, @NotNull String networkName, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
-        NetworkData network = globalData.getNetwork(networkName);
+    public static <T extends TileEntity & IEnderwireElement<T>> @Nullable EnderwireNetworkElement removeFromNetwork(@NotNull GlobalNetworksData globalData, @NotNull String networkName, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
+        EnderwireNetwork network = globalData.getNetwork(networkName);
         if (network != null) {
-            NetworkElementData elementData = network.getElement(element.getElementUUID());
+            EnderwireNetworkElement elementData = network.getElement(element.getElementUUID());
             if (elementData == null) {
                 ProgressivePeripherals.LOGGER.error(String.format("Element %s is not in network %s, this shouldn't happened!", element.getElementUUID(), networkName));
             } else {
@@ -42,14 +42,14 @@ public class NetworkElementTool {
     public static <T extends TileEntity & IEnderwireElement<T>> void changeAttachedNetwork(@Nullable String oldNetwork, @Nullable String newNetwork, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
         GlobalNetworksData globalData = GlobalNetworksData.get(world);
         boolean dirtyGlobalData = false;
-        NetworkElementData elementData = null;
+        EnderwireNetworkElement elementData = null;
         if (oldNetwork != null) {
             elementData = removeFromNetwork(globalData, oldNetwork, element, world);
             if (elementData != null)
                 dirtyGlobalData = true;
         }
         if (newNetwork != null) {
-            NetworkData network = globalData.getNetwork(newNetwork);
+            EnderwireNetwork network = globalData.getNetwork(newNetwork);
             if (network == null)
                 throw new IllegalArgumentException(String.format("Cannot find new network %s", newNetwork));
             if (elementData == null)
@@ -69,7 +69,7 @@ public class NetworkElementTool {
     public static void handleNetworkSetup(Hand playerHand, PlayerEntity player, ServerWorld world, BlockPos pos) {
         ItemStack itemInHand = player.getItemInHand(playerHand);
         if (isNetworkManager(itemInHand)) {
-            NetworkData selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get(world), ItemPocketComputer.getUpgradeInfo(itemInHand));
+            EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get(world), ItemPocketComputer.getUpgradeInfo(itemInHand));
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
                 if (selectedNetwork != null) {

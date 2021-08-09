@@ -5,9 +5,9 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.server.ServerWorld;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 
@@ -31,11 +31,11 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
         return this;
     }
 
-    public void populateElement(NetworkElementData element) {
+    public void populateElement(EnderwireNetworkElement element) {
         Objects.requireNonNull(level);
         if (element.getElementType().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getUUID().equals(getElementUUID())) {
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
-            NetworkData network = networks.getNetwork(attachedNetwork);
+            EnderwireNetwork network = networks.getNetwork(attachedNetwork);
             Objects.requireNonNull(network);
             if (network.canReach(element, getPosition(), level.dimension().location().toString())) {
                 TileEntity te = level.getBlockEntity(element.getPos());
@@ -49,7 +49,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
         }
     }
 
-    public void depopulateElement(NetworkElementData element) {
+    public void depopulateElement(EnderwireNetworkElement element) {
         Objects.requireNonNull(level);
         if (element.getElementType().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getUUID().equals(getElementUUID())) {
             TileEntity te = level.getBlockEntity(element.getPos());
@@ -76,8 +76,8 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
     public void onAttachedNetworkChange(String oldNetworkName, String newNetworkName) {
         if (level != null && !level.isClientSide) {
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
-            NetworkData oldNetwork = networks.getNetwork(oldNetworkName);
-            NetworkData newNetwork = networks.getNetwork(newNetworkName);
+            EnderwireNetwork oldNetwork = networks.getNetwork(oldNetworkName);
+            EnderwireNetwork newNetwork = networks.getNetwork(newNetworkName);
             if (oldNetwork != null)
                 oldNetwork.traverseElements(this::depopulateElement);
             if (newNetworkName != null && newNetwork != null) {
@@ -104,7 +104,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
         if (!initialized && level != null && !level.isClientSide && attachedNetwork != null) {
             initialized = true;
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
-            NetworkData network = networks.getNetwork(attachedNetwork);
+            EnderwireNetwork network = networks.getNetwork(attachedNetwork);
             if (network != null) {
                 network.traverseElements(this::populateElement);
             }

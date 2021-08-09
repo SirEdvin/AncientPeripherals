@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireRedstoneSensorBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.utils.ExtraLuaConverter;
@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
 
 public class EnderwireNetworkProducer {
 
-    protected static <T extends IEnderwireElement<?>> void eventEnvironment(@NotNull World world, @NotNull BlockPos pos, BiConsumer<T, NetworkData> consumer) {
+    protected static <T extends IEnderwireElement<?>> void eventEnvironment(@NotNull World world, @NotNull BlockPos pos, BiConsumer<T, EnderwireNetwork> consumer) {
         if (!world.isClientSide) {
             T te = (T) world.getBlockEntity(pos);
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
                 GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) world);
-                NetworkData currentNetwork = networksData.getNetwork(attachedNetwork);
+                EnderwireNetwork currentNetwork = networksData.getNetwork(attachedNetwork);
                 if (attachedNetwork != null && currentNetwork != null) {
                     consumer.accept(te, currentNetwork);
                 }
@@ -81,7 +81,7 @@ public class EnderwireNetworkProducer {
     }
 
     public static void fireRedstoneSensorEvent(int signal, Direction neighbor, @NotNull World world, @NotNull BlockPos pos) {
-        eventEnvironment(world, pos, (BiConsumer<EnderwireRedstoneSensorTileEntity, NetworkData>) (te, currentNetwork) -> {
+        eventEnvironment(world, pos, (BiConsumer<EnderwireRedstoneSensorTileEntity, EnderwireNetwork>) (te, currentNetwork) -> {
             if (te.getPower(neighbor) != signal) {
                 String eventName = EnderwireElementType.REDSTONE_SENSOR.getChangedEventName();
                 BlockState state = world.getBlockState(pos);

@@ -10,7 +10,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.NetworkAmplifier;
 import java.util.Objects;
 import java.util.UUID;
 
-public class NetworkElementData {
+public class EnderwireNetworkElement {
     private static final String POS_TAG = "blockPosition";
     private static final String UUID_TAG = "uuid";
     private static final String ELEMENT_TYPE_TAG = "elementType";
@@ -25,7 +25,7 @@ public class NetworkElementData {
     private final @NotNull String dimension;
     private final @NotNull NetworkAmplifier networkAmplifier;
 
-    public NetworkElementData(@NotNull UUID uuid, @NotNull BlockPos pos, @NotNull EnderwireElementCategory elementType, @NotNull String deviceType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
+    public EnderwireNetworkElement(@NotNull UUID uuid, @NotNull BlockPos pos, @NotNull EnderwireElementCategory elementType, @NotNull String deviceType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
         this.uuid = uuid;
         this.pos = pos;
         this.elementType = elementType;
@@ -69,8 +69,8 @@ public class NetworkElementData {
         return tag;
     }
 
-    public static NetworkElementData fromCompound(CompoundNBT tag) {
-        return new NetworkElementData(
+    public static EnderwireNetworkElement fromCompound(CompoundNBT tag) {
+        return new EnderwireNetworkElement(
                 UUID.fromString(tag.getString(UUID_TAG)),
                 NBTUtil.readBlockPos(tag.getCompound(POS_TAG)),
                 EnderwireElementCategory.valueOf(tag.getString(ELEMENT_TYPE_TAG)),
@@ -83,8 +83,8 @@ public class NetworkElementData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof NetworkElementData)) return false;
-        NetworkElementData that = (NetworkElementData) o;
+        if (!(o instanceof EnderwireNetworkElement)) return false;
+        EnderwireNetworkElement that = (EnderwireNetworkElement) o;
         return uuid.equals(that.uuid) && pos.equals(that.pos) && elementType.equals(that.elementType) && deviceType.equals(that.deviceType) && dimension.equals(that.dimension) && networkAmplifier == that.networkAmplifier;
     }
 

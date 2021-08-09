@@ -1,27 +1,27 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
-import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
 
 public class EnderwireNetworkEvent implements IEpochEvent {
-    private final NetworkElementData[] removedElements;
-    private final NetworkElementData[] addedElements;
+    private final EnderwireNetworkElement[] removedElements;
+    private final EnderwireNetworkElement[] addedElements;
     private final long epoch;
 
-    EnderwireNetworkEvent(NetworkElementData[] removedElements, NetworkElementData[] addedElements) {
+    EnderwireNetworkEvent(EnderwireNetworkElement[] removedElements, EnderwireNetworkElement[] addedElements) {
         this.removedElements = removedElements;
         this.addedElements = addedElements;
         this.epoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
     }
 
-    public NetworkElementData[] getAddedElements() {
+    public EnderwireNetworkElement[] getAddedElements() {
         return addedElements;
     }
 
-    public NetworkElementData[] getRemovedElements() {
+    public EnderwireNetworkElement[] getRemovedElements() {
         return removedElements;
     }
 
@@ -29,12 +29,12 @@ public class EnderwireNetworkEvent implements IEpochEvent {
         return epoch;
     }
 
-    public static EnderwireNetworkEvent addedElements(NetworkElementData... elements) {
-        return new EnderwireNetworkEvent(new NetworkElementData[0], elements);
+    public static EnderwireNetworkEvent addedElements(EnderwireNetworkElement... elements) {
+        return new EnderwireNetworkEvent(new EnderwireNetworkElement[0], elements);
     }
 
-    public static EnderwireNetworkEvent removedElements(NetworkElementData... elements) {
-        return new EnderwireNetworkEvent(elements, new NetworkElementData[0]);
+    public static EnderwireNetworkEvent removedElements(EnderwireNetworkElement... elements) {
+        return new EnderwireNetworkEvent(elements, new EnderwireNetworkElement[0]);
     }
 
     @Override

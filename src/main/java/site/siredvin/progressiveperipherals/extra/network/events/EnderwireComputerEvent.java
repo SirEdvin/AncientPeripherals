@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.extra.network.events;
 
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.extra.network.NetworkData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -42,7 +42,7 @@ public class EnderwireComputerEvent implements IEpochEvent {
     }
 
     public boolean IsNotMalformed(BlockPos receiverPos, String receiverDimension) {
-        return NetworkData.canReach(reachableRange, interdimensional, pos, receiverPos, originalDimension, receiverDimension);
+        return EnderwireNetwork.canReach(reachableRange, interdimensional, pos, receiverPos, originalDimension, receiverDimension);
     }
 
     public static EnderwireComputerEvent timed(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, Map<String, Object> data) {

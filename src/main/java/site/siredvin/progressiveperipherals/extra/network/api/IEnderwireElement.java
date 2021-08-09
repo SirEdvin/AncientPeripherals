@@ -8,7 +8,7 @@ import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.base.ITrickedTileEntity;
-import site.siredvin.progressiveperipherals.extra.network.NetworkElementData;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
 import java.util.Map;
@@ -30,8 +30,8 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
         }
     }
 
-    default NetworkElementData generateElementData() {
-        return new NetworkElementData(
+    default EnderwireNetworkElement generateElementData() {
+        return new EnderwireNetworkElement(
                 getElementUUID(), getPosition(), getElementType().getCategory(), getElementType().name().toLowerCase(),
                 Objects.requireNonNull(getWorld()).dimension().location().toString(), getAmplifier()
         );

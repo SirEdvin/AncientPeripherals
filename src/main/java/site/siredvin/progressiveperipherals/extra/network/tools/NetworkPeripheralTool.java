@@ -6,8 +6,8 @@ import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeriph
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.NetworkData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.PeripheralBiFunction;
 import site.siredvin.progressiveperipherals.extra.network.api.PeripheralFunction;
@@ -27,13 +27,13 @@ public class NetworkPeripheralTool {
         return function.apply(data);
     }
 
-    public static MethodResult withNetwork(World world, IEnderwireElement<?> tileEntity, PeripheralFunction<NetworkData, MethodResult> function) throws LuaException {
+    public static MethodResult withNetwork(World world, IEnderwireElement<?> tileEntity, PeripheralFunction<EnderwireNetwork, MethodResult> function) throws LuaException {
         ServerWorld serverWorld = (ServerWorld) world;
         GlobalNetworksData data = GlobalNetworksData.get(serverWorld);
         String attachedNetwork = tileEntity.getAttachedNetwork();
         if (attachedNetwork == null)
             return MethodResult.of(null, "Not attached to any network");
-        NetworkData network = data.getNetwork(attachedNetwork);
+        EnderwireNetwork network = data.getNetwork(attachedNetwork);
         if (network == null)
             return MethodResult.of(null, "Oh, this bad, missing network ...");
         return function.apply(network);

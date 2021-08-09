@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:enderwire/peripheral_sharing"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.enderwire.peripheral"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.enderwire.peripheral.description"
+    }
+  },
+  "parent": "progressiveperipherals:enderwire_manager",
+  "criteria": {
+    "sensor_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/peripheral_sharing"
+          }
+        ]
+      }
+    },
+    "emitter_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/peripheral_connector"
+          }
+        ]
+      }
+    }
+  }
+}
