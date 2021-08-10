@@ -74,7 +74,7 @@ public class EnderwireNetwork {
 
     public boolean canAcceptNewElements() {
         if (elements != null) {
-            return ProgressivePeripheralsConfig.enderwireNetworkMaxElementCount < elements.size();
+            return ProgressivePeripheralsConfig.enderwireNetworkMaxElementCount > elements.size();
         }
         return true;
     }

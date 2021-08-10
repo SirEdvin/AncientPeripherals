@@ -14,7 +14,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -75,7 +74,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
         super.setPlacedBy(world, pos, state, entity, stack);
         if (!world.isClientSide && entity instanceof PlayerEntity) {
-            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, (ServerWorld) world, pos);
+            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, world, pos);
         }
     }
 

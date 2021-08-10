@@ -74,13 +74,15 @@ public class NetworkElementTool {
                 if (te.getElementType().isEnabled()) {
                     if (!world.isClientSide) {
                         EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get((ServerWorld) world), ItemPocketComputer.getUpgradeInfo(itemInHand));
-                        if (selectedNetwork != null && selectedNetwork.canAcceptNewElements()) {
-                            te.changeAttachedNetwork(selectedNetwork.getName());
+                        if (selectedNetwork != null) {
+                            if (!selectedNetwork.canAcceptNewElements()) {
+                                player.displayClientMessage(TranslationUtil.formattedLocalization("enderwire.network_limit", selectedNetwork.getName()), true);
+                            } else {
+                                te.changeAttachedNetwork(selectedNetwork.getName());
+                            }
                         } else {
                             te.changeAttachedNetwork(null);
                         }
-                    } else {
-                        player.displayClientMessage(TranslationUtil.formattedLocalization("enderwire.try_to_attach", te.getElementUUID()), true);
                     }
                 } else if (world.isClientSide) {
                     player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled"), true);

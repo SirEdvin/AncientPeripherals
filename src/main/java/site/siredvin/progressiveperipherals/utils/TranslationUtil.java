@@ -1,6 +1,5 @@
 package site.siredvin.progressiveperipherals.utils;
 
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 
@@ -21,8 +20,7 @@ public class TranslationUtil {
         return new TranslationTextComponent(String.format("text.%s.%s", ProgressivePeripherals.MOD_ID, name));
     }
 
-    public static StringTextComponent formattedLocalization(String name, Object... var1) {
-        TranslationTextComponent original = localization(name);
-        return new StringTextComponent(String.format(original.getString(), var1));
+    public static TranslationTextComponent formattedLocalization(String name, Object... var1) {
+        return new TranslationTextComponent(String.format("text.%s.%s", ProgressivePeripherals.MOD_ID, name), var1);
     }
 }
