@@ -5,34 +5,27 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.pocket.IPocketAccess;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import de.srendi.advancedperipherals.common.util.Pair;
 import org.jetbrains.annotations.NotNull;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkAccessingTool;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkRepresentationTool;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetworks;
 
-public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
+public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
 
     public EnderwireNetworkManagerPeripheral(String type, IPocketAccess pocket) {
         super(type, pocket);
     }
 
     @Override
-    public List<IPeripheralOperation<?>> possibleOperations() {
-        return Collections.emptyList();
-    }
-
-    @Override
     public boolean isEnabled() {
-        return true;
+        return ProgressivePeripheralsConfig.enderwireNetworkEnabled;
     }
 
     @LuaFunction(mainThread = true)
@@ -41,6 +34,8 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
             EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
+            if (!data.isPlayerCanCreateNetworks(player.getUUID()))
+                return MethodResult.of(null, "You cannot create more networks, delete some you owned first");
             data.addPublicNetwork(name, player.getUUID());
             return MethodResult.of(true);
         });
@@ -52,6 +47,8 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
             EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
+            if (!data.isPlayerCanCreateNetworks(player.getUUID()))
+                return MethodResult.of(null, "You cannot create more networks, delete some you owned first");
             data.addPrivateNetwork(name, player.getUUID());
             return MethodResult.of(true);
         });
@@ -63,6 +60,8 @@ public class EnderwireNetworkManagerPeripheral extends OperationPeripheral {
             EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
+            if (!data.isPlayerCanCreateNetworks(player.getUUID()))
+                return MethodResult.of(null, "You cannot create more networks, delete some you owned first");
             data.addEncryptedNetwork(name, player.getUUID(), password);
             return MethodResult.of(true);
         });

@@ -4,6 +4,7 @@ import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHan
 import net.minecraftforge.common.ForgeConfigSpec;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTier;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.AutomataCoreTier;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.CountOperation;
@@ -62,9 +63,11 @@ public class ProgressivePeripheralsConfig {
     // Automata cores
     public static double enchantingAutomataCoreDisappearChance;
     // Enderwire network
-    public static int enderwireNetworkRangeStep = 64;
-    public static int enderwireNetworkComputerBusSize = 256;
-    public static boolean enderwireNetworkEnabled = true;
+    public static boolean enderwireNetworkEnabled;
+    public static int enderwireNetworkRangeStep;
+    public static int enderwireNetworkComputerBusSize;
+    public static int enderwireNetworkMaxElementCount;
+    public static int enderwireNetworkMaxCountPerPlayer;
 
     public static class CommonConfig {
 
@@ -111,6 +114,15 @@ public class ProgressivePeripheralsConfig {
 
         // Automata cores
         final ForgeConfigSpec.DoubleValue ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE;
+
+        // Enderwire
+
+        final ForgeConfigSpec.BooleanValue ENDERWIRE_NETWORK_ENABLED;
+        final ForgeConfigSpec.IntValue ENDERWIRE_NETWORK_RANGE_STEP;
+        final ForgeConfigSpec.IntValue ENDERWIRE_NETWORK_COMPUTER_BUS_SIZE;
+        final ForgeConfigSpec.IntValue ENDERWIRE_NETWORK_MAX_ELEMENT_COUNT;
+        final ForgeConfigSpec.IntValue ENDERWIRE_NETWORK_MAX_COUNT_PER_PLAYER;
+
 
         CommonConfig(final ForgeConfigSpec.Builder builder) {
             builder.comment("").push("Features");
@@ -170,6 +182,15 @@ public class ProgressivePeripheralsConfig {
 
             builder.comment("").push("Puzzled");
             LINEAR_SYSTEM_TIME_LIMIT = builder.defineInRange("linearSystemTimeLimit", 2, REASONABLE_MIN_TIME_LIMIT, REASONABLE_MAX_TIME_LIMIT);
+            builder.pop();
+
+            builder.comment("").push("Enderwire");
+            ENDERWIRE_NETWORK_ENABLED = builder.define("enderwireNetworkEnabled", true);
+            ENDERWIRE_NETWORK_RANGE_STEP = builder.defineInRange("enderwireNetworkRangeStep", 64, 1, Integer.MAX_VALUE);
+            ENDERWIRE_NETWORK_COMPUTER_BUS_SIZE = builder.defineInRange("enderwireNetworkComputerButSize", 256, 1, Integer.MAX_VALUE);
+            ENDERWIRE_NETWORK_MAX_ELEMENT_COUNT = builder.defineInRange("enderwireNetworkMaxElementCount", 256, 1, Integer.MAX_VALUE);
+            ENDERWIRE_NETWORK_MAX_COUNT_PER_PLAYER = builder.defineInRange("enderwireNetworkMaxCountPerPlayer", 32, 1, Integer.MAX_VALUE);
+            register(EnderwireElementType.values(), builder);
             builder.pop();
 
             builder.comment("").push("Automata cores");

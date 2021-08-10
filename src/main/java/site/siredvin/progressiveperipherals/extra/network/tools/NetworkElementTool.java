@@ -9,17 +9,17 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
-import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
+import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
 public class NetworkElementTool {
 
@@ -72,11 +72,12 @@ public class NetworkElementTool {
             EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get(world), ItemPocketComputer.getUpgradeInfo(itemInHand));
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
-                if (selectedNetwork != null) {
-                    te.changeAttachedNetwork(selectedNetwork.getName());
-                } else {
-                    te.changeAttachedNetwork(null);
-                }
+                if (te.getElementType().isEnabled())
+                    if (selectedNetwork != null && selectedNetwork.canAcceptNewElements()) {
+                        te.changeAttachedNetwork(selectedNetwork.getName());
+                    } else {
+                        te.changeAttachedNetwork(null);
+                    }
             }
         }
     }
@@ -87,18 +88,16 @@ public class NetworkElementTool {
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
+                if (!te.getElementType().isEnabled())
+                    player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled"), true);
                 if (attachedNetwork == null) {
                     player.displayClientMessage(
-                            new StringTextComponent(
-                                    String.format("This element with UUID %s don't attached to any network", te.getElementUUID())
-                            ),
+                            TranslationUtil.formattedLocalization("enderwire.not_attached_to_anything", te.getElementUUID()),
                             true
                     );
                 } else {
                     player.displayClientMessage(
-                            new StringTextComponent(
-                                    String.format("This element attached to %s, with UUID %s", attachedNetwork, te.getElementUUID())
-                            ),
+                            TranslationUtil.formattedLocalization("enderwire.attached_to", attachedNetwork, te.getElementUUID()),
                             true
                     );
                 }

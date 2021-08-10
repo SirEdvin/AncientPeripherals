@@ -25,7 +25,7 @@ public class EnderwireSensorTileEntity extends BaseEnderwireTileEntity<Enderwire
         Block block = getBlockState().getBlock();
         if (block instanceof IEnderwireSensorBlock)
             return ((IEnderwireSensorBlock) block).getComponentType();
-        return EnderwireElementType.UNKNOWN;
+        throw new IllegalArgumentException("How this even happened?");
     }
 
     @Override

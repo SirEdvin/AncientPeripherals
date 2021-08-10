@@ -176,5 +176,8 @@
   "text.progressiveperipherals.point_tier": "Point tier: ",
   "text.progressiveperipherals.power_level": "Power level: ",
   "text.progressiveperipherals.machinery_storage": "Machinery storage",
-  "text.progressiveperipherals.disabled": "§cThis item is disabled in config, so you can craft it, but related logic will not work"
+  "text.progressiveperipherals.disabled": "§cThis item is disabled in config, so you can craft it, but related logic will not work",
+  "text.progressiveperipherals.enderwire.not_attached_to_anything": "This element with UUID %s don't attached to any network",
+  "text.progressiveperipherals.enderwire.attached_to": "This element attached to %s, with UUID %s",
+  "text.progressiveperipherals.enderwire.is_disabled": "This element is disabled and cannot be attached to any network"
 }

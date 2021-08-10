@@ -8,6 +8,7 @@ import net.minecraft.world.storage.WorldSavedData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
 
@@ -85,6 +86,11 @@ public class GlobalNetworksData extends WorldSavedData {
         return networks.values().stream().filter(network -> network.getType() != NetworkType.PRIVATE || network.getOwnerUUID().equals(playerUUID)).collect(Collectors.toList());
     }
 
+    public boolean isPlayerCanCreateNetworks(UUID playerUUID) {
+        long ownedNetworkCount = networks.values().stream().filter(network -> network.getOwnerUUID().equals(playerUUID)).count();
+        return ownedNetworkCount < ProgressivePeripheralsConfig.enderwireNetworkMaxCountPerPlayer;
+    }
+
     public void addPublicNetwork(String name, UUID ownerUUID) {
         addNetwork(name, NetworkType.PUBLIC, ownerUUID, null);
     }
@@ -100,6 +106,8 @@ public class GlobalNetworksData extends WorldSavedData {
     public void addNetwork(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
         if (networks.containsKey(name))
             throw new IllegalArgumentException("Cannot add network with same name!");
+        if (!isPlayerCanCreateNetworks(ownerUUID))
+            throw new IllegalArgumentException("Player reached network limit");
         EnderwireNetwork newNetwork = new EnderwireNetwork(name, type, ownerUUID, password);
         addNetworkWithoutUpdate(newNetwork);
         setDirty();

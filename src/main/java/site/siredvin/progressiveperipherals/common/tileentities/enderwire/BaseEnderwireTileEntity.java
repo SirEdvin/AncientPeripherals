@@ -85,6 +85,8 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
                 if (!networksData.networkExists(attachedNetwork)) {
                     setAttachedNetwork(null);
                 }
+                if (!getElementType().isEnabled())
+                    setAttachedNetwork(null);
             }
             requireNetworkCheck = false;
         }

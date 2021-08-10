@@ -72,6 +72,13 @@ public class EnderwireNetwork {
         return interdimensional;
     }
 
+    public boolean canAcceptNewElements() {
+        if (elements != null) {
+            return ProgressivePeripheralsConfig.enderwireNetworkMaxElementCount < elements.size();
+        }
+        return true;
+    }
+
     public boolean canReach(EnderwireNetworkElement first, EnderwireNetworkElement second) {
         return canReach(reachableRange, interdimensional, first.getPos(), second.getPos(), first.getDimension(), second.getDimension());
     }

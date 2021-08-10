@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkConnectorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkRepresentationTool;
 
@@ -26,7 +27,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return EnderwireElementType.NETWORK_CONNECTOR.isEnabled();
     }
 
     @LuaFunction
