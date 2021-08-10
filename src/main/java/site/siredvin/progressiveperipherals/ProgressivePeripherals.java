@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -66,7 +67,6 @@ public class ProgressivePeripherals {
         modEventBus.addListener(this::modelSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::interModComms);
-        modEventBus.addListener(this::registerBlockColors);
         modEventBus.addListener(ConfigHandler::configEvent);
         modEventBus.addListener(ConfigHandler::reloadConfigEvent);
         // Forge events
@@ -98,6 +98,8 @@ public class ProgressivePeripherals {
 
     @SubscribeEvent
     public void clientSetup(FMLClientSetupEvent event) {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_STATUE.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.IRREALIUM_MACHINERY_GLASS.get(), RenderType.translucent());
@@ -128,9 +130,13 @@ public class ProgressivePeripherals {
             event.getGeneration().getFeatures(GenerationStage.Decoration.SURFACE_STRUCTURES).add(() -> ConfiguredFeatures.REALITY_BREAKTHROUGH_POINT);
     }
 
-    @SubscribeEvent
-    public void registerBlockColors(final ColorHandlerEvent.Block event) {
-        event.getBlockColors().register(new EnderwireLightEmitterBlockColor(), Blocks.ENDERWIRE_LIGHT_EMITTER.get());
+    @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientEventListener {
+        @SubscribeEvent
+        public static void registerBlockColors(final ColorHandlerEvent.Block event) {
+            event.getBlockColors().register(new EnderwireLightEmitterBlockColor(), Blocks.ENDERWIRE_LIGHT_EMITTER.get());
+        }
     }
+
 
 }

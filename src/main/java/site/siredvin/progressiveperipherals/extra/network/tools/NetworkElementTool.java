@@ -77,7 +77,7 @@ public class NetworkElementTool {
                         te.changeAttachedNetwork(selectedNetwork.getName());
                     } else {
                         te.changeAttachedNetwork(null);
-                    }
+                    }1
             }
         }
     }
