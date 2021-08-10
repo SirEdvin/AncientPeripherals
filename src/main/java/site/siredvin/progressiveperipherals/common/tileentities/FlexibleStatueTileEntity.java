@@ -74,9 +74,9 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
             QuadList newBakedQuads = NBTUtils.readQuadList(tag.getByteArray(BAKED_QUADS_TAG));
             if (!Objects.equals(bakedQuads, newBakedQuads)) {
                 if (newBakedQuads != null) {
-                    setBakedQuads(newBakedQuads, true);
+                    setBakedQuads(newBakedQuads, state,true);
                 } else {
-                    clear(true);
+                    clear(state,true);
                 }
             }
         }
@@ -100,13 +100,17 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
     }
 
     public void setBakedQuads(@NotNull QuadList bakedQuads, boolean skipUpdate) {
+        setBakedQuads(bakedQuads, getBlockState(), skipUpdate);
+    }
+
+    public void setBakedQuads(@NotNull QuadList bakedQuads, BlockState state, boolean skipUpdate) {
         this.bakedQuads = bakedQuads;
         refreshShape();
         if (!skipUpdate) {
-            pushInternalDataChangeToClient(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
+            pushInternalDataChangeToClient(state.setValue(FlexibleStatue.CONFIGURED, true));
         } else {
             if (pendingState == null)
-                pendingState = getBlockState();
+                pendingState = state;
             pendingState = pendingState.setValue(FlexibleStatue.CONFIGURED, true);
         }
     }
@@ -135,14 +139,14 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
         return lightLevel;
     }
 
-    public void clear(boolean skipUpdate) {
+    public void clear(BlockState state, boolean skipUpdate) {
         bakedQuads = null;
         refreshShape();
         if (!skipUpdate) {
-            pushInternalDataChangeToClient(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
+            pushInternalDataChangeToClient(state.setValue(FlexibleStatue.CONFIGURED, false));
         } else {
             if (pendingState == null)
-                pendingState = getBlockState();
+                pendingState = state;
             pendingState = pendingState.setValue(FlexibleStatue.CONFIGURED, false);
         }
     }

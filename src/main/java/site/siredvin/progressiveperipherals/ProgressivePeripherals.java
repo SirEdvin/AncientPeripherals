@@ -34,7 +34,6 @@ import site.siredvin.progressiveperipherals.client.renderer.PedestalTileRenderer
 import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughPointTileRenderer;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
-import site.siredvin.progressiveperipherals.common.events.BlockEvents;
 import site.siredvin.progressiveperipherals.common.setup.*;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
@@ -74,8 +73,6 @@ public class ProgressivePeripherals {
         forgeBus.addListener(this::biomeModification);
         forgeBus.addListener(EnderwireNetworkBusHub::performCleanup);
         forgeBus.addListener(SingleTickScheduler::tick);
-        // Mod event listeners
-        BlockEvents.subscribe(forgeBus);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC);
         Registration.register();
@@ -132,8 +129,7 @@ public class ProgressivePeripherals {
     }
 
     @SubscribeEvent
-    public void registerBlockColors(final ColorHandlerEvent.Block event)
-    {
+    public void registerBlockColors(final ColorHandlerEvent.Block event) {
         event.getBlockColors().register(new EnderwireLightEmitterBlockColor(), Blocks.ENDERWIRE_LIGHT_EMITTER.get());
     }
 
