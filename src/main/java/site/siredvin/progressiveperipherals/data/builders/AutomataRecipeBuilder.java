@@ -67,6 +67,10 @@ public class AutomataRecipeBuilder {
         return this;
     }
 
+    public AutomataRecipeBuilder empty() {
+        return pattern("    ");
+    }
+
     public AutomataRecipeBuilder group(String group) {
         this.group = group;
         return this;

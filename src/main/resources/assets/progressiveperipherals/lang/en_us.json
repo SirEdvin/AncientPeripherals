@@ -23,6 +23,8 @@
   "advancements.progressiveperipherals.enderwire.network_manager.description": "With this you can create your own network. Maybe, you should start from private one",
   "advancements.progressiveperipherals.enderwire.base_toolkit": "Wireless sensors!",
   "advancements.progressiveperipherals.enderwire.base_toolkit.description": "Collect base enderwire sensors, like buttons, levers and plates. Now you are fully prepared for tracking!",
+  "advancements.progressiveperipherals.enderwire.advanced_toolkit": "Advanced wireless sensors!",
+  "advancements.progressiveperipherals.enderwire.advanced_toolkit.description": "Upgrade base enderwire sensors, like buttons, levers and plates. Now you can now how exactly pressed it!",
   "advancements.progressiveperipherals.enderwire.redstone": "Wireless redstone",
   "advancements.progressiveperipherals.enderwire.redstone.description": "Emitting and observing. All as it should be.",
   "advancements.progressiveperipherals.enderwire.lamp": "Wireless light emitting",

@@ -178,6 +178,21 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("    ")
                 .save(consumer);
 
+        AutomataRecipeBuilder.start(Blocks.ADVANCED_ENDERWIRE_BUTTON.get())
+                .define('C', Blocks.ENDERWIRE_BUTTON.get())
+                .define('A', net.minecraft.item.Items.DIAMOND)
+                .pattern("CA  ").empty().empty().empty().save(consumer);
+
+        AutomataRecipeBuilder.start(Blocks.ADVANCED_ENDERWIRE_LEVER.get())
+                .define('C', Blocks.ENDERWIRE_LEVER.get())
+                .define('A', net.minecraft.item.Items.DIAMOND)
+                .pattern("CA  ").empty().empty().empty().save(consumer);
+
+        AutomataRecipeBuilder.start(Blocks.ADVANCED_ENDERWIRE_PRESSURE_PLATE.get())
+                .define('C', Blocks.ENDERWIRE_PRESSURE_PLATE.get())
+                .define('A', net.minecraft.item.Items.DIAMOND)
+                .pattern("CA  ").empty().empty().empty().save(consumer);
+
     }
 
     protected void buildIrrealiumMachineryRecipes(Consumer<IFinishedRecipe> consumer) {
