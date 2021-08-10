@@ -66,18 +66,25 @@ public class NetworkElementTool {
         return !stack.isEmpty() && stack.getItem() instanceof ItemPocketComputer && ItemPocketComputer.getUpgrade(stack) instanceof EnderwireNetworkManagementPocket;
     }
 
-    public static void handleNetworkSetup(Hand playerHand, PlayerEntity player, ServerWorld world, BlockPos pos) {
+    public static void handleNetworkSetup(Hand playerHand, PlayerEntity player, World world, BlockPos pos) {
         ItemStack itemInHand = player.getItemInHand(playerHand);
         if (isNetworkManager(itemInHand)) {
-            EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get(world), ItemPocketComputer.getUpgradeInfo(itemInHand));
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null) {
-                if (te.getElementType().isEnabled())
-                    if (selectedNetwork != null && selectedNetwork.canAcceptNewElements()) {
-                        te.changeAttachedNetwork(selectedNetwork.getName());
+                if (te.getElementType().isEnabled()) {
+                    if (!world.isClientSide) {
+                        EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get((ServerWorld) world), ItemPocketComputer.getUpgradeInfo(itemInHand));
+                        if (selectedNetwork != null && selectedNetwork.canAcceptNewElements()) {
+                            te.changeAttachedNetwork(selectedNetwork.getName());
+                        } else {
+                            te.changeAttachedNetwork(null);
+                        }
                     } else {
-                        te.changeAttachedNetwork(null);
-                    }1
+                        player.displayClientMessage(TranslationUtil.formattedLocalization("enderwire.try_to_attach", te.getElementUUID()), true);
+                    }
+                } else if (world.isClientSide) {
+                    player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled"), true);
+                }
             }
         }
     }
@@ -108,8 +115,7 @@ public class NetworkElementTool {
     public static @Nullable ActionResultType handleUse(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         ItemStack mainHandItem = player.getMainHandItem();
         if (!mainHandItem.isEmpty() && hand == Hand.MAIN_HAND && isNetworkManager(mainHandItem)) {
-            if (!world.isClientSide)
-                handleNetworkSetup(hand, player, (ServerWorld) world, pos);
+            handleNetworkSetup(hand, player, world, pos);
             return ActionResultType.SUCCESS;
         } else {
             ItemStack offhandItem = player.getOffhandItem();
