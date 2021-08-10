@@ -35,7 +35,7 @@ public class NetworkRepresentationTool {
         representation.put("UUID", networkElement.getUUID().toString());
         representation.put("elementType", networkElement.getElementType().name().toLowerCase());
         representation.put("deviceType", networkElement.getDeviceType());
-        representation.put("position", LuaConverter.posToObject(center.subtract(networkElement.getPos())));
+        representation.put("position", LuaConverter.posToObject(networkElement.getPos().subtract(center)));
         return representation;
     }
 }

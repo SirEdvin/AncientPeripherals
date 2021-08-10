@@ -7,15 +7,10 @@ import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.items.base.BaseItem;
 
 import java.util.HashMap;
@@ -52,17 +47,5 @@ public class ForgedAutomataCore extends BaseItem implements IFeedableAutomataCor
             }
         }
         return ActionResultType.PASS;
-    }
-
-    @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        // TODO: Remove
-        World world = context.getLevel();
-        if (world.isClientSide) {
-            TileEntity te = world.getBlockEntity(context.getClickedPos());
-            if (te != null)
-                ProgressivePeripherals.LOGGER.warn(te.save(new CompoundNBT()));
-        }
-        return super.useOn(context);
     }
 }
