@@ -49,7 +49,7 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern(" IP ")
                 .pattern(" NN ")
                 .pattern("R  R")
-                .save(consumer, "_automata");
+                .save(consumer, "automata");
 
         AutomataRecipeBuilder.start(Blocks.ENDERWIRE_CASING.get(), 8)
                 .define('I', Items.ENREDIUM_INGOT.get())
