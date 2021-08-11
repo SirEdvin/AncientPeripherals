@@ -131,6 +131,7 @@ repositories {
 
 configurations {
     extraLibs
+    jsocJavadoc
 }
 
 dependencies {
@@ -153,6 +154,15 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
     configurations.implementation.extendsFrom(configurations.extraLibs)
+
+    jsocJavadoc 'com.surfapi:javadoc-json-doclet:1.0'
+}
+
+
+task generateJson(type: Javadoc) {
+    source = sourceSets.main.allJava
+    options.docletpath = configurations.jsocJavadoc.files.asType(List)
+    options.doclet = "com.rga78.javadoc.JsonDoclet"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -187,7 +197,7 @@ publishing {
     }
     repositories {
         maven {
-            url "https://panel.repsy.io/mvn/siredvin/default/"
+            url "-"
             credentials {
                 username = System.getenv("USERNAME")
                 password = System.getenv("TOKEN")

@@ -1,0 +1,124 @@
+{
+  "name": "Network manager",
+  "icon": "progressiveperipherals:enderwire/network_manager",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Network manager",
+      "item": "progressiveperipherals:enderwire/network_manager",
+      "text": "Simple pocket computer upgrade that allow you to manage enderwire networks!$(p)$(l)Note:$() You need to crouching to access pocket computer with this upgrade"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/network_manager"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "createPublicNetwork",
+      "description": "Function for creating public enderwire network$(p)$(l)Note$(): anyone can access this network, if they want to"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "createPrivateNetwork",
+      "description": "Function for creating private enderwire network$(p)$(l)Note$(): only you can access this network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "createEncryptedNetwork",
+      "description": "Function for creating encrypted enderwire network$(p)$(l)Note$(): everyone how knows password can access this network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"],
+        ["string", "network password"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "removeNetwork",
+      "description": "Function for removing enderwire network.$(p)$(l)Note$(): you can remove only your network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "selectNetwork",
+      "description": "Trying to access selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"],
+        ["[string]", "Optional network password, if network encrypted"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "clearSelectedNetwork",
+      "description": "clear any data about selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["true", "just alwasy true"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getSelectedNetwork",
+      "description": "returns information about selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "selected network name or nil if no network selected"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getAvailableNetworks",
+      "description": "Returns list of available network for connection"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{table}", "List of table with name and type fields"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getOwnedNetworks",
+      "description": "Returns list of player owned network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{table}", "List of table with name and type fields"]
+      ]
+    }
+  ]
+}

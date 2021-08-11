@@ -14,6 +14,7 @@ import java.util.List;
 public class LuaFunctionRightPage extends BookPage {
 
     IVariable parameters;
+    IVariable operationReturn;
     IVariable returns;
 
     transient BookTextRenderer textRenderer;
@@ -41,16 +42,26 @@ public class LuaFunctionRightPage extends BookPage {
             }
             builder.finishList();
         }
-        List<IVariable> returns = this.returns.asList();
-        builder.local("returns").br().startList();
-        for (IVariable returnValue: returns) {
-            List<IVariable> returnArray = returnValue.asList();
-            builder.listElement().italic((IFormattableTextComponent) returnArray.get(0).as(ITextComponent.class))
-                    .add(": ")
-                    .add((IFormattableTextComponent) returnArray.get(1).as(ITextComponent.class))
-                    .finish();
+        if (operationReturn != null && operationReturn.asBoolean()) {
+            /*
+            ["true | nil", "True if operation successful, nil otherwise"],
+            ["nil | string", "Error message"]
+             */
+            builder.local("returns").br().startList();
+            builder.listElement().italic("true | nil").add(": ").add("True if operation successful, nil otherwise").finish();
+            builder.listElement().italic("nil | string").add(": ").add("Error message").finish();
+        } else {
+            List<IVariable> returns = this.returns.asList();
+            builder.local("returns").br().startList();
+            for (IVariable returnValue : returns) {
+                List<IVariable> returnArray = returnValue.asList();
+                builder.listElement().italic((IFormattableTextComponent) returnArray.get(0).as(ITextComponent.class))
+                        .add(": ")
+                        .add((IFormattableTextComponent) returnArray.get(1).as(ITextComponent.class))
+                        .finish();
+            }
+            builder.finishList();
         }
-        builder.finishList();
         textRenderer = new BookTextRenderer(parent, builder.build(), 0, LuaFunctionPage.STARTING_HEIGHT_WITHOUT_TITLE);
 
     }

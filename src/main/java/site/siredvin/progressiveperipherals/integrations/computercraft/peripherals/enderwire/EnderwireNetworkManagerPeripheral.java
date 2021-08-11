@@ -99,8 +99,9 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final void clearSelectedNetwork() {
+    public final boolean clearSelectedNetwork() {
         NetworkAccessingTool.writeSelectedNetwork(owner.getDataStorage(), null);
+        return true;
     }
 
     @LuaFunction(mainThread = true)
