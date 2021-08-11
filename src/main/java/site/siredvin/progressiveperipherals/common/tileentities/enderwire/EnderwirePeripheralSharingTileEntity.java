@@ -74,7 +74,14 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireWiredTile
 
     @Override
     public Map<String, Object> getCurrentState() {
-        return new HashMap<>();
+        return new HashMap<String, Object>() {{
+            IPeripheral sharedPeripheral = localPeripheral.getPeripheral();
+            if (sharedPeripheral != null) {
+                put("sharedPeripheral", sharedPeripheral.getType());
+            } else {
+                put("sharedPeripheral", null);
+            }
+        }};
     }
 
     @Override

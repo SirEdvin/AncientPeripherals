@@ -46,7 +46,10 @@ public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<End
 
     @Override
     public Map<String, Object> getCurrentState() {
-        return new HashMap<>();
+        return new HashMap<String, Object>() {{
+            put("enabled", getBlockState().getValue(EnderwireLightEmitterBlock.ENABLED));
+            put("color", LuaUtils.toLua(color));
+        }};
     }
 
     @Override

@@ -122,6 +122,14 @@ public class LuaUtils {
         return data;
     }
 
+    public static Map<String, Integer> toLua(Color color) {
+        return new HashMap<String, Integer>() {{
+           put("red", color.getRed());
+           put("green", color.getGreen());
+           put("blue", color.getBlue());
+        }};
+    }
+
     public static double[] toArray(Map<Double, Number> data) throws LuaException {
         int size = data.keySet().size();
         double[] value = new double[size];
