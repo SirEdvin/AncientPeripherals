@@ -1,0 +1,18 @@
+{
+  "name": "Network connector",
+  "icon": "progressiveperipherals:enderwire/network_connector",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Network connector",
+      "item": "progressiveperipherals:enderwire/network_connector",
+      "text": "Powerful computer peripheral, that will serve like a bridge between computers and your enderwire network. When attached to computer, this peripheral will populate events from configured network and allow to inspect network elements and even configure then!$(p)$(l)Note:$() By default, enderwire network has limited connection range between elements, take this to account"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/network_connector"
+    }
+  ]
+}
