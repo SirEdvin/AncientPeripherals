@@ -5,65 +5,65 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementCategory;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkAmplifier;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class EnderwireNetworkElement {
     private static final String POS_TAG = "blockPosition";
-    private static final String UUID_TAG = "uuid";
+    private static final String NAME_TAG = "name";
+    private static final String CATEGORY_TAG = "category";
     private static final String ELEMENT_TYPE_TAG = "elementType";
-    private static final String DEVICE_TYPE_TAG = "deviceType";
     private static final String DIMENSION_TAG = "dimension";
     private static final String NETWORK_AMPLIFIER_TAG = "networkAmplifier";
 
-    private final @NotNull UUID uuid;
+    private final @NotNull String name;
     private final @NotNull BlockPos pos;
-    private final @NotNull EnderwireElementCategory elementType;
-    private final @NotNull String deviceType;
+    private final @NotNull EnderwireElementCategory category;
+    private final @NotNull EnderwireElementType elementType;
     private final @NotNull String dimension;
     private final @NotNull NetworkAmplifier networkAmplifier;
 
-    public EnderwireNetworkElement(@NotNull UUID uuid, @NotNull BlockPos pos, @NotNull EnderwireElementCategory elementType, @NotNull String deviceType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
-        this.uuid = uuid;
+    public EnderwireNetworkElement(@NotNull String name, @NotNull BlockPos pos, @NotNull EnderwireElementCategory category, @NotNull EnderwireElementType elementType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
+        this.name = name;
         this.pos = pos;
+        this.category = category;
         this.elementType = elementType;
-        this.deviceType = deviceType;
         this.dimension = dimension;
         this.networkAmplifier = networkAmplifier;
     }
 
-    public BlockPos getPos() {
+    public @NotNull BlockPos getPos() {
         return pos;
     }
 
-    public UUID getUUID() {
-        return uuid;
+    public @NotNull String getName() {
+        return name;
     }
 
-    public EnderwireElementCategory getElementType() {
+    public @NotNull EnderwireElementCategory getCategory() {
+        return category;
+    }
+
+    public @NotNull EnderwireElementType getElementType() {
         return elementType;
     }
 
-    public String getDeviceType() {
-        return deviceType;
-    }
-
-    public NetworkAmplifier getNetworkAmplifier() {
+    public @NotNull NetworkAmplifier getNetworkAmplifier() {
         return networkAmplifier;
     }
 
-    public String getDimension() {
+    public @NotNull String getDimension() {
         return dimension;
     }
 
     public CompoundNBT toNBT() {
         CompoundNBT tag = new CompoundNBT();
-        tag.putString(UUID_TAG, uuid.toString());
+        tag.putString(NAME_TAG, name);
         tag.put(POS_TAG, NBTUtil.writeBlockPos(pos));
-        tag.putString(ELEMENT_TYPE_TAG, elementType.name().toUpperCase());
-        tag.putString(DEVICE_TYPE_TAG, deviceType);
+        tag.putString(CATEGORY_TAG, category.name());
+        tag.putString(ELEMENT_TYPE_TAG, elementType.name());
         tag.putString(DIMENSION_TAG, dimension);
         tag.putString(NETWORK_AMPLIFIER_TAG, networkAmplifier.name());
         return tag;
@@ -71,10 +71,10 @@ public class EnderwireNetworkElement {
 
     public static EnderwireNetworkElement fromCompound(CompoundNBT tag) {
         return new EnderwireNetworkElement(
-                UUID.fromString(tag.getString(UUID_TAG)),
+                tag.getString(NAME_TAG),
                 NBTUtil.readBlockPos(tag.getCompound(POS_TAG)),
-                EnderwireElementCategory.valueOf(tag.getString(ELEMENT_TYPE_TAG)),
-                tag.getString(DEVICE_TYPE_TAG),
+                EnderwireElementCategory.valueOf(tag.getString(CATEGORY_TAG)),
+                EnderwireElementType.valueOf(tag.getString(ELEMENT_TYPE_TAG)),
                 tag.getString(DIMENSION_TAG),
                 NetworkAmplifier.valueOf(tag.getString(NETWORK_AMPLIFIER_TAG))
         );
@@ -85,11 +85,11 @@ public class EnderwireNetworkElement {
         if (this == o) return true;
         if (!(o instanceof EnderwireNetworkElement)) return false;
         EnderwireNetworkElement that = (EnderwireNetworkElement) o;
-        return uuid.equals(that.uuid) && pos.equals(that.pos) && elementType.equals(that.elementType) && deviceType.equals(that.deviceType) && dimension.equals(that.dimension) && networkAmplifier == that.networkAmplifier;
+        return name.equals(that.name) && pos.equals(that.pos) && category.equals(that.category) && elementType.equals(that.elementType) && dimension.equals(that.dimension) && networkAmplifier == that.networkAmplifier;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, pos, elementType, deviceType, dimension, networkAmplifier);
+        return Objects.hash(name, pos, category, elementType, dimension, networkAmplifier);
     }
 }

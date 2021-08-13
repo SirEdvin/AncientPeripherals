@@ -14,20 +14,17 @@ import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 
-import java.util.UUID;
-
 public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends IBasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T>, IBlockObservingTileEntity {
     private static final String ATTACHED_NETWORK_TAG = "attachedNetwork";
-    private static final String ELEMENT_UUID_TAG = "elementUUID";
+    private static final String ELEMENT_NAME_TAG = "elementName";
 
     protected @Nullable String attachedNetwork;
-    protected UUID elementUUID;
+    protected @Nullable String name;
 
     private boolean requireNetworkCheck = true;
 
     public BaseEnderwireTileEntity(TileEntityType<?> tileEntityType) {
         super(tileEntityType);
-        this.elementUUID = UUID.randomUUID();
     }
 
     @Override
@@ -52,13 +49,20 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
     }
 
     @Override
-    public UUID getElementUUID() {
-        return elementUUID;
+    public @Nullable String getElementName() {
+        return name;
     }
 
     @Override
+    public void setElementName(@Nullable String name) {
+        this.name = name;
+    }
+
+
+    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
-        data.putUUID(ELEMENT_UUID_TAG, elementUUID);
+        if (name != null)
+            data.putString(ELEMENT_NAME_TAG, name);
         if (attachedNetwork != null)
             data.putString(ATTACHED_NETWORK_TAG, attachedNetwork);
         return data;
@@ -66,7 +70,8 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
 
     @Override
     public void loadInternalData(BlockState state, CompoundNBT data) {
-        elementUUID = data.getUUID(ELEMENT_UUID_TAG);
+        if (data.contains(ELEMENT_NAME_TAG))
+            name = data.getString(ELEMENT_NAME_TAG);
         if (data.contains(ATTACHED_NETWORK_TAG)) {
             attachedNetwork = data.getString(ATTACHED_NETWORK_TAG);
         } else {
@@ -84,9 +89,12 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
                 GlobalNetworksData networksData = GlobalNetworksData.get((ServerWorld) level);
                 if (!networksData.networkExists(attachedNetwork)) {
                     setAttachedNetwork(null);
+                    setElementName(null);
                 }
-                if (!getElementType().isEnabled())
+                if (!getElementType().isEnabled()) {
                     setAttachedNetwork(null);
+                    setElementName(null);
+                }
             }
             requireNetworkCheck = false;
         }

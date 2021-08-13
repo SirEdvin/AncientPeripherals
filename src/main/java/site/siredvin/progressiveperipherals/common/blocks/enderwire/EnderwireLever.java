@@ -113,6 +113,8 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
 
     @Override
     public EnderwireElementType getComponentType() {
+        if (verbose)
+            return EnderwireElementType.ADVANCED_LEVER;
         return EnderwireElementType.LEVER;
     }
 

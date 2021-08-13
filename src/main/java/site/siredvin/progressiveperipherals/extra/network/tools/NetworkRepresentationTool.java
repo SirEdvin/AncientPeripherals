@@ -19,7 +19,7 @@ public class NetworkRepresentationTool {
         Map<String, Object> representation = shortRepresentation(network);
         representation.put("range", network.getReachableRange());
         representation.put("interdimensional", network.isInterdimensional());
-        Map<UUID, EnderwireNetworkElement> elements = network.getElements();
+        Map<String, EnderwireNetworkElement> elements = network.getElements();
         if (elements != null) {
             List<Object> elementsRepresentation = new ArrayList<>();
             elements.values().forEach(networkElement -> elementsRepresentation.add(elementRepresentation(networkElement, center)));
@@ -32,9 +32,9 @@ public class NetworkRepresentationTool {
 
     public static Map<String, Object> elementRepresentation(EnderwireNetworkElement networkElement, BlockPos center) {
         Map<String, Object> representation = new HashMap<>();
-        representation.put("UUID", networkElement.getUUID().toString());
-        representation.put("elementType", networkElement.getElementType().name().toLowerCase());
-        representation.put("deviceType", networkElement.getDeviceType());
+        representation.put("name", networkElement.getName().toString());
+        representation.put("elementType", networkElement.getCategory().name().toLowerCase());
+        representation.put("deviceType", networkElement.getElementType());
         representation.put("position", LuaConverter.posToObject(networkElement.getPos().subtract(center)));
         return representation;
     }

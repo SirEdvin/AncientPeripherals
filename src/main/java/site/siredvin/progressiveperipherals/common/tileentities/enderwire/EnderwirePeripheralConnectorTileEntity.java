@@ -33,7 +33,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
 
     public void populateElement(EnderwireNetworkElement element) {
         Objects.requireNonNull(level);
-        if (element.getElementType().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getUUID().equals(getElementUUID())) {
+        if (element.getCategory().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getName().equals(getElementName())) {
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
             Objects.requireNonNull(network);
@@ -51,7 +51,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
 
     public void depopulateElement(EnderwireNetworkElement element) {
         Objects.requireNonNull(level);
-        if (element.getElementType().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getUUID().equals(getElementUUID())) {
+        if (element.getCategory().isPopulateNetwork() && level.isLoaded(element.getPos()) && !element.getName().equals(getElementName())) {
             TileEntity te = level.getBlockEntity(element.getPos());
             if (te != null)
                 te.getCapability(CAPABILITY_WIRED_ELEMENT).ifPresent(remoteWiredElement -> {

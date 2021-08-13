@@ -42,7 +42,7 @@ public class GlobalNetworksData extends WorldSavedData {
             return null;
         if (!playerUUID.equals(network.getOwnerUUID()))
             throw new IllegalArgumentException("Network cannot be removed by not owner!");
-        Map<UUID, EnderwireNetworkElement> elements = network.getElements();
+        Map<String, EnderwireNetworkElement> elements = network.getElements();
         if (elements != null) {
             List<EnderwireNetworkElement> removeTargets = new ArrayList<>();
             for (EnderwireNetworkElement networkElement : elements.values()) {
@@ -86,6 +86,7 @@ public class GlobalNetworksData extends WorldSavedData {
         return networks.values().stream().filter(network -> network.getType() != NetworkType.PRIVATE || network.getOwnerUUID().equals(playerUUID)).collect(Collectors.toList());
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isPlayerCanCreateNetworks(UUID playerUUID) {
         long ownedNetworkCount = networks.values().stream().filter(network -> network.getOwnerUUID().equals(playerUUID)).count();
         return ownedNetworkCount < ProgressivePeripheralsConfig.enderwireNetworkMaxCountPerPlayer;
@@ -128,7 +129,7 @@ public class GlobalNetworksData extends WorldSavedData {
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public @NotNull CompoundNBT save(CompoundNBT tag) {
         ListNBT serializedElements = new ListNBT();
         networks.values().forEach(element -> serializedElements.add(element.save(new CompoundNBT())));
         tag.put(NETWORKS_TAG, serializedElements);

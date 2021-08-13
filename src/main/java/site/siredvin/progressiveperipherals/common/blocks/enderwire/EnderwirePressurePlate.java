@@ -104,6 +104,8 @@ public class EnderwirePressurePlate extends PressurePlateBlock implements IEnder
 
     @Override
     public EnderwireElementType getComponentType() {
+        if (verbose)
+            return EnderwireElementType.ADVANCED_PLATE;
         return EnderwireElementType.PLATE;
     }
 

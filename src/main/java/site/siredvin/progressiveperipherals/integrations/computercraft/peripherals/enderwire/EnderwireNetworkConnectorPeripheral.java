@@ -49,14 +49,14 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult getNetworkElementState(String uuid) throws LuaException {
+    public final MethodResult getNetworkElementState(String name) throws LuaException {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
-            EnderwireNetworkElement element = network.getElement(UUID.fromString(uuid));
+            EnderwireNetworkElement element = network.getElement(name);
             if (element == null)
                 return MethodResult.of(null, "Cannot find element");
             Map<String, Object> elementState = new HashMap<>();
-            elementState.put("uuid", element.getUUID().toString());
+            elementState.put("name", element.getName());
             elementState.put("dimension", element.getDimension());
             if (world.isLoaded(element.getPos())) {
                 elementState.put("loaded", true);
@@ -71,10 +71,10 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult configureElement(String elementUUID, Map<?, ?> configuration) throws LuaException {
+    public final MethodResult configureElement(String name, Map<?, ?> configuration) throws LuaException {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
-            EnderwireNetworkElement element = network.getElement(UUID.fromString(elementUUID));
+            EnderwireNetworkElement element = network.getElement(name);
             if (element == null)
                 return MethodResult.of(null, "Cannot find element");
             if (!world.isLoaded(element.getPos()))
@@ -87,10 +87,10 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     }
 
     @LuaFunction
-    public final MethodResult isElementLoaded(String elementUUID) throws LuaException  {
+    public final MethodResult isElementLoaded(String name) throws LuaException  {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
-            EnderwireNetworkElement element = network.getElement(UUID.fromString(elementUUID));
+            EnderwireNetworkElement element = network.getElement(name);
             if (element == null)
                 return MethodResult.of(null, "Cannot find element");
             return MethodResult.of(world.isLoaded(element.getPos()));
@@ -98,14 +98,14 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     }
 
     @LuaFunction
-    public final MethodResult isElementsInReach(String firstUUID, String secondUUID) throws LuaException {
+    public final MethodResult isElementsInReach(String firstName, String secondName) throws LuaException {
         return withNetwork(getWorld(), tileEntity, network -> {
-            EnderwireNetworkElement first = network.getElement(UUID.fromString(firstUUID));
-            EnderwireNetworkElement second = network.getElement(UUID.fromString(secondUUID));
+            EnderwireNetworkElement first = network.getElement(firstName);
+            EnderwireNetworkElement second = network.getElement(secondName);
             if (first == null)
-                return MethodResult.of(null, String.format("Cannot find element %s", firstUUID));
+                return MethodResult.of(null, String.format("Cannot find element %s", firstName));
             if (second == null)
-                return MethodResult.of(null, String.format("Cannot find element %s", secondUUID));
+                return MethodResult.of(null, String.format("Cannot find element %s", secondName));
             return MethodResult.of(network.canReach(first, second));
         });
     }
@@ -115,19 +115,14 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
             for (Map.Entry<?, ?> configurationEntry: configurations.entrySet()) {
-                Object uuidKey = configurationEntry.getKey();
+                Object nameKey = configurationEntry.getKey();
                 Object configuration = configurationEntry.getValue();
-                UUID elementUUID;
-                try {
-                    elementUUID = UUID.fromString(uuidKey.toString());
-                } catch (IllegalArgumentException ignored) {
-                    throw new LuaException("Configurations key should be element UUID");
-                }
+                String elementName = nameKey.toString();
                 if (!(configuration instanceof Map))
                     throw new LuaException("Configurations value should be maps");
-                EnderwireNetworkElement element = network.getElement(elementUUID);
+                EnderwireNetworkElement element = network.getElement(elementName);
                 if (element == null)
-                    return MethodResult.of(null, String.format("Cannot find element with uuid %s", elementUUID));
+                    return MethodResult.of(null, String.format("Cannot find element with name %s", elementName));
                 if (!world.isLoaded(element.getPos()))
                     return MethodResult.of(null, "Element is not loaded ...");
                 IEnderwireElement<?> elementTE = (IEnderwireElement<?>) world.getBlockEntity(element.getPos());

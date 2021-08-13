@@ -92,6 +92,8 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
 
     @Override
     public EnderwireElementType getComponentType() {
+        if (verbose)
+            return EnderwireElementType.ADVANCED_BUTTON;
         return EnderwireElementType.BUTTON;
     }
 

@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
@@ -30,7 +31,7 @@ public class EnderwireNetwork {
     private UUID ownerUUID;
     private @Nullable String password;
     private @Nullable String salt;
-    private @Nullable Map<UUID, EnderwireNetworkElement> elements;
+    private @Nullable Map<String, EnderwireNetworkElement> elements;
 
     private int reachableRange;
     private boolean interdimensional;
@@ -118,13 +119,13 @@ public class EnderwireNetwork {
         this.password = PasswordUtil.generateSecurePassword(password, this.salt);
     }
 
-    public @Nullable EnderwireNetworkElement getElement(UUID elementUUID) {
+    public @Nullable EnderwireNetworkElement getElement(String name) {
         if (elements == null)
             return null;
-        return elements.get(elementUUID);
+        return elements.get(name);
     }
 
-    public @Nullable Map<UUID, EnderwireNetworkElement> getElements() {
+    public @Nullable Map<String, EnderwireNetworkElement> getElements() {
         return elements;
     }
 
@@ -133,10 +134,18 @@ public class EnderwireNetwork {
             elements.values().forEach(consumer);
     }
 
+    public String generateNameForElement(@NotNull IEnderwireElement<?> element) {
+        long count = 0;
+        if (elements != null)
+            count = elements.values().stream().filter(el -> el.getElementType().equals(element.getElementType())).count();
+        count++; // Move to next index
+        return element.getElementType().lowerTitleCase() + "_" + count;
+    }
+
     protected void addNetworkElementNoEvent(EnderwireNetworkElement element) {
         if (elements == null)
             elements = new HashMap<>();
-        elements.put(element.getUUID(), element);
+        elements.put(element.getName(), element);
     }
 
     public void addNetworkElement(EnderwireNetworkElement element) {
@@ -148,15 +157,15 @@ public class EnderwireNetwork {
 
     @SuppressWarnings("UnusedReturnValue")
     public @Nullable EnderwireNetworkElement removeNetworkElement(EnderwireNetworkElement element) {
-        return removeNetworkElementByUUID(element.getUUID());
+        return removeNetworkElementByName(element.getName());
     }
 
-    public @Nullable EnderwireNetworkElement removeNetworkElementByUUID(UUID uuid) {
+    public @Nullable EnderwireNetworkElement removeNetworkElementByName(String name) {
         if (elements != null) {
-            EnderwireNetworkElement removed = elements.remove(uuid);
+            EnderwireNetworkElement removed = elements.remove(name);
             if (removed != null) {
                 recalculateNetworkStats();
-                EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.removedElements(removed));
+                EnderwireNetworkBusHub.fireNetworkEvent(this.name, EnderwireNetworkEvent.removedElements(removed));
             }
             return removed;
         }
