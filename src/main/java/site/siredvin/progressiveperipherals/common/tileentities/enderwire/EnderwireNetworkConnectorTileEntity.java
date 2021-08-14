@@ -36,7 +36,7 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.SENSOR_MANAGER;
+        return EnderwireElementType.NETWORK_MANAGER;
     }
 
     @Override

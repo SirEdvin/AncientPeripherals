@@ -89,7 +89,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireWiredTi
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.NETWORK_CONNECTOR;
+        return EnderwireElementType.PERIPHERAL_CONNECTOR;
     }
 
     @Override

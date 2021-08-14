@@ -69,7 +69,7 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireWiredTile
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.PERIPHERAL_CONNECTOR;
+        return EnderwireElementType.PERIPHERAL_SHARING;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
 
     @Override
     public boolean isEnabled() {
-        return EnderwireElementType.NETWORK_CONNECTOR.isEnabled();
+        return EnderwireElementType.PERIPHERAL_CONNECTOR.isEnabled();
     }
 
     @LuaFunction

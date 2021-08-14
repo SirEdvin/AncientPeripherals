@@ -32,9 +32,9 @@ public class NetworkRepresentationTool {
 
     public static Map<String, Object> elementRepresentation(EnderwireNetworkElement networkElement, BlockPos center) {
         Map<String, Object> representation = new HashMap<>();
-        representation.put("name", networkElement.getName().toString());
+        representation.put("name", networkElement.getName());
         representation.put("elementType", networkElement.getCategory().name().toLowerCase());
-        representation.put("deviceType", networkElement.getElementType());
+        representation.put("deviceType", networkElement.getElementType().lowerTitleCase());
         representation.put("position", LuaConverter.posToObject(networkElement.getPos().subtract(center)));
         return representation;
     }

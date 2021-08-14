@@ -9,6 +9,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
@@ -88,7 +89,7 @@ public class NetworkElementTool {
                         EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get((ServerWorld) world), ItemPocketComputer.getUpgradeInfo(itemInHand));
                         if (selectedNetwork != null) {
                             if (!selectedNetwork.canAcceptNewElements()) {
-                                player.displayClientMessage(TranslationUtil.formattedLocalization("enderwire.network_limit", selectedNetwork.getName()), true);
+                                player.displayClientMessage(TranslationUtil.formattedLocalization("enderwire.network_limit", TextFormatting.DARK_GRAY, selectedNetwork.getName()), true);
                             } else {
                                 te.changeAttachedNetwork(selectedNetwork.getName());
                             }
@@ -97,7 +98,7 @@ public class NetworkElementTool {
                         }
                     }
                 } else if (world.isClientSide) {
-                    player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled"), true);
+                    player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled", TextFormatting.DARK_GRAY), true);
                 }
             }
         }
@@ -110,15 +111,15 @@ public class NetworkElementTool {
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
                 if (!te.getElementType().isEnabled())
-                    player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled"), true);
+                    player.displayClientMessage(TranslationUtil.localization("enderwire.is_disabled", TextFormatting.DARK_GRAY), true);
                 if (attachedNetwork == null) {
                     player.displayClientMessage(
-                            TranslationUtil.localization("enderwire.not_attached_to_anything"),
+                            TranslationUtil.localization("enderwire.not_attached_to_anything", TextFormatting.DARK_GRAY),
                             true
                     );
                 } else {
                     player.displayClientMessage(
-                            TranslationUtil.formattedLocalization("enderwire.attached_to", attachedNetwork, te.getElementName()),
+                            TranslationUtil.formattedLocalization("enderwire.attached_to", TextFormatting.DARK_GRAY, attachedNetwork, te.getElementName()),
                             true
                     );
                 }

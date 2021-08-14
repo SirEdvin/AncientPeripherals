@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum EnderwireElementType implements IConfigHandler {
-    SENSOR_MANAGER(EnderwireElementCategory.SERVICE), PERIPHERAL_CONNECTOR(EnderwireElementCategory.SERVICE), NETWORK_CONNECTOR(EnderwireElementCategory.SERVICE),
+    NETWORK_MANAGER(EnderwireElementCategory.SERVICE), PERIPHERAL_SHARING(EnderwireElementCategory.SERVICE), PERIPHERAL_CONNECTOR(EnderwireElementCategory.SERVICE),
     NETWORK_AMPLIFIER(EnderwireElementCategory.MODIFICATION), DIMENSION_BREAKER(EnderwireElementCategory.MODIFICATION),
     LEVER(EnderwireElementCategory.SENSOR), BUTTON(EnderwireElementCategory.SENSOR), PLATE(EnderwireElementCategory.SENSOR),
     ADVANCED_LEVER(EnderwireElementCategory.SENSOR), ADVANCED_BUTTON(EnderwireElementCategory.SENSOR), ADVANCED_PLATE(EnderwireElementCategory.SENSOR),
@@ -55,7 +55,7 @@ public enum EnderwireElementType implements IConfigHandler {
     }
 
     public String lowerTitleCase() {
-        List<String> processed = Arrays.stream(name().split("_")).map(StringUtils::capitalize).collect(Collectors.toList());
+        List<String> processed = Arrays.stream(name().toLowerCase().split("_")).map(StringUtils::capitalize).collect(Collectors.toList());
         processed.set(0, StringUtils.uncapitalize(processed.get(0)));
         StringBuilder builder = new StringBuilder();
         processed.forEach(builder::append);

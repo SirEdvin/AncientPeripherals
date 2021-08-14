@@ -135,11 +135,12 @@ public class EnderwireNetwork {
     }
 
     public String generateNameForElement(@NotNull IEnderwireElement<?> element) {
-        long count = 0;
+        String elementTypeName = element.getElementType().lowerTitleCase();
+        int lastIndex = 0;
         if (elements != null)
-            count = elements.values().stream().filter(el -> el.getElementType().equals(element.getElementType())).count();
-        count++; // Move to next index
-        return element.getElementType().lowerTitleCase() + "_" + count;
+            lastIndex = elements.values().stream().filter(el -> el.getName().startsWith(elementTypeName)).map(el -> Integer.valueOf(el.getName().split("_")[1])).max(Integer::compareTo).orElse(lastIndex);
+        lastIndex++; // Move to next index
+        return elementTypeName + "_" + lastIndex;
     }
 
     protected void addNetworkElementNoEvent(EnderwireNetworkElement element) {
