@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum EnderwireElementType implements IConfigHandler {
-    NETWORK_MANAGER(EnderwireElementCategory.SERVICE), PERIPHERAL_SHARING(EnderwireElementCategory.SERVICE), PERIPHERAL_CONNECTOR(EnderwireElementCategory.SERVICE),
+    NETWORK_MANAGER(EnderwireElementCategory.SERVICE), PERIPHERAL_SHARING(EnderwireElementCategory.PROPAGATOR), PERIPHERAL_CONNECTOR(EnderwireElementCategory.SERVICE),
     NETWORK_AMPLIFIER(EnderwireElementCategory.MODIFICATION), DIMENSION_BREAKER(EnderwireElementCategory.MODIFICATION),
     LEVER(EnderwireElementCategory.SENSOR), BUTTON(EnderwireElementCategory.SENSOR), PLATE(EnderwireElementCategory.SENSOR),
     ADVANCED_LEVER(EnderwireElementCategory.SENSOR), ADVANCED_BUTTON(EnderwireElementCategory.SENSOR), ADVANCED_PLATE(EnderwireElementCategory.SENSOR),

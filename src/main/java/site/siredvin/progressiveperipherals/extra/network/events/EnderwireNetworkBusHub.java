@@ -1,7 +1,11 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+@Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EnderwireNetworkBusHub {
+
     private static final Map<String, EnderwireEventBus<EnderwireNetworkEvent>> networkEvents = new HashMap<>();
     private static final Map<String, EnderwireEventBus<EnderwireComputerEvent>> computerEvents = new HashMap<>();
 
@@ -79,4 +85,17 @@ public class EnderwireNetworkBusHub {
             tick_counter = 0;
         }
     }
+
+    @SubscribeEvent
+    public static void afterServerStopped(FMLServerStoppedEvent event) {
+        networkEvents.clear();
+        computerEvents.clear();
+    }
+
+    @SubscribeEvent
+    public static void beforeServerStarted(FMLServerStartingEvent event) {
+        networkEvents.clear();
+        computerEvents.clear();
+    }
 }
+

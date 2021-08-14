@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EnderwireEventBus<T extends IEpochEvent> {
+public class EnderwireEventBus<T extends IEnderwireBusEvent> {
     private static final long ALLOWED_DELAY_IN_SECONDS = 60 * 15;
 
     private long counter;
@@ -47,6 +47,8 @@ public class EnderwireEventBus<T extends IEpochEvent> {
     public synchronized long traverse(long lastConsumedMessage, Consumer<T> consumer) {
         for (EnderwireEventBusMessage<T> message : queue) {
             if (message.getNumber() <= lastConsumedMessage)
+                continue;
+            if (!message.getEvent().isValid())
                 continue;
             consumer.accept(message.getEvent());
             lastConsumedMessage = message.getNumber();

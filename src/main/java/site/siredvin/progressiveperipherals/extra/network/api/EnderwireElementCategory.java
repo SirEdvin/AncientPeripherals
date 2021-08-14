@@ -2,22 +2,23 @@ package site.siredvin.progressiveperipherals.extra.network.api;
 
 public enum EnderwireElementCategory {
     SENSOR(),
-    SERVICE(true),
+    SERVICE(),
+    PROPAGATOR(true),
     MODIFICATION(),
     EMITTER(),
     NONE();
 
-    private final boolean populateNetwork;
+    private final boolean canSharePeripheral;
 
-    EnderwireElementCategory(boolean populateNetwork) {
-        this.populateNetwork = populateNetwork;
+    EnderwireElementCategory(boolean canSharePeripheral) {
+        this.canSharePeripheral = canSharePeripheral;
     }
 
     EnderwireElementCategory() {
-        this.populateNetwork = false;
+        this.canSharePeripheral = false;
     }
 
-    public boolean isPopulateNetwork() {
-        return populateNetwork;
+    public boolean canSharePeripheral() {
+        return canSharePeripheral;
     }
 }

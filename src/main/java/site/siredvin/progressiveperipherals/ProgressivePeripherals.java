@@ -36,7 +36,6 @@ import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughP
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.setup.*;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionPage;
@@ -71,7 +70,6 @@ public class ProgressivePeripherals {
         modEventBus.addListener(ConfigHandler::reloadConfigEvent);
         // Forge events
         forgeBus.addListener(this::biomeModification);
-        forgeBus.addListener(EnderwireNetworkBusHub::performCleanup);
         forgeBus.addListener(SingleTickScheduler::tick);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC);
@@ -98,8 +96,6 @@ public class ProgressivePeripherals {
 
     @SubscribeEvent
     public void clientSetup(FMLClientSetupEvent event) {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_REALITY_ANCHOR.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.FLEXIBLE_STATUE.get(), RenderType.translucent());
         RenderTypeLookup.setRenderLayer(Blocks.IRREALIUM_MACHINERY_GLASS.get(), RenderType.translucent());

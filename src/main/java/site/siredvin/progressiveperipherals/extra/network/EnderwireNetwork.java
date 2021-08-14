@@ -152,7 +152,7 @@ public class EnderwireNetwork {
     public void addNetworkElement(EnderwireNetworkElement element) {
         addNetworkElementNoEvent(element);
         recalculateNetworkStats();
-        EnderwireNetworkBusHub.fireNetworkEvent(name, EnderwireNetworkEvent.addedElements(element));
+        EnderwireNetworkBusHub.fireNetworkEvent(name, new EnderwireNetworkEvent.ElementAdded(element));
     }
 
 
@@ -166,7 +166,7 @@ public class EnderwireNetwork {
             EnderwireNetworkElement removed = elements.remove(name);
             if (removed != null) {
                 recalculateNetworkStats();
-                EnderwireNetworkBusHub.fireNetworkEvent(this.name, EnderwireNetworkEvent.removedElements(removed));
+                EnderwireNetworkBusHub.fireNetworkEvent(this.name, new EnderwireNetworkEvent.ElementRemoved(removed));
             }
             return removed;
         }

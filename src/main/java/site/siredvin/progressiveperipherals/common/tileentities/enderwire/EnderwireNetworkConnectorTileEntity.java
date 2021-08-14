@@ -30,6 +30,14 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
     }
 
     @Override
+    public void blockTick() {
+        super.blockTick();
+        if (level != null && !level.isClientSide && attachedNetwork != null && lastComputerEventMessage == -1) {
+            lastComputerEventMessage = EnderwireNetworkBusHub.getComputerEventsStart(attachedNetwork);
+        }
+    }
+
+    @Override
     public EnderwireNetworkConnectorTileEntity getThis() {
         return this;
     }

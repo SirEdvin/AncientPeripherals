@@ -12,6 +12,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 
@@ -46,13 +47,13 @@ public abstract class MutableNBTTileEntity<T extends IBasePeripheral> extends Op
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(@NotNull BlockState state, @NotNull CompoundNBT tag) {
         super.load(state, tag);
         loadInternalData(state, tag);
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public @NotNull CompoundNBT save(@NotNull CompoundNBT tag) {
         tag = saveInternalData(tag);
         return super.save(tag);
     }

@@ -18,13 +18,14 @@ import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends TileEntity implements IPeripheralTileEntity {
 
     private static final String PERIPHERAL_DATA_TAG = "peripheralData";
 
     // Peripheral logic
-    protected @Nullable CompoundNBT peripheralData = null;
+    protected @NotNull CompoundNBT peripheralData;
     @Nullable protected T peripheral = null;
     private LazyOptional<IPeripheral> peripheralCap;
 
@@ -33,23 +34,24 @@ public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends Til
         this.peripheralData = new CompoundNBT();
     }
 
+    public void ensurePeripheralCreated() {
+        if (this.peripheral == null) {
+            this.peripheral = this.createPeripheral();
+        }
+    }
+
     @NotNull
     public <T1> LazyOptional<T1> getCapability(@NotNull Capability<T1> cap, @Nullable Direction direction) {
         if (cap == Capabilities.CAPABILITY_PERIPHERAL && hasPeripheral()) {
-            if (this.peripheral == null) {
-                this.peripheral = this.createPeripheral();
-            }
+            ensurePeripheralCreated();
+            Objects.requireNonNull(peripheral);
 
             if (this.peripheral.isEnabled()) {
                 if (this.peripheralCap == null) {
-                    this.peripheralCap = LazyOptional.of(() -> {
-                        return this.peripheral;
-                    });
+                    this.peripheralCap = LazyOptional.of(() -> this.peripheral);
                 } else if (!this.peripheralCap.isPresent()) {
                     this.peripheral = this.createPeripheral();
-                    this.peripheralCap = LazyOptional.of(() -> {
-                        return this.peripheral;
-                    });
+                    this.peripheralCap = LazyOptional.of(() -> this.peripheral);
                 }
 
                 return this.peripheralCap.cast();
@@ -82,9 +84,9 @@ public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends Til
     }
 
     @Override
-    public CompoundNBT save(@NotNull CompoundNBT compound) {
+    public @NotNull CompoundNBT save(@NotNull CompoundNBT compound) {
         super.save(compound);
-        if (this.peripheralData != null && !this.peripheralData.isEmpty()) {
+        if (!this.peripheralData.isEmpty()) {
             compound.put(PERIPHERAL_DATA_TAG, this.peripheralData);
         }
 
@@ -100,8 +102,6 @@ public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends Til
 
     @Override
     public CompoundNBT getApSettings() {
-        if (this.peripheralData == null)
-            this.peripheralData = new CompoundNBT();
         return this.peripheralData;
     }
 }

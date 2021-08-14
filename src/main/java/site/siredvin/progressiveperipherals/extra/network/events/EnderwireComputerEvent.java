@@ -9,7 +9,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class EnderwireComputerEvent implements IEpochEvent {
+public class EnderwireComputerEvent implements IEnderwireBusEvent {
     private final @NotNull String name;
     private final @NotNull Map<String, Object> data;
     private final int reachableRange;
@@ -54,5 +54,10 @@ public class EnderwireComputerEvent implements IEpochEvent {
         data.put("event", name);
 
         return new EnderwireComputerEvent(name, reachableRange, interdimensional, originalDimension, pos, data, epoch);
+    }
+
+    @Override
+    public boolean isValid() {
+        return true;
     }
 }

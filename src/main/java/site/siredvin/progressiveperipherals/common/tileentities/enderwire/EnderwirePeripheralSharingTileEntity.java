@@ -1,24 +1,102 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.shared.Peripherals;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireDirectionalBlock;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
+import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
+import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireWiredTileEntity<EnderwirePeripheralSharingTileEntity> {
+public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntity<EnderwirePeripheralSharingTileEntity, IBasePeripheral> {
+
+    private boolean initialized = false;
+    private @Nullable IPeripheral sharedPeripheral;
 
     public EnderwirePeripheralSharingTileEntity() {
         super(TileEntityTypes.ENDERWIRE_PERIPHERAL_SHARING.get());
+    }
+
+    private void detachCurrentPeripheral() {
+        ProgressivePeripherals.LOGGER.warn(String.format("Try to cleanup shared peripheral data for %s", getElementName()));
+        if (level != null && !level.isClientSide && sharedPeripheral != null && attachedNetwork != null) {
+            GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
+            EnderwireNetwork network = networks.getNetwork(attachedNetwork);
+            if (network == null)
+                return;
+            EnderwireNetworkElement element = network.getElement(getElementName());
+            if (element == null)
+                return;
+            ProgressivePeripherals.LOGGER.warn(String.format("Firing cleanup for %s", getElementName()));
+            EnderwireNetworkBusHub.fireNetworkEvent(attachedNetwork, new EnderwireNetworkEvent.PeripheralDetached(element, sharedPeripheral));
+            sharedPeripheral = null;
+        }
+    }
+
+    private void attachNewPeripheral(@NotNull IPeripheral newPeripheral) {
+        ProgressivePeripherals.LOGGER.warn(String.format("Try to attach new peripherals shared peripheral data for %s", getElementName()));
+        if (level != null && !level.isClientSide && attachedNetwork != null) {
+            GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
+            EnderwireNetwork network = networks.getNetwork(attachedNetwork);
+            if (network == null)
+                return;
+            EnderwireNetworkElement element = network.getElement(getElementName());
+            if (element == null)
+                return;
+            sharedPeripheral = newPeripheral;
+            ProgressivePeripherals.LOGGER.warn(String.format("Peripheral attached to %s", getElementName()));
+            EnderwireNetworkBusHub.fireNetworkEvent(attachedNetwork, new EnderwireNetworkEvent.PeripheralAttached(element, sharedPeripheral));
+        }
+    }
+
+    public void destroy() {
+        detachCurrentPeripheral();
+    }
+
+    @Override
+    public void placed() {
+        SingleTickScheduler.schedule(this);
+    }
+
+    @Override
+    public void onChunkUnloaded() {
+        super.onChunkUnloaded();
+        detachCurrentPeripheral();
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        detachCurrentPeripheral();
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        SingleTickScheduler.schedule(this);
+    }
+
+    @Override
+    public void clearCache() {
+        super.clearCache();
+        SingleTickScheduler.now(this);
     }
 
     @Override
@@ -41,10 +119,19 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireWiredTile
         }
     }
 
-    @Override
     protected void refreshPeripheral() {
-        if (level != null && !isRemoved() && localPeripheral.attach(level, getBlockPos(), getLookingDirection())) {
-            updateConnectedPeripherals();
+        if (level != null && !isRemoved()) {
+            Direction lookingDirection = getLookingDirection();
+            IPeripheral peripheral = Peripherals.getPeripheral(level, getBlockPos().relative(lookingDirection), lookingDirection.getOpposite(), optPeripheral -> refreshPeripheral());
+
+            if (peripheral == null) {
+                if (sharedPeripheral != null)
+                    detachCurrentPeripheral();
+            } else if (!peripheral.equals(sharedPeripheral)) {
+                if (sharedPeripheral != null)
+                    detachCurrentPeripheral();
+                attachNewPeripheral(peripheral);
+            }
         }
     }
 
@@ -57,11 +144,6 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireWiredTile
         }
     }
 
-    private void updateConnectedPeripherals() {
-        Map<String, IPeripheral> peripherals = localPeripheral.toMap();
-        node.updatePeripherals(peripherals);
-    }
-
     @Override
     public EnderwirePeripheralSharingTileEntity getThis() {
         return this;
@@ -72,21 +154,20 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireWiredTile
         return EnderwireElementType.PERIPHERAL_SHARING;
     }
 
+    @Nullable
+    @Override
+    public IPeripheral getSharedPeripheral() {
+        return sharedPeripheral;
+    }
+
     @Override
     public Map<String, Object> getCurrentState() {
         return new HashMap<String, Object>() {{
-            IPeripheral sharedPeripheral = localPeripheral.getPeripheral();
             if (sharedPeripheral != null) {
                 put("sharedPeripheral", sharedPeripheral.getType());
             } else {
                 put("sharedPeripheral", null);
             }
         }};
-    }
-
-    @Override
-    public @NotNull Vector3d getWiredPosition() {
-        BlockPos pos = getBlockPos().relative(getLookingDirection());
-        return new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
     }
 }

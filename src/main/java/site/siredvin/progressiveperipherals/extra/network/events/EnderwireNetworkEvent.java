@@ -1,54 +1,88 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
+import dan200.computercraft.api.peripheral.IPeripheral;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 
+import java.lang.ref.WeakReference;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
 
-public class EnderwireNetworkEvent implements IEpochEvent {
-    private final EnderwireNetworkElement[] removedElements;
-    private final EnderwireNetworkElement[] addedElements;
+public class EnderwireNetworkEvent implements IEnderwireBusEvent {
     private final long epoch;
 
-    EnderwireNetworkEvent(EnderwireNetworkElement[] removedElements, EnderwireNetworkElement[] addedElements) {
-        this.removedElements = removedElements;
-        this.addedElements = addedElements;
+    EnderwireNetworkEvent() {
         this.epoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-    }
-
-    public EnderwireNetworkElement[] getAddedElements() {
-        return addedElements;
-    }
-
-    public EnderwireNetworkElement[] getRemovedElements() {
-        return removedElements;
     }
 
     public long getEpoch() {
         return epoch;
     }
 
-    public static EnderwireNetworkEvent addedElements(EnderwireNetworkElement... elements) {
-        return new EnderwireNetworkEvent(new EnderwireNetworkElement[0], elements);
+    public boolean isValid() {
+        return true;
     }
 
-    public static EnderwireNetworkEvent removedElements(EnderwireNetworkElement... elements) {
-        return new EnderwireNetworkEvent(elements, new EnderwireNetworkElement[0]);
+    private static class ElementEvent extends EnderwireNetworkEvent {
+        private final WeakReference<EnderwireNetworkElement> element;
+
+        public ElementEvent(EnderwireNetworkElement element) {
+            super();
+            this.element = new WeakReference<>(element);
+        }
+
+        public EnderwireNetworkElement getElement() {
+            return element.get();
+        }
+
+        @Override
+        public boolean isValid() {
+            return element.get() != null;
+        }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EnderwireNetworkEvent)) return false;
-        EnderwireNetworkEvent that = (EnderwireNetworkEvent) o;
-        return Arrays.equals(removedElements, that.removedElements) && Arrays.equals(addedElements, that.addedElements);
+    private static class PeripheralEvent extends ElementEvent {
+        private final WeakReference<IPeripheral> peripheral;
+
+        public PeripheralEvent(EnderwireNetworkElement element, IPeripheral peripheral) {
+            super(element);
+            this.peripheral = new WeakReference<>(peripheral);
+        }
+
+        public IPeripheral getPeripheral() {
+            return peripheral.get();
+        }
+
+        @Override
+        public boolean isValid() {
+            return super.isValid() && peripheral.get() != null;
+        }
     }
 
-    @Override
-    public int hashCode() {
-        int result = Arrays.hashCode(removedElements);
-        result = 31 * result + Arrays.hashCode(addedElements);
-        return result;
+    public static class ElementAdded extends ElementEvent {
+
+        public ElementAdded(EnderwireNetworkElement element) {
+            super(element);
+        }
+    }
+
+    public static class ElementRemoved extends ElementEvent {
+
+        public ElementRemoved(EnderwireNetworkElement element) {
+            super(element);
+        }
+    }
+
+    public static class PeripheralAttached extends PeripheralEvent {
+
+        public PeripheralAttached(EnderwireNetworkElement element, IPeripheral peripheral) {
+            super(element, peripheral);
+        }
+    }
+
+    public static class PeripheralDetached extends PeripheralEvent {
+
+        public PeripheralDetached(EnderwireNetworkElement element, IPeripheral peripheral) {
+            super(element, peripheral);
+        }
     }
 }
