@@ -64,9 +64,9 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        FlexibleRealityAnchorTileEntity tileEntity = (FlexibleRealityAnchorTileEntity) world.getBlockEntity(pos);
-        if (tileEntity != null)
-            return tileEntity.getLightLevel();
+        TileEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof FlexibleRealityAnchorTileEntity)
+            return ((FlexibleRealityAnchorTileEntity) tileEntity).getLightLevel();
         return 0;
     }
 
