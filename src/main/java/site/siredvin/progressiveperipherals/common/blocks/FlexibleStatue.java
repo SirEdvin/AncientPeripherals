@@ -70,9 +70,9 @@ public class FlexibleStatue extends BaseNBTBlock<FlexibleStatueTileEntity> {
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        FlexibleStatueTileEntity tileEntity = (FlexibleStatueTileEntity) world.getBlockEntity(pos);
-        if (tileEntity != null)
-            return tileEntity.getLightLevel();
+        TileEntity tileEntity = world.getBlockEntity(pos);
+        if (tileEntity instanceof FlexibleStatueTileEntity)
+            return ((FlexibleStatueTileEntity) tileEntity).getLightLevel();
         return 0;
     }
 }

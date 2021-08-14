@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [0.0.8] - 2021-08-14
+
+### Fixed
+
+- `lightLevel` support for Flexible reality anchor and Flexible statue [now works fine](https://github.com/SirEdvin/ProgressivePeripherals/issues/33) 
+
 ### [0.0.7] - 2021-08-08
 
 ### Fixed
