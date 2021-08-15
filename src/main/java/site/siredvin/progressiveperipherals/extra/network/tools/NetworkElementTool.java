@@ -15,6 +15,7 @@ import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
+import site.siredvin.progressiveperipherals.api.tileentity.IBlockObservingTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
@@ -147,6 +148,8 @@ public class NetworkElementTool {
         if (!world.isClientSide) {
             IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
             if (te != null && te.getAttachedNetwork() != null) {
+                if (te instanceof IBlockObservingTileEntity)
+                    ((IBlockObservingTileEntity) te).destroy();
                 ServerWorld serverWorld = (ServerWorld) world;
                 removeFromNetwork(GlobalNetworksData.get(serverWorld), te.getAttachedNetwork(), te, serverWorld);
             }

@@ -77,14 +77,14 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
 
     @Override
     public void onChunkUnloaded() {
-        super.onChunkUnloaded();
         detachCurrentPeripheral();
+        super.onChunkUnloaded();
     }
 
     @Override
     public void setRemoved() {
-        super.setRemoved();
         detachCurrentPeripheral();
+        super.setRemoved();
     }
 
     @Override

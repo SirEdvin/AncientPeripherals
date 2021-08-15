@@ -1,17 +1,14 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EnderwireNetworkBusHub {
@@ -19,71 +16,40 @@ public class EnderwireNetworkBusHub {
     private static final Map<String, EnderwireEventBus<EnderwireNetworkEvent>> networkEvents = new HashMap<>();
     private static final Map<String, EnderwireEventBus<EnderwireComputerEvent>> computerEvents = new HashMap<>();
 
-    private static int tick_counter = 0;
-
-    public static void fireNetworkEvent(String networkName, EnderwireNetworkEvent event) {
+    private static EnderwireEventBus<EnderwireNetworkEvent> getNetworkEventBus(@NotNull String networkName) {
         if (!networkEvents.containsKey(networkName))
             networkEvents.put(networkName, new EnderwireEventBus<>());
-        networkEvents.get(networkName).handleEvent(event);
+        return networkEvents.get(networkName);
     }
 
-    public static long traverseNetworkEvents(String networkName, long lastConsumedMessage, Consumer<EnderwireNetworkEvent> consumer) {
-        EnderwireEventBus<EnderwireNetworkEvent> bus = networkEvents.get(networkName);
-        if (bus != null)
-            return bus.traverse(lastConsumedMessage, consumer);
-        return lastConsumedMessage;
-    }
-
-    public static long getNetworkEventsStart(String networkName) {
-        EnderwireEventBus<EnderwireNetworkEvent> bus = networkEvents.get(networkName);
-        if (bus == null)
-            return -1;
-        return bus.getCounter() - 1;
-    }
-
-    public static void fireComputerEvent(String networkName, EnderwireComputerEvent event) {
+    private static EnderwireEventBus<EnderwireComputerEvent> getComputerEventBus(@NotNull String networkName) {
         if (!computerEvents.containsKey(networkName))
             computerEvents.put(networkName, new EnderwireEventBus<>());
-        computerEvents.get(networkName).handleEvent(event);
+        return computerEvents.get(networkName);
     }
 
-    public static long traverseComputerEvents(String networkName, long lastConsumedMessage, Consumer<EnderwireComputerEvent> consumer) {
-        EnderwireEventBus<EnderwireComputerEvent> bus = computerEvents.get(networkName);
-        if (bus != null)
-            return bus.traverse(lastConsumedMessage, consumer);
-        return lastConsumedMessage;
+    public static void fireNetworkEvent(@NotNull String networkName, EnderwireNetworkEvent event) {
+        getNetworkEventBus(networkName).handleEvent(event);
     }
 
-    public static long getComputerEventsStart(String networkName) {
-        EnderwireEventBus<EnderwireComputerEvent> bus = computerEvents.get(networkName);
-        if (bus == null)
-            return -1;
-        return bus.getCounter() - 1;
+    public static EnderwireEventSubscription<EnderwireNetworkEvent> subscribeToNetworkEvents(@NotNull String networkName, IEnderwireEventConsumer<EnderwireNetworkEvent> consumer) {
+        return getNetworkEventBus(networkName).subscribe(consumer);
     }
 
-    @SubscribeEvent
-    public static void performCleanup(final TickEvent.ServerTickEvent event) {
-        tick_counter++;
-        if (tick_counter % 60 == 0) {
-            List<String> removeList = new ArrayList<>();
-            for (String key : networkEvents.keySet()) {
-                EnderwireEventBus<EnderwireNetworkEvent> bus = networkEvents.get(key);
-                bus.cleanup();
-                if (bus.isEmpty())
-                    removeList.add(key);
-            }
-            removeList.forEach(networkEvents::remove);
+    public static void unsubscribeFromNetworkEvents(@NotNull String networkName, EnderwireEventSubscription<EnderwireNetworkEvent> subscription) {
+        getNetworkEventBus(networkName).unsubscribe(subscription);
+    }
 
-            removeList = new ArrayList<>();
-            for (String key : computerEvents.keySet()) {
-                EnderwireEventBus<EnderwireComputerEvent> bus = computerEvents.get(key);
-                bus.cleanup();
-                if (bus.isEmpty())
-                    removeList.add(key);
-            }
-            removeList.forEach(computerEvents::remove);
-            tick_counter = 0;
-        }
+    public static void fireComputerEvent(@NotNull String networkName, EnderwireComputerEvent event) {
+        getComputerEventBus(networkName).handleEvent(event);
+    }
+
+    public static EnderwireEventSubscription<EnderwireComputerEvent> subscribeToComputerEvents(@NotNull String networkName, IEnderwireEventConsumer<EnderwireComputerEvent> consumer) {
+        return getComputerEventBus(networkName).subscribe(consumer);
+    }
+
+    public static void unsubscribeFromComputerEvents(@NotNull String networkName, EnderwireEventSubscription<EnderwireComputerEvent> subscription) {
+        getComputerEventBus(networkName).unsubscribe(subscription);
     }
 
     @SubscribeEvent

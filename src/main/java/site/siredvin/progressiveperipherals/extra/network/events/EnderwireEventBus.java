@@ -1,58 +1,33 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
-import com.google.common.collect.EvictingQueue;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class EnderwireEventBus<T extends IEnderwireBusEvent> {
-    private static final long ALLOWED_DELAY_IN_SECONDS = 60 * 15;
+    private final List<EnderwireEventSubscription<T>> consumers = new ArrayList<>();
 
-    private long counter;
-    private final EvictingQueue<EnderwireEventBusMessage<T>> queue;
+    public EnderwireEventBus() {}
 
-    public EnderwireEventBus() {
-        this.counter = 0;
-        this.queue = EvictingQueue.create(ProgressivePeripheralsConfig.enderwireNetworkComputerBusSize);
+    public EnderwireEventSubscription<T> subscribe(IEnderwireEventConsumer<T> consumer) {
+        EnderwireEventSubscription<T> subscription = new EnderwireEventSubscription<>(consumer);
+        consumers.add(subscription);
+        return subscription;
     }
 
-    public long getCounter() {
-        return counter;
+    public void unsubscribe(EnderwireEventSubscription<T> subscription) {
+        consumers.remove(subscription);
     }
 
     public synchronized void handleEvent(@NotNull T event) {
-        queue.add(new EnderwireEventBusMessage<>(counter, event));
-        counter++;
-    }
-
-    public boolean isEmpty() {
-        return queue.isEmpty();
-    }
-
-    public synchronized void cleanup () {
-        long currentEpoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        List<EnderwireEventBusMessage<T>> removeList = new ArrayList<>();
-        for (EnderwireEventBusMessage<T> message: queue) {
-            if (message.getEvent().getEpoch() - currentEpoch > ALLOWED_DELAY_IN_SECONDS)
-                removeList.add(message);
+        Iterator<EnderwireEventSubscription<T>> iterator = consumers.listIterator();
+        while (iterator.hasNext()) {
+            EnderwireEventSubscription<T> sub = iterator.next();
+            if (!sub.isValid())
+                iterator.remove();
+            sub.consume(event);
         }
-        removeList.forEach(queue::remove);
-    }
-
-    public synchronized long traverse(long lastConsumedMessage, Consumer<T> consumer) {
-        for (EnderwireEventBusMessage<T> message : queue) {
-            if (message.getNumber() <= lastConsumedMessage)
-                continue;
-            if (!message.getEvent().isValid())
-                continue;
-            consumer.accept(message.getEvent());
-            lastConsumedMessage = message.getNumber();
-        }
-        return lastConsumedMessage;
     }
 }

@@ -1,7 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,8 +11,10 @@ import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElemen
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireEventSubscription;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
+import site.siredvin.progressiveperipherals.extra.network.events.IEnderwireEventConsumer;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireModemPeripheral;
 import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 
@@ -21,9 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEntity<EnderwirePeripheralConnectorTileEntity, EnderwireModemPeripheral> implements ITickableTileEntity {
-    private long lastNetworkEventMessage = -1;
+public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEntity<EnderwirePeripheralConnectorTileEntity, EnderwireModemPeripheral> implements IEnderwireEventConsumer<EnderwireNetworkEvent> {
     private boolean initialized = false;
+    private EnderwireEventSubscription<EnderwireNetworkEvent> subscription;
 
     public EnderwirePeripheralConnectorTileEntity() {
         super(TileEntityTypes.ENDERWIRE_PERIPHERAL_CONNECTOR.get());
@@ -75,11 +76,15 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     }
 
     public void attachPeripheral(@NotNull EnderwireNetworkElement element, @Nullable IPeripheral peripheral) {
-        if (peripheral != null && attachedNetwork != null) {
+        if (level != null && !level.isClientSide && peripheral != null && attachedNetwork != null) {
             ensurePeripheralCreated();
             Objects.requireNonNull(level);
             Objects.requireNonNull(this.peripheral);
-            this.peripheral.addSharedPeripheral(attachedNetwork, element, peripheral);
+            GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
+            EnderwireNetwork network = networks.getNetwork(attachedNetwork);
+            Objects.requireNonNull(network);
+            if (network.canReach(element, getPosition(), level.dimension().location().toString()))
+                this.peripheral.addSharedPeripheral(attachedNetwork, element, peripheral);
         }
     }
 
@@ -94,24 +99,11 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     }
 
     public void detachPeripheral(@NotNull EnderwireNetworkElement element) {
-        ensurePeripheralCreated();
-        Objects.requireNonNull(level);
-        Objects.requireNonNull(this.peripheral);
-        this.peripheral.removeSharedPeripheral(element);
-    }
-
-    @Override
-    public void tick() {
-        if (attachedNetwork != null && level != null && !level.isClientSide) {
-            lastNetworkEventMessage = EnderwireNetworkBusHub.traverseNetworkEvents(attachedNetwork, lastNetworkEventMessage, event -> {
-                if (event instanceof EnderwireNetworkEvent.PeripheralAttached) {
-                    ProgressivePeripherals.LOGGER.warn(String.format("Processing added event from %s", ((EnderwireNetworkEvent.PeripheralAttached) event).getElement().getName()));
-                    attachPeripheral(((EnderwireNetworkEvent.PeripheralAttached) event).getElement(), ((EnderwireNetworkEvent.PeripheralAttached) event).getPeripheral());
-                } else if (event instanceof EnderwireNetworkEvent.PeripheralDetached) {
-                    ProgressivePeripherals.LOGGER.warn(String.format("Processing removed event from %s", ((EnderwireNetworkEvent.PeripheralDetached) event).getElement().getName()));
-                    detachPeripheral(((EnderwireNetworkEvent.PeripheralDetached) event).getElement());
-                }
-            });
+        if (level != null && !level.isClientSide) {
+            ensurePeripheralCreated();
+            Objects.requireNonNull(level);
+            Objects.requireNonNull(this.peripheral);
+            this.peripheral.removeSharedPeripheral(element);
         }
     }
 
@@ -121,10 +113,12 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork oldNetwork = networks.getNetwork(oldNetworkName);
             EnderwireNetwork newNetwork = networks.getNetwork(newNetworkName);
-            if (oldNetwork != null)
+            if (oldNetwork != null) {
                 oldNetwork.traverseElements(this::detachPeripheral);
+                unsubscribeFromEvents(oldNetworkName);
+            }
             if (newNetworkName != null && newNetwork != null) {
-                lastNetworkEventMessage = EnderwireNetworkBusHub.getNetworkEventsStart(attachedNetwork);
+                subscribeToEvents(newNetworkName);
                 newNetwork.traverseElements(this::attachPeripheral);
             }
         }
@@ -145,11 +139,11 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
         super.blockTick();
         if (!initialized && level != null && !level.isClientSide && attachedNetwork != null) {
             initialized = true;
-//            lastNetworkEventMessage = EnderwireNetworkBusHub.getNetworkEventsStart(attachedNetwork);
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
             if (network != null) {
                 network.traverseElements(this::attachPeripheral);
+                subscribeToEvents();
             }
         }
     }
@@ -162,5 +156,38 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     @Override
     protected @NotNull EnderwireModemPeripheral createPeripheral() {
         return new EnderwireModemPeripheral(this);
+    }
+
+    @Override
+    public void consume(EnderwireNetworkEvent event) {
+        if (event instanceof EnderwireNetworkEvent.PeripheralAttached) {
+            ProgressivePeripherals.LOGGER.warn(String.format("Processing added event from %s", ((EnderwireNetworkEvent.PeripheralAttached) event).getElement().getName()));
+            attachPeripheral(((EnderwireNetworkEvent.PeripheralAttached) event).getElement(), ((EnderwireNetworkEvent.PeripheralAttached) event).getPeripheral());
+        } else if (event instanceof EnderwireNetworkEvent.PeripheralDetached) {
+            ProgressivePeripherals.LOGGER.warn(String.format("Processing removed event from %s", ((EnderwireNetworkEvent.PeripheralDetached) event).getElement().getName()));
+            detachPeripheral(((EnderwireNetworkEvent.PeripheralDetached) event).getElement());
+        }
+    }
+
+    public void subscribeToEvents(@NotNull String newNetwork) {
+        if (level != null && !level.isClientSide && subscription == null) {
+            subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork, this);
+        }
+    }
+
+    public void subscribeToEvents() {
+        if (level != null && !level.isClientSide && attachedNetwork != null)
+            subscribeToEvents(attachedNetwork);
+    }
+
+    public void unsubscribeFromEvents() {
+        if (level != null && !level.isClientSide && attachedNetwork != null)
+            unsubscribeFromEvents(attachedNetwork);
+    }
+
+    public void unsubscribeFromEvents(@NotNull String oldNetwork) {
+        if (level != null && !level.isClientSide && subscription != null) {
+            EnderwireNetworkBusHub.unsubscribeFromNetworkEvents(oldNetwork, subscription);
+        }
     }
 }
