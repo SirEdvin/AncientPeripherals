@@ -1,9 +1,13 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.MapMaker;
+import dan200.computercraft.api.filesystem.IMount;
+import dan200.computercraft.api.filesystem.IWritableMount;
 import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.peripheral.IWorkMonitor;
 import dan200.computercraft.core.apis.PeripheralAPI;
 import dan200.computercraft.core.asm.PeripheralMethod;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
@@ -13,23 +17,27 @@ import site.siredvin.progressiveperipherals.common.tileentities.enderwire.Enderw
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class EnderwireModemPeripheral extends BasePeripheral {
 
-    private static class PeripheralRecord {
+    private class PeripheralRecord {
         private final @NotNull IPeripheral peripheral;
         private final @NotNull String ownerName;
         private final @NotNull String name;
         private final @NotNull Map<String, PeripheralMethod> methodMap;
+        private final ConcurrentMap<IComputerAccess, RemoteComputerWrapper> wrappers;
 
         public PeripheralRecord(@NotNull IPeripheral peripheral, @NotNull String ownerName, @NotNull String name) {
             this.peripheral = peripheral;
             this.ownerName = ownerName;
             this.name = name;
             this.methodMap = PeripheralAPI.getMethods(this.peripheral);
+            wrappers = new ConcurrentHashMap<>();
         }
 
         public @NotNull IPeripheral getPeripheral() {
@@ -48,25 +56,106 @@ public class EnderwireModemPeripheral extends BasePeripheral {
             return methodMap.keySet();
         }
 
+        public void attach(IComputerAccess computer) {
+            peripheral.attach(computer);
+            computer.queueEvent("peripheral", name);
+            wrappers.put(computer, new RemoteComputerWrapper(computer, this));
+        }
+
+        public void detach(IComputerAccess computer) {
+            peripheral.detach(computer);
+            computer.queueEvent("peripheral_detach", name);
+            wrappers.remove(computer);
+        }
+
         public MethodResult callMethod(IComputerAccess access, ILuaContext context, String methodName, IArguments arguments) throws LuaException {
             PeripheralMethod method = this.methodMap.get(methodName);
             if (method == null) {
                 throw new LuaException("No such method " + methodName);
             }
-            return method.apply(this.peripheral, context, access, arguments);
+            return method.apply(this.peripheral, context, wrappers.get(access), arguments);
+        }
+    }
+
+
+    private class RemoteComputerWrapper implements IComputerAccess {
+        private final IComputerAccess computer;
+        private final PeripheralRecord record;
+
+        RemoteComputerWrapper(IComputerAccess computer, PeripheralRecord record) {
+            this.computer = computer;
+            this.record = record;
+        }
+
+        public String mount(@Nonnull String desiredLocation, @Nonnull IMount mount) {
+            return computer.mount(desiredLocation, mount, record.getName());
+        }
+
+        public String mount(@Nonnull String desiredLocation, @Nonnull IMount mount, @Nonnull String driveName) {
+            return computer.mount(desiredLocation, mount, driveName);
+        }
+
+        public String mountWritable(@Nonnull String desiredLocation, @Nonnull IWritableMount mount) {
+            return computer.mountWritable(desiredLocation, mount, record.getName());
+        }
+
+        public String mountWritable(@Nonnull String desiredLocation, @Nonnull IWritableMount mount, @Nonnull String driveName) {
+            return computer.mountWritable(desiredLocation, mount, driveName);
+        }
+
+        public void unmount(String location) {
+            computer.unmount(location);
+        }
+
+        public int getID() {
+            return computer.getID();
+        }
+
+        public void queueEvent(@Nonnull String event, Object... arguments) {
+            computer.queueEvent(event, arguments);
+        }
+
+        @Nonnull
+        public IWorkMonitor getMainThreadMonitor() {
+            return computer.getMainThreadMonitor();
+        }
+
+        @Nonnull
+        public String getAttachmentName() {
+            return record.getName();
+        }
+
+        @Nonnull
+        public Map<String, IPeripheral> getAvailablePeripherals() {
+            synchronized(peripheralsRecord) {
+                //noinspection UnstableApiUsage
+                return peripheralsRecord.entrySet().stream().collect(ImmutableMap.toImmutableMap(Map.Entry::getKey, entry -> entry.getValue().getPeripheral()));
+            }
+        }
+
+        @Nullable
+        public IPeripheral getAvailablePeripheral(@Nonnull String name) {
+            synchronized(peripheralsRecord) {
+                PeripheralRecord record = peripheralsRecord.get(name);
+                if (record != null)
+                    return record.getPeripheral();
+                return null;
+            }
         }
     }
 
     private final ConcurrentMap<String, PeripheralRecord> peripheralsRecord = new ConcurrentHashMap<>();
     private final Set<IPeripheral> sharedPeripherals = Collections.newSetFromMap(new MapMaker().concurrencyLevel(4).weakKeys().makeMap());
+    private final EnderwirePeripheralConnectorTileEntity tileEntity;
 
 
     public EnderwireModemPeripheral(@NotNull EnderwirePeripheralConnectorTileEntity tileEntity) {
         super("modem", tileEntity);
+        this.tileEntity = tileEntity;
     }
 
     protected String selectName(@NotNull String networkName, @NotNull IPeripheral peripheral) {
-        String elementType = networkName + "->" + peripheral.getType();
+        String elementType = networkName + "->" + tileEntity.getElementName() + "->" + peripheral.getType();
         int maxIndex = peripheralsRecord.keySet().stream().filter(key -> key.startsWith(elementType)).map(key -> {
             String[] splitName = key.split("_");
             return Integer.valueOf(splitName[splitName.length - 1]);
@@ -84,22 +173,17 @@ public class EnderwireModemPeripheral extends BasePeripheral {
             return;
         ProgressivePeripherals.LOGGER.warn(String.format("Adding peripheral from element %s", element.getName()));
         String peripheralName = selectName(networkName, peripheral);
-        connectedComputers.forEach(computer -> {
-            peripheral.attach(computer);
-            computer.queueEvent("peripheral", peripheralName);
-        });
+        PeripheralRecord record = new PeripheralRecord(peripheral, element.getName(), peripheralName);
+        connectedComputers.forEach(record::attach);
         sharedPeripherals.add(peripheral);
-        peripheralsRecord.put(peripheralName, new PeripheralRecord(peripheral, element.getName(), peripheralName));
+        peripheralsRecord.put(peripheralName, record);
     }
 
     public void removeSharedPeripheral(@NotNull EnderwireNetworkElement element) {
         ProgressivePeripherals.LOGGER.warn(String.format("Removing peripheral from element %s", element.getName()));
         Optional<PeripheralRecord> optRecord = peripheralsRecord.values().stream().filter(x -> x.getOwnerName().equals(element.getName())).findAny();
         optRecord.ifPresent(record -> {
-            connectedComputers.forEach(computer -> {
-                record.getPeripheral().detach(computer);
-                computer.queueEvent("peripheral_detach", record.getName());
-            });
+            connectedComputers.forEach(record::detach);
             sharedPeripherals.remove(record.getPeripheral());
             peripheralsRecord.remove(record.getName());
         });
@@ -108,6 +192,18 @@ public class EnderwireModemPeripheral extends BasePeripheral {
     public void clearSharedPeripherals() {
         List<String> allKeys = new ArrayList<>(peripheralsRecord.keySet());
         allKeys.forEach(peripheralsRecord::remove);
+    }
+
+    @Override
+    public void attach(@NotNull IComputerAccess computer) {
+        super.attach(computer);
+        peripheralsRecord.values().forEach(record -> record.attach(computer));
+    }
+
+    @Override
+    public void detach(@NotNull IComputerAccess computer) {
+        super.detach(computer);
+        peripheralsRecord.values().forEach(record -> record.detach(computer));
     }
 
     @LuaFunction
