@@ -6,6 +6,8 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.pocket.IPocketAccess;
+import dan200.computercraft.api.turtle.ITurtleAccess;
+import dan200.computercraft.api.turtle.TurtleSide;
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
@@ -25,13 +27,17 @@ import java.util.Objects;
 
 import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetworks;
 
-public class EnderwirePocketModemPeripheral extends BaseEnderwireModemPeripheral implements IEnderwireEventConsumer<EnderwireNetworkEvent> {
+public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeripheral implements IEnderwireEventConsumer<EnderwireNetworkEvent> {
 
     private @Nullable EnderwireEventSubscription<EnderwireNetworkEvent> subscription;
     private boolean initialized = false;
 
-    public EnderwirePocketModemPeripheral(@NotNull IPocketAccess pocket) {
+    public EnderwireUpgradeModemPeripheral(@NotNull IPocketAccess pocket) {
         super(pocket);
+    }
+
+    public EnderwireUpgradeModemPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
+        super(turtle, side);
     }
 
     protected void changeNetwork(GlobalNetworksData data, @Nullable EnderwireNetwork newNetwork) {

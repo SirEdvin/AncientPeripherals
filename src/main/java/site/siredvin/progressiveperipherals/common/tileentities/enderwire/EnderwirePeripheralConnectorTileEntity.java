@@ -91,7 +91,6 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     public void attachPeripheral(@NotNull EnderwireNetworkElement element) {
         Objects.requireNonNull(level);
         if (element.getCategory().canSharePeripheral() && level.isLoaded(element.getPos())) {
-            ProgressivePeripherals.LOGGER.warn(String.format("Processing initial peripheral adding from %s", element.getName()));
             IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) level.getBlockEntity(element.getPos());
             if (enderwireElement != null)
                 attachPeripheral(element, enderwireElement.getSharedPeripheral());

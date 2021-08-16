@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireDirectionalBlock;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
@@ -35,7 +34,6 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
     }
 
     private void detachCurrentPeripheral() {
-        ProgressivePeripherals.LOGGER.warn(String.format("Try to cleanup shared peripheral data for %s", getElementName()));
         if (level != null && !level.isClientSide && sharedPeripheral != null && attachedNetwork != null) {
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
@@ -44,14 +42,12 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
             EnderwireNetworkElement element = network.getElement(getElementName());
             if (element == null)
                 return;
-            ProgressivePeripherals.LOGGER.warn(String.format("Firing cleanup for %s", getElementName()));
             EnderwireNetworkBusHub.fireNetworkEvent(attachedNetwork, new EnderwireNetworkEvent.PeripheralDetached(element, sharedPeripheral));
             sharedPeripheral = null;
         }
     }
 
     private void attachNewPeripheral(@NotNull IPeripheral newPeripheral) {
-        ProgressivePeripherals.LOGGER.warn(String.format("Try to attach new peripherals shared peripheral data for %s", getElementName()));
         if (level != null && !level.isClientSide && attachedNetwork != null) {
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
@@ -61,7 +57,6 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
             if (element == null)
                 return;
             sharedPeripheral = newPeripheral;
-            ProgressivePeripherals.LOGGER.warn(String.format("Peripheral attached to %s", getElementName()));
             EnderwireNetworkBusHub.fireNetworkEvent(attachedNetwork, new EnderwireNetworkEvent.PeripheralAttached(element, sharedPeripheral));
         }
     }

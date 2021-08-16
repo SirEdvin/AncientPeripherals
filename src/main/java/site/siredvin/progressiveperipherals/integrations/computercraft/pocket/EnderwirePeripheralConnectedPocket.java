@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwirePocketModemPeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireUpgradeModemPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnderwirePeripheralConnectedPocket extends BasePocket<EnderwirePocketModemPeripheral> {
+public class EnderwirePeripheralConnectedPocket extends BasePocket<EnderwireUpgradeModemPeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_peripheral_connected_pocket");
 
     public EnderwirePeripheralConnectedPocket() {
@@ -19,15 +19,15 @@ public class EnderwirePeripheralConnectedPocket extends BasePocket<EnderwirePock
     }
 
     @Override
-    protected EnderwirePocketModemPeripheral getPeripheral(IPocketAccess pocket) {
-        return new EnderwirePocketModemPeripheral(pocket);
+    protected EnderwireUpgradeModemPeripheral getPeripheral(IPocketAccess pocket) {
+        return new EnderwireUpgradeModemPeripheral(pocket);
     }
 
     @Override
     public void update(@NotNull IPocketAccess access, @Nullable IPeripheral peripheral) {
-        if (peripheral instanceof EnderwirePocketModemPeripheral) {
-            if (!((EnderwirePocketModemPeripheral) peripheral).isInitialized())
-                ((EnderwirePocketModemPeripheral) peripheral).initialize();
+        if (peripheral instanceof EnderwireUpgradeModemPeripheral) {
+            if (!((EnderwireUpgradeModemPeripheral) peripheral).isInitialized())
+                ((EnderwireUpgradeModemPeripheral) peripheral).initialize();
         }
     }
 }

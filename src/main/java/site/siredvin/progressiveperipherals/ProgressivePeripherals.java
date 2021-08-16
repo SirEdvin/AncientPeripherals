@@ -3,6 +3,9 @@ package site.siredvin.progressiveperipherals;
 import de.srendi.advancedperipherals.common.configuration.ConfigHandler;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.IUnbakedModel;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -10,8 +13,11 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.model.SimpleModelTransform;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,6 +34,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.client.models.FlexibleRealityAnchorModelLoader;
 import site.siredvin.progressiveperipherals.client.models.FlexibleStatueModelLoader;
 import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitterTileRenderer;
@@ -36,6 +43,7 @@ import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughP
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.setup.*;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwirePeripheralConnectedTurtle;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionPage;
@@ -45,6 +53,9 @@ import site.siredvin.progressiveperipherals.utils.BiomeUtils;
 import site.siredvin.progressiveperipherals.utils.Platform;
 import vazkii.patchouli.client.book.ClientBookRegistry;
 
+import java.util.HashSet;
+import java.util.Map;
+
 @Mod(ProgressivePeripherals.MOD_ID)
 public class ProgressivePeripherals {
 
@@ -52,7 +63,7 @@ public class ProgressivePeripherals {
     public static final Logger LOGGER = LogManager.getLogger("Progressive Peripherals");
     public static final ItemGroup TAB = new ItemGroup("progressiveperipherals") {
         @Override
-        public ItemStack makeIcon() {
+        public @NotNull ItemStack makeIcon() {
             return new ItemStack(Blocks.REALITY_FORGER.get());
         }
     };
@@ -128,9 +139,36 @@ public class ProgressivePeripherals {
 
     @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientEventListener {
+
+        private static final ModelResourceLocation[] EXTRA_MODELS = new ModelResourceLocation[]{
+                EnderwirePeripheralConnectedTurtle.NOT_CONNECTED_LEFT_MODEL,
+                EnderwirePeripheralConnectedTurtle.NOT_CONNECTED_RIGHT_MODEL,
+                EnderwirePeripheralConnectedTurtle.CONNECTED_LEFT_MODEL,
+                EnderwirePeripheralConnectedTurtle.CONNECTED_RIGHT_MODEL,
+        };
+
         @SubscribeEvent
         public static void registerBlockColors(final ColorHandlerEvent.Block event) {
             event.getBlockColors().register(new EnderwireLightEmitterBlockColor(), Blocks.ENDERWIRE_LIGHT_EMITTER.get());
+        }
+
+        @SubscribeEvent
+        public static void onModelBakeEvent(ModelBakeEvent event) {
+            // Loading extra models, because if they are not bound to any item or block it will be not loaded
+            ModelLoader loader = event.getModelLoader();
+            Map<ResourceLocation, IBakedModel> registry = event.getModelRegistry();
+
+            for (ModelResourceLocation model : EXTRA_MODELS) {
+
+                ResourceLocation location = new ResourceLocation(model.getNamespace(), model.getPath().replace('.', '/'));
+                IUnbakedModel unbakedModel = loader.getModelOrMissing(location);
+                unbakedModel.getMaterials(loader::getModelOrMissing, new HashSet<>());
+
+                IBakedModel baked = unbakedModel.bake(loader, ModelLoader.defaultTextureGetter(), SimpleModelTransform.IDENTITY, location);
+                if (baked != null) {
+                    registry.put(model, baked);
+                }
+            }
         }
     }
 

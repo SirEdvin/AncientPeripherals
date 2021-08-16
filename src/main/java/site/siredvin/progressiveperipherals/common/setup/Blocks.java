@@ -18,6 +18,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementTy
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwirePeripheralConnectedPocket;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwirePeripheralConnectedTurtle;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
@@ -245,7 +246,8 @@ public class Blocks {
             () -> new EnderwireHorizontalBlock(EnderwirePeripheralConnectorTileEntity::new),
             () -> new PeripheralBlockItem(
                     Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get(), new Item.Properties().stacksTo(64),
-                    null, EnderwirePeripheralConnectedPocket.ID, EnderwireElementType.PERIPHERAL_CONNECTOR::isEnabled)
+                    EnderwirePeripheralConnectedTurtle.ID, EnderwirePeripheralConnectedPocket.ID, EnderwireElementType.PERIPHERAL_CONNECTOR::isEnabled
+            )
     );
 
 

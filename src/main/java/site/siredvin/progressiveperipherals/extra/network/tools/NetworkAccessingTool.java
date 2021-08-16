@@ -44,9 +44,13 @@ public class NetworkAccessingTool {
         return data.getNetwork(attachedNetworkName);
     }
 
-    public static @Nullable String getSelectedNetworkName( CompoundNBT tag) {
+    public static @Nullable String getSelectedNetworkName(CompoundNBT tag) {
         if (!tag.contains(SELECTED_NETWORK_TAG))
             return null;
         return tag.getString(SELECTED_NETWORK_TAG);
+    }
+
+    public static boolean isSelectedNetworkPresent(CompoundNBT tag) {
+        return tag.contains(SELECTED_NETWORK_TAG);
     }
 }
