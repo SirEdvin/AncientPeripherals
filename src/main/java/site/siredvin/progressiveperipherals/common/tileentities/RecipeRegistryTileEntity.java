@@ -12,6 +12,6 @@ public class RecipeRegistryTileEntity extends PeripheralTileEntity<RecipeRegistr
 
     @Override
     protected @NotNull RecipeRegistryPeripheral createPeripheral() {
-        return new RecipeRegistryPeripheral("recipeRegistry",this);
+        return new RecipeRegistryPeripheral(this);
     }
 }

@@ -30,6 +30,6 @@ public class BrewingTurtle extends ModelTransformingTurtle<BrewingAutomataCorePe
 
     @Override
     protected BrewingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new BrewingAutomataCorePeripheral("brewingAutomataCore", turtle, side);
+        return new BrewingAutomataCorePeripheral(turtle, side);
     }
 }

@@ -4,8 +4,10 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.common.tileentities.RealityForgerTileEntity;
 
 public class RealityForgerMK2Peripheral extends RealityForgerPeripheral {
-    public RealityForgerMK2Peripheral(String type, RealityForgerTileEntity tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "realityForgerMK2";
+
+    public RealityForgerMK2Peripheral(RealityForgerTileEntity tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override

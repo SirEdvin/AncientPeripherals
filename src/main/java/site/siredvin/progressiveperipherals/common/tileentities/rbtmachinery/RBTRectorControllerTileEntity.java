@@ -52,7 +52,7 @@ public class RBTRectorControllerTileEntity extends MutableNBTTileEntity<RBTReact
 
     @Override
     protected @NotNull RBTReactorControllerPeripheral createPeripheral() {
-        return new RBTReactorControllerPeripheral("realityBreakthroughReactorController", this);
+        return new RBTReactorControllerPeripheral(this);
     }
 
     @Override

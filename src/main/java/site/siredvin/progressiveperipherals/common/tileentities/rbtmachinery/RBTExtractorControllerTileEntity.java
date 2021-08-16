@@ -49,7 +49,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTTileEntity<RBTEx
 
     @Override
     protected @NotNull RBTExtractorPeripheral createPeripheral() {
-        return new RBTExtractorPeripheral("realityBreakthroughExtractorController", this);
+        return new RBTExtractorPeripheral(this);
     }
 
     @Override

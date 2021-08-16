@@ -25,7 +25,7 @@ public class CreativeItemDuplicatorTileEntity extends MutableNBTTileEntity<Creat
 
     @Override
     protected @NotNull CreativeItemDuplicatorPeripheral createPeripheral() {
-        return new CreativeItemDuplicatorPeripheral("creativeItemDuplicator", this);
+        return new CreativeItemDuplicatorPeripheral(this);
     }
 
     public void setStoredStack(@NotNull ItemStack storedStack) {

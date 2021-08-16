@@ -21,8 +21,10 @@ import static site.siredvin.progressiveperipherals.integrations.computercraft.pe
 
 public class RBTExtractorPeripheral extends GenericMachineryPeripheral<RBTExtractorControllerTileEntity> {
 
-    public RBTExtractorPeripheral(String type, RBTExtractorControllerTileEntity tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "realityBreakthroughExtractorController";
+
+    public RBTExtractorPeripheral(RBTExtractorControllerTileEntity tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override

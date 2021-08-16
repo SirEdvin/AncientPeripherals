@@ -26,7 +26,7 @@ public class AbstractiumPedestalTileEntity extends MutableNBTTileEntity<Abstract
 
     @Override
     protected @NotNull AbstractiumPedestalPeripheral createPeripheral() {
-        return new AbstractiumPedestalPeripheral("abstractiumPedestal", this);
+        return new AbstractiumPedestalPeripheral(this);
     }
 
     public void setStoredStack(@NotNull ItemStack storedStack) {

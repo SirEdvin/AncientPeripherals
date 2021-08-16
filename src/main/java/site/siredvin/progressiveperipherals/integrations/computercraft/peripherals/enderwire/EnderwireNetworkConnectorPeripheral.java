@@ -19,9 +19,11 @@ import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPe
 import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetwork;
 
 public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
+    public static final String TYPE = "enderwireNetworkConnector";
+
     private final EnderwireNetworkConnectorTileEntity tileEntity;
     public EnderwireNetworkConnectorPeripheral(EnderwireNetworkConnectorTileEntity tileEntity) {
-        super("enderwireNetworkConnector", tileEntity);
+        super(TYPE, tileEntity);
         this.tileEntity = tileEntity;
     }
 

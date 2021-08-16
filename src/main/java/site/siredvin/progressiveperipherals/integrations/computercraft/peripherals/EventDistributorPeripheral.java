@@ -19,8 +19,10 @@ import java.util.Optional;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUEUE_EVENT;
 
 public class EventDistributorPeripheral extends OperationPeripheral {
-    public EventDistributorPeripheral(String type, PeripheralTileEntity<?> tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "eventDistributor";
+
+    public EventDistributorPeripheral(PeripheralTileEntity<?> tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override

@@ -28,6 +28,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public class BaseEnderwireModemPeripheral extends BasePeripheral {
 
+    public static final String TYPE = "modem";
+
     private class PeripheralRecord {
         private final @NotNull IPeripheral peripheral;
         private final @NotNull String ownerName;
@@ -151,7 +153,7 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
     private final Set<IPeripheral> sharedPeripherals = Collections.newSetFromMap(new MapMaker().concurrencyLevel(4).weakKeys().makeMap());
 
     public <T extends TileEntity & IPeripheralTileEntity> BaseEnderwireModemPeripheral(T tileEntity) {
-        super("modem", tileEntity);
+        super(TYPE, tileEntity);
     }
 
     public BaseEnderwireModemPeripheral(ITurtleAccess turtle, TurtleSide side) {

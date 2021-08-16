@@ -5,10 +5,8 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.StringTextComponent;
@@ -20,10 +18,12 @@ import java.util.Optional;
 
 public class AbstractiumPedestalPeripheral extends BasePeripheral {
 
+    public static final String TYPE = "abstractiumPedestal";
+
     private final AbstractiumPedestalTileEntity tileEntity;
 
-    public <T extends TileEntity & IPeripheralTileEntity> AbstractiumPedestalPeripheral(String type, AbstractiumPedestalTileEntity tileEntity) {
-        super(type, tileEntity);
+    public AbstractiumPedestalPeripheral(AbstractiumPedestalTileEntity tileEntity) {
+        super(TYPE, tileEntity);
         this.tileEntity = tileEntity;
     }
 

@@ -12,6 +12,6 @@ public class EventDistributorTileEntity extends PeripheralTileEntity<EventDistri
 
     @Override
     protected @NotNull EventDistributorPeripheral createPeripheral() {
-        return new EventDistributorPeripheral("eventDistributor",this);
+        return new EventDistributorPeripheral(this);
     }
 }

@@ -19,8 +19,10 @@ import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPe
 
 public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
 
-    public EnderwireNetworkManagerPeripheral(String type, IPocketAccess pocket) {
-        super(type, pocket);
+    public static final String TYPE = "enderwireNetworkManager";
+
+    public EnderwireNetworkManagerPeripheral(IPocketAccess pocket) {
+        super(TYPE, pocket);
     }
 
     @Override

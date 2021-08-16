@@ -34,8 +34,10 @@ import static site.siredvin.progressiveperipherals.integrations.computercraft.pe
 
 public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
 
-    public BrewingAutomataCorePeripheral(String type, ITurtleAccess turtle, TurtleSide side) {
-        super(type, turtle, side);
+    public static final String TYPE = "brewingAutomataCore";
+
+    public BrewingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
+        super(TYPE, turtle, side);
     }
 
     private static class TurtlePotionDispenseBehavior implements IDispenseItemBehavior {

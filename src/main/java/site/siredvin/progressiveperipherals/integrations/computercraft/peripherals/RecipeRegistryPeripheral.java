@@ -22,8 +22,10 @@ import java.util.stream.Collectors;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUERY_REGISTRY;
 
 public class RecipeRegistryPeripheral extends OperationPeripheral {
-    public RecipeRegistryPeripheral(String type, PeripheralTileEntity<?> tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "recipeRegistry";
+
+    public RecipeRegistryPeripheral(PeripheralTileEntity<?> tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override

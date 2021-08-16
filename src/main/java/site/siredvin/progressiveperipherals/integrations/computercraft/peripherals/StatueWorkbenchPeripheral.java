@@ -16,10 +16,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public class StatueWorkbenchPeripheral extends BasePeripheral {
+    public static final String TYPE = "statueWorkbench";
     private final static int MAX_QUAD_COUNT = 128;
 
-    public <T extends TileEntity & IPeripheralTileEntity> StatueWorkbenchPeripheral(String type, T tileEntity) {
-        super(type, tileEntity);
+    public <T extends TileEntity & IPeripheralTileEntity> StatueWorkbenchPeripheral(T tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override

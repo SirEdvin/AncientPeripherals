@@ -30,6 +30,6 @@ public class SmithingTurtle extends ModelTransformingTurtle<SmithingAutomataCore
 
     @Override
     protected SmithingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new SmithingAutomataCorePeripheral("smithingAutomataCore", turtle, side);
+        return new SmithingAutomataCorePeripheral(turtle, side);
     }
 }

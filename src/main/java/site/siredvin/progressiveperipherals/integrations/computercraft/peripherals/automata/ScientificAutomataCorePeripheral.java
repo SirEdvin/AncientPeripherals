@@ -18,8 +18,10 @@ import java.util.Optional;
 
 public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
 
-    public ScientificAutomataCorePeripheral(String type, ITurtleAccess turtle, TurtleSide side) {
-        super(type, turtle, side);
+    public static final String TYPE = "scientificAutomataCore";
+
+    public ScientificAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
+        super(TYPE, turtle, side);
     }
 
     @Override

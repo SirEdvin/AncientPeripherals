@@ -22,10 +22,13 @@ import java.util.Map;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.ENCHANTMENT;
 
 public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
+
+    public static final String TYPE = "enchantingAutomataCore";
+
     private static final int MINECRAFT_ENCHANTING_LEVEL_LIMIT = 30;
 
-    public EnchantingAutomataCorePeripheral(String type, ITurtleAccess turtle, TurtleSide side) {
-        super(type, turtle, side);
+    public EnchantingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
+        super(TYPE, turtle, side);
     }
 
     @Override

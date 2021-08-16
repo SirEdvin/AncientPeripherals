@@ -32,6 +32,8 @@ import site.siredvin.progressiveperipherals.utils.ScanUtils;
 import java.util.*;
 
 public class RealityForgerPeripheral extends BasePeripheral {
+    public static final String TYPE = "realityForger";
+
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{
         put("playerPassable", FlexibleRealityAnchor.PLAYER_PASSABLE);
         put("lightPassable", FlexibleRealityAnchor.LIGHT_PASSABLE);
@@ -39,7 +41,11 @@ public class RealityForgerPeripheral extends BasePeripheral {
         put("invisible", FlexibleRealityAnchor.INVISIBLE);
     }};
 
-    public RealityForgerPeripheral(String type, RealityForgerTileEntity tileEntity) {
+    public RealityForgerPeripheral(RealityForgerTileEntity tileEntity) {
+        super(TYPE, tileEntity);
+    }
+
+    protected RealityForgerPeripheral(String type, RealityForgerTileEntity tileEntity) {
         super(type, tileEntity);
     }
 

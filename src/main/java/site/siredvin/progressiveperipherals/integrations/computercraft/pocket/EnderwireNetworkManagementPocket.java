@@ -24,7 +24,7 @@ public class EnderwireNetworkManagementPocket extends BasePocket<EnderwireNetwor
 
     @Override
     protected EnderwireNetworkManagerPeripheral getPeripheral(IPocketAccess pocket) {
-        return new EnderwireNetworkManagerPeripheral("enderwireNetworkManager", pocket);
+        return new EnderwireNetworkManagerPeripheral(pocket);
     }
 
     @Override

@@ -6,13 +6,11 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
 import de.srendi.advancedperipherals.common.util.InventoryUtil;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -30,6 +28,8 @@ import java.util.Optional;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.DUPLICATE_ITEM;
 
 public class CreativeItemDuplicatorPeripheral extends OperationPeripheral {
+    public static final String TYPE = "creativeItemDuplicator";
+
     private final CreativeItemDuplicatorTileEntity tileEntity;
 
     private static IItemHandler extractHandler(@Nullable Object object) {
@@ -83,8 +83,8 @@ public class CreativeItemDuplicatorPeripheral extends OperationPeripheral {
     }
 
 
-    public <T extends TileEntity & IPeripheralTileEntity> CreativeItemDuplicatorPeripheral(String type, CreativeItemDuplicatorTileEntity tileEntity) {
-        super(type, tileEntity);
+    public CreativeItemDuplicatorPeripheral(CreativeItemDuplicatorTileEntity tileEntity) {
+        super(TYPE, tileEntity);
         this.tileEntity = tileEntity;
     }
 
