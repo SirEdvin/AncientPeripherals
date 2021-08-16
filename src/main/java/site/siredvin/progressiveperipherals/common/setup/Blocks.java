@@ -14,8 +14,10 @@ import site.siredvin.progressiveperipherals.common.items.FlexibleStatueItem;
 import site.siredvin.progressiveperipherals.common.items.base.BaseBlockItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralBlockItem;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.*;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
+import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwirePeripheralConnectedPocket;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
@@ -241,7 +243,9 @@ public class Blocks {
     public static final RegistryObject<Block> ENDERWIRE_PERIPHERAL_CONNECTOR = register(
             "enderwire/peripheral_connector",
             () -> new EnderwireHorizontalBlock(EnderwirePeripheralConnectorTileEntity::new),
-            () -> new BaseBlockItem(Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get(), new Item.Properties().stacksTo(64))
+            () -> new PeripheralBlockItem(
+                    Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get(), new Item.Properties().stacksTo(64),
+                    null, EnderwirePeripheralConnectedPocket.ID, EnderwireElementType.PERIPHERAL_CONNECTOR::isEnabled)
     );
 
 

@@ -108,7 +108,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     }
 
     @Override
-    public void onAttachedNetworkChange(String oldNetworkName, String newNetworkName) {
+    public void afterAttachedNetworkChange(String oldNetworkName, String newNetworkName) {
         if (level != null && !level.isClientSide) {
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork oldNetwork = networks.getNetwork(oldNetworkName);
@@ -169,6 +169,11 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
         }
     }
 
+    @Override
+    public void terminate() {
+        // just do nothing, because network unattachement will be already handled by IEnderwireElement logic
+    }
+
     public void subscribeToEvents(@NotNull String newNetwork) {
         if (level != null && !level.isClientSide && subscription == null) {
             subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork, this);
@@ -178,11 +183,6 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     public void subscribeToEvents() {
         if (level != null && !level.isClientSide && attachedNetwork != null)
             subscribeToEvents(attachedNetwork);
-    }
-
-    public void unsubscribeFromEvents() {
-        if (level != null && !level.isClientSide && attachedNetwork != null)
-            unsubscribeFromEvents(attachedNetwork);
     }
 
     public void unsubscribeFromEvents(@NotNull String oldNetwork) {

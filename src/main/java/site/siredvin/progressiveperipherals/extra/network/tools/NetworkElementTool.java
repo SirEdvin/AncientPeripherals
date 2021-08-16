@@ -56,6 +56,7 @@ public class NetworkElementTool {
         GlobalNetworksData globalData = GlobalNetworksData.get(world);
         boolean dirtyGlobalData = false;
         EnderwireNetworkElement elementData = null;
+        element.beforeAttachedNetworkChange(oldNetwork, newNetwork);
         if (oldNetwork != null) {
             elementData = removeFromNetwork(globalData, oldNetwork, element, world);
             if (elementData != null)
@@ -72,6 +73,7 @@ public class NetworkElementTool {
             dirtyGlobalData = true;
         }
         element.setAttachedNetwork(newNetwork);
+        element.afterAttachedNetworkChange(oldNetwork, newNetwork);
         if (dirtyGlobalData)
             globalData.setDirty();
     }

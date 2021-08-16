@@ -36,16 +36,10 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireE
         return getBlockState().setValue(BaseEnderwireBlock.CONNECTED, attachedNetwork != null);
     }
 
-    public void onAttachedNetworkChange(String oldNetwork, String newNetwork) {
-
-    }
-
     @Override
     public final void setAttachedNetwork(@Nullable String attachedNetwork) {
-        String oldNetwork = this.attachedNetwork;
         this.attachedNetwork = attachedNetwork;
         pushInternalDataChangeToClient(handleAttachedNetwork(attachedNetwork));
-        onAttachedNetworkChange(oldNetwork, this.attachedNetwork);
     }
 
     @Override

@@ -40,6 +40,13 @@ public class EnderwireNetworkBusHub {
         getNetworkEventBus(networkName).unsubscribe(subscription);
     }
 
+    public static void removeNetworkEventBus(@NotNull String networkName) {
+        if (networkEvents.containsKey(networkName)) {
+            networkEvents.get(networkName).handleRemove();
+            networkEvents.remove(networkName);
+        }
+    }
+
     public static void fireComputerEvent(@NotNull String networkName, EnderwireComputerEvent event) {
         getComputerEventBus(networkName).handleEvent(event);
     }
@@ -50,6 +57,18 @@ public class EnderwireNetworkBusHub {
 
     public static void unsubscribeFromComputerEvents(@NotNull String networkName, EnderwireEventSubscription<EnderwireComputerEvent> subscription) {
         getComputerEventBus(networkName).unsubscribe(subscription);
+    }
+
+    public static void removeComputerEventBus(@NotNull String networkName) {
+        if (computerEvents.containsKey(networkName)) {
+            computerEvents.get(networkName).handleRemove();
+            computerEvents.remove(networkName);
+        }
+    }
+
+    public static void removeNetworkData(@NotNull String networkName) {
+        removeComputerEventBus(networkName);
+        removeNetworkEventBus(networkName);
     }
 
     @SubscribeEvent

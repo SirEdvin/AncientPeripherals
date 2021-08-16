@@ -66,6 +66,16 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
         }
     }
 
+    @Override
+    public void beforeAttachedNetworkChange(String oldNetwork, String newNetwork) {
+        detachCurrentPeripheral();
+    }
+
+    @Override
+    public void afterAttachedNetworkChange(String oldNetwork, String newNetwork) {
+        refreshPeripheral();
+    }
+
     public void destroy() {
         detachCurrentPeripheral();
     }

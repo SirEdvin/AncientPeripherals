@@ -23,12 +23,12 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
     }
 
     @Override
-    public void onAttachedNetworkChange(String oldNetworkName, String newNetworkName) {
+    public void afterAttachedNetworkChange(String oldNetwork, String newNetwork) {
         if (level != null && !level.isClientSide) {
-            if (oldNetworkName != null && subscription != null)
-                unsubscribeFromEvents(oldNetworkName);
-            if (newNetworkName != null)
-                subscribeToEvents(newNetworkName);
+            if (oldNetwork != null && subscription != null)
+                unsubscribeFromEvents(oldNetwork);
+            if (newNetwork != null)
+                subscribeToEvents(newNetwork);
         }
     }
 
@@ -94,5 +94,10 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
         } else {
             getConnectedComputers().forEach(computer -> computer.queueEvent(EnderwireComputerEventType.MALFORMED_ENDERWIRE_EVENT.name().toLowerCase()));
         }
+    }
+
+    @Override
+    public void terminate() {
+        // again nothing to do here ...
     }
 }

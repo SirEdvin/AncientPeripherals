@@ -29,6 +29,14 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
         }
     }
 
+    default void beforeAttachedNetworkChange(String oldNetwork, String newNetwork) {
+
+    }
+
+    default void afterAttachedNetworkChange(String oldNetwork, String newNetwork) {
+
+    }
+
     default @NotNull NetworkAmplifier getAmplifier() {
         return NetworkAmplifier.NONE;
     }

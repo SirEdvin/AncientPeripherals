@@ -11,6 +11,7 @@ import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,16 +63,10 @@ public class GlobalNetworksData extends WorldSavedData {
                 }
             });
         }
+        EnderwireNetworkBusHub.removeNetworkData(name);
         EnderwireNetwork removed = networks.remove(name);
         setDirty();
         return removed;
-    }
-
-    public boolean isOwner(String name, UUID playerUUID) {
-        EnderwireNetwork network = getNetwork(name);
-        if (network == null)
-            return false;
-        return playerUUID.equals(network.getOwnerUUID());
     }
 
     public boolean networkExists(String name) {

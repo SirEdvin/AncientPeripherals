@@ -38,6 +38,15 @@ public class NetworkAccessingTool {
     }
 
     public static @Nullable EnderwireNetwork getSelectedNetwork(GlobalNetworksData data, CompoundNBT tag) {
-        return data.getNetwork(tag.getString(SELECTED_NETWORK_TAG));
+        String attachedNetworkName = getSelectedNetworkName(tag);
+        if (attachedNetworkName == null)
+            return null;
+        return data.getNetwork(attachedNetworkName);
+    }
+
+    public static @Nullable String getSelectedNetworkName( CompoundNBT tag) {
+        if (!tag.contains(SELECTED_NETWORK_TAG))
+            return null;
+        return tag.getString(SELECTED_NETWORK_TAG);
     }
 }

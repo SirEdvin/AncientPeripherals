@@ -167,6 +167,7 @@
   "turtle.progressiveperipherals.fortune_3_extracting_pickaxe": "Fortune III Depth Extracting",
   "turtle.progressiveperipherals.correcting_shovel": "Correcting",
   "pocket.progressiveperipherals.enderwire_network_manager": "Enderwire Network Managing",
+  "pocket.progressiveperipherals.enderwire_peripheral_connected": "Enderwire peripheral connected",
   "text.progressiveperipherals.parameters": "$(l)Parameters$(): ",
   "text.progressiveperipherals.returns": "$(l)Returns$():",
   "text.progressiveperipherals.throw": "$(l)Throw in case of$(): ",

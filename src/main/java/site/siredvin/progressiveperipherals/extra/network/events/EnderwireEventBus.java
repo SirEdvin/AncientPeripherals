@@ -30,4 +30,8 @@ public class EnderwireEventBus<T extends IEnderwireBusEvent> {
             sub.consume(event);
         }
     }
+
+    public synchronized void handleRemove() {
+        consumers.forEach(EnderwireEventSubscription::terminate);
+    }
 }

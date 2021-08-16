@@ -21,4 +21,11 @@ public class EnderwireEventSubscription<T extends IEnderwireBusEvent> implements
         if (consumer != null)
             consumer.consume(event);
     }
+
+    @Override
+    public void terminate() {
+        IEnderwireEventConsumer<T> consumer = consumerRef.get();
+        if (consumer != null)
+            consumer.terminate();
+    }
 }
