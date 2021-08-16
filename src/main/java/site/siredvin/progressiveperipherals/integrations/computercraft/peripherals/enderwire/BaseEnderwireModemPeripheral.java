@@ -17,8 +17,8 @@ import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeriph
 import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -182,7 +182,7 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
         return EnderwireElementType.PERIPHERAL_CONNECTOR.isEnabled();
     }
 
-    public void addSharedPeripheral(@NotNull String networkName, @NotNull EnderwireNetworkElement element, @NotNull IPeripheral peripheral) {
+    public void addSharedPeripheral(@NotNull String networkName, @NotNull IEnderwireNetworkElement element, @NotNull IPeripheral peripheral) {
         if (sharedPeripherals.contains(peripheral))
             return;
         String peripheralName = selectName(networkName, peripheral);
@@ -192,7 +192,7 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
         peripheralsRecord.put(peripheralName, record);
     }
 
-    public void removeSharedPeripheral(@NotNull EnderwireNetworkElement element) {
+    public void removeSharedPeripheral(@NotNull IEnderwireNetworkElement element) {
         Optional<PeripheralRecord> optRecord = peripheralsRecord.values().stream().filter(x -> x.getOwnerName().equals(element.getName())).findAny();
         optRecord.ifPresent(record -> {
             connectedComputers.forEach(record::detach);

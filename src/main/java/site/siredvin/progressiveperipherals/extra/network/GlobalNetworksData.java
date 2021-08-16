@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.api.NetworkType;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 
@@ -43,10 +44,10 @@ public class GlobalNetworksData extends WorldSavedData {
             return null;
         if (!playerUUID.equals(network.getOwnerUUID()))
             throw new IllegalArgumentException("Network cannot be removed by not owner!");
-        Map<String, EnderwireNetworkElement> elements = network.getElements();
+        Map<String, IEnderwireNetworkElement> elements = network.getElements();
         if (elements != null) {
-            List<EnderwireNetworkElement> removeTargets = new ArrayList<>();
-            for (EnderwireNetworkElement networkElement : elements.values()) {
+            List<IEnderwireNetworkElement> removeTargets = new ArrayList<>();
+            for (IEnderwireNetworkElement networkElement : elements.values()) {
                 if (serverWorld.isLoaded(networkElement.getPos())) {
                     removeTargets.add(networkElement);
                 }
@@ -54,7 +55,7 @@ public class GlobalNetworksData extends WorldSavedData {
             removeTargets.forEach(networkElement -> {
                 BlockPos pos = networkElement.getPos();
                 if (!serverWorld.isEmptyBlock(pos)) {
-                    IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) serverWorld.getBlockEntity(networkElement.getPos());
+                    IEnderwireElement enderwireElement = networkElement.getElement(serverWorld);
                     if (enderwireElement != null) {
                         enderwireElement.changeAttachedNetwork(null);
                     } else {

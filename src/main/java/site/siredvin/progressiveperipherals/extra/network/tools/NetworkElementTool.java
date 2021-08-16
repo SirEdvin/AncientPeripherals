@@ -4,7 +4,6 @@ import dan200.computercraft.shared.pocket.items.ItemPocketComputer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -17,20 +16,26 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.api.tileentity.IBlockObservingTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-import java.util.Objects;
-
 public class NetworkElementTool {
 
-    public static <T extends TileEntity & IEnderwireElement<T>> @Nullable EnderwireNetworkElement removeFromNetwork(@NotNull GlobalNetworksData globalData, @NotNull String networkName, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
+    @SuppressWarnings("UnusedReturnValue")
+    public static @Nullable IEnderwireNetworkElement removeFromNetwork(@NotNull String networkName, @NotNull IEnderwireElement element, @NotNull ServerWorld world) {
+        GlobalNetworksData data = GlobalNetworksData.get(world);
+        IEnderwireNetworkElement result = removeFromNetwork(data, networkName, element);
+        data.setDirty();
+        return result;
+    }
+
+    private static @Nullable IEnderwireNetworkElement removeFromNetwork(@NotNull GlobalNetworksData globalData, @NotNull String networkName, @NotNull IEnderwireElement element) {
         EnderwireNetwork network = globalData.getNetwork(networkName);
         if (network != null) {
-            EnderwireNetworkElement elementData = network.getElement(element.getElementName());
+            IEnderwireNetworkElement elementData = network.getElement(element.getElementName());
             if (elementData == null) {
                 ProgressivePeripherals.LOGGER.error(String.format("Element %s is not in network %s, this shouldn't happened!", element.getElementName(), networkName));
             } else {
@@ -44,21 +49,31 @@ public class NetworkElementTool {
         return null;
     }
 
-    public static <T extends TileEntity & IEnderwireElement<T>> EnderwireNetworkElement generateElementData(@NotNull IEnderwireElement<T> element, @NotNull EnderwireNetwork network) {
+    public static IEnderwireNetworkElement generateElementData(@NotNull IEnderwireElement element, @NotNull EnderwireNetwork network) {
         String newElementName = network.generateNameForElement(element);
-        return new EnderwireNetworkElement(
-                newElementName, element.getPosition(), element.getElementType().getCategory(), element.getElementType(),
-                Objects.requireNonNull(element.getWorld()).dimension().location().toString(), element.getAmplifier()
-        );
+        return element.generateElementData(newElementName);
     }
 
-    public static <T extends TileEntity & IEnderwireElement<T>> void changeAttachedNetwork(@Nullable String oldNetwork, @Nullable String newNetwork, @NotNull IEnderwireElement<T> element, @NotNull ServerWorld world) {
+    public static void connectToNewNetwork(@NotNull IEnderwireElement element, @NotNull EnderwireNetwork network, @NotNull ServerWorld world) {
+        GlobalNetworksData data = GlobalNetworksData.get(world);
+        connectToNewNetwork(null, element, network);
+        data.setDirty();
+    }
+
+    private static void connectToNewNetwork(@Nullable IEnderwireNetworkElement elementData, @NotNull IEnderwireElement element, @NotNull EnderwireNetwork network) {
+        if (elementData == null)
+            elementData = generateElementData(element, network);
+        element.setElementName(elementData.getName());
+        network.addNetworkElement(elementData);
+    }
+
+    public static void changeAttachedNetwork(@Nullable String oldNetwork, @Nullable String newNetwork, @NotNull IEnderwireElement element, @NotNull ServerWorld world) {
         GlobalNetworksData globalData = GlobalNetworksData.get(world);
         boolean dirtyGlobalData = false;
-        EnderwireNetworkElement elementData = null;
+        IEnderwireNetworkElement elementData = null;
         element.beforeAttachedNetworkChange(oldNetwork, newNetwork);
         if (oldNetwork != null) {
-            elementData = removeFromNetwork(globalData, oldNetwork, element, world);
+            elementData = removeFromNetwork(globalData, oldNetwork, element);
             if (elementData != null)
                 dirtyGlobalData = true;
         }
@@ -66,10 +81,7 @@ public class NetworkElementTool {
             EnderwireNetwork network = globalData.getNetwork(newNetwork);
             if (network == null)
                 throw new IllegalArgumentException(String.format("Cannot find new network %s", newNetwork));
-            if (elementData == null)
-                elementData = generateElementData(element, network);
-            element.setElementName(elementData.getName());
-            network.addNetworkElement(elementData);
+            connectToNewNetwork(elementData, element, network);
             dirtyGlobalData = true;
         }
         element.setAttachedNetwork(newNetwork);
@@ -85,7 +97,7 @@ public class NetworkElementTool {
     public static void handleNetworkSetup(Hand playerHand, PlayerEntity player, World world, BlockPos pos) {
         ItemStack itemInHand = player.getItemInHand(playerHand);
         if (isNetworkManager(itemInHand)) {
-            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
+            IEnderwireElement te = (IEnderwireElement) world.getBlockEntity(pos);
             if (te != null) {
                 if (te.getElementType().isEnabled()) {
                     if (!world.isClientSide) {
@@ -110,7 +122,7 @@ public class NetworkElementTool {
     public static void handleNetworkDisplay(PlayerEntity player, World world, BlockPos pos, Hand hand) {
         ItemStack itemInHand = player.getItemInHand(hand);
         if (isNetworkManager(itemInHand)) {
-            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
+            IEnderwireElement te = (IEnderwireElement) world.getBlockEntity(pos);
             if (te != null) {
                 String attachedNetwork = te.getAttachedNetwork();
                 if (!te.getElementType().isEnabled())
@@ -148,12 +160,11 @@ public class NetworkElementTool {
 
     public static void handleRemove(@NotNull World world, @NotNull BlockPos pos) {
         if (!world.isClientSide) {
-            IEnderwireElement<?> te = (IEnderwireElement<?>) world.getBlockEntity(pos);
+            IEnderwireElement te = (IEnderwireElement) world.getBlockEntity(pos);
             if (te != null && te.getAttachedNetwork() != null) {
                 if (te instanceof IBlockObservingTileEntity)
                     ((IBlockObservingTileEntity) te).destroy();
-                ServerWorld serverWorld = (ServerWorld) world;
-                removeFromNetwork(GlobalNetworksData.get(serverWorld), te.getAttachedNetwork(), te, serverWorld);
+                removeFromNetwork(te.getAttachedNetwork(), te, (ServerWorld) world);
             }
         }
     }

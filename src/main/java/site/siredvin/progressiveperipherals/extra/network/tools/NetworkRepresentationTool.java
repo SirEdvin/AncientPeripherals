@@ -3,9 +3,12 @@ package site.siredvin.progressiveperipherals.extra.network.tools;
 import de.srendi.advancedperipherals.common.util.LuaConverter;
 import net.minecraft.util.math.BlockPos;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NetworkRepresentationTool {
     public static Map<String, Object> shortRepresentation(EnderwireNetwork network) {
@@ -19,7 +22,7 @@ public class NetworkRepresentationTool {
         Map<String, Object> representation = shortRepresentation(network);
         representation.put("range", network.getReachableRange());
         representation.put("interdimensional", network.isInterdimensional());
-        Map<String, EnderwireNetworkElement> elements = network.getElements();
+        Map<String, IEnderwireNetworkElement> elements = network.getElements();
         if (elements != null) {
             List<Object> elementsRepresentation = new ArrayList<>();
             elements.values().forEach(networkElement -> elementsRepresentation.add(elementRepresentation(networkElement, center)));
@@ -30,7 +33,7 @@ public class NetworkRepresentationTool {
         return representation;
     }
 
-    public static Map<String, Object> elementRepresentation(EnderwireNetworkElement networkElement, BlockPos center) {
+    public static Map<String, Object> elementRepresentation(IEnderwireNetworkElement networkElement, BlockPos center) {
         Map<String, Object> representation = new HashMap<>();
         representation.put("name", networkElement.getName());
         representation.put("elementType", networkElement.getCategory().name().toLowerCase());

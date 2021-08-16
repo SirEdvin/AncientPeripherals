@@ -8,15 +8,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireNetworkConnectorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkRepresentationTool;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetworks;
 import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetwork;
+import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetworks;
 
 public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     public static final String TYPE = "enderwireNetworkConnector";
@@ -57,7 +58,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     public final MethodResult getNetworkElementState(String name) throws LuaException {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
-            EnderwireNetworkElement element = network.getElement(name);
+            IEnderwireNetworkElement element = network.getElement(name);
             if (element == null)
                 return MethodResult.of(null, "Cannot find element");
             Map<String, Object> elementState = new HashMap<>();
@@ -67,7 +68,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
                 elementState.put("loaded", true);
                 TileEntity te = world.getBlockEntity(element.getPos());
                 if (te instanceof IEnderwireElement)
-                    elementState.putAll(((IEnderwireElement<?>) te).getCurrentState());
+                    elementState.putAll(((IEnderwireElement) te).getCurrentState());
             } else {
                 elementState.put("loaded", false);
             }
@@ -80,12 +81,12 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     public final MethodResult configureElement(String name, Map<?, ?> configuration) throws LuaException {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
-            EnderwireNetworkElement element = network.getElement(name);
+            IEnderwireNetworkElement element = network.getElement(name);
             if (element == null)
                 return MethodResult.of(null, "Cannot find element");
             if (!world.isLoaded(element.getPos()))
                 return MethodResult.of(null, "Element is not loaded ...");
-            IEnderwireElement<?> elementTE = (IEnderwireElement<?>) world.getBlockEntity(element.getPos());
+            IEnderwireElement elementTE = (IEnderwireElement) world.getBlockEntity(element.getPos());
             if (elementTE == null)
                 return MethodResult.of(null, "This shouldn't happen, but there is no tile entity");
             return elementTE.configure(configuration);
@@ -97,7 +98,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     public final MethodResult isElementLoaded(String name) throws LuaException  {
         World world = getWorld();
         return withNetwork(world, tileEntity, network -> {
-            EnderwireNetworkElement element = network.getElement(name);
+            IEnderwireNetworkElement element = network.getElement(name);
             if (element == null)
                 return MethodResult.of(null, "Cannot find element");
             return MethodResult.of(world.isLoaded(element.getPos()));
@@ -108,8 +109,8 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     @LuaFunction
     public final MethodResult isElementsInReach(String firstName, String secondName) throws LuaException {
         return withNetwork(getWorld(), tileEntity, network -> {
-            EnderwireNetworkElement first = network.getElement(firstName);
-            EnderwireNetworkElement second = network.getElement(secondName);
+            IEnderwireNetworkElement first = network.getElement(firstName);
+            IEnderwireNetworkElement second = network.getElement(secondName);
             if (first == null)
                 return MethodResult.of(null, String.format("Cannot find element %s", firstName));
             if (second == null)
@@ -129,12 +130,12 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
                 String elementName = nameKey.toString();
                 if (!(configuration instanceof Map))
                     throw new LuaException("Configurations value should be maps");
-                EnderwireNetworkElement element = network.getElement(elementName);
+                IEnderwireNetworkElement element = network.getElement(elementName);
                 if (element == null)
                     return MethodResult.of(null, String.format("Cannot find element with name %s", elementName));
                 if (!world.isLoaded(element.getPos()))
                     return MethodResult.of(null, "Element is not loaded ...");
-                IEnderwireElement<?> elementTE = (IEnderwireElement<?>) world.getBlockEntity(element.getPos());
+                IEnderwireElement elementTE = (IEnderwireElement) world.getBlockEntity(element.getPos());
                 if (elementTE == null)
                     return MethodResult.of(null, "This shouldn't happen, but there is no tile entity");
                 MethodResult configureResult = elementTE.configure((Map<?, ?>) configuration);

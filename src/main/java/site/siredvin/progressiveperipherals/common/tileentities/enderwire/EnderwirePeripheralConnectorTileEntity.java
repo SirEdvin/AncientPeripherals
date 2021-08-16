@@ -7,10 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireEventSubscription;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
@@ -75,7 +75,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
         SingleTickScheduler.now(this);
     }
 
-    public void attachPeripheral(@NotNull EnderwireNetworkElement element, @Nullable IPeripheral peripheral) {
+    public void attachPeripheral(@NotNull IEnderwireNetworkElement element, @Nullable IPeripheral peripheral) {
         if (level != null && !level.isClientSide && peripheral != null && attachedNetwork != null) {
             ensurePeripheralCreated();
             Objects.requireNonNull(level);
@@ -88,16 +88,16 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
         }
     }
 
-    public void attachPeripheral(@NotNull EnderwireNetworkElement element) {
+    public void attachPeripheral(@NotNull IEnderwireNetworkElement element) {
         Objects.requireNonNull(level);
         if (element.getCategory().canSharePeripheral() && level.isLoaded(element.getPos())) {
-            IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) level.getBlockEntity(element.getPos());
+            IEnderwireElement enderwireElement = element.getElement(level);
             if (enderwireElement != null)
                 attachPeripheral(element, enderwireElement.getSharedPeripheral());
         }
     }
 
-    public void detachPeripheral(@NotNull EnderwireNetworkElement element) {
+    public void detachPeripheral(@NotNull IEnderwireNetworkElement element) {
         if (level != null && !level.isClientSide) {
             ensurePeripheralCreated();
             Objects.requireNonNull(level);

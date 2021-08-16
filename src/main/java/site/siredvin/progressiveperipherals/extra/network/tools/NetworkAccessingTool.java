@@ -37,6 +37,14 @@ public class NetworkAccessingTool {
         }
     }
 
+    public static void writeSelectedNetwork(CompoundNBT tag, @Nullable String name) {
+        if (name == null) {
+            tag.remove(SELECTED_NETWORK_TAG);
+        } else {
+            tag.putString(SELECTED_NETWORK_TAG, name);
+        }
+    }
+
     public static @Nullable EnderwireNetwork getSelectedNetwork(GlobalNetworksData data, CompoundNBT tag) {
         String attachedNetworkName = getSelectedNetworkName(tag);
         if (attachedNetworkName == null)

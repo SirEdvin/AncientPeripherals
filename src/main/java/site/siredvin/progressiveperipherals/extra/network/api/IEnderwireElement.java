@@ -3,23 +3,23 @@ package site.siredvin.progressiveperipherals.extra.network.api;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.api.base.ITrickedTileEntity;
+import site.siredvin.progressiveperipherals.api.base.IWorldObject;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
 import java.util.Map;
 
-public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> extends ITrickedTileEntity<T> {
+public interface IEnderwireElement extends IWorldObject {
     @Nullable String getAttachedNetwork();
     void setAttachedNetwork(@Nullable String name);
     @Nullable String getElementName();
     void setElementName(@Nullable String name);
     EnderwireElementType getElementType();
     Map<String, Object> getCurrentState();
+    @NotNull IEnderwireNetworkElement generateElementData(@NotNull String elementName);
 
     default void changeAttachedNetwork(@Nullable String newNetwork) {
         World world = getWorld();

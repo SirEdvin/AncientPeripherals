@@ -27,10 +27,10 @@ public class NetworkPeripheralTool {
         return function.apply(data);
     }
 
-    public static MethodResult withNetwork(World world, IEnderwireElement<?> tileEntity, PeripheralFunction<EnderwireNetwork, MethodResult> function) throws LuaException {
+    public static MethodResult withNetwork(World world, IEnderwireElement enderwireElement, PeripheralFunction<EnderwireNetwork, MethodResult> function) throws LuaException {
         ServerWorld serverWorld = (ServerWorld) world;
         GlobalNetworksData data = GlobalNetworksData.get(serverWorld);
-        String attachedNetwork = tileEntity.getAttachedNetwork();
+        String attachedNetwork = enderwireElement.getAttachedNetwork();
         if (attachedNetwork == null)
             return MethodResult.of(null, "Not attached to any network");
         EnderwireNetwork network = data.getNetwork(attachedNetwork);

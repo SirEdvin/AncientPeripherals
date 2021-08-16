@@ -20,7 +20,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
 @SuppressWarnings("deprecation")
-public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElement<T>> extends TileEntityBlock<T> {
+public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElement> extends TileEntityBlock<T> {
 
     public static final BooleanProperty CONNECTED = BooleanProperty.create("connected");
 

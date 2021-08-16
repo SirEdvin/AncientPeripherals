@@ -35,7 +35,7 @@ public class ModProbeInfoProvider implements IProbeInfoProvider {
         }
 
         if (tile instanceof IEnderwireElement) {
-            String attachedNetwork = ((IEnderwireElement<?>) tile).getAttachedNetwork();
+            String attachedNetwork = ((IEnderwireElement) tile).getAttachedNetwork();
 
             if (attachedNetwork != null) {
                 iProbeInfo.text(new StringTextComponent("Enderwire: attached to: " + attachedNetwork));

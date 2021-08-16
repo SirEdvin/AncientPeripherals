@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class EnderwireNetworkProducer {
 
     @SuppressWarnings("unchecked")
-    protected static <T extends IEnderwireElement<?>> void eventEnvironment(@NotNull World world, @NotNull BlockPos pos, BiConsumer<T, EnderwireNetwork> consumer) {
+    protected static <T extends IEnderwireElement> void eventEnvironment(@NotNull World world, @NotNull BlockPos pos, BiConsumer<T, EnderwireNetwork> consumer) {
         if (!world.isClientSide) {
             T te = (T) world.getBlockEntity(pos);
             if (te != null) {

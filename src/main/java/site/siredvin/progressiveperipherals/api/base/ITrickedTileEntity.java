@@ -5,7 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public interface ITrickedTileEntity<T extends TileEntity & ITrickedTileEntity<T>> {
+public interface ITrickedTileEntity<T extends TileEntity & ITrickedTileEntity<T>> extends IWorldObject {
     T getThis();
     default BlockPos getPosition() {
         return getThis().getBlockPos();

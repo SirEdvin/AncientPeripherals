@@ -12,11 +12,11 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkAccessingTool;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireUpgradeModemPeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireTurtleUpgradeModemPeripheral;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.DataDependPeripheralTurtle;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnderwirePeripheralConnectedTurtle extends DataDependPeripheralTurtle<EnderwireUpgradeModemPeripheral> {
+public class EnderwirePeripheralConnectedTurtle extends DataDependPeripheralTurtle<EnderwireTurtleUpgradeModemPeripheral> {
 
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_peripheral_connected_turtle");
     public static final ModelResourceLocation NOT_CONNECTED_LEFT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.peripheral_connector_turtle_left"), "inventory");
@@ -43,16 +43,16 @@ public class EnderwirePeripheralConnectedTurtle extends DataDependPeripheralTurt
     }
 
     @Override
-    protected EnderwireUpgradeModemPeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new EnderwireUpgradeModemPeripheral(turtle, side);
+    protected EnderwireTurtleUpgradeModemPeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
+        return new EnderwireTurtleUpgradeModemPeripheral(turtle, side);
     }
 
     @Override
     public void update(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         IPeripheral peripheral = turtle.getPeripheral(side);
-        if (peripheral instanceof EnderwireUpgradeModemPeripheral) {
-            if (!((EnderwireUpgradeModemPeripheral) peripheral).isInitialized())
-                ((EnderwireUpgradeModemPeripheral) peripheral).initialize();
+        if (peripheral instanceof EnderwireTurtleUpgradeModemPeripheral) {
+            if (!((EnderwireTurtleUpgradeModemPeripheral) peripheral).isInitialized())
+                ((EnderwireTurtleUpgradeModemPeripheral) peripheral).initialize();
         }
     }
 }

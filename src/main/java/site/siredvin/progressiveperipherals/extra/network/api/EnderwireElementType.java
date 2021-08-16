@@ -15,7 +15,8 @@ public enum EnderwireElementType implements IConfigHandler {
     LEVER(EnderwireElementCategory.SENSOR), BUTTON(EnderwireElementCategory.SENSOR), PLATE(EnderwireElementCategory.SENSOR),
     ADVANCED_LEVER(EnderwireElementCategory.SENSOR), ADVANCED_BUTTON(EnderwireElementCategory.SENSOR), ADVANCED_PLATE(EnderwireElementCategory.SENSOR),
     REDSTONE_SENSOR(EnderwireElementCategory.SENSOR),
-    REDSTONE_EMITTER(EnderwireElementCategory.EMITTER), LIGHT_EMITTER(EnderwireElementCategory.EMITTER);
+    REDSTONE_EMITTER(EnderwireElementCategory.EMITTER), LIGHT_EMITTER(EnderwireElementCategory.EMITTER),
+    TURTLE(EnderwireElementCategory.PROPAGATOR);
 
     private final EnderwireElementCategory category;
     private ForgeConfigSpec.BooleanValue enabled;

@@ -2,15 +2,18 @@ package site.siredvin.progressiveperipherals.extra.network;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementCategory;
-import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
-import site.siredvin.progressiveperipherals.extra.network.api.NetworkAmplifier;
+import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.extra.network.api.*;
 
 import java.util.Objects;
 
-public class EnderwireNetworkElement {
+public class PlacedEnderwireNetworkElement implements IEnderwireNetworkElement {
+    public static final String TYPE_MARK = "stable";
+
     private static final String POS_TAG = "blockPosition";
     private static final String NAME_TAG = "name";
     private static final String CATEGORY_TAG = "category";
@@ -25,7 +28,7 @@ public class EnderwireNetworkElement {
     private final @NotNull String dimension;
     private final @NotNull NetworkAmplifier networkAmplifier;
 
-    public EnderwireNetworkElement(@NotNull String name, @NotNull BlockPos pos, @NotNull EnderwireElementCategory category, @NotNull EnderwireElementType elementType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
+    public PlacedEnderwireNetworkElement(@NotNull String name, @NotNull BlockPos pos, @NotNull EnderwireElementCategory category, @NotNull EnderwireElementType elementType, @NotNull String dimension, @NotNull NetworkAmplifier networkAmplifier) {
         this.name = name;
         this.pos = pos;
         this.category = category;
@@ -58,7 +61,7 @@ public class EnderwireNetworkElement {
         return dimension;
     }
 
-    public CompoundNBT toNBT() {
+    public @NotNull CompoundNBT toNBT() {
         CompoundNBT tag = new CompoundNBT();
         tag.putString(NAME_TAG, name);
         tag.put(POS_TAG, NBTUtil.writeBlockPos(pos));
@@ -69,8 +72,21 @@ public class EnderwireNetworkElement {
         return tag;
     }
 
-    public static EnderwireNetworkElement fromCompound(CompoundNBT tag) {
-        return new EnderwireNetworkElement(
+    @Override
+    public @NotNull String getTypeMark() {
+        return TYPE_MARK;
+    }
+
+    @Override
+    public @Nullable IEnderwireElement getElement(World world) {
+        TileEntity te = world.getBlockEntity(getPos());
+        if (te instanceof IEnderwireElement)
+            return (IEnderwireElement) te;
+        return null;
+    }
+
+    public static PlacedEnderwireNetworkElement fromCompound(CompoundNBT tag) {
+        return new PlacedEnderwireNetworkElement(
                 tag.getString(NAME_TAG),
                 NBTUtil.readBlockPos(tag.getCompound(POS_TAG)),
                 EnderwireElementCategory.valueOf(tag.getString(CATEGORY_TAG)),
@@ -83,8 +99,8 @@ public class EnderwireNetworkElement {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EnderwireNetworkElement)) return false;
-        EnderwireNetworkElement that = (EnderwireNetworkElement) o;
+        if (!(o instanceof PlacedEnderwireNetworkElement)) return false;
+        PlacedEnderwireNetworkElement that = (PlacedEnderwireNetworkElement) o;
         return name.equals(that.name) && pos.equals(that.pos) && category.equals(that.category) && elementType.equals(that.elementType) && dimension.equals(that.dimension) && networkAmplifier == that.networkAmplifier;
     }
 

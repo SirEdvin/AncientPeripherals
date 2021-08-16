@@ -11,10 +11,10 @@ import site.siredvin.progressiveperipherals.api.tileentity.IBlockObservingTileEn
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.BaseEnderwireBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
-import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireTileEntity;
 import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 
-public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireElement<T>, V  extends IBasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireElement<T>, IBlockObservingTileEntity {
+public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireTileEntity<T>, V  extends IBasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireTileEntity<T>, IBlockObservingTileEntity {
     private static final String ATTACHED_NETWORK_TAG = "attachedNetwork";
     private static final String ELEMENT_NAME_TAG = "elementName";
 

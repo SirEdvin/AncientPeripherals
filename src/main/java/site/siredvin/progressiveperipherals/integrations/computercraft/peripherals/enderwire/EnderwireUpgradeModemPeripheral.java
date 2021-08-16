@@ -14,9 +14,9 @@ import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireEventSubscription;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
@@ -40,24 +40,30 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         super(turtle, side);
     }
 
+    protected void removeFromOldNetwork(@NotNull EnderwireNetwork oldNetwork) {
+        oldNetwork.traverseElements(this::detachPeripheral);
+        if (subscription != null) {
+            EnderwireNetworkBusHub.unsubscribeFromNetworkEvents(oldNetwork.getName(), subscription);
+            subscription = null;
+        }
+    }
+
+    protected void attachToNewNetwork(@NotNull EnderwireNetwork newNetwork) {
+        newNetwork.traverseElements(this::attachPeripheral);
+        subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork.getName(), this);
+    }
+
     protected void changeNetwork(GlobalNetworksData data, @Nullable EnderwireNetwork newNetwork) {
         CompoundNBT tag = owner.getDataStorage();
         EnderwireNetwork oldNetwork = NetworkAccessingTool.getSelectedNetwork(data, tag);
         NetworkAccessingTool.writeSelectedNetwork(tag, newNetwork);
-        if (oldNetwork != null) {
-            oldNetwork.traverseElements(this::detachPeripheral);
-            if (subscription != null) {
-                EnderwireNetworkBusHub.unsubscribeFromNetworkEvents(oldNetwork.getName(), subscription);
-                subscription = null;
-            }
-        }
-        if (newNetwork != null) {
-            newNetwork.traverseElements(this::attachPeripheral);
-            subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork.getName(), this);
-        }
+        if (oldNetwork != null)
+            removeFromOldNetwork(oldNetwork);
+        if (newNetwork != null)
+            attachToNewNetwork(newNetwork);
     }
 
-    public void attachPeripheral(GlobalNetworksData networks, @NotNull EnderwireNetworkElement element, @Nullable IPeripheral peripheral) {
+    public void attachPeripheral(GlobalNetworksData networks, @NotNull IEnderwireNetworkElement element, @Nullable IPeripheral peripheral) {
         if (peripheral != null) {
             EnderwireNetwork network = NetworkAccessingTool.getSelectedNetwork(networks, owner.getDataStorage());
             Objects.requireNonNull(network);
@@ -65,16 +71,16 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         }
     }
 
-    public void attachPeripheral(@NotNull EnderwireNetworkElement element) {
+    public void attachPeripheral(@NotNull IEnderwireNetworkElement element) {
         ServerWorld level = (ServerWorld) getWorld();
         if (element.getCategory().canSharePeripheral() && level.isLoaded(element.getPos())) {
-            IEnderwireElement<?> enderwireElement = (IEnderwireElement<?>) level.getBlockEntity(element.getPos());
+            IEnderwireElement enderwireElement = element.getElement(level);
             if (enderwireElement != null)
                 attachPeripheral(GlobalNetworksData.get(level), element, enderwireElement.getSharedPeripheral());
         }
     }
 
-    public void detachPeripheral(@NotNull EnderwireNetworkElement element) {
+    public void detachPeripheral(@NotNull IEnderwireNetworkElement element) {
         removeSharedPeripheral(element);
     }
 
@@ -133,12 +139,11 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
             CompoundNBT tag = owner.getDataStorage();
             EnderwireNetwork network = NetworkAccessingTool.getSelectedNetwork(data, tag);
             if (network != null) {
-                network.traverseElements(this::attachPeripheral);
-                subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(network.getName(), this);
+                attachToNewNetwork(network);
             } else {
                 String networkName = NetworkAccessingTool.getSelectedNetworkName(tag);
                 if (networkName != null)
-                    NetworkAccessingTool.writeSelectedNetwork(tag, null);
+                    NetworkAccessingTool.writeSelectedNetwork(tag, (String) null);
             }
             initialized = true;
         }

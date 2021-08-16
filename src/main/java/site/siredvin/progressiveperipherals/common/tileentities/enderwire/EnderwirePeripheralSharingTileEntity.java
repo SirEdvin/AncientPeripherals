@@ -12,9 +12,9 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireDirectionalBlock;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
 import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
@@ -39,7 +39,7 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
             if (network == null)
                 return;
-            EnderwireNetworkElement element = network.getElement(getElementName());
+            IEnderwireNetworkElement element = network.getElement(getElementName());
             if (element == null)
                 return;
             EnderwireNetworkBusHub.fireNetworkEvent(attachedNetwork, new EnderwireNetworkEvent.PeripheralDetached(element, sharedPeripheral));
@@ -53,7 +53,7 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
             if (network == null)
                 return;
-            EnderwireNetworkElement element = network.getElement(getElementName());
+            IEnderwireNetworkElement element = network.getElement(getElementName());
             if (element == null)
                 return;
             sharedPeripheral = newPeripheral;

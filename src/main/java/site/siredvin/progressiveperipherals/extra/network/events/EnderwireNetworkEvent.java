@@ -1,7 +1,7 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
-import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 
 import java.lang.ref.WeakReference;
 
@@ -14,14 +14,14 @@ public class EnderwireNetworkEvent implements IEnderwireBusEvent {
     }
 
     private static class ElementEvent extends EnderwireNetworkEvent {
-        private final WeakReference<EnderwireNetworkElement> element;
+        private final WeakReference<IEnderwireNetworkElement> element;
 
-        public ElementEvent(EnderwireNetworkElement element) {
+        public ElementEvent(IEnderwireNetworkElement element) {
             super();
             this.element = new WeakReference<>(element);
         }
 
-        public EnderwireNetworkElement getElement() {
+        public IEnderwireNetworkElement getElement() {
             return element.get();
         }
 
@@ -34,7 +34,7 @@ public class EnderwireNetworkEvent implements IEnderwireBusEvent {
     private static class PeripheralEvent extends ElementEvent {
         private final WeakReference<IPeripheral> peripheral;
 
-        public PeripheralEvent(EnderwireNetworkElement element, IPeripheral peripheral) {
+        public PeripheralEvent(IEnderwireNetworkElement element, IPeripheral peripheral) {
             super(element);
             this.peripheral = new WeakReference<>(peripheral);
         }
@@ -51,28 +51,28 @@ public class EnderwireNetworkEvent implements IEnderwireBusEvent {
 
     public static class ElementAdded extends ElementEvent {
 
-        public ElementAdded(EnderwireNetworkElement element) {
+        public ElementAdded(IEnderwireNetworkElement element) {
             super(element);
         }
     }
 
     public static class ElementRemoved extends ElementEvent {
 
-        public ElementRemoved(EnderwireNetworkElement element) {
+        public ElementRemoved(IEnderwireNetworkElement element) {
             super(element);
         }
     }
 
     public static class PeripheralAttached extends PeripheralEvent {
 
-        public PeripheralAttached(EnderwireNetworkElement element, IPeripheral peripheral) {
+        public PeripheralAttached(IEnderwireNetworkElement element, IPeripheral peripheral) {
             super(element, peripheral);
         }
     }
 
     public static class PeripheralDetached extends PeripheralEvent {
 
-        public PeripheralDetached(EnderwireNetworkElement element, IPeripheral peripheral) {
+        public PeripheralDetached(IEnderwireNetworkElement element, IPeripheral peripheral) {
             super(element, peripheral);
         }
     }
