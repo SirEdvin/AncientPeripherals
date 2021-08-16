@@ -14,9 +14,9 @@ import java.util.function.Supplier;
 
 public class PeripheralBlockItem extends BaseBlockItem {
 
-    @Nullable ResourceLocation turtleID;
-    @Nullable ResourceLocation pocketID;
-    @NotNull Supplier<Boolean> enabledSup;
+    private final @Nullable ResourceLocation turtleID;
+    private final @Nullable ResourceLocation pocketID;
+    private final @NotNull Supplier<Boolean> enabledSup;
 
     public PeripheralBlockItem(@NotNull Block blockID, @NotNull Properties properties, @Nullable ResourceLocation turtleID, @Nullable ResourceLocation pocketID, @NotNull Supplier<Boolean> enabledSup) {
         super(blockID, properties);
@@ -38,7 +38,7 @@ public class PeripheralBlockItem extends BaseBlockItem {
     }
 
     @Override
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(@NotNull ItemGroup group, @NotNull NonNullList<ItemStack> items) {
         super.fillItemCategory(group, items);
         if (!allowdedIn(group))
             return;

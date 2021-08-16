@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireLightEmitterTileEntity;
 import site.siredvin.progressiveperipherals.utils.TERUtils;
@@ -44,7 +45,7 @@ public class EnderwireLightEmitterTileRenderer extends TileEntityRenderer<Enderw
     }
 
     @Override
-    public void render(EnderwireLightEmitterTileEntity entity, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
+    public void render(EnderwireLightEmitterTileEntity entity, float partialTicks, @NotNull MatrixStack stack, @NotNull IRenderTypeBuffer buffer, int combinedLightIn, int combinedOverlayIn) {
         if (entity.isEnabled()) {
             Color color = entity.getColor();
             BlockState state = entity.getBlockState();

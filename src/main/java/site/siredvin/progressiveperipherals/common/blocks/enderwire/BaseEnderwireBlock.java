@@ -13,13 +13,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.base.TileEntityBlock;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
+@SuppressWarnings("deprecation")
 public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElement<T>> extends TileEntityBlock<T> {
 
     public static final BooleanProperty CONNECTED = BooleanProperty.create("connected");
@@ -34,13 +34,13 @@ public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElemen
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTED);
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
         if (!newState.is(this)) // new block are not this block
             NetworkElementTool.handleRemove(world, pos);
         super.onRemove(state, world, pos, newState, isMoving);
@@ -50,7 +50,7 @@ public abstract class BaseEnderwireBlock<T extends TileEntity & IEnderwireElemen
     public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
         super.setPlacedBy(world, pos, state, entity, stack);
         if (!world.isClientSide && entity instanceof PlayerEntity) {
-            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, (ServerWorld) world, pos);
+            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, world, pos);
         }
     }
 

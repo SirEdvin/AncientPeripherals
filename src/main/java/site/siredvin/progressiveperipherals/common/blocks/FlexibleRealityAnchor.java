@@ -53,7 +53,7 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONFIGURED);
         builder.add(PLAYER_PASSABLE);
@@ -87,7 +87,7 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos, @NotNull ISelectionContext context) {
         if (state.getValue(INVISIBLE))
             return super.getShape(state, world, pos, context);
         FlexibleRealityAnchorTileEntity tileEntity = (FlexibleRealityAnchorTileEntity) world.getBlockEntity(pos);
@@ -100,7 +100,7 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
     }
 
     @Override
-    public BlockRenderType getRenderShape(BlockState state) {
+    public @NotNull BlockRenderType getRenderShape(BlockState state) {
         if (state.getValue(INVISIBLE))
             return BlockRenderType.INVISIBLE;
         return super.getRenderShape(state);
@@ -112,29 +112,29 @@ public class FlexibleRealityAnchor extends BaseNBTBlock<FlexibleRealityAnchorTil
     }
 
     @Override
-    public boolean useShapeForLightOcclusion(BlockState state) {
+    public boolean useShapeForLightOcclusion(@NotNull BlockState state) {
         return true;
     }
 
-    public VoxelShape getVisualShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public @NotNull VoxelShape getVisualShape(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos, @NotNull ISelectionContext context) {
         if (state.getValue(LIGHT_PASSABLE) || !state.getValue(CONFIGURED))
             return VoxelShapes.empty();
         return super.getVisualShape(state, world, pos, context);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public float getShadeBrightness(BlockState state, IBlockReader world, BlockPos pos) {
+    public float getShadeBrightness(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos) {
         if (state.getValue(LIGHT_PASSABLE) || !state.getValue(CONFIGURED))
             return 1.0F;
         return super.getShadeBrightness(state, world, pos);
     }
 
-    public boolean propagatesSkylightDown(BlockState state, IBlockReader world, BlockPos pos) {
+    public boolean propagatesSkylightDown(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos) {
         return state.getValue(SKY_LIGHT_PASSABLE) || !state.getValue(CONFIGURED);
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos, ISelectionContext context) {
         Entity collidingEntity = context.getEntity();
         if (collidingEntity != null) {
             if (state.getValue(PLAYER_PASSABLE) && collidingEntity instanceof PlayerEntity)

@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.data.builders.AutomataRecipeBuilder;
@@ -452,7 +453,7 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(@NotNull Consumer<IFinishedRecipe> consumer) {
         this.buildCraftingRecipes(consumer);
         this.buildSmithingRecipes(consumer);
         this.buildAutomataRecipes(consumer);

@@ -57,10 +57,12 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         return ProgressivePeripheralsConfig.enableEnchantingAutomataCore;
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean allowTreasureEnchants() {
         return false;
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult enchant(int levels) {
         return withOperation(ENCHANTMENT, context -> {
@@ -84,6 +86,7 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult extractEnchantment(int target) throws LuaException {
         CheckUtils.isCorrectSlot(target);

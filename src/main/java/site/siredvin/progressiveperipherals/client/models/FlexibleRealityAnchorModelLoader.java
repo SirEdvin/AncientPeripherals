@@ -4,15 +4,16 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.IResourceManager;
 import net.minecraftforge.client.model.IModelLoader;
+import org.jetbrains.annotations.NotNull;
 
 public class FlexibleRealityAnchorModelLoader implements IModelLoader<FlexibleRealityAnchorGeometry> {
     @Override
-    public void onResourceManagerReload(IResourceManager resourceManager) {
+    public void onResourceManagerReload(@NotNull IResourceManager resourceManager) {
 
     }
 
     @Override
-    public FlexibleRealityAnchorGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents) {
+    public @NotNull FlexibleRealityAnchorGeometry read(@NotNull JsonDeserializationContext deserializationContext, @NotNull JsonObject modelContents) {
         return new FlexibleRealityAnchorGeometry();
     }
 }

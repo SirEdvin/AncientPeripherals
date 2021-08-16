@@ -6,6 +6,7 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public interface IProbeable {
     List<ITextComponent> commonProbeData(BlockState state);
     default List<ITextComponent> extraProbeData(BlockState state) {

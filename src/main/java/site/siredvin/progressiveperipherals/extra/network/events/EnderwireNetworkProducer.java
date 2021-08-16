@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireRedstoneSensorBlock;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireRedstoneSensorTileEntity;
-import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
+import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.utils.ExtraLuaConverter;
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 public class EnderwireNetworkProducer {
 
+    @SuppressWarnings("unchecked")
     protected static <T extends IEnderwireElement<?>> void eventEnvironment(@NotNull World world, @NotNull BlockPos pos, BiConsumer<T, EnderwireNetwork> consumer) {
         if (!world.isClientSide) {
             T te = (T) world.getBlockEntity(pos);
@@ -46,7 +47,7 @@ public class EnderwireNetworkProducer {
             if (!isEnabled)
                 eventName = component.getDisabledEventName();
             Map<String, Object> data = new HashMap<>();
-            data.put("element", te.getElementName().toString());
+            data.put("element", te.getElementName());
             if (extendedData && player != null)
                 data.put("player", player.getName().getString());
             EnderwireNetworkBusHub.fireComputerEvent(currentNetwork.getName(), EnderwireComputerEvent.timed(
@@ -70,7 +71,7 @@ public class EnderwireNetworkProducer {
             if (!isEnabled)
                 eventName = EnderwireElementType.PLATE.getDisabledEventName();
             Map<String, Object> data = new HashMap<>();
-            data.put("element", te.getElementName().toString());
+            data.put("element", te.getElementName());
             if (extendedData && collidingEntities != null)
                 data.put("entities", collidingEntities.stream().map(ExtraLuaConverter::classifyEntity).collect(Collectors.toList()));
             EnderwireNetworkBusHub.fireComputerEvent(currentNetwork.getName(), EnderwireComputerEvent.timed(
@@ -86,7 +87,7 @@ public class EnderwireNetworkProducer {
                 String eventName = EnderwireElementType.REDSTONE_SENSOR.getChangedEventName();
                 BlockState state = world.getBlockState(pos);
                 Map<String, Object> data = new HashMap<>();
-                data.put("element", te.getElementName().toString());
+                data.put("element", te.getElementName());
                 data.put("side", OrientationUtils.toSide(
                         state.getValue(EnderwireRedstoneSensorBlock.FACING),
                         state.getValue(EnderwireRedstoneSensorBlock.FACE),

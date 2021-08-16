@@ -44,6 +44,7 @@ public class EventDistributorPeripheral extends OperationPeripheral {
         access.queueEvent(eventName, eventData);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult broadcastEvent(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(QUEUE_EVENT);
@@ -60,6 +61,7 @@ public class EventDistributorPeripheral extends OperationPeripheral {
         return MethodResult.of(true);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult sendEventByID(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(QUEUE_EVENT);
@@ -75,6 +77,7 @@ public class EventDistributorPeripheral extends OperationPeripheral {
         return MethodResult.of(true);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult sendEventByLabel(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(QUEUE_EVENT);

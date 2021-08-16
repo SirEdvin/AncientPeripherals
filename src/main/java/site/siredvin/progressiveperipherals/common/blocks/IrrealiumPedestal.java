@@ -29,7 +29,7 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public @NotNull ActionResultType use(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, PlayerEntity player, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         ItemStack itemInHand = player.getItemInHand(hand);
         if (!itemInHand.isEmpty()) {
             TileEntity tileEntity = world.getBlockEntity(pos);
@@ -47,7 +47,7 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
 
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+    public void onRemove(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileEntity = world.getBlockEntity(blockPos);
             if (tileEntity instanceof ITileEntityStackContainer) {
@@ -60,7 +60,7 @@ public class IrrealiumPedestal extends BasePedestal<IrrealiumPedestalTileEntity>
     }
 
     @Override
-    public void attack(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+    public void attack(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, PlayerEntity player) {
         ItemStack itemInHand = player.getItemInHand(Hand.MAIN_HAND);
         if (itemInHand.isEmpty()) {
             TileEntity tileEntity = world.getBlockEntity(pos);

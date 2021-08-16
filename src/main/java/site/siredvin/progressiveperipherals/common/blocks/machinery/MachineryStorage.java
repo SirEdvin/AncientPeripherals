@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.MachineryStorageTileEntity;
 
@@ -33,7 +34,7 @@ public class MachineryStorage extends MachineryBlock {
         return new MachineryStorageTileEntity(size);
     }
 
-    public void onRemove(BlockState oldState, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState oldState, @NotNull World world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (!oldState.is(newState.getBlock())) {
             MachineryStorageTileEntity tileEntity = (MachineryStorageTileEntity) world.getBlockEntity(blockPos);
             if (tileEntity != null) {
@@ -46,12 +47,12 @@ public class MachineryStorage extends MachineryBlock {
     }
 
     @Nullable
-    public INamedContainerProvider getMenuProvider(BlockState state, World world, BlockPos pos) {
+    public INamedContainerProvider getMenuProvider(@NotNull BlockState state, World world, @NotNull BlockPos pos) {
         return (MachineryStorageTileEntity) world.getBlockEntity(pos);
     }
 
 
-    public ActionResultType use(BlockState blockState, World world, BlockPos blockPos, PlayerEntity playerEntity, Hand hand, BlockRayTraceResult hit) {
+    public @NotNull ActionResultType use(@NotNull BlockState blockState, World world, @NotNull BlockPos blockPos, @NotNull PlayerEntity playerEntity, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         if (world.isClientSide) {
             return ActionResultType.SUCCESS;
         } else {

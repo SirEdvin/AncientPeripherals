@@ -28,7 +28,7 @@ public abstract class TileEntityBlock<T extends TileEntity> extends BaseBlock {
 
     @Override
     @Deprecated
-    public void neighborChanged(@Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull Block neighbourBlock, @Nonnull BlockPos neighbourPos, boolean isMoving) {
+    public void neighborChanged(@Nonnull BlockState state, @NotNull World world, @Nonnull BlockPos pos, @Nonnull Block neighbourBlock, @Nonnull BlockPos neighbourPos, boolean isMoving) {
         super.neighborChanged(state, world, pos, neighbourBlock, neighbourPos, isMoving);
         TileEntity tile = world.getBlockEntity(pos);
         if (tile instanceof IBlockObservingTileEntity)
@@ -45,7 +45,7 @@ public abstract class TileEntityBlock<T extends TileEntity> extends BaseBlock {
 
     @Override
     @Deprecated
-    public void tick(@Nonnull BlockState state, ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random rand) {
+    public void tick(@Nonnull BlockState state, @NotNull ServerWorld world, @Nonnull BlockPos pos, @Nonnull Random rand) {
         super.tick(state, world, pos, rand);
         TileEntity te = world.getBlockEntity(pos);
         if (te instanceof IBlockObservingTileEntity)
@@ -53,7 +53,7 @@ public abstract class TileEntityBlock<T extends TileEntity> extends BaseBlock {
     }
 
     @Override
-    public void onPlace(BlockState state, World world, BlockPos pos, BlockState newState, boolean bool) {
+    public void onPlace(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull BlockState newState, boolean bool) {
         super.onPlace(state, world, pos, newState, bool);
         if (newState.getBlock() == this) {
             TileEntity te = world.getBlockEntity(pos);

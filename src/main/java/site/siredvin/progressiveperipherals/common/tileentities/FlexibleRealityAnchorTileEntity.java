@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
@@ -46,8 +47,11 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
     }
 
     public void setMimic(@Nullable BlockState mimic, @NotNull BlockState state, boolean skipUpdate) {
-        if (mimic != null && ProgressivePeripheralsConfig.realityForgerBlacklist.contains(mimic.getBlock().getRegistryName().toString()))
-            return;
+        if (mimic != null) {
+            ResourceLocation blockName = mimic.getBlock().getRegistryName();
+            if (blockName != null && ProgressivePeripheralsConfig.realityForgerBlacklist.contains(blockName.toString()))
+                return;
+        }
         this.mimic = mimic;
         if (!skipUpdate) {
             pushInternalDataChangeToClient(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));
@@ -77,7 +81,7 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePe
     }
 
     @Override
-    public IModelData getModelData() {
+    public @NotNull IModelData getModelData() {
         return new ModelDataMap.Builder()
                 .withInitial(MIMIC, mimic)
                 .build();

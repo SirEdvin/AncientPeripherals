@@ -15,6 +15,7 @@ import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class RealityBreakthroughPointTileEntity extends TileEntity implements IProbeable {
@@ -40,12 +41,12 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IP
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public @NotNull CompoundNBT save(@NotNull CompoundNBT tag) {
         return saveInternalData(super.save(tag));
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(@NotNull BlockState state, @NotNull CompoundNBT tag) {
         super.load(state, tag);
         loadInternalData(state, tag);
     }
@@ -63,6 +64,7 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IP
     }
 
     public void consumePower(int amount) {
+        Objects.requireNonNull(level);
         pointState.consumePower(amount);
         if (pointState.getPowerLevel() <= 0)
             level.destroyBlock(getBlockPos(), false);

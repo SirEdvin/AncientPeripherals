@@ -76,11 +76,6 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
             subscribeToEvents(attachedNetwork);
     }
 
-    public void unsubscribeFromEvents() {
-        if (level != null && !level.isClientSide && attachedNetwork != null)
-            unsubscribeFromEvents(attachedNetwork);
-    }
-
     public void unsubscribeFromEvents(@NotNull String oldNetwork) {
         if (level != null && !level.isClientSide && subscription != null) {
             EnderwireNetworkBusHub.unsubscribeFromComputerEvents(oldNetwork, subscription);

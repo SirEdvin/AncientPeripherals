@@ -29,10 +29,12 @@ public interface IEnderwireElement<T extends TileEntity & IEnderwireElement<T>> 
         }
     }
 
+    @SuppressWarnings("unused")
     default void beforeAttachedNetworkChange(String oldNetwork, String newNetwork) {
 
     }
 
+    @SuppressWarnings("unused")
     default void afterAttachedNetworkChange(String oldNetwork, String newNetwork) {
 
     }

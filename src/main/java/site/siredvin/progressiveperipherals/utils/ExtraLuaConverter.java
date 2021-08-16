@@ -14,6 +14,7 @@ import java.util.Set;
 
 public class ExtraLuaConverter {
 
+    @SuppressWarnings("unchecked")
     public static Map<String, Object>  classifyEntity(Entity entity) {
         Map<String, Object> baseData = LuaConverter.entityToLua(entity);
         Set<String> tags = (Set<String>) baseData.get("tags");

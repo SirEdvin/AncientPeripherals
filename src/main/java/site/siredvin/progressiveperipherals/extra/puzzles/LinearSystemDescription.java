@@ -2,10 +2,8 @@ package site.siredvin.progressiveperipherals.extra.puzzles;
 
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
-import org.ejml.data.SingularMatrixException;
 import org.ejml.simple.SimpleMatrix;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzleTask;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
@@ -25,22 +23,6 @@ public class LinearSystemDescription implements IPuzzleTask {
     public LinearSystemDescription(SimpleMatrix A, SimpleMatrix b) {
         this.A = A;
         this.b = b;
-    }
-
-    public SimpleMatrix getA() {
-        return A;
-    }
-
-    public SimpleMatrix getB() {
-        return b;
-    }
-
-    public @Nullable SimpleMatrix solve() {
-        try {
-            return A.solve(b);
-        } catch (SingularMatrixException e) {
-            return null;
-        }
     }
 
     public static LinearSystemDescription generate(int size, Random random) {
@@ -67,6 +49,7 @@ public class LinearSystemDescription implements IPuzzleTask {
         return data;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean checkSolution(@NotNull IArguments arguments) throws LuaException {
         Map<?, ?> data = arguments.getTable(0);

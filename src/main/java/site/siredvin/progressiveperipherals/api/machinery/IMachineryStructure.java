@@ -4,6 +4,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public interface IMachineryStructure {
     void traverse(Consumer<BlockPos> consumer);
     void traverseInside(Consumer<BlockPos> consumer);

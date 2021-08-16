@@ -32,11 +32,13 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         return EnderwireElementType.PERIPHERAL_CONNECTOR.isEnabled();
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final String getAttachedNetworkName() {
         return tileEntity.getAttachedNetwork();
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult inspectNetwork() throws LuaException {
         return withNetworks(getWorld(), data -> {
@@ -50,6 +52,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult getNetworkElementState(String name) throws LuaException {
         World world = getWorld();
@@ -72,6 +75,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult configureElement(String name, Map<?, ?> configuration) throws LuaException {
         World world = getWorld();
@@ -88,6 +92,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult isElementLoaded(String name) throws LuaException  {
         World world = getWorld();
@@ -99,6 +104,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult isElementsInReach(String firstName, String secondName) throws LuaException {
         return withNetwork(getWorld(), tileEntity, network -> {
@@ -112,6 +118,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult configureElements(Map<?, ?> configurations) throws LuaException {
         World world = getWorld();

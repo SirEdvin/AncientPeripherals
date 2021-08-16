@@ -5,11 +5,11 @@ public enum EnderwireElementCategory {
     SERVICE(),
     PROPAGATOR(true),
     MODIFICATION(),
-    EMITTER(),
-    NONE();
+    EMITTER();
 
     private final boolean canSharePeripheral;
 
+    @SuppressWarnings("SameParameterValue")
     EnderwireElementCategory(boolean canSharePeripheral) {
         this.canSharePeripheral = canSharePeripheral;
     }

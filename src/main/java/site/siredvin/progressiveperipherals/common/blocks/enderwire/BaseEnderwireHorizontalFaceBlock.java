@@ -27,6 +27,7 @@ import java.util.Random;
 
 import static site.siredvin.progressiveperipherals.common.blocks.enderwire.BaseEnderwireBlock.CONNECTED;
 
+@SuppressWarnings("ALL")
 public abstract class BaseEnderwireHorizontalFaceBlock<T extends TileEntity> extends HorizontalFaceBlock {
 
     public BaseEnderwireHorizontalFaceBlock() {
@@ -91,6 +92,7 @@ public abstract class BaseEnderwireHorizontalFaceBlock<T extends TileEntity> ext
         return newTileEntity(state, world);
     }
 
+    @SuppressWarnings("unused")
     public abstract T newTileEntity(BlockState state, IBlockReader world);
 
     @Override

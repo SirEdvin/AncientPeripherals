@@ -57,7 +57,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
             return new Position(x, y, z);
         }
 
-        public final ItemStack dispense(IBlockSource turtleBlockSource, ItemStack stack) {
+        public final @NotNull ItemStack dispense(@NotNull IBlockSource turtleBlockSource, @NotNull ItemStack stack) {
             ItemStack lvt_3_1_ = this.execute(turtleBlockSource, stack);
             this.playSound(turtleBlockSource);
             this.playAnimation(turtleBlockSource, turtleBlockSource.getBlockState().getValue(BlockTurtle.FACING));
@@ -92,9 +92,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
         }
 
         protected ProjectileEntity getProjectile(World world, IPosition targetPosition, ItemStack stack) {
-            return Util.make(new PotionEntity(world, targetPosition.x(), targetPosition.y(), targetPosition.z()), (p_218413_1_) -> {
-                p_218413_1_.setItem(stack);
-            });
+            return Util.make(new PotionEntity(world, targetPosition.x(), targetPosition.y(), targetPosition.z()), (p_218413_1_) -> p_218413_1_.setItem(stack));
         }
     }
 
@@ -116,6 +114,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
         return ProgressivePeripheralsConfig.enableBrewingAutomataCore;
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult brew() {
         return withOperation(BREW, context -> {
@@ -152,6 +151,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult throwPotion(@NotNull IArguments arguments) throws LuaException {
         double power = Math.min(arguments.optFiniteDouble(0, 1), 16);

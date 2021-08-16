@@ -32,6 +32,7 @@ public class AbstractiumPedestalPeripheral extends BasePeripheral {
         return ProgressivePeripheralsConfig.enableAbstractiumPedestal;
     }
 
+    @SuppressWarnings({"deprecation", "unused"})
     @LuaFunction
     public final MethodResult setItem(@NotNull IArguments arguments) throws LuaException {
         String item = arguments.getString(0);
@@ -45,6 +46,7 @@ public class AbstractiumPedestalPeripheral extends BasePeripheral {
         return MethodResult.of(true);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final String getItem() {
         ItemStack stored = tileEntity.getStoredStack();

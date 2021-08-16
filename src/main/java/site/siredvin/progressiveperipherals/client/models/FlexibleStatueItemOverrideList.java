@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.vector.Vector3f;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.client.models.abstr.AbstractFlexibleStatueModel;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseNBTBlock;
@@ -32,12 +33,12 @@ public class FlexibleStatueItemOverrideList extends ItemOverrideList {
         }
 
         @Override
-        public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+        public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull Random rand) {
             return getQuads(state, side, rand, quadList);
         }
 
         @Override
-        public ItemCameraTransforms getTransforms() {
+        public @NotNull ItemCameraTransforms getTransforms() {
             ItemTransformVec3f transformVec3f = new ItemTransformVec3f(
                     new Vector3f(30, 225, 0),
                     new Vector3f(),
@@ -49,7 +50,7 @@ public class FlexibleStatueItemOverrideList extends ItemOverrideList {
 
 
     @Override
-    public IBakedModel resolve(IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
+    public IBakedModel resolve(@NotNull IBakedModel originalModel, ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
         CompoundNBT internalData = stack.getTagElement(BaseNBTBlock.INTERNAL_DATA_TAG);
         QuadList list = null;
         if (internalData != null && internalData.contains(FlexibleStatueTileEntity.BAKED_QUADS_TAG)) {

@@ -44,7 +44,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeriphera
     }
 
     @Override
-    public IModelData getModelData() {
+    public @NotNull IModelData getModelData() {
         return new ModelDataMap.Builder().withInitial(BAKED_QUADS, bakedQuads).build();
     }
 

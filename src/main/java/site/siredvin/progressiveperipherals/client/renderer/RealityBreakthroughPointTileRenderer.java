@@ -12,10 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTileEntity;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class RealityBreakthroughPointTileRenderer extends TileEntityRenderer<RealityBreakthroughPointTileEntity> {
     public static final ResourceLocation MAIN = new ResourceLocation(ProgressivePeripherals.MOD_ID,"textures/misc/breakthrough_point.png");
@@ -32,8 +34,9 @@ public class RealityBreakthroughPointTileRenderer extends TileEntityRenderer<Rea
 
 
         Quaternion quaternion = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
-
-        float time = (Minecraft.getInstance().level.getGameTime()+partialTicks)*5;
+        World level = Minecraft.getInstance().level;
+        Objects.requireNonNull(level);
+        float time = (level.getGameTime() + partialTicks) * 5;
         Color color = entity.getColor();
 
         stack.mulPose(quaternion);

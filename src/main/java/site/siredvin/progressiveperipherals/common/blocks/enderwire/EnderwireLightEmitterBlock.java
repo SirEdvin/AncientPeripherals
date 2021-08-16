@@ -61,14 +61,14 @@ public class EnderwireLightEmitterBlock extends BaseEnderwireHorizontalFaceBlock
     }
 
     @OnlyIn(Dist.CLIENT)
-    public float getShadeBrightness(BlockState state, IBlockReader world, BlockPos pos) {
+    public float getShadeBrightness(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos) {
         if (state.getValue(ENABLED))
             return 1.0F;
         return super.getShadeBrightness(state, world, pos);
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos, @NotNull ISelectionContext context) {
         switch (state.getValue(FACE)) {
             case FLOOR:
                 return FLOOR_SHAPE;

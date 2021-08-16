@@ -15,5 +15,6 @@ public class BlockTags {
         return HELPER.bind(ProgressivePeripherals.MOD_ID + ":" + p_199894_0_);
     }
 
+    @SuppressWarnings("EmptyMethod")
     public static void register(){}
 }

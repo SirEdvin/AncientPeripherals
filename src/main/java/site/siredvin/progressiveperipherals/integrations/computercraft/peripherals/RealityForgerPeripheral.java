@@ -45,6 +45,7 @@ public class RealityForgerPeripheral extends BasePeripheral {
         super(TYPE, tileEntity);
     }
 
+    @SuppressWarnings("SameParameterValue")
     protected RealityForgerPeripheral(String type, RealityForgerTileEntity tileEntity) {
         super(type, tileEntity);
     }

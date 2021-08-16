@@ -48,7 +48,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTED);
     }
@@ -79,14 +79,14 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+    public void onRemove(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
         if (!newState.is(this)) // new block are not this block
             NetworkElementTool.handleRemove(world, pos);
         super.onRemove(state, world, pos, newState, isMoving);
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public @NotNull ActionResultType use(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
         if (handledUse != null)
             return handledUse;
@@ -94,7 +94,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState p_180655_1_, World p_180655_2_, BlockPos p_180655_3_, Random p_180655_4_) {
+    public void animateTick(BlockState p_180655_1_, @NotNull World p_180655_2_, @NotNull BlockPos p_180655_3_, @NotNull Random p_180655_4_) {
         if (p_180655_1_.getValue(POWERED) && p_180655_4_.nextFloat() < 0.25F) {
             makeParticle(p_180655_1_, p_180655_2_, p_180655_3_, 0.5F);
         }
@@ -118,16 +118,16 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
         return EnderwireElementType.LEVER;
     }
 
-    public int getSignal(BlockState p_180656_1_, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {
+    public int getSignal(@NotNull BlockState p_180656_1_, @NotNull IBlockReader p_180656_2_, @NotNull BlockPos p_180656_3_, @NotNull Direction p_180656_4_) {
         return 0;
     }
 
-    public int getDirectSignal(BlockState p_176211_1_, IBlockReader p_176211_2_, BlockPos p_176211_3_, Direction p_176211_4_) {
+    public int getDirectSignal(@NotNull BlockState p_176211_1_, @NotNull IBlockReader p_176211_2_, @NotNull BlockPos p_176211_3_, @NotNull Direction p_176211_4_) {
         return 0;
     }
 
     @Override
-    public boolean isSignalSource(BlockState p_149744_1_) {
+    public boolean isSignalSource(@NotNull BlockState p_149744_1_) {
         return false;
     }
 }

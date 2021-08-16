@@ -26,7 +26,7 @@ public abstract class MutableNBTTileEntity<T extends IBasePeripheral> extends Op
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
+    public @NotNull CompoundNBT getUpdateTag() {
         CompoundNBT tag = super.getUpdateTag();
         tag = saveInternalData(tag);
         return tag;

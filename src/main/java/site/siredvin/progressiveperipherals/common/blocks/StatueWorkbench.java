@@ -23,13 +23,13 @@ public class StatueWorkbench extends GenericTileEntityBlock<StatueWorkbenchTileE
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTED);
     }
 
     @Override
-    public void neighborChanged(@NotNull BlockState state, World world, @NotNull BlockPos pos, @NotNull Block neighbourBlock, @NotNull BlockPos neighbourPos, boolean isMoving) {
+    public void neighborChanged(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull Block neighbourBlock, @NotNull BlockPos neighbourPos, boolean isMoving) {
         if (pos.above().equals(neighbourPos)) {
             boolean isFlexibleStatue = world.getBlockState(neighbourPos).is(Blocks.FLEXIBLE_STATUE.get());
             if (state.getValue(CONNECTED) && !isFlexibleStatue)

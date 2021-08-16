@@ -10,6 +10,7 @@ public class Features {
             "reality_breakthrough_point", () -> new RealityBreakthroughPointFeature(NoFeatureConfig.CODEC)
     );
 
+    @SuppressWarnings("EmptyMethod")
     public static void register() {
     }
 }

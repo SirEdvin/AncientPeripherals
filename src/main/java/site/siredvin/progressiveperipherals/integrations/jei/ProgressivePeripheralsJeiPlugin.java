@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.progressiveperipherals.common.setup.Items;
@@ -21,7 +22,7 @@ import java.util.Set;
 @JeiPlugin
 public class ProgressivePeripheralsJeiPlugin implements IModPlugin {
     @Override
-    public ResourceLocation getPluginUid() {
+    public @NotNull ResourceLocation getPluginUid() {
         return new ResourceLocation(ProgressivePeripherals.MOD_ID, "jei_plugin");
     }
 

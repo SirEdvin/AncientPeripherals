@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.extra.network.events;
 
 public interface IEnderwireBusEvent {
-    long getEpoch();
+    @SuppressWarnings("unused")
     boolean isValid();
 }

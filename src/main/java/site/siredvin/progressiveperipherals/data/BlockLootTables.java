@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.data;
 
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.Registration;
 
@@ -28,7 +29,7 @@ public class BlockLootTables extends net.minecraft.data.loot.BlockLootTables {
     }
 
     @Override
-    protected Iterable<Block> getKnownBlocks() {
+    protected @NotNull Iterable<Block> getKnownBlocks() {
         return Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).filter(NOT_FROM_BLACKLIST)::iterator;
     }
 }

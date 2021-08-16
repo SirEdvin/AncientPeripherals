@@ -45,9 +45,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        opStatue.ifPresent(statue -> {
-            statue.setName(name);
-        });
+        opStatue.ifPresent(statue -> statue.setName(name));
         return MethodResult.of(true);
     }
 
@@ -65,9 +63,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        opStatue.ifPresent(statue -> {
-            statue.setAuthor(author);
-        });
+        opStatue.ifPresent(statue -> statue.setAuthor(author));
         return MethodResult.of(true);
     }
 
@@ -85,9 +81,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        opStatue.ifPresent(statue -> {
-            statue.setLightLevel(lightLevel);
-        });
+        opStatue.ifPresent(statue -> statue.setLightLevel(lightLevel));
         return MethodResult.of(true);
     }
 

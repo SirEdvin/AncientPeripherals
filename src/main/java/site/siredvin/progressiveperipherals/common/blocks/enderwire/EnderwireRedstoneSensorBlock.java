@@ -25,7 +25,7 @@ public class EnderwireRedstoneSensorBlock extends BaseEnderwirePlate<EnderwireRe
     }
 
     @Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block neighbor, BlockPos neighborPos, boolean p_220069_6_) {
+    public void neighborChanged(@NotNull BlockState state, World world, @NotNull BlockPos pos, @NotNull Block neighbor, @NotNull BlockPos neighborPos, boolean p_220069_6_) {
         super.neighborChanged(state, world, pos, neighbor, neighborPos, p_220069_6_);
         Vector3i neighborDiff = pos.subtract(neighborPos);
         Direction neighborDirection = Direction.fromNormal(neighborDiff.getX(), neighborDiff.getY(), neighborDiff.getZ());

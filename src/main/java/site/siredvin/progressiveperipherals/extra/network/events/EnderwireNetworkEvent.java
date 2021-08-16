@@ -4,19 +4,10 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetworkElement;
 
 import java.lang.ref.WeakReference;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 public class EnderwireNetworkEvent implements IEnderwireBusEvent {
-    private final long epoch;
 
-    EnderwireNetworkEvent() {
-        this.epoch = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-    }
-
-    public long getEpoch() {
-        return epoch;
-    }
+    EnderwireNetworkEvent() {}
 
     public boolean isValid() {
         return true;

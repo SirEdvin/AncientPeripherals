@@ -108,6 +108,7 @@ public class Items {
             "enderwire/network_manager", () -> new PeripheralItem(() -> true, null, EnderwireNetworkManagementPocket.ID)
     );
 
+    @SuppressWarnings("EmptyMethod")
     public static void register() {
     }
 

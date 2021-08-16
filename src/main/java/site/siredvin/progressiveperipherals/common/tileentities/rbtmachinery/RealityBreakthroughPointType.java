@@ -10,6 +10,7 @@ public enum RealityBreakthroughPointType {
 
     private final @Nullable RegistryObject<Item> producibleItem;
 
+    @SuppressWarnings("SameParameterValue")
     RealityBreakthroughPointType(@Nullable RegistryObject<Item> producibleItem) {
         this.producibleItem = producibleItem;
     }

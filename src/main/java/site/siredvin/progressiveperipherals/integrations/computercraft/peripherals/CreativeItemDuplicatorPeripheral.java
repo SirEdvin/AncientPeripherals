@@ -98,6 +98,7 @@ public class CreativeItemDuplicatorPeripheral extends OperationPeripheral {
         return ProgressivePeripheralsConfig.enableCreativeItemDuplicator;
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult pushItem(@NotNull IComputerAccess access, @NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(DUPLICATE_ITEM);

@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 
 public class ConfiguredFeatures {
-    public static ConfiguredFeature<NoFeatureConfig, ?> REALITY_BREAKTHROUGH_POINT = Features.REALITY_BREAKTHROUGH_POINT
+    public static final ConfiguredFeature<NoFeatureConfig, ?> REALITY_BREAKTHROUGH_POINT = Features.REALITY_BREAKTHROUGH_POINT
             .get().configured(NoFeatureConfig.INSTANCE);
 
     public static void register() {

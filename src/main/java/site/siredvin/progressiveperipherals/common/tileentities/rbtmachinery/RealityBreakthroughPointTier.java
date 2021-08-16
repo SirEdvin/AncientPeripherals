@@ -23,6 +23,7 @@ public enum RealityBreakthroughPointTier implements IConfigHandler {
     private final Color color;
     private final IPuzzle puzzle;
 
+    @SuppressWarnings("SameParameterValue")
     RealityBreakthroughPointTier(int defaultMinPower, int defaultMaxPower, Color color, int encryptLevels, IPuzzle puzzle) {
         this.defaultMinPower = defaultMinPower;
         this.defaultMaxPower = defaultMaxPower;

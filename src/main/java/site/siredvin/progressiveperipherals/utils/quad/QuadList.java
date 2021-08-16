@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class QuadList implements Serializable {
-    public List<QuadData> list;
+    public final List<QuadData> list;
 
     public QuadList(List<QuadData> list){
         this.list = list;

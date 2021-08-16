@@ -26,6 +26,7 @@ public class CubeMachineryStructure implements IMachineryStructure {
         this.northWestLowest = MachineryStructureCorner.northWestLowest(northWestLowest);
     }
 
+    @SuppressWarnings("unused")
     public int getSize() {
         return size;
     }
@@ -104,7 +105,6 @@ public class CubeMachineryStructure implements IMachineryStructure {
     }
 
     public boolean isBelongTo(BlockPos pos) {
-        MachineryStructureCorner anotherCorner = northWestLowest.opposite(size);
         int xDiff = pos.getX() - northWestLowest.getPos().getX();
         int yDiff = pos.getY() - northWestLowest.getPos().getY();
         int zDiff = pos.getZ() - northWestLowest.getPos().getZ();

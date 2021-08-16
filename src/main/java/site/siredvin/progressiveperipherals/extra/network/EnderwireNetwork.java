@@ -45,12 +45,8 @@ public class EnderwireNetwork {
         recalculateNetworkStats();
     }
 
-    protected EnderwireNetwork(String name, NetworkType type, UUID ownerUUID) {
-        this(name, type, ownerUUID, null);
-    }
-
     protected EnderwireNetwork() {
-        this("temporary_dummy", NetworkType.PUBLIC, Util.NIL_UUID);
+        this("temporary_dummy", NetworkType.PUBLIC, Util.NIL_UUID, null);
     }
 
     public String getName() {

@@ -36,7 +36,7 @@ public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvide
         return Collections.emptyList();
     }
 
-    public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void playerWillDestroy(World world, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull PlayerEntity player) {
         TileEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof ITileEntityDataProvider) {
             if (!world.isClientSide && !player.isCreative()) {
@@ -60,8 +60,9 @@ public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvide
         super.playerWillDestroy(world, pos, state, player);
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+    public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
         super.setPlacedBy(world, pos, state, entity, stack);
         TileEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof ITileEntityDataProvider) {

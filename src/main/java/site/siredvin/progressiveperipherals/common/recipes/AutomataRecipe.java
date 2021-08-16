@@ -13,6 +13,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.common.setup.RecipeSerializers;
@@ -38,7 +39,7 @@ public class AutomataRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory inventory, World world) {
+    public boolean matches(IInventory inventory, @NotNull World world) {
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             if(!recipeItems.get(i).test(inventory.getItem(i))) {
                 return false;
@@ -72,12 +73,12 @@ public class AutomataRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
+    public @NotNull NonNullList<Ingredient> getIngredients() {
         return recipeItems;
     }
 
     @Override
-    public ItemStack assemble(IInventory inventory) {
+    public @NotNull ItemStack assemble(@NotNull IInventory inventory) {
         return result.copy();
     }
 
@@ -87,33 +88,33 @@ public class AutomataRecipe implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public @NotNull ItemStack getResultItem() {
         return result;
     }
 
     @Override
-    public ResourceLocation getId() {
+    public @NotNull ResourceLocation getId() {
         return id;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer()
+    public @NotNull IRecipeSerializer<?> getSerializer()
     {
         return RecipeSerializers.AUTOMATA_CRAFTING.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public @NotNull IRecipeType<?> getType() {
         return RecipeSerializers.AUTOMATA_CRAFTING.get().getRecipeType();
     }
 
     @Override
-    public String getGroup() {
+    public @NotNull String getGroup() {
         return GROUP;
     }
 
     @Override
-    public ItemStack getToastSymbol() {
+    public @NotNull ItemStack getToastSymbol() {
         return new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get());
     }
 

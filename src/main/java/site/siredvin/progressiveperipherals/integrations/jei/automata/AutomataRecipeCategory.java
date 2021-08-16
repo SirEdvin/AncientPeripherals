@@ -10,6 +10,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.progressiveperipherals.common.setup.Items;
@@ -29,27 +30,27 @@ public class AutomataRecipeCategory implements IRecipeCategory<AutomataRecipe> {
     }
 
     @Override
-    public ResourceLocation getUid() {
+    public @NotNull ResourceLocation getUid() {
         return UID;
     }
 
     @Override
-    public Class<? extends AutomataRecipe> getRecipeClass() {
+    public @NotNull Class<? extends AutomataRecipe> getRecipeClass() {
         return AutomataRecipe.class;
     }
 
     @Override
-    public String getTitle() {
+    public @NotNull String getTitle() {
         return new TranslationTextComponent("jei.category.progressiveperipherals.automata").getString();
     }
 
     @Override
-    public IDrawable getBackground() {
+    public @NotNull IDrawable getBackground() {
         return background;
     }
 
     @Override
-    public IDrawable getIcon() {
+    public @NotNull IDrawable getIcon() {
         return icon;
     }
 
@@ -60,7 +61,7 @@ public class AutomataRecipeCategory implements IRecipeCategory<AutomataRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, AutomataRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, @NotNull AutomataRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 
         List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);

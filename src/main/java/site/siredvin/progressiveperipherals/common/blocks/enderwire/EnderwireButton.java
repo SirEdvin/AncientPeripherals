@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
@@ -36,13 +35,13 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTED);
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, @NotNull World world, @NotNull BlockPos blockPos, @NotNull BlockState newState, boolean isMoving) {
         if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
             EnderwireNetworkProducer.firePoweredButtonEvent(false, world, blockPos, null, this.verbose);
         if (!newState.is(this)) // new block are not this block
@@ -54,12 +53,12 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
     public void setPlacedBy(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity entity, @NotNull ItemStack stack) {
         super.setPlacedBy(world, pos, state, entity, stack);
         if (!world.isClientSide && entity instanceof PlayerEntity) {
-            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, (ServerWorld) world, pos);
+            NetworkElementTool.handleNetworkSetup(Hand.OFF_HAND, (PlayerEntity) entity, world, pos);
         }
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public @NotNull ActionResultType use(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos pos, @NotNull PlayerEntity player, @NotNull Hand hand, @NotNull BlockRayTraceResult hit) {
         ActionResultType handledUse = NetworkElementTool.handleUse(state, world, pos, player, hand, hit);
         if (handledUse != null)
             return handledUse;
@@ -75,7 +74,7 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
     }
 
     @Override
-    protected SoundEvent getSound(boolean p_196369_1_) {
+    protected @NotNull SoundEvent getSound(boolean p_196369_1_) {
         return p_196369_1_ ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF;
     }
 
@@ -97,16 +96,16 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
         return EnderwireElementType.BUTTON;
     }
 
-    public int getSignal(BlockState p_180656_1_, IBlockReader p_180656_2_, BlockPos p_180656_3_, Direction p_180656_4_) {
+    public int getSignal(@NotNull BlockState p_180656_1_, @NotNull IBlockReader p_180656_2_, @NotNull BlockPos p_180656_3_, @NotNull Direction p_180656_4_) {
         return 0;
     }
 
-    public int getDirectSignal(BlockState p_176211_1_, IBlockReader p_176211_2_, BlockPos p_176211_3_, Direction p_176211_4_) {
+    public int getDirectSignal(@NotNull BlockState p_176211_1_, @NotNull IBlockReader p_176211_2_, @NotNull BlockPos p_176211_3_, @NotNull Direction p_176211_4_) {
         return 0;
     }
 
     @Override
-    public boolean isSignalSource(BlockState p_149744_1_) {
+    public boolean isSignalSource(@NotNull BlockState p_149744_1_) {
         return false;
     }
 }

@@ -78,6 +78,7 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         removeSharedPeripheral(element);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult selectNetwork(@NotNull IArguments arguments) throws LuaException {
         String name = arguments.getString(0);
@@ -94,6 +95,7 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult clearSelectedNetwork() throws LuaException {
         return withNetworks(getWorld(), owner.getOwner(), (data, player) -> {
@@ -119,6 +121,7 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         changeNetwork(GlobalNetworksData.get(world), null);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isInitialized() {
         return initialized;
     }

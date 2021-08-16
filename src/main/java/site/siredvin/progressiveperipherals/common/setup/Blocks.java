@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 
 public class Blocks {
 
+    @SuppressWarnings("EmptyMethod")
     static void register() {
     }
 

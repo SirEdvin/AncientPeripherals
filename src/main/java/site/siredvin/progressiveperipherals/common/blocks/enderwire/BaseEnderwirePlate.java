@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.utils.ShapeUtils;
 
 public abstract class BaseEnderwirePlate<T extends TileEntity> extends BaseEnderwireHorizontalFaceBlock<T> {
@@ -26,19 +27,19 @@ public abstract class BaseEnderwirePlate<T extends TileEntity> extends BaseEnder
     }
 
     @Override
-    public BlockState rotate(BlockState p_185499_1_, Rotation p_185499_2_) {
+    public @NotNull BlockState rotate(@NotNull BlockState p_185499_1_, @NotNull Rotation p_185499_2_) {
         // Rotation can cause strange problem, so avoiding it
         return p_185499_1_;
     }
 
     @Override
-    public BlockState mirror(BlockState p_185471_1_, Mirror p_185471_2_) {
+    public @NotNull BlockState mirror(@NotNull BlockState p_185471_1_, @NotNull Mirror p_185471_2_) {
         // Rotation can cause strange problem, so avoiding it
         return p_185471_1_;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos, @NotNull ISelectionContext context) {
         switch (state.getValue(FACE)) {
             case FLOOR:
                 return DOWN_ATTACHED;

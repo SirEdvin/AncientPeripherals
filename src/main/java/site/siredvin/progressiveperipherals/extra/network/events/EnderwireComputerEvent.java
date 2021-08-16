@@ -10,35 +10,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class EnderwireComputerEvent implements IEnderwireBusEvent {
-    private final @NotNull String name;
     private final @NotNull Map<String, Object> data;
     private final int reachableRange;
     private final boolean interdimensional;
     private final String originalDimension;
     private final BlockPos pos;
-    private final long epoch;
 
 
-    protected EnderwireComputerEvent(@NotNull String name, int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, @NotNull Map<String, Object> data, long epoch) {
-        this.name = name;
+    protected EnderwireComputerEvent(int reachableRange, boolean interdimensional, @NotNull String originalDimension, @NotNull BlockPos pos, @NotNull Map<String, Object> data) {
         this.reachableRange = reachableRange;
         this.interdimensional = interdimensional;
         this.originalDimension = originalDimension;
         this.pos = pos;
         this.data = data;
-        this.epoch = epoch;
-    }
-
-    public @NotNull String getName() {
-        return name;
     }
 
     public @NotNull Map<String, Object> getData() {
         return data;
-    }
-
-    public long getEpoch() {
-        return epoch;
     }
 
     public boolean IsNotMalformed(BlockPos receiverPos, String receiverDimension) {
@@ -53,7 +41,7 @@ public class EnderwireComputerEvent implements IEnderwireBusEvent {
         data.put("epoch", epoch);
         data.put("event", name);
 
-        return new EnderwireComputerEvent(name, reachableRange, interdimensional, originalDimension, pos, data, epoch);
+        return new EnderwireComputerEvent(reachableRange, interdimensional, originalDimension, pos, data);
     }
 
     @Override

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 public class TileEntityTypes {
 
+    @SuppressWarnings("EmptyMethod")
     static void register() {
     }
 
@@ -28,8 +29,9 @@ public class TileEntityTypes {
 
     @SafeVarargs
     private static <T extends TileEntity> RegistryObject<TileEntityType<T>> ofBlock(String name, Supplier<T> sup, RegistryObject<Block>... blocks) {
+        //noinspection ConstantConditions
         return Registration.TILE_ENTITIES.register(
-                name, () -> new TileEntityType<T>(
+                name, () -> new TileEntityType<>(
                         sup, Sets.newHashSet(Arrays.stream(blocks).map(RegistryObject::get).collect(Collectors.toList())), null
                 )
         );

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
@@ -19,6 +20,7 @@ import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class ControllingHelmet extends ArmorItem {
     private ITextComponent description;
 
@@ -26,19 +28,20 @@ public class ControllingHelmet extends ArmorItem {
         super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, new Properties().tab(ProgressivePeripherals.TAB).stacksTo(1));
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean isEnabled() {
         return true;
     }
 
     @Override
-    public ITextComponent getDescription() {
+    public @NotNull ITextComponent getDescription() {
         if (description == null)
             description = TranslationUtil.itemTooltip(getDescriptionId());
         return description;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable World worldIn, @NotNull List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         if (!InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_CONTROL)) {
             tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.hold_ctrl")));

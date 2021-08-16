@@ -3,6 +3,7 @@ package site.siredvin.progressiveperipherals.utils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class LimitedInventory implements IInventory {
     private final int[] usedSlots;
@@ -27,22 +28,22 @@ public class LimitedInventory implements IInventory {
     }
 
     @Override
-    public ItemStack getItem(int slot) {
+    public @NotNull ItemStack getItem(int slot) {
         return parent.getItem(usedSlots[slot]);
     }
 
     @Override
-    public ItemStack removeItem(int slot, int p_70298_2_) {
+    public @NotNull ItemStack removeItem(int slot, int p_70298_2_) {
         return parent.removeItem(usedSlots[slot], p_70298_2_);
     }
 
     @Override
-    public ItemStack removeItemNoUpdate(int slot) {
+    public @NotNull ItemStack removeItemNoUpdate(int slot) {
         return parent.removeItemNoUpdate(usedSlots[slot]);
     }
 
     @Override
-    public void setItem(int slot, ItemStack item) {
+    public void setItem(int slot, @NotNull ItemStack item) {
         parent.setItem(usedSlots[slot], item);
     }
 
@@ -67,7 +68,7 @@ public class LimitedInventory implements IInventory {
     }
 
     @Override
-    public boolean stillValid(PlayerEntity player) {
+    public boolean stillValid(@NotNull PlayerEntity player) {
         return parent.stillValid(player);
     }
 

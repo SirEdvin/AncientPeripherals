@@ -21,6 +21,7 @@ public abstract class DataDependPeripheralTurtle<T extends IBasePeripheral> exte
 
     protected static final Map<ModelResourceLocation, TransformedModel> _TRANSFORMED_MODEL_CACHE = new HashMap<>();
 
+    @SuppressWarnings("SameParameterValue")
     protected DataDependPeripheralTurtle(ResourceLocation id, String adjective, ItemStack stack) {
         super(id, TurtleUpgradeType.PERIPHERAL, adjective, stack);
     }

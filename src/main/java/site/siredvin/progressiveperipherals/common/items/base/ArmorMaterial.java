@@ -8,6 +8,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 
@@ -28,6 +29,7 @@ public enum ArmorMaterial implements IArmorMaterial {
         private final float knockbackResistance;
         private final LazyValue<Ingredient> repairIngredient;
 
+        @SuppressWarnings("SameParameterValue")
         ArmorMaterial(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
             this.name = name;
             this.durabilityMultiplier = durabilityMultiplier;
@@ -51,16 +53,16 @@ public enum ArmorMaterial implements IArmorMaterial {
             return this.enchantmentValue;
         }
 
-        public SoundEvent getEquipSound() {
+        public @NotNull SoundEvent getEquipSound() {
             return this.sound;
         }
 
-        public Ingredient getRepairIngredient() {
+        public @NotNull Ingredient getRepairIngredient() {
             return this.repairIngredient.get();
         }
 
         @OnlyIn(Dist.CLIENT)
-        public String getName() {
+        public @NotNull String getName() {
             return ProgressivePeripherals.MOD_ID + ":" + this.name;
         }
 

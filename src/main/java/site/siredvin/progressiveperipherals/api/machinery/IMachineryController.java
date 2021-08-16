@@ -74,6 +74,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         getPlugins().clear();
     }
 
+    @SuppressWarnings("unchecked")
     default void rebuildPluginsAndMethods() {
         World world = getWorld();
         IMachineryStructure structure = getStructure();
@@ -111,7 +112,10 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         setConfigured(true);
     }
 
+    @SuppressWarnings("EmptyMethod")
     void deconstructionCallback();
+
+    @SuppressWarnings("EmptyMethod")
     void detectCallback();
 
     // Advanced utility methods
@@ -140,6 +144,7 @@ public interface IMachineryController<T extends TileEntity & IMachineryControlle
         return container.getValue();
     }
 
+    @SuppressWarnings("unused")
     default NonNullList<BlockPos> detectStorages() {
         IMachineryStructure structure = getStructure();
         if (structure == null)

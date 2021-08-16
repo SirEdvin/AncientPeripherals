@@ -218,21 +218,25 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
         peripheralsRecord.values().forEach(record -> record.detach(computer));
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final Collection<String> getNamesRemote() {
         return peripheralsRecord.keySet();
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final boolean isPresentRemote(String name) {
         return peripheralsRecord.containsKey(name);
     }
 
+    @SuppressWarnings({"SameReturnValue", "unused"})
     @LuaFunction
     public final boolean isWireless() {
         return false;
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final Object[] getTypeRemote(IComputerAccess computer, String name) {
         PeripheralRecord record = peripheralsRecord.get(name);
@@ -241,6 +245,7 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
         return new Object[]{record.getPeripheral().getType()};
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final Object[] getMethodsRemote(IComputerAccess computer, String name) {
         PeripheralRecord record = peripheralsRecord.get(name);
@@ -249,6 +254,7 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
         return new Object[]{record.getMethodNames()};
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult callRemote(IComputerAccess computer, ILuaContext context, IArguments arguments) throws LuaException {
         String remoteName = arguments.getString(0);

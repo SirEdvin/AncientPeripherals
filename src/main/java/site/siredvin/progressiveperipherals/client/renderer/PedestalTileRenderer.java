@@ -20,6 +20,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackContainer;
 import site.siredvin.progressiveperipherals.common.blocks.base.BasePedestal;
@@ -98,16 +99,14 @@ public class PedestalTileRenderer<T extends TileEntity & ITileEntityStackContain
     }
 
     public Quaternion itemTimeRotation(Direction direction, float time) {
-        switch (direction) {
-            case WEST:
-                return Vector3f.XP.rotationDegrees(time % 360);
-        }
+        if (direction == Direction.WEST)
+            return Vector3f.XP.rotationDegrees(time % 360);
         return Vector3f.YP.rotationDegrees(time % 360);
     }
 
     @Override
-    public void render(T tileEntity, float partialTicks, MatrixStack matrixStackIn,
-                       IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(T tileEntity, float partialTicks, @NotNull MatrixStack matrixStackIn,
+                       @NotNull IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         ItemStack storedStack = tileEntity.getStoredStack();
         if (storedStack.isEmpty())
             return;
@@ -121,8 +120,11 @@ public class PedestalTileRenderer<T extends TileEntity & ITileEntityStackContain
         renderLabel(matrixStackIn, bufferIn, lightLevel, getLabelTranslate(blockDirection), storedStack.getDisplayName(), 0xffffff);
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void renderItem(ItemStack stack, Direction direction, MatrixStack matrixStack, IRenderTypeBuffer buffer, float partialTicks, int combinedOverlay, int lightLevel, float scale) {
-        float time = (Minecraft.getInstance().level.getGameTime() + partialTicks) * 5;
+        World level = Minecraft.getInstance().level;
+        Objects.requireNonNull(level);
+        float time = (level.getGameTime() + partialTicks) * 5;
         Vector3d translation = getItemTranslate(direction);
         Quaternion itemRotation = itemRotation(direction);
 
@@ -139,6 +141,7 @@ public class PedestalTileRenderer<T extends TileEntity & ITileEntityStackContain
         matrixStack.popPose();
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void renderLabel(MatrixStack stack, IRenderTypeBuffer buffer, int lightLevel, Vector3d translation, ITextComponent text, int color) {
 
         FontRenderer font = Minecraft.getInstance().font;

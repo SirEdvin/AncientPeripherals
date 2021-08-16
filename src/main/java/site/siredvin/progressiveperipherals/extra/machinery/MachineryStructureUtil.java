@@ -76,6 +76,6 @@ public class MachineryStructureUtil {
         TileEntity entity = world.getBlockEntity(controllerData.getLeft());
         if (!(entity instanceof IMachineryController))
             throw new IllegalArgumentException("Incorrect multiblock controller");
-        ((IMachineryController) entity).deconstructMultiBlock();
+        ((IMachineryController<?>) entity).deconstructMultiBlock();
     }
 }
