@@ -90,9 +90,4 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
             getConnectedComputers().forEach(computer -> computer.queueEvent(EnderwireComputerEventType.MALFORMED_ENDERWIRE_EVENT.name().toLowerCase()));
         }
     }
-
-    @Override
-    public void terminate() {
-        // again nothing to do here ...
-    }
 }

@@ -4,6 +4,7 @@ import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
+import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.pocket.IPocketAccess;
 import dan200.computercraft.api.turtle.ITurtleAccess;
@@ -15,12 +16,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
+import site.siredvin.progressiveperipherals.extra.network.api.EnderwireComputerEventType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireEventSubscription;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkBusHub;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
-import site.siredvin.progressiveperipherals.extra.network.events.IEnderwireEventConsumer;
+import site.siredvin.progressiveperipherals.extra.network.events.*;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkAccessingTool;
 
 import java.util.Objects;
@@ -29,7 +28,8 @@ import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPe
 
 public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeripheral implements IEnderwireEventConsumer<EnderwireNetworkEvent> {
 
-    private @Nullable EnderwireEventSubscription<EnderwireNetworkEvent> subscription;
+    private @Nullable EnderwireEventSubscription<EnderwireNetworkEvent> networkSubscription;
+    private @Nullable EnderwireEventSubscription<EnderwireComputerEvent> computerSubscription;
     private boolean initialized = false;
 
     public EnderwireUpgradeModemPeripheral(@NotNull IPocketAccess pocket) {
@@ -40,17 +40,31 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         super(turtle, side);
     }
 
+    @Override
+    public void detach(@NotNull IComputerAccess computer) {
+        super.detach(computer);
+        GlobalNetworksData data = GlobalNetworksData.get((ServerWorld) getWorld());
+        EnderwireNetwork network = NetworkAccessingTool.getSelectedNetwork(data, owner.getDataStorage());
+        if (network != null)
+            removeFromOldNetwork(network);
+    }
+
     protected void removeFromOldNetwork(@NotNull EnderwireNetwork oldNetwork) {
         oldNetwork.traverseElements(this::detachPeripheral);
-        if (subscription != null) {
-            EnderwireNetworkBusHub.unsubscribeFromNetworkEvents(oldNetwork.getName(), subscription);
-            subscription = null;
+        if (networkSubscription != null) {
+            EnderwireNetworkBusHub.unsubscribeFromNetworkEvents(oldNetwork.getName(), networkSubscription);
+            networkSubscription = null;
+        }
+        if (computerSubscription != null) {
+            EnderwireNetworkBusHub.unsubscribeFromComputerEvents(oldNetwork.getName(), computerSubscription);
+            computerSubscription = null;
         }
     }
 
     protected void attachToNewNetwork(@NotNull EnderwireNetwork newNetwork) {
         newNetwork.traverseElements(this::attachPeripheral);
-        subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork.getName(), this);
+        networkSubscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork.getName(), this);
+        computerSubscription = EnderwireNetworkBusHub.subscribeToComputerEvents(newNetwork.getName(), this::consume);
     }
 
     protected void changeNetwork(GlobalNetworksData data, @Nullable EnderwireNetwork newNetwork) {
@@ -112,6 +126,7 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
 
     @Override
     public void consume(EnderwireNetworkEvent event) {
+        // Ignoring any check here because network should be all accessible
         ServerWorld world = (ServerWorld) getWorld();
         if (event instanceof EnderwireNetworkEvent.PeripheralAttached) {
             attachPeripheral(GlobalNetworksData.get(world), ((EnderwireNetworkEvent.PeripheralAttached) event).getElement(), ((EnderwireNetworkEvent.PeripheralAttached) event).getPeripheral());
@@ -120,10 +135,20 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         }
     }
 
+    public void consume(EnderwireComputerEvent event) {
+        // Ignoring any check here because network should be all accessible
+        getConnectedComputers().forEach(
+                computer -> computer.queueEvent(EnderwireComputerEventType.ENDERWIRE_COMPUTER_EVENT.name().toLowerCase(),
+                        event.getData())
+        );
+    }
+
     @Override
     public void terminate() {
         ServerWorld world = (ServerWorld) getWorld();
-        subscription = null; // to avoid subscription cleanup
+        // to avoid subscription cleanup
+        networkSubscription = null;
+        computerSubscription = null;
         changeNetwork(GlobalNetworksData.get(world), null);
     }
 

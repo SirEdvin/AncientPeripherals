@@ -22,6 +22,8 @@ public class TurtleEnderwireElement implements IEnderwireElement {
     private final @NotNull ITurtleAccess turtle;
     private final @NotNull TurtleSide side;
     private @Nullable String elementName;
+    private boolean isPeripheralShared = false;
+    private @Nullable IPeripheral cachedPeripheral;
 
     public TurtleEnderwireElement(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         this.turtle = turtle;
@@ -75,9 +77,21 @@ public class TurtleEnderwireElement implements IEnderwireElement {
         }};
     }
 
+    public void setPeripheralShared(boolean peripheralShared) {
+        isPeripheralShared = peripheralShared;
+    }
+
+    public boolean isPeripheralShared() {
+        return isPeripheralShared;
+    }
+
     @Override
     public @Nullable IPeripheral getSharedPeripheral() {
-        return Peripherals.getPeripheral(getWorld(), getPosition(), null, peripheral -> {;});
+        if (!isPeripheralShared)
+            return null;
+        if (cachedPeripheral == null)
+            cachedPeripheral = Peripherals.getPeripheral(getWorld(), getPosition(), null, peripheral -> {});
+        return cachedPeripheral;
     }
 
     @Override

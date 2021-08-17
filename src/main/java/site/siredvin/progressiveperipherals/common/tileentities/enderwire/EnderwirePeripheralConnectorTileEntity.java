@@ -4,7 +4,6 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
@@ -160,23 +159,15 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     @Override
     public void consume(EnderwireNetworkEvent event) {
         if (event instanceof EnderwireNetworkEvent.PeripheralAttached) {
-            ProgressivePeripherals.LOGGER.warn(String.format("Processing added event from %s", ((EnderwireNetworkEvent.PeripheralAttached) event).getElement().getName()));
             attachPeripheral(((EnderwireNetworkEvent.PeripheralAttached) event).getElement(), ((EnderwireNetworkEvent.PeripheralAttached) event).getPeripheral());
         } else if (event instanceof EnderwireNetworkEvent.PeripheralDetached) {
-            ProgressivePeripherals.LOGGER.warn(String.format("Processing removed event from %s", ((EnderwireNetworkEvent.PeripheralDetached) event).getElement().getName()));
             detachPeripheral(((EnderwireNetworkEvent.PeripheralDetached) event).getElement());
         }
     }
 
-    @Override
-    public void terminate() {
-        // just do nothing, because network unattachement will be already handled by IEnderwireElement logic
-    }
-
     public void subscribeToEvents(@NotNull String newNetwork) {
-        if (level != null && !level.isClientSide && subscription == null) {
+        if (level != null && !level.isClientSide && subscription == null)
             subscription = EnderwireNetworkBusHub.subscribeToNetworkEvents(newNetwork, this);
-        }
     }
 
     public void subscribeToEvents() {
@@ -187,6 +178,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     public void unsubscribeFromEvents(@NotNull String oldNetwork) {
         if (level != null && !level.isClientSide && subscription != null) {
             EnderwireNetworkBusHub.unsubscribeFromNetworkEvents(oldNetwork, subscription);
+            subscription = null;
         }
     }
 }

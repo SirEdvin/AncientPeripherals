@@ -51,8 +51,11 @@ public class EnderwirePeripheralConnectedTurtle extends DataDependPeripheralTurt
     public void update(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         IPeripheral peripheral = turtle.getPeripheral(side);
         if (peripheral instanceof EnderwireTurtleUpgradeModemPeripheral) {
-            if (!((EnderwireTurtleUpgradeModemPeripheral) peripheral).isInitialized())
-                ((EnderwireTurtleUpgradeModemPeripheral) peripheral).initialize();
+            EnderwireTurtleUpgradeModemPeripheral turtlePeripheral = (EnderwireTurtleUpgradeModemPeripheral) peripheral;
+            if (!turtlePeripheral.isInitialized())
+                turtlePeripheral.initialize();
+            if (turtlePeripheral.isExposed())
+                turtlePeripheral.consumeTickFuel();
         }
     }
 }

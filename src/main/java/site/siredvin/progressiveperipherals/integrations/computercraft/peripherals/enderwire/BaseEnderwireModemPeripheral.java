@@ -13,8 +13,9 @@ import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.core.apis.PeripheralAPI;
 import dan200.computercraft.core.asm.PeripheralMethod;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
+import de.srendi.advancedperipherals.common.addons.computercraft.operations.FuelConsumingPeripheral;
+import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
 import net.minecraft.tileentity.TileEntity;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
@@ -26,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class BaseEnderwireModemPeripheral extends BasePeripheral {
+public class BaseEnderwireModemPeripheral extends FuelConsumingPeripheral {
 
     public static final String TYPE = "modem";
 
@@ -216,6 +217,26 @@ public class BaseEnderwireModemPeripheral extends BasePeripheral {
     public void detach(@NotNull IComputerAccess computer) {
         super.detach(computer);
         peripheralsRecord.values().forEach(record -> record.detach(computer));
+    }
+
+    @Override
+    public List<IPeripheralOperation<?>> possibleOperations() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    protected int getMaxFuelConsumptionRate() {
+        return 1;
+    }
+
+    @Override
+    protected int _getFuelConsumptionRate() {
+        return 1;
+    }
+
+    @Override
+    protected void _setFuelConsumptionRate(int i) {
+
     }
 
     @SuppressWarnings("unused")
