@@ -15,6 +15,14 @@
       "recipe": "progressiveperipherals:enderwire/network_manager"
     },
     {
+      "type": "text",
+      "text": "Pocket computer with this update also should be used as main network configuration tool.$(p)When you click on enderwire block with pocket computer in main hand, it will set selected network (if network is not select, it will disconnect block from network)."
+    },
+    {
+      "type": "text",
+      "text": "If you click with empty hand on enderwire block when you hold pocket computer with this update in off hand you can see network infomation.$(p)Also, while you hold pocket computer in your off hand any placed enderwire block will be connected to selected network automatically."
+    },
+    {
       "type": "progressiveperipherals:lua_function_left_page",
       "functionName": "createPublicNetwork",
       "description": "Function for creating public enderwire network$(p)$(l)Note$(): anyone can access this network, if they want to"

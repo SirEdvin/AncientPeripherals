@@ -40,7 +40,7 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult inspectNetwork() throws LuaException {
         return withNetworks(getWorld(), data -> {
             String attachedNetwork = tileEntity.getAttachedNetwork();
@@ -94,32 +94,6 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
-    public final MethodResult isElementLoaded(String name) throws LuaException  {
-        World world = getWorld();
-        return withNetwork(world, tileEntity, network -> {
-            IEnderwireNetworkElement element = network.getElement(name);
-            if (element == null)
-                return MethodResult.of(null, "Cannot find element");
-            return MethodResult.of(world.isLoaded(element.getPos()));
-        });
-    }
-
-    @SuppressWarnings("unused")
-    @LuaFunction
-    public final MethodResult isElementsInReach(String firstName, String secondName) throws LuaException {
-        return withNetwork(getWorld(), tileEntity, network -> {
-            IEnderwireNetworkElement first = network.getElement(firstName);
-            IEnderwireNetworkElement second = network.getElement(secondName);
-            if (first == null)
-                return MethodResult.of(null, String.format("Cannot find element %s", firstName));
-            if (second == null)
-                return MethodResult.of(null, String.format("Cannot find element %s", secondName));
-            return MethodResult.of(network.canReach(first, second));
-        });
-    }
-
-    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult configureElements(Map<?, ?> configurations) throws LuaException {
         World world = getWorld();
@@ -146,6 +120,32 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
                     return configureResult;
             }
             return MethodResult.of(true);
+        });
+    }
+
+    @SuppressWarnings("unused")
+    @LuaFunction(mainThread = true)
+    public final MethodResult isElementLoaded(String name) throws LuaException  {
+        World world = getWorld();
+        return withNetwork(world, tileEntity, network -> {
+            IEnderwireNetworkElement element = network.getElement(name);
+            if (element == null)
+                return MethodResult.of(null, "Cannot find element");
+            return MethodResult.of(world.isLoaded(element.getPos()));
+        });
+    }
+
+    @SuppressWarnings("unused")
+    @LuaFunction(mainThread = true)
+    public final MethodResult isElementsInReach(String firstName, String secondName) throws LuaException {
+        return withNetwork(getWorld(), tileEntity, network -> {
+            IEnderwireNetworkElement first = network.getElement(firstName);
+            IEnderwireNetworkElement second = network.getElement(secondName);
+            if (first == null)
+                return MethodResult.of(null, String.format("Cannot find element %s", firstName));
+            if (second == null)
+                return MethodResult.of(null, String.format("Cannot find element %s", secondName));
+            return MethodResult.of(network.canReach(first, second));
         });
     }
  }

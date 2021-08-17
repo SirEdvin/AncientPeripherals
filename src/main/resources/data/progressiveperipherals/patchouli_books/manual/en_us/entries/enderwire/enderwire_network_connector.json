@@ -13,6 +13,103 @@
     {
       "type": "progressiveperipherals:automata",
       "recipe": "progressiveperipherals:enderwire/network_connector"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getAttachedNetworkName",
+      "description": "Getter method for attached network name"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "Returns attached network name or nil if element is not attached to any network"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "inspectNetwork",
+      "description": "Method for inspecting all networks element"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{table} | nil", "Array of network element representation or nil on error"],
+        ["nil | string", "nil or error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getNetworkElementState",
+      "description": "Method for inspecting exact element state"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "target element name"]
+      ],
+      "returns": [
+        ["table | nil", "Table with element state or nil on error"],
+        ["nil | string", "nil or error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "configureElement",
+      "description": "Method for configuring enderwire element, changing it state (like turn off/on), etc.",
+      "throw": [
+        "Incorrect configuration table"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "element name"],
+        ["table", "element configuration, for each element type it is quite different, please, read the documentation"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "configureElements",
+      "description": "Method for batch configuring enderwire element, changing it state (like turn off/on), etc. Should be used in case when you need to configure several items at once to avoid delay",
+      "throw": [
+        "Incorrect configuration table"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+      ],
+      "returns": [
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "",
+      "description": "",
+      "throw": [],
+      "operationGroup": ""
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+      ],
+      "returns": [
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "",
+      "description": "",
+      "throw": [],
+      "operationGroup": ""
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+      ],
+      "returns": [
+      ]
     }
   ]
 }
