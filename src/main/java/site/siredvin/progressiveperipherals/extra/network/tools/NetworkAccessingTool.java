@@ -1,6 +1,7 @@
 package site.siredvin.progressiveperipherals.extra.network.tools;
 
 import dan200.computercraft.api.lua.MethodResult;
+import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralOwner;
 import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,20 +30,33 @@ public class NetworkAccessingTool {
         return Pair.onlyLeft(MethodResult.of(null, "Cannot get access to network"));
     }
 
-    public static void writeSelectedNetwork(CompoundNBT tag, @Nullable EnderwireNetwork network) {
+    public static void writeSelectedNetwork(IPeripheralOwner owner, @Nullable EnderwireNetwork network) {
+        CompoundNBT tag = owner.getDataStorage();
         if (network == null) {
             tag.remove(SELECTED_NETWORK_TAG);
         } else {
             tag.putString(SELECTED_NETWORK_TAG, network.getName());
         }
+        owner.markDataStorageDirty();
     }
 
-    public static void writeSelectedNetwork(CompoundNBT tag, @Nullable String name) {
+    public static void writeSelectedNetwork(IPeripheralOwner owner, @Nullable String name) {
+        CompoundNBT tag = owner.getDataStorage();
         if (name == null) {
             tag.remove(SELECTED_NETWORK_TAG);
         } else {
             tag.putString(SELECTED_NETWORK_TAG, name);
         }
+        owner.markDataStorageDirty();
+    }
+
+    public static void writeSelectedNetwork(CompoundNBT tag, @Nullable String name, Runnable modificationCallback) {
+        if (name == null) {
+            tag.remove(SELECTED_NETWORK_TAG);
+        } else {
+            tag.putString(SELECTED_NETWORK_TAG, name);
+        }
+        modificationCallback.run();
     }
 
     public static @Nullable EnderwireNetwork getSelectedNetwork(GlobalNetworksData data, CompoundNBT tag) {

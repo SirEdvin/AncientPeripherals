@@ -70,7 +70,7 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
     protected void changeNetwork(GlobalNetworksData data, @Nullable EnderwireNetwork newNetwork) {
         CompoundNBT tag = owner.getDataStorage();
         EnderwireNetwork oldNetwork = NetworkAccessingTool.getSelectedNetwork(data, tag);
-        NetworkAccessingTool.writeSelectedNetwork(tag, newNetwork);
+        NetworkAccessingTool.writeSelectedNetwork(owner, newNetwork);
         if (oldNetwork != null)
             removeFromOldNetwork(oldNetwork);
         if (newNetwork != null)
@@ -124,6 +124,11 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
         });
     }
 
+    @LuaFunction
+    public final String getSelectedNetwork() {
+        return NetworkAccessingTool.getSelectedNetworkName(owner.getDataStorage());
+    }
+
     @Override
     public void consume(EnderwireNetworkEvent event) {
         // Ignoring any check here because network should be all accessible
@@ -132,6 +137,10 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
             attachPeripheral(GlobalNetworksData.get(world), ((EnderwireNetworkEvent.PeripheralAttached) event).getElement(), ((EnderwireNetworkEvent.PeripheralAttached) event).getPeripheral());
         } else if (event instanceof EnderwireNetworkEvent.PeripheralDetached) {
             detachPeripheral(((EnderwireNetworkEvent.PeripheralDetached) event).getElement());
+        } else if (event instanceof EnderwireNetworkEvent.NetworkStatsChanged) {
+            if (!((EnderwireNetworkEvent.NetworkStatsChanged) event).getNewStats().isInterdimensional())
+                // This is farewell to network
+                changeNetwork(GlobalNetworksData.get((ServerWorld) getWorld()), null);
         }
     }
 
@@ -168,7 +177,7 @@ public class EnderwireUpgradeModemPeripheral extends BaseEnderwireModemPeriphera
             } else {
                 String networkName = NetworkAccessingTool.getSelectedNetworkName(tag);
                 if (networkName != null)
-                    NetworkAccessingTool.writeSelectedNetwork(tag, (String) null);
+                    NetworkAccessingTool.writeSelectedNetwork(owner, (String) null);
             }
             initialized = true;
         }

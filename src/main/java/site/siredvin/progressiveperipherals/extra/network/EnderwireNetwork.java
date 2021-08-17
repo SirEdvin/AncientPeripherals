@@ -35,8 +35,7 @@ public class EnderwireNetwork {
     private @Nullable String salt;
     private @Nullable Map<String, IEnderwireNetworkElement> elements;
 
-    private int reachableRange;
-    private boolean interdimensional;
+    private @NotNull EnderwireNetworkStats stats = new EnderwireNetworkStats(false, ProgressivePeripheralsConfig.enderwireNetworkRangeStep);
 
     protected EnderwireNetwork(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
         this.type = type;
@@ -64,11 +63,11 @@ public class EnderwireNetwork {
     }
 
     public int getReachableRange() {
-        return reachableRange;
+        return stats.getReachableRange();
     }
 
     public boolean isInterdimensional() {
-        return interdimensional;
+        return stats.isInterdimensional();
     }
 
     public boolean canAcceptNewElements() {
@@ -79,28 +78,24 @@ public class EnderwireNetwork {
     }
 
     public boolean canReach(IEnderwireNetworkElement first, IEnderwireNetworkElement second) {
-        return canReach(reachableRange, interdimensional, first.getPos(), second.getPos(), first.getDimension(), second.getDimension());
+        return canReach(stats.getReachableRange(), stats.isInterdimensional(), first.getPos(), second.getPos(), first.getDimension(), second.getDimension());
     }
 
     public boolean canReach(IEnderwireNetworkElement element, BlockPos target, String targetDimension) {
-        return canReach(reachableRange, interdimensional, element.getPos(), target, element.getDimension(), targetDimension);
+        return canReach(stats.getReachableRange(), stats.isInterdimensional(), element.getPos(), target, element.getDimension(), targetDimension);
     }
 
     protected void recalculateNetworkStats() {
-        reachableRange = ProgressivePeripheralsConfig.enderwireNetworkRangeStep;
-        interdimensional = false;
+        EnderwireNetworkStats oldStats = stats;
+        EnderwireNetworkStats.Builder builder = EnderwireNetworkStats.build();
         if (elements != null) {
             elements.values().forEach(networkElement -> {
-                switch (networkElement.getNetworkAmplifier()) {
-                    case EXTEND_RANGE:
-                        reachableRange += ProgressivePeripheralsConfig.enderwireNetworkRangeStep;
-                        break;
-                    case MAKE_INTERDIMENSIONAL:
-                        interdimensional = true;
-                        break;
-                }
+                builder.consumeAmplifier(networkElement.getNetworkAmplifier());
             });
         }
+        stats = builder.finish();
+        if (!stats.equals(oldStats))
+            EnderwireNetworkBusHub.fireNetworkEvent(name, new EnderwireNetworkEvent.NetworkStatsChanged(this, oldStats, stats));
     }
 
     public boolean testPassword(@Nullable String password) {

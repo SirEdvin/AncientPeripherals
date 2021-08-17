@@ -52,7 +52,7 @@ public class TurtleEnderwireElement implements IEnderwireElement {
 
     @Override
     public void setAttachedNetwork(@Nullable String name) {
-        NetworkAccessingTool.writeSelectedNetwork(getDataStorage(), name);
+        NetworkAccessingTool.writeSelectedNetwork(getDataStorage(), name, () -> turtle.updateUpgradeNBTData(side));
     }
 
     @Override

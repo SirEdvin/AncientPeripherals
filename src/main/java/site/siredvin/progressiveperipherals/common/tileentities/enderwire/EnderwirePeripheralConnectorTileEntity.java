@@ -77,7 +77,6 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     public void attachPeripheral(@NotNull IEnderwireNetworkElement element, @Nullable IPeripheral peripheral) {
         if (level != null && !level.isClientSide && peripheral != null && attachedNetwork != null) {
             ensurePeripheralCreated();
-            Objects.requireNonNull(level);
             Objects.requireNonNull(this.peripheral);
             GlobalNetworksData networks = GlobalNetworksData.get((ServerWorld) level);
             EnderwireNetwork network = networks.getNetwork(attachedNetwork);
@@ -99,9 +98,25 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     public void detachPeripheral(@NotNull IEnderwireNetworkElement element) {
         if (level != null && !level.isClientSide) {
             ensurePeripheralCreated();
-            Objects.requireNonNull(level);
             Objects.requireNonNull(this.peripheral);
             this.peripheral.removeSharedPeripheral(element);
+        }
+    }
+
+    public void revalidatePeripheral(@NotNull IEnderwireNetworkElement element, @NotNull EnderwireNetwork network) {
+        if (level != null && !level.isClientSide && element.getCategory().canSharePeripheral()) {
+            ensurePeripheralCreated();
+            Objects.requireNonNull(this.peripheral);
+            if (network.canReach(element, getPosition(), level.dimension().location().toString())) {
+                IEnderwireElement realWorldElement = element.getElement(getWorld());
+                if (realWorldElement != null) {
+                    IPeripheral peripheral = realWorldElement.getSharedPeripheral();
+                    if (peripheral != null)
+                        this.peripheral.addSharedPeripheral(network.getName(), element, peripheral);
+                }
+            } else {
+                this.peripheral.removeSharedPeripheral(element);
+            }
         }
     }
 
@@ -162,6 +177,10 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
             attachPeripheral(((EnderwireNetworkEvent.PeripheralAttached) event).getElement(), ((EnderwireNetworkEvent.PeripheralAttached) event).getPeripheral());
         } else if (event instanceof EnderwireNetworkEvent.PeripheralDetached) {
             detachPeripheral(((EnderwireNetworkEvent.PeripheralDetached) event).getElement());
+        } else if (event instanceof EnderwireNetworkEvent.NetworkStatsChanged) {
+            // In any case invalidation are very relevant
+            EnderwireNetwork network = ((EnderwireNetworkEvent.NetworkStatsChanged) event).getNetwork();
+            network.traverseElements(element -> revalidatePeripheral(element, network));
         }
     }
 

@@ -85,7 +85,7 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
             if (removeNetworkResult) {
                 EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(data, owner.getDataStorage());
                 if (selectedNetwork != null && selectedNetwork.getName().equals(name))
-                    NetworkAccessingTool.writeSelectedNetwork(owner.getDataStorage(), (String) null);
+                    NetworkAccessingTool.writeSelectedNetwork(owner, (String) null);
             }
             return MethodResult.of(removeNetworkResult);
         });
@@ -100,7 +100,7 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
             Pair<MethodResult, EnderwireNetwork> accessResult = NetworkAccessingTool.accessNetwork(data, name, player, password);
             if (accessResult.leftPresent())
                 return accessResult.getLeft();
-            NetworkAccessingTool.writeSelectedNetwork(owner.getDataStorage(), accessResult.getRight());
+            NetworkAccessingTool.writeSelectedNetwork(owner, accessResult.getRight());
             return MethodResult.of(true);
         });
     }
@@ -108,7 +108,7 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
     @SuppressWarnings({"SameReturnValue", "unused"})
     @LuaFunction(mainThread = true)
     public final boolean clearSelectedNetwork() {
-        NetworkAccessingTool.writeSelectedNetwork(owner.getDataStorage(), (String) null);
+        NetworkAccessingTool.writeSelectedNetwork(owner, (String) null);
         return true;
     }
 
