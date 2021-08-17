@@ -3,7 +3,6 @@ package site.siredvin.progressiveperipherals.extra.network;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import dan200.computercraft.shared.Peripherals;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -13,6 +12,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementTy
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkAccessingTool;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireTurtlePeripheral;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,11 +23,12 @@ public class TurtleEnderwireElement implements IEnderwireElement {
     private final @NotNull TurtleSide side;
     private @Nullable String elementName;
     private boolean isPeripheralShared = false;
-    private @Nullable IPeripheral cachedPeripheral;
+    private final @NotNull IPeripheral peripheral;
 
     public TurtleEnderwireElement(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         this.turtle = turtle;
         this.side = side;
+        peripheral = new EnderwireTurtlePeripheral(turtle);
     }
 
     public CompoundNBT getDataStorage() {
@@ -89,9 +90,7 @@ public class TurtleEnderwireElement implements IEnderwireElement {
     public @Nullable IPeripheral getSharedPeripheral() {
         if (!isPeripheralShared)
             return null;
-        if (cachedPeripheral == null)
-            cachedPeripheral = Peripherals.getPeripheral(getWorld(), getPosition(), null, peripheral -> {});
-        return cachedPeripheral;
+        return peripheral;
     }
 
     @Override
