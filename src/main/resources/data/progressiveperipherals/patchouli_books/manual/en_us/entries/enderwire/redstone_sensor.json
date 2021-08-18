@@ -1,0 +1,23 @@
+{
+  "name": "Redstone sensor",
+  "icon": "progressiveperipherals:enderwire/redstone_sensor",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Redstone sensor",
+      "item": "progressiveperipherals:enderwire/redstone_sensor",
+      "text": "Nice redstone sensor, that can be attached to floor, walls or even celling! Observe only four sides around and send event when any of input changes.$(p)$(o)Not configurable, returns all 4 input power level in state data$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/redstone_sensor"
+    },
+    {
+      "type": "text",
+      "title": "Event example",
+      "text": "{$(br)  $(#BA2121)\"enderwire_computer_event\"$(),$(br)  {$(br)    datetime $(#666666)=$() $(#BA2121)\"2020-08-18T10:55:51.538\"$(),$(br)    element $(#666666)=$() $(#BA2121)\"redstoneSensor_1\"$(),$(br)    epoch $(#666666)=$() $(#666666)1629284151$(),$(br)    event $(#666666)=$() $(#BA2121)\"redstone_sensor_changed\"$(),$(br)    side $(#666666)=$() $(#BA2121)\"left\"$(),$(br)    power $(#666666)=$() $(#666666)15$()$(br)  }$(br)}$(br)"
+    }
+  ]
+}
