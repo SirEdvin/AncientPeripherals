@@ -81,30 +81,6 @@ public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntit
     }
 
     @Override
-    public void onChunkUnloaded() {
-        detachCurrentPeripheral();
-        super.onChunkUnloaded();
-    }
-
-    @Override
-    public void setRemoved() {
-        detachCurrentPeripheral();
-        super.setRemoved();
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        SingleTickScheduler.schedule(this);
-    }
-
-    @Override
-    public void clearCache() {
-        super.clearCache();
-        SingleTickScheduler.now(this);
-    }
-
-    @Override
     public void onNeighbourChange(@Nonnull BlockPos neighbour) {
         onNeighbourTileEntityChange(neighbour);
     }

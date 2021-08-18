@@ -77,6 +77,30 @@ public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireT
     }
 
     @Override
+    public void onLoad() {
+        super.onLoad();
+        SingleTickScheduler.schedule(this);
+    }
+
+    @Override
+    public void clearCache() {
+        super.clearCache();
+        SingleTickScheduler.now(this);
+    }
+
+    @Override
+    public void onChunkUnloaded() {
+        super.onChunkUnloaded();
+        destroy();
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        destroy();
+    }
+
+    @Override
     public void blockTick() {
         if (requireNetworkCheck) {
             if (level != null && !level.isClientSide && attachedNetwork != null) {

@@ -41,6 +41,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
         }
     }
 
+    @Override
     public void destroy() {
         detachPeripherals();
     }
@@ -48,30 +49,6 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
     @Override
     public void placed() {
         SingleTickScheduler.schedule(this);
-    }
-
-    @Override
-    public void onChunkUnloaded() {
-        super.onChunkUnloaded();
-        detachPeripherals();
-    }
-
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        detachPeripherals();
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        SingleTickScheduler.schedule(this);
-    }
-
-    @Override
-    public void clearCache() {
-        super.clearCache();
-        SingleTickScheduler.now(this);
     }
 
     public void attachPeripheral(@NotNull IEnderwireNetworkElement element, @Nullable IPeripheral peripheral) {

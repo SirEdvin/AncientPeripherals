@@ -41,6 +41,13 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
     }
 
     @Override
+    public void destroy() {
+        super.destroy();
+        if (attachedNetwork != null)
+            unsubscribeFromEvents(attachedNetwork);
+    }
+
+    @Override
     public EnderwireNetworkConnectorTileEntity getThis() {
         return this;
     }
@@ -79,6 +86,7 @@ public class EnderwireNetworkConnectorTileEntity extends BaseEnderwireTileEntity
     public void unsubscribeFromEvents(@NotNull String oldNetwork) {
         if (level != null && !level.isClientSide && subscription != null) {
             EnderwireNetworkBusHub.unsubscribeFromComputerEvents(oldNetwork, subscription);
+            subscription = null;
         }
     }
 

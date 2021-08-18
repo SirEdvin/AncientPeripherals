@@ -27,14 +27,16 @@ public class EnderwireRedstoneSensorBlock extends BaseEnderwirePlate<EnderwireRe
     @Override
     public void neighborChanged(@NotNull BlockState state, World world, @NotNull BlockPos pos, @NotNull Block neighbor, @NotNull BlockPos neighborPos, boolean p_220069_6_) {
         super.neighborChanged(state, world, pos, neighbor, neighborPos, p_220069_6_);
-        Vector3i neighborDiff = pos.subtract(neighborPos);
-        Direction neighborDirection = Direction.fromNormal(neighborDiff.getX(), neighborDiff.getY(), neighborDiff.getZ());
-        Objects.requireNonNull(neighborDirection);
-        BlockState neighborState = world.getBlockState(neighborPos);
-        EnderwireNetworkProducer.fireRedstoneSensorEvent(
-                neighborState.getSignal(world, neighborPos, neighborDirection.getOpposite()),
-                neighborDirection,
-                world, pos
-        );
+        if (!world.isClientSide) {
+            Vector3i neighborDiff = pos.subtract(neighborPos);
+            Direction neighborDirection = Direction.fromNormal(neighborDiff.getX(), neighborDiff.getY(), neighborDiff.getZ());
+            Objects.requireNonNull(neighborDirection);
+            BlockState neighborState = world.getBlockState(neighborPos);
+            EnderwireNetworkProducer.fireRedstoneSensorEvent(
+                    neighborState.getSignal(world, neighborPos, neighborDirection.getOpposite()),
+                    neighborDirection,
+                    world, pos
+            );
+        }
     }
 }
