@@ -8,11 +8,29 @@
       "type": "spotlight",
       "title": "Network connector",
       "item": "progressiveperipherals:enderwire/network_connector",
-      "text": "Powerful computer peripheral, that will serve like a bridge between computers and your enderwire network. When attached to computer, this peripheral will populate events from configured network and allow to inspect network elements and even configure then!$(p)$(l)Note:$() By default, enderwire network has limited connection range between elements, take this to account"
+      "text": "Powerful computer peripheral, that will serve like a bridge between computers and your enderwire network. When attached to computer, this peripheral will populate events from configured network and allow to inspect network elements and even configure then!"
     },
     {
       "type": "progressiveperipherals:automata",
       "recipe": "progressiveperipherals:enderwire/network_connector"
+    },
+    {
+      "type": "text",
+      "title": "Enderwire events",
+      "text": "When network connector connected to network it will populate all event inside network to all connected computers. Event will always have type $(o)enderwire_computer_event$()."
+    },
+    {
+      "type": "text",
+      "text": "{$(br)  $(#BA2121)\"enderwire_computer_event\"$(),$(br)  {$(br)    datetime $(#666666)=$() $(#BA2121)\"2020-08-18T10:55:51.538\"$(),$(br)    element $(#666666)=$() $(#BA2121)\"lever_1\"$(),$(br)    epoch $(#666666)=$() $(#666666)1629284151$(),$(br)    event $(#666666)=$() $(#BA2121)\"lever_enabled\"$()$(br)  }$(br)}$(p)$(p)$(o)Example of event$()"
+    },
+    {
+      "type": "text",
+      "title": "Network range",
+      "text": "By default, enderwire network has limited connection range between elements, take this to account.$(p)If you try to configure element that are not in range of network connector, you will receive error."
+    },
+    {
+      "type": "text",
+      "text": "If you receive event from element that are not in range of network connector you will receive $(o)malformed_enderwire_event$() without any data"
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
@@ -79,36 +97,36 @@
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
+        ["table", "Table where key is element name and value is element configuration, for each element type it is quite different, please, read the documentation"]
       ],
-      "returns": [
-      ]
+      "operationReturn": true
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "",
-      "description": "",
-      "throw": [],
-      "operationGroup": ""
+      "functionName": "isElementLoaded",
+      "description": "Allows to check is element loaded in world"
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
+        ["string", "element name"]
       ],
-      "returns": [
-      ]
+      "operationReturn": true
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "",
-      "description": "",
-      "throw": [],
-      "operationGroup": ""
+      "functionName": "isElementsInReach",
+      "description": "Allows to check if elements can reach one another"
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
+        ["string", "first element name"],
+        ["string", "second element name"]
       ],
       "returns": [
+        ["boolean | nil", "Is reachable or nil in case of error"],
+        ["nil | string", "nil or string with error"]
       ]
     }
   ]

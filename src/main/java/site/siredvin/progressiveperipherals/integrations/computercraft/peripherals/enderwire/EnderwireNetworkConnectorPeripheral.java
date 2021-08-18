@@ -86,7 +86,9 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
                 return MethodResult.of(null, "Cannot find element");
             if (!world.isLoaded(element.getPos()))
                 return MethodResult.of(null, "Element is not loaded ...");
-            IEnderwireElement elementTE = (IEnderwireElement) world.getBlockEntity(element.getPos());
+            if (!network.canReach(element, owner.getPos(), world.dimension().location().toString()))
+                return MethodResult.of(null, "Cannot reach element");
+            IEnderwireElement elementTE = element.getElement(world);
             if (elementTE == null)
                 return MethodResult.of(null, "This shouldn't happen, but there is no tile entity");
             return elementTE.configure(configuration);
@@ -109,7 +111,9 @@ public class EnderwireNetworkConnectorPeripheral extends BasePeripheral {
                     return MethodResult.of(null, String.format("Cannot find element with name %s", elementName));
                 if (!world.isLoaded(element.getPos()))
                     return MethodResult.of(null, "Element is not loaded ...");
-                IEnderwireElement elementTE = (IEnderwireElement) world.getBlockEntity(element.getPos());
+                if (!network.canReach(element, owner.getPos(), world.dimension().location().toString()))
+                    return MethodResult.of(null, "Cannot reach element");
+                IEnderwireElement elementTE = element.getElement(world);
                 if (elementTE == null)
                     return MethodResult.of(null, "This shouldn't happen, but there is no tile entity");
                 MethodResult configureResult = elementTE.configure((Map<?, ?>) configuration);
