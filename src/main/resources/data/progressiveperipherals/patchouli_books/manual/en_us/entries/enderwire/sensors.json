@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "Enderwire sensors is category of special blocks, that will propagate events when world state changes respectively.$(p)All of sensors have disable/enable events."
+      "text": "Enderwire sensors is category of special blocks, that will propagate events when world state changes respectively.$(p)All of sensors have disable/enable events.$(p)None of those sensors are configurable"
     },
     {
       "type": "empty",

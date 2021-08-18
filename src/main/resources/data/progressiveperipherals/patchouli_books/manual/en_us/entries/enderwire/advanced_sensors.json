@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "Advanced sensors has only one difference from base sensors. It will populate source of change, like, lever will populate player data and pressure plate will populate data about how pressed it"
+      "text": "Advanced sensors has only one difference from base sensors. It will populate source of change, like, lever will populate player data and pressure plate will populate data about how pressed it.$(p)None of those sensors are configurable"
     },
     {
       "type": "empty",
