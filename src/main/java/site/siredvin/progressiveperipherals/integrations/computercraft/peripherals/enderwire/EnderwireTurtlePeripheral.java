@@ -8,13 +8,11 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.shared.turtle.blocks.TileTurtle;
-import dan200.computercraft.shared.util.NBTUtil;
 import de.srendi.advancedperipherals.common.util.InventoryUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.utils.ExtraLuaConverter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,15 +54,7 @@ public class EnderwireTurtlePeripheral implements IPeripheral {
             ItemStack stack = turtle.getInventory().getItem(slot);
             if (stack.isEmpty())
                 continue;
-            data.put(slot + 1, new HashMap<String, Object>() {{
-                put("count", stack.getCount());
-                ResourceLocation registryName = stack.getItem().getRegistryName();
-                if (registryName != null) {
-                    put("name", registryName.toString());
-                } else {
-                    put("name", "unknown");
-                }
-            }});
+            data.put(slot + 1, ExtraLuaConverter.shortStackInfo(stack));
         }
         return MethodResult.of(data);
     }
@@ -77,22 +67,7 @@ public class EnderwireTurtlePeripheral implements IPeripheral {
         ItemStack stack = turtle.getInventory().getItem(javaSlot);
         if (stack.isEmpty())
             return MethodResult.of(new HashMap<>());
-        Map<String, Object> data = new HashMap<>();
-        data.put("count", stack.getCount());
-        data.put("displayName", stack.getDisplayName().getString());
-        ResourceLocation registryName = stack.getItem().getRegistryName();
-        if (registryName != null) {
-            data.put("name", registryName.toString());
-        } else {
-            data.put("name", "unknown");
-        }
-        CompoundNBT tag = stack.getTag();
-        if (tag != null && !tag.isEmpty()) {
-            data.put("nbt", NBTUtil.getNBTHash(tag));
-        }
-        data.put("tags", stack.getItem().getTags());
-        data.put("maxCount", stack.getItem().getItemStackLimit(stack));
-        return MethodResult.of(data);
+        return MethodResult.of(ExtraLuaConverter.stackInfo(stack, false));
     }
 
     @LuaFunction
