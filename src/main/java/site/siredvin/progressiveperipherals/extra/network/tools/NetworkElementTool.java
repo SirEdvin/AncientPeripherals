@@ -103,7 +103,7 @@ public class NetworkElementTool {
                     if (!world.isClientSide) {
                         EnderwireNetwork selectedNetwork = NetworkAccessingTool.getSelectedNetwork(GlobalNetworksData.get((ServerWorld) world), ItemPocketComputer.getUpgradeInfo(itemInHand));
                         if (selectedNetwork != null) {
-                            if (!selectedNetwork.canAcceptNewElements()) {
+                            if (!selectedNetwork.canAcceptNewElements(player)) {
                                 player.displayClientMessage(TranslationUtil.formattedLocalization("enderwire.network_limit", TextFormatting.DARK_GRAY, selectedNetwork.getName()), true);
                             } else {
                                 te.changeAttachedNetwork(selectedNetwork.getName());

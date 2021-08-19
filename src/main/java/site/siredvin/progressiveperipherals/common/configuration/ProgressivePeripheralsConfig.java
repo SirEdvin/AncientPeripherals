@@ -189,9 +189,9 @@ public class ProgressivePeripheralsConfig {
             builder.comment("").push("Enderwire");
             ENDERWIRE_NETWORK_ENABLED = builder.define("enderwireNetworkEnabled", true);
             ENDERWIRE_NETWORK_RANGE_STEP = builder.defineInRange("enderwireNetworkRangeStep", 64, 1, Integer.MAX_VALUE);
-            ENDERWIRE_NETWORK_COMPUTER_BUS_SIZE = builder.defineInRange("enderwireNetworkComputerButSize", 256, 1, Integer.MAX_VALUE);
-            ENDERWIRE_NETWORK_MAX_ELEMENT_COUNT = builder.defineInRange("enderwireNetworkMaxElementCount", 256, 1, Integer.MAX_VALUE);
-            ENDERWIRE_NETWORK_MAX_COUNT_PER_PLAYER = builder.defineInRange("enderwireNetworkMaxCountPerPlayer", 32, 1, Integer.MAX_VALUE);
+            ENDERWIRE_NETWORK_COMPUTER_BUS_SIZE = builder.defineInRange("enderwireNetworkComputerButSize", 512, 1, Integer.MAX_VALUE);
+            ENDERWIRE_NETWORK_MAX_ELEMENT_COUNT = builder.defineInRange("enderwireNetworkMaxElementCount", 512, 1, Integer.MAX_VALUE);
+            ENDERWIRE_NETWORK_MAX_COUNT_PER_PLAYER = builder.defineInRange("enderwireNetworkMaxCountPerPlayer", 16, 1, Integer.MAX_VALUE);
             register(EnderwireElementType.values(), builder);
             builder.pop();
 

@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.extra.network;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Util;
@@ -70,7 +71,9 @@ public class EnderwireNetwork {
         return stats.isInterdimensional();
     }
 
-    public boolean canAcceptNewElements() {
+    public boolean canAcceptNewElements(@NotNull PlayerEntity player) {
+        if (player.hasPermissions(4))
+            return true;
         if (elements != null) {
             return ProgressivePeripheralsConfig.enderwireNetworkMaxElementCount > elements.size();
         }

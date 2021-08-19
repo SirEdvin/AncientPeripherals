@@ -37,9 +37,9 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
             EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
-            if (!data.isPlayerCanCreateNetworks(player.getUUID()))
+            if (!data.isPlayerCanCreateNetworks(player))
                 return MethodResult.of(null, "You cannot create more networks, delete some you owned first");
-            data.addPublicNetwork(name, player.getUUID());
+            data.addPublicNetwork(name, player);
             return MethodResult.of(true);
         });
     }
@@ -51,9 +51,9 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
             EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
-            if (!data.isPlayerCanCreateNetworks(player.getUUID()))
+            if (!data.isPlayerCanCreateNetworks(player))
                 return MethodResult.of(null, "You cannot create more networks, delete some you owned first");
-            data.addPrivateNetwork(name, player.getUUID());
+            data.addPrivateNetwork(name, player);
             return MethodResult.of(true);
         });
     }
@@ -65,9 +65,9 @@ public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
             EnderwireNetwork existingNetwork = data.getNetwork(name);
             if (existingNetwork != null)
                 return MethodResult.of(null, "This name already taken");
-            if (!data.isPlayerCanCreateNetworks(player.getUUID()))
+            if (!data.isPlayerCanCreateNetworks(player))
                 return MethodResult.of(null, "You cannot create more networks, delete some you owned first");
-            data.addEncryptedNetwork(name, player.getUUID(), password);
+            data.addEncryptedNetwork(name, player, password);
             return MethodResult.of(true);
         });
     }

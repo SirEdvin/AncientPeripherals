@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.extra.network;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.BlockPos;
@@ -83,29 +84,32 @@ public class GlobalNetworksData extends WorldSavedData {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean isPlayerCanCreateNetworks(UUID playerUUID) {
+    public boolean isPlayerCanCreateNetworks(PlayerEntity player) {
+        if (player.hasPermissions(4))
+            return true;
+        UUID playerUUID = player.getUUID();
         long ownedNetworkCount = networks.values().stream().filter(network -> network.getOwnerUUID().equals(playerUUID)).count();
         return ownedNetworkCount < ProgressivePeripheralsConfig.enderwireNetworkMaxCountPerPlayer;
     }
 
-    public void addPublicNetwork(String name, UUID ownerUUID) {
-        addNetwork(name, NetworkType.PUBLIC, ownerUUID, null);
+    public void addPublicNetwork(String name, PlayerEntity player) {
+        addNetwork(name, NetworkType.PUBLIC, player, null);
     }
 
-    public void addPrivateNetwork(String name, UUID ownerUUID) {
-        addNetwork(name, NetworkType.PRIVATE, ownerUUID, null);
+    public void addPrivateNetwork(String name, PlayerEntity player) {
+        addNetwork(name, NetworkType.PRIVATE, player, null);
     }
 
-    public void addEncryptedNetwork(String name, UUID ownerUUID, @NotNull String password) {
-        addNetwork(name, NetworkType.ENCRYPTED, ownerUUID, password);
+    public void addEncryptedNetwork(String name, PlayerEntity player, @NotNull String password) {
+        addNetwork(name, NetworkType.ENCRYPTED, player, password);
     }
 
-    public void addNetwork(String name, NetworkType type, UUID ownerUUID, @Nullable String password) {
+    public void addNetwork(String name, NetworkType type, PlayerEntity player, @Nullable String password) {
         if (networks.containsKey(name))
             throw new IllegalArgumentException("Cannot add network with same name!");
-        if (!isPlayerCanCreateNetworks(ownerUUID))
+        if (!isPlayerCanCreateNetworks(player))
             throw new IllegalArgumentException("Player reached network limit");
-        EnderwireNetwork newNetwork = new EnderwireNetwork(name, type, ownerUUID, password);
+        EnderwireNetwork newNetwork = new EnderwireNetwork(name, type, player.getUUID(), password);
         addNetworkWithoutUpdate(newNetwork);
         setDirty();
     }
