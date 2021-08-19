@@ -8,8 +8,10 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.shared.turtle.blocks.TileTurtle;
+import dan200.computercraft.shared.util.NBTUtil;
 import de.srendi.advancedperipherals.common.util.InventoryUtil;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -83,6 +85,10 @@ public class EnderwireTurtlePeripheral implements IPeripheral {
             data.put("name", registryName.toString());
         } else {
             data.put("name", "unknown");
+        }
+        CompoundNBT tag = stack.getTag();
+        if (tag != null && !tag.isEmpty()) {
+            data.put("nbt", NBTUtil.getNBTHash(tag));
         }
         data.put("tags", stack.getItem().getTags());
         data.put("maxCount", stack.getItem().getItemStackLimit(stack));
