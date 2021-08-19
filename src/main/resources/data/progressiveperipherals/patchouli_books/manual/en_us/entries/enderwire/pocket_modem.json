@@ -1,0 +1,49 @@
+{
+  "name": "Pocket enderwire modem",
+  "icon": "computercraft:pocket_computer_advanced",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Enderwire modem can also be attached to pocket computer. In this case, you can connect pocket computer to any interdimensional enderwire network. Pocket computer will have access to peripheral that shared inside network and will receive events from network"
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getSelectedNetwork",
+      "description": "Access function for currect selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "Current selected network"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "clearSelectedNetwork",
+      "description": "Allows to cleanup selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "selectNetwork",
+      "description": "Trying to access selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"],
+        ["[string]", "Optional network password, if network encrypted"]
+      ],
+      "operationReturn": true
+    }
+  ]
+}

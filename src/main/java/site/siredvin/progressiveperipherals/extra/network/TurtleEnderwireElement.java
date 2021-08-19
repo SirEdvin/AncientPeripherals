@@ -86,6 +86,10 @@ public class TurtleEnderwireElement implements IEnderwireElement {
         return isPeripheralShared;
     }
 
+    public @NotNull IPeripheral getTurtlePeripheral() {
+        return peripheral;
+    }
+
     @Override
     public @Nullable IPeripheral getSharedPeripheral() {
         if (!isPeripheralShared)

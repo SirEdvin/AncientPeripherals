@@ -43,8 +43,9 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
             EnderwireNetwork network = data.getNetwork(elementProvider.getAttachedNetwork());
             Objects.requireNonNull(network);
             IEnderwireNetworkElement element = network.getElement(elementProvider.getElementName());
+            Objects.requireNonNull(element);
             elementProvider.setPeripheralShared(true);
-            EnderwireNetworkBusHub.fireNetworkEvent(network.getName(), new EnderwireNetworkEvent.PeripheralAttached(element, elementProvider.getSharedPeripheral()));
+            EnderwireNetworkBusHub.fireNetworkEvent(network.getName(), new EnderwireNetworkEvent.PeripheralAttached(element, elementProvider.getTurtlePeripheral()));
         }
     }
 
@@ -54,8 +55,9 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
             EnderwireNetwork network = data.getNetwork(elementProvider.getAttachedNetwork());
             Objects.requireNonNull(network);
             IEnderwireNetworkElement element = network.getElement(elementProvider.getElementName());
+            Objects.requireNonNull(element);
             elementProvider.setPeripheralShared(false);
-            EnderwireNetworkBusHub.fireNetworkEvent(network.getName(), new EnderwireNetworkEvent.PeripheralDetached(element, elementProvider.getSharedPeripheral()));
+            EnderwireNetworkBusHub.fireNetworkEvent(network.getName(), new EnderwireNetworkEvent.PeripheralDetached(element, elementProvider.getTurtlePeripheral()));
         }
     }
 
@@ -96,6 +98,8 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
 
     @LuaFunction(mainThread = true)
     public final MethodResult expose() {
+        if (elementProvider.getAttachedNetwork() == null)
+            return MethodResult.of(null, "Turtle don't attached to any network");
         if (!isPeripheralSharingEnabled) {
             Optional<MethodResult> checkResult = cooldownCheck(EXPOSE);
             if (checkResult.isPresent())
@@ -113,6 +117,8 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
 
     @LuaFunction(mainThread = true)
     public final MethodResult hide() {
+        if (elementProvider.getAttachedNetwork() == null)
+            return MethodResult.of(null, "Turtle don't attached to any network");
         if (isPeripheralSharingEnabled) {
             stopExposing();
             return MethodResult.of(true);
