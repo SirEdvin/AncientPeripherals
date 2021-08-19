@@ -170,7 +170,7 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("KDDK")
                 .save(consumer);
 
-        AutomataRecipeBuilder.start(Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get())
+        AutomataRecipeBuilder.start(Blocks.ENDERWIRE_MODEM.get())
                 .define('C', Blocks.ENDERWIRE_PERIPHERAL_SHARING.get())
                 .define('N', net.minecraft.item.Items.NETHERITE_INGOT)
                 .pattern("N  N")

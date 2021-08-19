@@ -43,7 +43,7 @@ import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughP
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.setup.*;
-import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwirePeripheralConnectedTurtle;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwireModemTurtle;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionPage;
@@ -141,10 +141,10 @@ public class ProgressivePeripherals {
     public static class ClientEventListener {
 
         private static final ModelResourceLocation[] EXTRA_MODELS = new ModelResourceLocation[]{
-                EnderwirePeripheralConnectedTurtle.NOT_CONNECTED_LEFT_MODEL,
-                EnderwirePeripheralConnectedTurtle.NOT_CONNECTED_RIGHT_MODEL,
-                EnderwirePeripheralConnectedTurtle.CONNECTED_LEFT_MODEL,
-                EnderwirePeripheralConnectedTurtle.CONNECTED_RIGHT_MODEL,
+                EnderwireModemTurtle.NOT_CONNECTED_LEFT_MODEL,
+                EnderwireModemTurtle.NOT_CONNECTED_RIGHT_MODEL,
+                EnderwireModemTurtle.CONNECTED_LEFT_MODEL,
+                EnderwireModemTurtle.CONNECTED_RIGHT_MODEL,
         };
 
         @SubscribeEvent

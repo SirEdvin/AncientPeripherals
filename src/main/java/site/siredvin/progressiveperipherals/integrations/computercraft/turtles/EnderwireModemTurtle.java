@@ -16,16 +16,16 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.periphera
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.DataDependPeripheralTurtle;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnderwirePeripheralConnectedTurtle extends DataDependPeripheralTurtle<EnderwireTurtleUpgradeModemPeripheral> {
+public class EnderwireModemTurtle extends DataDependPeripheralTurtle<EnderwireTurtleUpgradeModemPeripheral> {
 
-    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_peripheral_connected_turtle");
-    public static final ModelResourceLocation NOT_CONNECTED_LEFT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.peripheral_connector_turtle_left"), "inventory");
-    public static final ModelResourceLocation NOT_CONNECTED_RIGHT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.peripheral_connector_turtle_right"), "inventory");
-    public static final ModelResourceLocation CONNECTED_LEFT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.peripheral_connector_turtle_left_connected"), "inventory");
-    public static final ModelResourceLocation CONNECTED_RIGHT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.peripheral_connector_turtle_right_connected"), "inventory");
+    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_modem_turtle");
+    public static final ModelResourceLocation NOT_CONNECTED_LEFT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.modem_turtle_left"), "inventory");
+    public static final ModelResourceLocation NOT_CONNECTED_RIGHT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.modem_turtle_right"), "inventory");
+    public static final ModelResourceLocation CONNECTED_LEFT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.modem_turtle_left_connected"), "inventory");
+    public static final ModelResourceLocation CONNECTED_RIGHT_MODEL = new ModelResourceLocation(new ResourceLocation(ProgressivePeripherals.MOD_ID, "turtle.enderwire.modem_turtle_right_connected"), "inventory");
 
-    public EnderwirePeripheralConnectedTurtle() {
-        super(ID, TranslationUtil.turtle("enderwire_peripheral_connected"), new ItemStack(Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR.get()));
+    public EnderwireModemTurtle() {
+        super(ID, TranslationUtil.turtle("enderwire_modem"), new ItemStack(Blocks.ENDERWIRE_MODEM.get()));
     }
 
     @Override

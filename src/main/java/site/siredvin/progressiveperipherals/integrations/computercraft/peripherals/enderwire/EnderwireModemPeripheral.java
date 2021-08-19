@@ -2,12 +2,12 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.peripher
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import org.jetbrains.annotations.NotNull;
-import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwirePeripheralConnectorTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireModemTileEntity;
 
 public class EnderwireModemPeripheral extends BaseEnderwireModemPeripheral {
-    private final EnderwirePeripheralConnectorTileEntity tileEntity;
+    private final EnderwireModemTileEntity tileEntity;
 
-    public EnderwireModemPeripheral(@NotNull EnderwirePeripheralConnectorTileEntity tileEntity) {
+    public EnderwireModemPeripheral(@NotNull EnderwireModemTileEntity tileEntity) {
         super(tileEntity);
         this.tileEntity = tileEntity;
     }

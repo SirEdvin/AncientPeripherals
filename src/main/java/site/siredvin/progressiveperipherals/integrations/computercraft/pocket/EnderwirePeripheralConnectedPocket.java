@@ -15,7 +15,7 @@ public class EnderwirePeripheralConnectedPocket extends BasePocket<EnderwireUpgr
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_peripheral_connected_pocket");
 
     public EnderwirePeripheralConnectedPocket() {
-        super(ID, TranslationUtil.pocket("enderwire_peripheral_connected"), Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR);
+        super(ID, TranslationUtil.pocket("enderwire_peripheral_connected"), Blocks.ENDERWIRE_MODEM);
     }
 
     @Override

@@ -21,16 +21,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEntity<EnderwirePeripheralConnectorTileEntity, EnderwireModemPeripheral> implements IEnderwireEventConsumer<EnderwireNetworkEvent> {
+public class EnderwireModemTileEntity extends BaseEnderwireTileEntity<EnderwireModemTileEntity, EnderwireModemPeripheral> implements IEnderwireEventConsumer<EnderwireNetworkEvent> {
     private boolean initialized = false;
     private EnderwireEventSubscription<EnderwireNetworkEvent> subscription;
 
-    public EnderwirePeripheralConnectorTileEntity() {
-        super(TileEntityTypes.ENDERWIRE_PERIPHERAL_CONNECTOR.get());
+    public EnderwireModemTileEntity() {
+        super(TileEntityTypes.ENDERWIRE_MODEM.get());
     }
 
     @Override
-    public EnderwirePeripheralConnectorTileEntity getThis() {
+    public EnderwireModemTileEntity getThis() {
         return this;
     }
 
@@ -116,7 +116,7 @@ public class EnderwirePeripheralConnectorTileEntity extends BaseEnderwireTileEnt
 
     @Override
     public EnderwireElementType getElementType() {
-        return EnderwireElementType.PERIPHERAL_CONNECTOR;
+        return EnderwireElementType.MODEM;
     }
 
     @Override

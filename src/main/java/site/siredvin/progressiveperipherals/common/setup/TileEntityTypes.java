@@ -92,5 +92,5 @@ public class TileEntityTypes {
 
     public static final RegistryObject<TileEntityType<EnderwirePeripheralSharingTileEntity>> ENDERWIRE_PERIPHERAL_SHARING = ofBlock(EnderwirePeripheralSharingTileEntity::new, Blocks.ENDERWIRE_PERIPHERAL_SHARING);
 
-    public static final RegistryObject<TileEntityType<EnderwirePeripheralConnectorTileEntity>> ENDERWIRE_PERIPHERAL_CONNECTOR = ofBlock(EnderwirePeripheralConnectorTileEntity::new, Blocks.ENDERWIRE_PERIPHERAL_CONNECTOR);
+    public static final RegistryObject<TileEntityType<EnderwireModemTileEntity>> ENDERWIRE_MODEM = ofBlock(EnderwireModemTileEntity::new, Blocks.ENDERWIRE_MODEM);
 }

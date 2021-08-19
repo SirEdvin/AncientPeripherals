@@ -180,7 +180,7 @@ public class BaseEnderwireModemPeripheral extends FuelConsumingPeripheral {
 
     @Override
     public boolean isEnabled() {
-        return EnderwireElementType.PERIPHERAL_CONNECTOR.isEnabled();
+        return EnderwireElementType.MODEM.isEnabled();
     }
 
     public void addSharedPeripheral(@NotNull String networkName, @NotNull IEnderwireNetworkElement element, @NotNull IPeripheral peripheral) {

@@ -1,7 +1,7 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "north": "progressiveperipherals:block/enderwire/peripheral_connector_connected",
+    "north": "progressiveperipherals:block/enderwire/modem",
     "south": "progressiveperipherals:block/enderwire/casing",
     "west": "progressiveperipherals:block/enderwire/casing",
     "east": "progressiveperipherals:block/enderwire/casing",
