@@ -1,0 +1,23 @@
+{
+  "name": "Redstone emitter",
+  "icon": "progressiveperipherals:enderwire/redstone_emitter",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Redstone emitter",
+      "item": "progressiveperipherals:enderwire/redstone_emitter",
+      "text": "Redstone emitter, that can be attached to floor, walls or even celling! Can send redstone signals from 4 sides.$(p)$(o)Configurable, returns all 4 output power level in state data$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/redstone_sensor"
+    },
+    {
+      "type": "text",
+      "title": "Configuration",
+      "text": "{$(br)  left $(#666666)=$() $(#666666)4$(),$(br)  right $(#666666)=$() $(#666666)0$(),$(br)  front $(#666666)=$() $(#666666)12$(),$(br)  back $(#666666)=$() $(#666666)5$()$(br)}$(br)$(p)$(l)Note:$() You can send partial configuration, omitting fields, that you don't want to change"
+    }
+  ]
+}

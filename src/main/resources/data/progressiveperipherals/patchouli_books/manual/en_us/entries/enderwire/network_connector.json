@@ -73,7 +73,7 @@
     {
       "type": "progressiveperipherals:lua_function_left_page",
       "functionName": "configureElement",
-      "description": "Method for configuring enderwire element, changing it state (like turn off/on), etc.",
+      "description": "Method for configuring enderwire element, changing it state (like turn off/on), etc.$(p)You can send partial configuration, omitting fields, that you don't want to change",
       "throw": [
         "Incorrect configuration table"
       ]
@@ -89,7 +89,7 @@
     {
       "type": "progressiveperipherals:lua_function_left_page",
       "functionName": "configureElements",
-      "description": "Method for batch configuring enderwire element, changing it state (like turn off/on), etc. Should be used in case when you need to configure several items at once to avoid delay",
+      "description": "Method for batch configuring enderwire element, changing it state (like turn off/on), etc. Should be used in case when you need to configure several items at once to avoid delay.$(p)You can send partial configuration, omitting fields, that you don't want to change",
       "throw": [
         "Incorrect configuration table"
       ]

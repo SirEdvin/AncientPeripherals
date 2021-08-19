@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -55,8 +56,12 @@ public class EnderwireLightEmitterBlock extends BaseEnderwireHorizontalFaceBlock
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        if (state.getValue(ENABLED))
-            return 15;
+        if (state.getValue(ENABLED)) {
+            TileEntity te = world.getBlockEntity(pos);
+            if (te instanceof EnderwireLightEmitterTileEntity) {
+                return ((EnderwireLightEmitterTileEntity) te).getLightLevel();
+            }
+        }
         return 0;
     }
 
