@@ -11,11 +11,11 @@ import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireUpgradeModemPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnderwirePeripheralConnectedPocket extends BasePocket<EnderwireUpgradeModemPeripheral> {
-    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_peripheral_connected_pocket");
+public class EnderwireModemPocket extends BasePocket<EnderwireUpgradeModemPeripheral> {
+    public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_modem_pocket");
 
-    public EnderwirePeripheralConnectedPocket() {
-        super(ID, TranslationUtil.pocket("enderwire_peripheral_connected"), Blocks.ENDERWIRE_MODEM);
+    public EnderwireModemPocket() {
+        super(ID, TranslationUtil.pocket("enderwire_modem"), Blocks.ENDERWIRE_MODEM);
     }
 
     @Override

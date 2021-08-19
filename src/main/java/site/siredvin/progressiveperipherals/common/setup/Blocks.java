@@ -17,7 +17,7 @@ import site.siredvin.progressiveperipherals.common.tileentities.enderwire.*;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
-import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwirePeripheralConnectedPocket;
+import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireModemPocket;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwireModemTurtle;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
@@ -247,7 +247,7 @@ public class Blocks {
             () -> new EnderwireHorizontalBlock(EnderwireModemTileEntity::new),
             () -> new PeripheralBlockItem(
                     Blocks.ENDERWIRE_MODEM.get(), new Item.Properties().stacksTo(64),
-                    EnderwireModemTurtle.ID, EnderwirePeripheralConnectedPocket.ID, EnderwireElementType.MODEM::isEnabled
+                    EnderwireModemTurtle.ID, EnderwireModemPocket.ID, EnderwireElementType.MODEM::isEnabled
             )
     );
 
