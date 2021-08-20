@@ -19,8 +19,11 @@ import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
 import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireNetworkElement;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEventProducer;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
+
+import java.util.Objects;
 
 public class NetworkElementTool {
 
@@ -39,6 +42,7 @@ public class NetworkElementTool {
             if (elementData == null) {
                 ProgressivePeripherals.LOGGER.error(String.format("Element %s is not in network %s, this shouldn't happened!", element.getElementName(), networkName));
             } else {
+                EnderwireNetworkEventProducer.fireElementDetachedEvent(Objects.requireNonNull(element.getWorld()), element.getPosition(), networkName);
                 network.removeNetworkElement(elementData);
                 element.setElementName(null);
                 return elementData;
@@ -65,6 +69,7 @@ public class NetworkElementTool {
             elementData = generateElementData(element, network);
         element.setElementName(elementData.getName());
         network.addNetworkElement(elementData);
+        EnderwireNetworkEventProducer.fireElementAttachedEvent(Objects.requireNonNull(element.getWorld()), element.getPosition(), network.getName());
     }
 
     public static void changeAttachedNetwork(@Nullable String oldNetwork, @Nullable String newNetwork, @NotNull IEnderwireElement element, @NotNull ServerWorld world) {

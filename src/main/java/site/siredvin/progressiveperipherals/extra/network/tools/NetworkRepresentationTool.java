@@ -33,11 +33,16 @@ public class NetworkRepresentationTool {
         return representation;
     }
 
-    public static Map<String, Object> elementRepresentation(IEnderwireNetworkElement networkElement, BlockPos center) {
+    public static Map<String, Object> elementRepresentation(IEnderwireNetworkElement networkElement) {
         Map<String, Object> representation = new HashMap<>();
         representation.put("name", networkElement.getName());
         representation.put("elementType", networkElement.getCategory().name().toLowerCase());
         representation.put("deviceType", networkElement.getElementType().lowerTitleCase());
+        return representation;
+    }
+
+    public static Map<String, Object> elementRepresentation(IEnderwireNetworkElement networkElement, BlockPos center) {
+        Map<String, Object> representation = elementRepresentation(networkElement);
         representation.put("position", LuaConverter.posToObject(networkElement.getPos().subtract(center)));
         return representation;
     }

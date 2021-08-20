@@ -41,6 +41,14 @@ public enum EnderwireElementType implements IConfigHandler {
         return name().toLowerCase() + "_changed";
     }
 
+    public String getDetachEventName() {
+        return "detached";
+    }
+
+    public String getAttachEventName() {
+        return "attached";
+    }
+
     public boolean isEnabled() {
         return ProgressivePeripheralsConfig.enderwireNetworkEnabled && enabled.get();
     }

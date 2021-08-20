@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkProducer;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEventProducer;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
@@ -43,7 +43,7 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
     @Override
     public void onRemove(BlockState state, @NotNull World world, @NotNull BlockPos blockPos, @NotNull BlockState newState, boolean isMoving) {
         if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
-            EnderwireNetworkProducer.firePoweredButtonEvent(false, world, blockPos, null, this.verbose);
+            EnderwireNetworkEventProducer.firePoweredButtonEvent(false, world, blockPos, null, this.verbose);
         if (!newState.is(this)) // new block are not this block
             NetworkElementTool.handleRemove(world, blockPos);
         super.onRemove(state, world, blockPos, newState, isMoving);
@@ -66,7 +66,7 @@ public class EnderwireButton extends AbstractButtonBlock implements IEnderwireSe
             return ActionResultType.CONSUME;
         } else {
             if (!world.isClientSide)
-                EnderwireNetworkProducer.firePoweredButtonEvent(true, world, pos, player, this.verbose);
+                EnderwireNetworkEventProducer.firePoweredButtonEvent(true, world, pos, player, this.verbose);
             this.press(state, world, pos);
             this.playSound(player, world, pos, true);
             return ActionResultType.sidedSuccess(world.isClientSide);

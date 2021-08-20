@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkProducer;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEventProducer;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
 import java.util.Random;
@@ -64,7 +64,7 @@ public class EnderwireLever extends LeverBlock implements IEnderwireSensorBlock 
             return ActionResultType.SUCCESS;
         }
         BlockState blockstate = this.pull(state, world, pos);
-        EnderwireNetworkProducer.firePoweredLeverEvent(blockstate.getValue(POWERED), world, pos, player, verbose);
+        EnderwireNetworkEventProducer.firePoweredLeverEvent(blockstate.getValue(POWERED), world, pos, player, verbose);
         float f = blockstate.getValue(POWERED) ? 0.6F : 0.5F;
         world.playSound(null, pos, SoundEvents.LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
         return ActionResultType.CONSUME;

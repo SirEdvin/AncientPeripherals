@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.tileentities.enderwire.EnderwireSensorTileEntity;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBlock;
-import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkProducer;
+import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEventProducer;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
@@ -66,7 +66,7 @@ public class EnderwirePressurePlate extends PressurePlateBlock implements IEnder
     @Override
     public void onRemove(BlockState state, @NotNull World world, @NotNull BlockPos blockPos, @NotNull BlockState newState, boolean isMoving) {
         if (state.getValue(POWERED) && newState.is(this) && !newState.getValue(POWERED))
-            EnderwireNetworkProducer.firePoweredPlateEvent(false, world, blockPos, null, this.verbose);
+            EnderwireNetworkEventProducer.firePoweredPlateEvent(false, world, blockPos, null, this.verbose);
         if (!newState.is(this)) // new block are not this block
             NetworkElementTool.handleRemove(world, blockPos);
         super.onRemove(state, world, blockPos, newState, isMoving);
@@ -85,7 +85,7 @@ public class EnderwirePressurePlate extends PressurePlateBlock implements IEnder
             list = world.getEntities(null, axisalignedbb).stream().filter(entity -> !entity.isIgnoringBlockTriggers()).collect(Collectors.toList());
 
             if (!list.isEmpty())
-                EnderwireNetworkProducer.firePoweredPlateEvent(true, world, pos, list, this.verbose);
+                EnderwireNetworkEventProducer.firePoweredPlateEvent(true, world, pos, list, this.verbose);
         }
     }
 
