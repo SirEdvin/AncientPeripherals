@@ -61,14 +61,14 @@
       "type": "link",
       "text": "Casual event printer for enderwire network, just connect computer to network connector",
       "title": "EN event printer",
-      "url": "https://gitlab.com/SirEdvin/darkos/-/blob/master/stored/devserver/eventprinter.lua",
+      "url": "https://gitlab.com/SirEdvin/dark_toolkit/-/blob/master/stored/devserver/eventprinter.lua",
       "link_text": "Go to code"
     },
     {
       "type": "link",
       "text": "Lamp controller, that will change it color on button pressing and enable/disable on lever events. Just connect network connector to computer, but some lamps, lever and button and see what happens!",
       "title": "EN lamp controller",
-      "url": "https://gitlab.com/SirEdvin/darkos/-/blob/master/stored/devserver/lamp.lua",
+      "url": "https://gitlab.com/SirEdvin/dark_toolkit/-/blob/master/stored/devserver/lamp.lua",
       "link_text": "Go to code"
     }
   ]
