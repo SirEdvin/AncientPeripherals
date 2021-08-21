@@ -27,7 +27,7 @@
       "conditions": {
         "items": [
           {
-            "item": "progressiveperipherals:enderwire/peripheral_connector"
+            "item": "progressiveperipherals:enderwire/modem"
           }
         ]
       }
