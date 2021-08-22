@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Flexible Realty anchor and flexible statue now can be [cleaned](https://github.com/SirEdvin/ProgressivePeripherals/issues/30) on crafting table
+
 ### [0.0.8] - 2021-08-14
 
 ### Fixed
@@ -16,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Incompitability with 0.7r AP, now you should use release version only
+- Incompatibility with 0.7r AP, now you should use release version only
 
 ### [0.0.6] - 2021-08-08
 

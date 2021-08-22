@@ -47,7 +47,7 @@ public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvide
                 }
                 List<Property<?>> savableProperties = savableProperties();
 
-                if (!savableProperties.isEmpty()) {
+                if (!savableProperties.isEmpty() && !defaultBlockState().equals(state)) {
                     itemstack.addTagElement(BLOCK_STATE_TAG, NBTUtil.writeBlockState(state));
                 }
 
@@ -67,17 +67,18 @@ public abstract class BaseNBTBlock<T extends TileEntity & ITileEntityDataProvide
         TileEntity tileentity = world.getBlockEntity(pos);
         if (tileentity instanceof ITileEntityDataProvider) {
             if (!world.isClientSide) {
-                CompoundNBT data = stack.getOrCreateTag();
-                if (data.contains(BLOCK_STATE_TAG)) {
-                    BlockState savedState = NBTUtil.readBlockState(data.getCompound(BLOCK_STATE_TAG));
-                    for (Property property: savableProperties()) {
-                        state = state.setValue(property, savedState.getValue(property));
+                CompoundNBT data = stack.getTag();
+                if (data != null) {
+                    if (data.contains(BLOCK_STATE_TAG)) {
+                        BlockState savedState = NBTUtil.readBlockState(data.getCompound(BLOCK_STATE_TAG));
+                        for (Property property : savableProperties()) {
+                            state = state.setValue(property, savedState.getValue(property));
+                        }
                     }
-                }
-                if (data.contains(INTERNAL_DATA_TAG)) {
-                    ((ITileEntityDataProvider) tileentity).loadInternalData(state, data.getCompound(INTERNAL_DATA_TAG));
-                    ((ITileEntityDataProvider) tileentity).pushInternalDataChangeToClient();
-
+                    if (data.contains(INTERNAL_DATA_TAG)) {
+                        ((ITileEntityDataProvider) tileentity).loadInternalData(state, data.getCompound(INTERNAL_DATA_TAG));
+                        ((ITileEntityDataProvider) tileentity).pushInternalDataChangeToClient();
+                    }
                 }
             }
         }

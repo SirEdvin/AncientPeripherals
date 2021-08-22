@@ -452,11 +452,22 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .save(consumer);
     }
 
+    protected void buildCleanupRecipes(Consumer<IFinishedRecipe> consumer) {
+        TweakedShapelessRecipeBuilder.shapeless(Blocks.FLEXIBLE_STATUE.get().asItem())
+                .requires(Blocks.FLEXIBLE_STATUE.get())
+                .save(consumer, "cleanup");
+
+        TweakedShapelessRecipeBuilder.shapeless(Blocks.FLEXIBLE_REALITY_ANCHOR.get().asItem())
+                .requires(Blocks.FLEXIBLE_REALITY_ANCHOR.get())
+                .save(consumer, "cleanup");
+    }
+
     @Override
     protected void buildShapelessRecipes(@NotNull Consumer<IFinishedRecipe> consumer) {
         this.buildCraftingRecipes(consumer);
         this.buildSmithingRecipes(consumer);
         this.buildAutomataRecipes(consumer);
+        this.buildCleanupRecipes(consumer);
     }
 
     private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<IFinishedRecipe> consumer) {

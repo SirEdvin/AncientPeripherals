@@ -73,6 +73,10 @@ public class TweakedShapelessRecipeBuilder {
         this.save(consumer, Registry.ITEM.getKey(this.result));
     }
 
+    public void save(Consumer<IFinishedRecipe> consumer, String postfix) {
+        this.save(consumer, new ResourceLocation(Registry.ITEM.getKey(this.result) + "_" + postfix));
+    }
+
     public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation id) {
         consumer.accept(new Result(id, this.result, this.count, this.group, this.ingredients));
     }

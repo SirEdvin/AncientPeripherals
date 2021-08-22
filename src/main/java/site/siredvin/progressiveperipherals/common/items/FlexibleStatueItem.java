@@ -20,7 +20,7 @@ import java.util.List;
 public class FlexibleStatueItem extends BaseBlockItem {
 
     public FlexibleStatueItem() {
-        super(Blocks.FLEXIBLE_STATUE.get());
+        super(Blocks.FLEXIBLE_STATUE.get(), new Properties().stacksTo(64));
     }
 
     @Override
