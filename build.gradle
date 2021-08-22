@@ -23,7 +23,6 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
     // Channel:   Version:
@@ -192,12 +191,13 @@ jar.finalizedBy('reobfJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId archivesBaseName
             artifact jar
         }
     }
     repositories {
         maven {
-            url "https://repo.repsy.io/mvn/siredvin/default"
+            url "https://maven.pkg.github.com/SirEdvin/ProgressivePeripherals"
             credentials {
                 username = System.getenv("USERNAME")
                 password = System.getenv("TOKEN")
