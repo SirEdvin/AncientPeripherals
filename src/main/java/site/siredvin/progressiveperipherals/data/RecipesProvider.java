@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.data.builders.AutomataRecipeBuilder;
@@ -289,11 +290,22 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .save(consumer);
     }
 
+    protected void buildCleanupRecipes(Consumer<IFinishedRecipe> consumer) {
+        TweakedShapelessRecipeBuilder.shapeless(Blocks.FLEXIBLE_STATUE.get().asItem())
+                .requires(Blocks.FLEXIBLE_STATUE.get())
+                .save(consumer, "cleanup");
+
+        TweakedShapelessRecipeBuilder.shapeless(Blocks.FLEXIBLE_REALITY_ANCHOR.get().asItem())
+                .requires(Blocks.FLEXIBLE_REALITY_ANCHOR.get())
+                .save(consumer, "cleanup");
+    }
+
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(@NotNull Consumer<IFinishedRecipe> consumer) {
         this.buildCraftingRecipes(consumer);
         this.buildSmithingRecipes(consumer);
         this.buildAutomataRecipes(consumer);
+        this.buildCleanupRecipes(consumer);
     }
 
     private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<IFinishedRecipe> consumer) {

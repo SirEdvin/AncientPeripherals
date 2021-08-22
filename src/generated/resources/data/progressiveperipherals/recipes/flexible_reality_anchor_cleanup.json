@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:flexible_reality_anchor"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:flexible_reality_anchor"
+  }
+}

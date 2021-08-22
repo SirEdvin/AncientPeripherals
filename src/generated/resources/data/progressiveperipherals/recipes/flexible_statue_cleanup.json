@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "progressiveperipherals:flexible_statue"
+    }
+  ],
+  "result": {
+    "item": "progressiveperipherals:flexible_statue"
+  }
+}
