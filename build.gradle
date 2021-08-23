@@ -1,3 +1,6 @@
+import org.jetbrains.changelog.ExtensionsKt
+import java.text.SimpleDateFormat
+
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
@@ -7,8 +10,13 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.0.20', changing: true
     }
 }
+
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'org.jetbrains.changelog' version '1.2.1'
+}
+
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
@@ -179,6 +187,16 @@ dependencies {
 //    jsocJavadoc 'com.surfapi:javadoc-json-doclet:1.0'
 }
 
+changelog {
+    version = "${project.version}"
+    path = "${project.projectDir}/CHANGELOG.md"
+    header = "[${-> version.get()}] - ${new SimpleDateFormat("yyyy-MM-dd").format(new Date())}"
+    headerParserRegex = ~/\d+\.\d+\.\d+/
+    itemPrefix = "-"
+    keepUnreleasedSection = true
+    unreleasedTerm = "[Unreleased]"
+    groups = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"]
+}
 
 task generateJson(type: Javadoc) {
     source = sourceSets.main.allJava
@@ -209,6 +227,25 @@ jar {
 jar.finalizedBy('reobfJar') 
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
+
+curseforge {
+    apiKey = secretEnv["CURSEFORGE_KEY"] ?: System.getenv("CURSEFORGE_KEY")
+
+    project {
+        id = "506252"
+        releaseType = "beta"
+        mainArtifact(jar) {
+            displayName = "Progressive Peripherals ${version}"
+            relations {
+                requiredDependency 'advanced-peripherals'
+                requiredDependency 'cc-tweaked'
+                requiredDependency 'patchouli'
+            }
+        }
+
+        changelog = changelog.get(project.version).withHeader(false).toText()
+    }
+}
 
 publishing {
     publications {
