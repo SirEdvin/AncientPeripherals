@@ -4,17 +4,17 @@ import dan200.computercraft.api.lua.*;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IDynamicPeripheral;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
-import de.srendi.advancedperipherals.common.blocks.base.PeripheralTileEntity;
 import de.srendi.advancedperipherals.common.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.api.integrations.IPluggableLuaMethod;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
+import site.siredvin.progressiveperipherals.common.tileentities.base.OptionalPeripheralTileEntity;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<?> & IMachineryController<T>> extends OperationPeripheral implements IDynamicPeripheral {
+public abstract class GenericMachineryPeripheral<T extends OptionalPeripheralTileEntity<?> & IMachineryController<T>> extends OperationPeripheral implements IDynamicPeripheral {
     protected final T tileEntity;
     private final Map<String, IPluggableLuaMethod<T>> methodMap;
     private final String[] methodNames;
@@ -31,7 +31,7 @@ public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<
 
     @NotNull
     @Override
-    public String[] getMethodNames() {
+    public String @NotNull [] getMethodNames() {
         return methodNames;
     }
 
@@ -44,11 +44,13 @@ public abstract class GenericMachineryPeripheral<T extends PeripheralTileEntity<
         return method.call(access, context, arguments, tileEntity);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final boolean isConnected() {
         return tileEntity.isConfigured();
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult connect() {
         Pair<Boolean, String> result = tileEntity.detectMultiBlock();

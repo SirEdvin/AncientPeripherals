@@ -1,0 +1,7 @@
+{
+	"parent": "progressiveperipherals:block/enderwire/redstone_emitter",
+	"textures": {
+		"0": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+		"particle": "progressiveperipherals:block/enderwire/redstone_sensor_connected"
+	}
+}

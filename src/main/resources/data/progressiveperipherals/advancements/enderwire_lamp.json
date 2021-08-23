@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:enderwire/light_emitter"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.enderwire.lamp"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.enderwire.lamp.description"
+    }
+  },
+  "parent": "progressiveperipherals:enderwire_manager",
+  "criteria": {
+    "lamp_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/light_emitter"
+          }
+        ]
+      }
+    }
+  }
+}

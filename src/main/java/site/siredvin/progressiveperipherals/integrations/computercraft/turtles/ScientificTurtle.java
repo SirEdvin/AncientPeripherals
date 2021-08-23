@@ -30,6 +30,6 @@ public class ScientificTurtle extends ModelTransformingTurtle<ScientificAutomata
 
     @Override
     protected ScientificAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new ScientificAutomataCorePeripheral("scientificAutomataCore", turtle, side);
+        return new ScientificAutomataCorePeripheral(turtle, side);
     }
 }

@@ -8,6 +8,7 @@ import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("UnusedReturnValue")
 public class TextBuilder {
     private final static String LIST_SPACING = "  ";
     private final static Map<String, String> CUSTOM_MACROS = new HashMap<String, String>() {{

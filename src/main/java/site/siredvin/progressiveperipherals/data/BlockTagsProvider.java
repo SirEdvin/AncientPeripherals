@@ -15,6 +15,7 @@ import site.siredvin.progressiveperipherals.common.tags.BlockTags;
 
 import java.nio.file.Path;
 
+@SuppressWarnings("ALL")
 public class BlockTagsProvider extends TagsProvider<Block> {
 
     public BlockTagsProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {

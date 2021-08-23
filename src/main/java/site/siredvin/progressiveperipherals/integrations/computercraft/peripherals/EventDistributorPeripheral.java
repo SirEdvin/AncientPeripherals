@@ -19,8 +19,10 @@ import java.util.Optional;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUEUE_EVENT;
 
 public class EventDistributorPeripheral extends OperationPeripheral {
-    public EventDistributorPeripheral(String type, PeripheralTileEntity<?> tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "eventDistributor";
+
+    public EventDistributorPeripheral(PeripheralTileEntity<?> tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override
@@ -42,6 +44,7 @@ public class EventDistributorPeripheral extends OperationPeripheral {
         access.queueEvent(eventName, eventData);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult broadcastEvent(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(QUEUE_EVENT);
@@ -58,6 +61,7 @@ public class EventDistributorPeripheral extends OperationPeripheral {
         return MethodResult.of(true);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult sendEventByID(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(QUEUE_EVENT);
@@ -73,6 +77,7 @@ public class EventDistributorPeripheral extends OperationPeripheral {
         return MethodResult.of(true);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult sendEventByLabel(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = cooldownCheck(QUEUE_EVENT);

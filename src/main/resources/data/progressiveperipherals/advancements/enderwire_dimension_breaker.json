@@ -1,0 +1,27 @@
+{
+  "display": {
+    "frame": "challenge",
+    "icon": {
+      "item": "progressiveperipherals:enderwire/dimension_breaker"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.enderwire.dimension_breaker"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.enderwire.dimension_breaker.description"
+    }
+  },
+  "parent": "progressiveperipherals:enderwire_network_amplifier",
+  "criteria": {
+    "lamp_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/dimension_breaker"
+          }
+        ]
+      }
+    }
+  }
+}

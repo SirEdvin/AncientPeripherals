@@ -16,10 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
 import site.siredvin.progressiveperipherals.common.blocks.GenericTileEntityBlock;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
 
 public class MachineryController<T extends TileEntity & IMachineryController<T>> extends GenericTileEntityBlock<T> {
     public static final BooleanProperty CONNECTED = MachineryBlockProperties.CONNECTED;
@@ -31,14 +32,14 @@ public class MachineryController<T extends TileEntity & IMachineryController<T>>
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(FACING);
         builder.add(CONNECTED);
     }
 
     @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
@@ -54,7 +55,7 @@ public class MachineryController<T extends TileEntity & IMachineryController<T>>
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+    public void onRemove(@NotNull BlockState state, @NotNull World world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock() && state.getValue(MachineryBlockProperties.CONNECTED)) {
             IMachineryController<?> tileEntity = (IMachineryController<?>) world.getBlockEntity(blockPos);
             if (tileEntity != null)

@@ -1,0 +1,46 @@
+{
+  "name": "Advanced sensors",
+  "icon": "progressiveperipherals:enderwire/advanced_button",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Advanced sensors has only one difference from base sensors. It will populate source of change, like, lever will populate player data and pressure plate will populate data about how pressed it.$(p)None of those sensors are configurable"
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "spotlight",
+      "title": "Advanced lever",
+      "item": "progressiveperipherals:enderwire/advanced_lever",
+      "text": "Upgraded lever, will additionally send information about player that toggled lever"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/advanced_lever"
+    },
+    {
+      "type": "spotlight",
+      "title": "Advanced button",
+      "item": "progressiveperipherals:enderwire/advanced_button",
+      "text": "Upgraded button, will additionally send information about player that pressed button. Take a note, that this is possible only for turn on event"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/advanced_button"
+    },
+    {
+      "type": "spotlight",
+      "title": "Advanced pressure plate",
+      "item": "progressiveperipherals:enderwire/advanced_pressure_plate",
+      "text": "Upgraded pressure plate, will additionally send information about entity on top of plate that pressed it. Take a not, that this is possible only for turn on event"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/advanced_pressure_plate"
+    }
+  ]
+}

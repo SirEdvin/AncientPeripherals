@@ -1,0 +1,21 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "K  K",
+    " CC ",
+    " CC ",
+    "K  K"
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/casing"
+    },
+    "K": {
+      "item": "progressiveperipherals:knowledgium_ingot"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/peripheral_casing",
+    "count": 4
+  }
+}

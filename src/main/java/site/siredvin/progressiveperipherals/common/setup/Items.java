@@ -13,6 +13,7 @@ import site.siredvin.progressiveperipherals.common.items.base.ItemTier;
 import site.siredvin.progressiveperipherals.common.items.*;
 import site.siredvin.progressiveperipherals.common.items.peripheral.EnchantablePeripheralItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralItem;
+import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.HashSet;
@@ -21,14 +22,19 @@ public class Items {
 
     // Automata cores
     public static final RegistryObject<Item> FORGED_AUTOMATA_CORE = Registration.ITEMS.register("forged_automata_core", ForgedAutomataCore::new);
+
     public static final RegistryObject<Item> SCIENTIFIC_AUTOMATA_CORE = Registration.ITEMS.register(
-            "scientific_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableScientificAutomataCore, ScientificTurtle.ID, null));
+            "scientific_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableScientificAutomataCore, ScientificTurtle.ID, null)
+    );
+
     public static final RegistryObject<Item> ENCHANTING_AUTOMATA_CORE = Registration.ITEMS.register(
             "enchanting_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableEnchantingAutomataCore, EnchantingTurtle.ID, null)
     );
+
     public static final RegistryObject<Item> SMITHING_AUTOMATA_CORE = Registration.ITEMS.register(
             "smithing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableSmithingAutomataCore, SmithingTurtle.ID, null)
     );
+
     public static final RegistryObject<Item> BREWING_AUTOMATA_CORE = Registration.ITEMS.register(
             "brewing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableBrewingAutomataCore, BrewingTurtle.ID, null)
     );
@@ -92,6 +98,17 @@ public class Items {
             "knowledgium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
     );
 
+    // Enderwire network
+
+    public static final RegistryObject<Item> ENREDIUM_INGOT = Registration.ITEMS.register(
+            "enredium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
+    );
+
+    public static final RegistryObject<Item> ENDERWIRE_NETWORK_MANAGER = Registration.ITEMS.register(
+            "enderwire/network_manager", () -> new PeripheralItem(() -> true, null, EnderwireNetworkManagementPocket.ID)
+    );
+
+    @SuppressWarnings("EmptyMethod")
     public static void register() {
     }
 

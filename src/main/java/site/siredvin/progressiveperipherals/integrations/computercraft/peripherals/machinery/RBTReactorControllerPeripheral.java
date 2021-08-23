@@ -8,8 +8,10 @@ import java.util.List;
 
 public class RBTReactorControllerPeripheral extends GenericMachineryPeripheral<RBTRectorControllerTileEntity> {
 
-    public RBTReactorControllerPeripheral(String type, RBTRectorControllerTileEntity tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "realityBreakthroughReactorController";
+
+    public RBTReactorControllerPeripheral(RBTRectorControllerTileEntity tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override

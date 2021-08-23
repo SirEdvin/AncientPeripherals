@@ -43,7 +43,8 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(Tags.Items.INGOTS).add(
                 Items.KNOWLEDGIUM_INGOT.get(),
                 Items.ABSTRACTIUM_INGOT.get(),
-                Items.IRREALIUM_INGOT.get()
+                Items.IRREALIUM_INGOT.get(),
+                Items.ENREDIUM_INGOT.get()
         );
         this.tag(Tags.Items.STORAGE_BLOCKS).add(
                 Blocks.IRREALIUM_MACHINERY_STORAGE.get().asItem(),

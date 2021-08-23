@@ -3,6 +3,7 @@ package site.siredvin.progressiveperipherals.common.items.base;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.Items;
 
 import java.util.function.Supplier;
@@ -19,7 +20,8 @@ public enum ItemTier implements IItemTier {
     private final int enchantmentValue;
     private final LazyValue<Ingredient> repairIngredient;
 
-    private ItemTier(int level, int uses, float speed, float damage, int enchantmentValue, Supplier<Ingredient> repairIngredient) {
+    @SuppressWarnings("SameParameterValue")
+    ItemTier(int level, int uses, float speed, float damage, int enchantmentValue, Supplier<Ingredient> repairIngredient) {
         this.level = level;
         this.uses = uses;
         this.speed = speed;
@@ -48,7 +50,7 @@ public enum ItemTier implements IItemTier {
         return this.enchantmentValue;
     }
 
-    public Ingredient getRepairIngredient() {
+    public @NotNull Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
 }

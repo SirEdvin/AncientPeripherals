@@ -27,7 +27,7 @@ public class FlexibleStatueModel extends AbstractFlexibleStatueModel implements 
     }
 
     @Override
-    public ItemOverrideList getOverrides() {
+    public @NotNull ItemOverrideList getOverrides() {
         return overrides;
     }
 }

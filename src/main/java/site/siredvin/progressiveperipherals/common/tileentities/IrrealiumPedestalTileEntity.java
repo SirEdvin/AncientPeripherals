@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,7 +10,7 @@ import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackConta
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 
-public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity implements ITileEntityDataProvider, ITileEntityStackContainer {
+public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
     private static final String ITEM_STACK_TAG = "itemStackTag";
     private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 
@@ -19,7 +20,7 @@ public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity implements
 
     public void setStoredStack(@NotNull ItemStack storedStack) {
         this.storedStack = storedStack;
-        pushState();
+        pushInternalDataChangeToClient();
     }
 
     public @NotNull ItemStack getStoredStack() {
@@ -39,11 +40,9 @@ public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity implements
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(ITEM_STACK_TAG)) {
             storedStack = ItemStack.of(data.getCompound(ITEM_STACK_TAG));
-            if (!skipUpdate)
-                pushState();
         }
     }
 }

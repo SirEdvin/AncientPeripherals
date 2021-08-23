@@ -25,6 +25,7 @@ public abstract class AbstractFlexibleStatueModel implements IBakedModel {
     public static final ResourceLocation TEXTURE = new ResourceLocation(ProgressivePeripherals.MOD_ID, "block/flexible_statue_empty");
     private static final ResourceLocation DUMMY = new ResourceLocation("dummy_name");
 
+    @SuppressWarnings("deprecation")
     private TextureAtlasSprite getTexture() {
         return Minecraft.getInstance().getTextureAtlas(AtlasTexture.LOCATION_BLOCKS).apply(TEXTURE);
     }
@@ -33,6 +34,7 @@ public abstract class AbstractFlexibleStatueModel implements IBakedModel {
         FaceBakery bakery = new FaceBakery();
 
         if (quadsData == null)
+            //noinspection deprecation
             return Minecraft.getInstance().getBlockRenderer().getBlockModel(Blocks.FLEXIBLE_STATUE.get().defaultBlockState()).getQuads(state, side, rand);
         Direction stableSide;
         if (side == null) {
@@ -80,17 +82,18 @@ public abstract class AbstractFlexibleStatueModel implements IBakedModel {
     }
 
     @Override
-    public TextureAtlasSprite getParticleIcon() {
+    public @NotNull TextureAtlasSprite getParticleIcon() {
         return getTexture();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public ItemCameraTransforms getTransforms() {
+    public @NotNull ItemCameraTransforms getTransforms() {
         return ItemCameraTransforms.NO_TRANSFORMS;
     }
 
     @Override
-    public ItemOverrideList getOverrides() {
+    public @NotNull ItemOverrideList getOverrides() {
         return ItemOverrideList.EMPTY;
     }
 }

@@ -1,0 +1,46 @@
+{
+  "name": "Enderwire sensors",
+  "icon": "progressiveperipherals:enderwire/button",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Enderwire sensors is category of special blocks, that will propagate events when world state changes respectively.$(p)All of sensors have disable/enable events.$(p)None of those sensors are configurable"
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "spotlight",
+      "title": "Enderwire lever",
+      "item": "progressiveperipherals:enderwire/lever",
+      "text": "Lever, that connected to enderwire network. Will populate turn off/turn on events and also, state of lever can be observed via $(o)getNetworkElementState$() from network connector"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/lever"
+    },
+    {
+      "type": "spotlight",
+      "title": "Enderwire button",
+      "item": "progressiveperipherals:enderwire/button",
+      "text": "Button, that connected to enderwire network. Will populate turn off/turn on events and also, state of button can be observed via $(o)getNetworkElementState$() from network connector.$(p)$(l)Note$(): button cannot be unpressed, it will be unpressed automatically"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/button"
+    },
+    {
+      "type": "spotlight",
+      "title": "Enderwire pressure plate",
+      "item": "progressiveperipherals:enderwire/pressure_plate",
+      "text": "Pressure plate, that connected to enderwire network. Will populate turn off/turn on events and also, state of plate can be observed via $(o)getNetworkElementState$() from network connector"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/pressure_plate"
+    }
+  ]
+}

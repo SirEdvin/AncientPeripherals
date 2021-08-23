@@ -1,0 +1,28 @@
+{
+  "name": "Network mofificators",
+  "icon": "progressiveperipherals:enderwire/network_amplifier",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Network amplifier",
+      "item": "progressiveperipherals:enderwire/network_amplifier",
+      "text": "When connected to network, expand network max range. Amplifier modification are addictive, so more amplifier you add to network, more network max range will be.$(p)$(o)Not configurable and doesn't have any events$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/network_connector"
+    },
+    {
+      "type": "spotlight",
+      "title": "Dimension breaker",
+      "item": "progressiveperipherals:enderwire/dimension_breaker",
+      "text": "When attached to network, it will make network able to connect elements between dimension. Also, range now irrelevant! You can connect more then one dimension breaker to network, but this will not add any benefits.$(p)$(o)Not configurable and doesn't have any events$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/dimension_breaker"
+    }
+  ]
+}

@@ -27,8 +27,10 @@ import static site.siredvin.progressiveperipherals.integrations.computercraft.pe
 
 public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
 
-    public SmithingAutomataCorePeripheral(String type, ITurtleAccess turtle, TurtleSide side) {
-        super(type, turtle, side);
+    public static final String TYPE = "smithingAutomataCore";
+
+    public SmithingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
+        super(TYPE, turtle, side);
     }
 
     @Override

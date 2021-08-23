@@ -1,6 +1,7 @@
 package site.siredvin.progressiveperipherals.utils;
 
 import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -23,6 +24,9 @@ public class BiomeUtils {
     }
 
     public static boolean isOverworldBiome(@NotNull BiomeLoadingEvent event) {
+        ResourceLocation biomeName = event.getName();
+        if (biomeName == null)
+            return false;
         RegistryKey<Biome> biomeKey = RegistryKey.create(Registry.BIOME_REGISTRY, event.getName());
         return OVERWORLD_BIOMES.contains(biomeKey);
     }

@@ -13,6 +13,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
@@ -21,15 +22,17 @@ import java.util.stream.Stream;
 
 public class RealityBreakthroughPointFeature extends Feature<NoFeatureConfig> {
     private static final ResourceLocation templateRL = new ResourceLocation(ProgressivePeripherals.MOD_ID, "breakthrough_point");
-    protected PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE).setRotation(Rotation.NONE).setIgnoreEntities(false).setChunkPos(null);
     private static final int startYSearchLevel = 56;
+
+    @SuppressWarnings("ConstantConditions")
+    protected final PlacementSettings placementsettings = (new PlacementSettings()).setMirror(Mirror.NONE).setRotation(Rotation.NONE).setIgnoreEntities(false).setChunkPos(null);
 
     public RealityBreakthroughPointFeature(Codec<NoFeatureConfig> config) {
         super(config);
     }
 
     @Override
-    public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(ISeedReader world, @NotNull ChunkGenerator chunkGenerator, @NotNull Random random, @NotNull BlockPos pos, @NotNull NoFeatureConfig config) {
         BlockPos.Mutable mutable = new BlockPos.Mutable().set(pos);
         mutable.setY(startYSearchLevel);
         while (!world.isEmptyBlock(mutable)) {

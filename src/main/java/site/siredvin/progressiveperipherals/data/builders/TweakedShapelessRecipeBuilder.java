@@ -11,6 +11,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -92,10 +93,10 @@ public class TweakedShapelessRecipeBuilder {
             this.result = result;
             this.count = count;
             this.group = group;
-            this.ingredients = ingredients;;
+            this.ingredients = ingredients;
         }
 
-        public void serializeRecipeData(JsonObject jsonObject) {
+        public void serializeRecipeData(@NotNull JsonObject jsonObject) {
             if (!this.group.isEmpty()) {
                 jsonObject.addProperty("group", this.group);
             }
@@ -116,11 +117,11 @@ public class TweakedShapelessRecipeBuilder {
             jsonObject.add("result", jsonobject);
         }
 
-        public IRecipeSerializer<?> getType() {
+        public @NotNull IRecipeSerializer<?> getType() {
             return IRecipeSerializer.SHAPELESS_RECIPE;
         }
 
-        public ResourceLocation getId() {
+        public @NotNull ResourceLocation getId() {
             return this.id;
         }
 

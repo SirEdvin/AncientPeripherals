@@ -8,9 +8,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
+import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireElement;
 
 public class ModProbeInfoProvider implements IProbeInfoProvider {
 
@@ -29,6 +31,16 @@ public class ModProbeInfoProvider implements IProbeInfoProvider {
             if (probeMode != ProbeMode.NORMAL) {
                 for (ITextComponent text: ((IProbeable) tile).extraProbeData(blockState))
                     iProbeInfo.text(text);
+            }
+        }
+
+        if (tile instanceof IEnderwireElement) {
+            String attachedNetwork = ((IEnderwireElement) tile).getAttachedNetwork();
+
+            if (attachedNetwork != null) {
+                iProbeInfo.text(new StringTextComponent("Enderwire: attached to: " + attachedNetwork));
+            } else {
+                iProbeInfo.text(new StringTextComponent("Enderwire: not attached to anything"));
             }
         }
     }

@@ -17,7 +17,7 @@ public class RealityForgerTileEntity extends PeripheralTileEntity<RealityForgerP
     protected @NotNull RealityForgerPeripheral createPeripheral() {
         BlockState blockState = getBlockState();
         if (blockState.is(Blocks.REALITY_FORGER_MK2.get()))
-            return new RealityForgerMK2Peripheral("realityForgerMK2", this);
-        return new RealityForgerPeripheral("realityForger", this);
+            return new RealityForgerMK2Peripheral(this);
+        return new RealityForgerPeripheral(this);
     }
 }

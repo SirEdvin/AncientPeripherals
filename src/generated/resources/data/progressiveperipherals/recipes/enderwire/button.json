@@ -1,0 +1,17 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "    ",
+    " C  ",
+    "    ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/casing"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/button"
+  }
+}

@@ -17,11 +17,7 @@ import java.util.function.Supplier;
 
 public class BaseItem extends Item {
     protected ITextComponent description;
-    Supplier<Boolean> enabledSup;
-
-    public BaseItem() {
-        this(new Item.Properties().stacksTo(1));
-    }
+    private final Supplier<Boolean> enabledSup;
 
     public BaseItem(Properties properties) {
         this(properties, () -> true);
@@ -36,8 +32,11 @@ public class BaseItem extends Item {
         return enabledSup.get();
     }
 
-    public void appendModHoverText(ItemStack stack, @org.jetbrains.annotations.Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(EnumColor.buildTextComponent(getModDescription()));
+    @SuppressWarnings("unused")
+    public void appendModHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        ITextComponent modDescription = getModDescription();
+        if (!modDescription.getString().isEmpty())
+            tooltip.add(EnumColor.buildTextComponent(modDescription));
         if (!isEnabled())
             tooltip.add(EnumColor.buildTextComponent(new TranslationTextComponent("item.advancedperipherals.tooltip.disabled")));
     }
@@ -49,7 +48,7 @@ public class BaseItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable World worldIn, @NotNull List<ITextComponent> tooltip, @NotNull ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         appendModHoverText(stack, worldIn, tooltip, flagIn);
     }

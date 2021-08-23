@@ -57,5 +57,11 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.linearSystemTimeLimit = ConfigHolder.COMMON_CONFIG.LINEAR_SYSTEM_TIME_LIMIT.get();
         // Automata Cores
         ProgressivePeripheralsConfig.enchantingAutomataCoreDisappearChance = ConfigHolder.COMMON_CONFIG.ENCHANTING_AUTOMATA_CORE_DISAPPEAR_CHANCE.get();
+        // Enderwire
+        ProgressivePeripheralsConfig.enderwireNetworkEnabled = ConfigHolder.COMMON_CONFIG.ENDERWIRE_NETWORK_ENABLED.get();
+        ProgressivePeripheralsConfig.enderwireNetworkRangeStep = ConfigHolder.COMMON_CONFIG.ENDERWIRE_NETWORK_RANGE_STEP.get();
+        ProgressivePeripheralsConfig.enderwireNetworkComputerBusSize = ConfigHolder.COMMON_CONFIG.ENDERWIRE_NETWORK_COMPUTER_BUS_SIZE.get();
+        ProgressivePeripheralsConfig.enderwireNetworkMaxElementCount = ConfigHolder.COMMON_CONFIG.ENDERWIRE_NETWORK_MAX_ELEMENT_COUNT.get();
+        ProgressivePeripheralsConfig.enderwireNetworkMaxCountPerPlayer = ConfigHolder.COMMON_CONFIG.ENDERWIRE_NETWORK_MAX_COUNT_PER_PLAYER.get();
     }
 }

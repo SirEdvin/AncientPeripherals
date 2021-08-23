@@ -30,6 +30,7 @@ public enum CountOperation implements IPeripheralOperation<Integer> {
     private final int defaultCost;
     private final CountPolicy countCostPolicy;
 
+    @SuppressWarnings("SameParameterValue")
     CountOperation(
             int defaultCooldown, CountPolicy countCooldownPolicy, int defaultCost, CountPolicy countCostPolicy) {
         this.defaultCooldown = defaultCooldown;
@@ -38,6 +39,7 @@ public enum CountOperation implements IPeripheralOperation<Integer> {
         this.countCostPolicy = countCostPolicy;
     }
 
+    @SuppressWarnings("SameParameterValue")
     CountOperation(int defaultCooldown, int defaultCost) {
         this(defaultCooldown, CountPolicy.MULTIPLY, defaultCost, CountPolicy.MULTIPLY);
     }

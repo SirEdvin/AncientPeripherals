@@ -15,11 +15,12 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryController;
 import site.siredvin.progressiveperipherals.common.blocks.base.BaseBlock;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryBlockProperties;
-import site.siredvin.progressiveperipherals.common.machinery.MachineryStructureUtil;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryBlockProperties;
+import site.siredvin.progressiveperipherals.extra.machinery.MachineryStructureUtil;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RBTRectorControllerTileEntity;
 
 public class MachineryBlock extends BaseBlock {
@@ -33,14 +34,14 @@ public class MachineryBlock extends BaseBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONNECTED);
         builder.add(FACING);
     }
 
     @Override
-    public BlockState mirror(BlockState state, Mirror mirror) {
+    public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
@@ -56,7 +57,7 @@ public class MachineryBlock extends BaseBlock {
     }
 
     @Override
-    public void onRemove(BlockState state, World world, BlockPos blockPos, BlockState newState, boolean isMoving) {
+    public void onRemove(BlockState state, @NotNull World world, @NotNull BlockPos blockPos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock()) && state.getValue(MachineryBlockProperties.CONNECTED)) {
             MachineryStructureUtil.handlePartDestroy(
                     world, blockPos, RBTRectorControllerTileEntity.SIZE,

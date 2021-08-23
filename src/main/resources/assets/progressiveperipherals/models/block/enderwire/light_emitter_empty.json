@@ -1,0 +1,8 @@
+{
+	"parent": "progressiveperipherals:block/enderwire/light_emitter",
+	"textures": {
+		"0": "progressiveperipherals:block/enderwire/light_emitter_floor",
+		"1": "progressiveperipherals:block/enderwire/light_emitter_lamp_empty",
+		"particle": "progressiveperipherals:block/enderwire/light_emitter_floor"
+	}
+}

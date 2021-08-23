@@ -67,6 +67,10 @@ public class LuaUtils {
     }
 
     public static Color convertToColor(@Nullable Object obj) throws LuaException {
+        return convertToColor(obj, 255);
+    }
+
+    public static Color convertToColor(@Nullable Object obj, int colorAlpha) throws LuaException {
         if (obj == null)
             return Color.WHITE;
         if (!(obj instanceof Map))
@@ -79,7 +83,7 @@ public class LuaUtils {
         Object blue = table.get("blue");
         if (!(red instanceof Number) || !(green instanceof Number) || !(blue instanceof Number))
             throw new LuaException("Table should have color RGB codes");
-        return new Color(((Number) red).intValue(), ((Number) green).intValue(), ((Number) blue).intValue());
+        return new Color(((Number) red).intValue(), ((Number) green).intValue(), ((Number) blue).intValue(), colorAlpha);
     }
 
     public static QuadData convertToQuadData(Map<?, ?> table) throws LuaException {
@@ -116,6 +120,14 @@ public class LuaUtils {
             data.put(i + 1, toLua(value[i]));
         }
         return data;
+    }
+
+    public static Map<String, Integer> toLua(Color color) {
+        return new HashMap<String, Integer>() {{
+           put("red", color.getRed());
+           put("green", color.getGreen());
+           put("blue", color.getBlue());
+        }};
     }
 
     public static double[] toArray(Map<Double, Number> data) throws LuaException {

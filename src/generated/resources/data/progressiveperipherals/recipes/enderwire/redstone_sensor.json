@@ -1,0 +1,20 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "R  R",
+    " RR ",
+    " RR ",
+    "R CR"
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/casing"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/redstone_sensor"
+  }
+}

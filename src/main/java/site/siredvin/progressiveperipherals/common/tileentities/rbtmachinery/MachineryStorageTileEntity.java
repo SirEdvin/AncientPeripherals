@@ -10,11 +10,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class MachineryStorageTileEntity extends LockableLootTileEntity implements ITileEntityDataProvider {
+public class MachineryStorageTileEntity extends LockableLootTileEntity {
 
     private static final String SIZE_TAG = "size";
 
@@ -29,15 +29,13 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
         this.items = NonNullList.withSize(size, ItemStack.EMPTY);
     }
 
-    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.putInt(SIZE_TAG, items.size());
         ItemStackHelper.saveAllItems(data, items);
         return data;
     }
 
-    @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         int size = data.getInt(SIZE_TAG);
         if (items.size() != size) {
             int inflictedSize = Math.min(items.size(), size);
@@ -51,35 +49,35 @@ public class MachineryStorageTileEntity extends LockableLootTileEntity implement
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT data) {
+    public @NotNull CompoundNBT save(@NotNull CompoundNBT data) {
         return saveInternalData(super.save(data));
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT data) {
+    public void load(@NotNull BlockState state, @NotNull CompoundNBT data) {
         super.load(state, data);
-        loadInternalData(state, data, true);
+        loadInternalData(state, data);
     }
 
     @Override
-    protected ITextComponent getDefaultName() {
+    protected @NotNull ITextComponent getDefaultName() {
         return TranslationUtil.localization("machinery_storage");
     }
 
     @Override
-    protected Container createMenu(int p_213906_1_, PlayerInventory p_213906_2_) {
+    protected @NotNull Container createMenu(int p_213906_1_, @NotNull PlayerInventory p_213906_2_) {
         if (items.size() == 54)
             return ChestContainer.sixRows(p_213906_1_, p_213906_2_, this);
         return ChestContainer.threeRows(p_213906_1_, p_213906_2_, this);
     }
 
     @Override
-    protected NonNullList<ItemStack> getItems() {
+    protected @NotNull NonNullList<ItemStack> getItems() {
         return items;
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> nonNullList) {
+    protected void setItems(@NotNull NonNullList<ItemStack> nonNullList) {
         items = nonNullList;
     }
 

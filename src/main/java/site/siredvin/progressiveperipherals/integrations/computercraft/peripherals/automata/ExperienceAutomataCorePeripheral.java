@@ -68,6 +68,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         return this.withOperation(operation, null, function, null);
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult collectXP() {
         return withOperation(XP_TRANSFER, context -> {
@@ -84,6 +85,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult suckOwnerXP(int limit) {
         return withOperation(XP_TRANSFER, context -> {
@@ -97,6 +99,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final double burnXP(double limit) throws LuaException {
         if (limit <= 0)
@@ -107,6 +110,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         return burnAmount;
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult sendXPToOwner(int limit) {
         return withOperation(XP_TRANSFER, context -> {
@@ -121,6 +125,7 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult sendXP(Map<?, ?> rawBlockPos, double limit) throws LuaException {
         BlockPos pos = getPos();
@@ -146,11 +151,13 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final double getStoredXP() {
         return _getStoredXP();
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction
     public final MethodResult getOwnerXP() {
         PlayerEntity player = owner.getOwner();

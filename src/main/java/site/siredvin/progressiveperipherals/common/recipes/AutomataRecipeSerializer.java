@@ -11,6 +11,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -24,7 +25,7 @@ public class AutomataRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
     }
 
     @Override
-    public AutomataRecipe fromJson(ResourceLocation id, JsonObject recipeData) {
+    public @NotNull AutomataRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject recipeData) {
         Map<String, Ingredient> map = AutomataRecipe.keyFromJson(JSONUtils.getAsJsonObject(recipeData, "key"));
         String[] patterns = AutomataRecipe.patternFromJson(JSONUtils.getAsJsonArray(recipeData, "pattern"));
         NonNullList<Ingredient> ingredients = AutomataRecipe.dissolvePattern(patterns, map);
@@ -34,7 +35,7 @@ public class AutomataRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
 
     @Nullable
     @Override
-    public AutomataRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
+    public AutomataRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull PacketBuffer buffer) {
         NonNullList<Ingredient> ingredients = NonNullList.withSize(AutomataRecipe.MAX_HEIGHT * AutomataRecipe.MAX_WIDTH, Ingredient.EMPTY);
 
         for (int k = 0; k < ingredients.size(); k++) {
@@ -47,7 +48,7 @@ public class AutomataRecipeSerializer extends ForgeRegistryEntry<IRecipeSerializ
     }
 
     @Override
-    public void toNetwork(PacketBuffer buffer, AutomataRecipe recipe) {
+    public void toNetwork(@NotNull PacketBuffer buffer, AutomataRecipe recipe) {
         for(Ingredient ingredient : recipe.getIngredients()) {
             ingredient.toNetwork(buffer);
         }

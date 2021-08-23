@@ -1,0 +1,24 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "KDDK",
+    " CC ",
+    " CC ",
+    "KDDK"
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/peripheral_casing"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "K": {
+      "item": "progressiveperipherals:knowledgium_ingot"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/peripheral_sharing",
+    "count": 4
+  }
+}

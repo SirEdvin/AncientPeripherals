@@ -1,0 +1,28 @@
+{
+  "name": "Enderwire modem",
+  "icon": "progressiveperipherals:enderwire/modem",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Enderwire modem",
+      "item": "progressiveperipherals:enderwire/modem",
+      "text": "Enderwire modem, that need to be attached to computer directly, allows to access peripherals inside enderwire network! Can send redstone signals from 4 sides.$(p)$(o)Not configurable, and don't have any data in state$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/modem"
+    },
+    {
+      "type": "spotlight",
+      "title": "Peripheral sharing",
+      "item": "progressiveperipherals:enderwire/peripheral_sharing",
+      "text": "Block, that allow to populate connected peripheral to enderwire network.$(p)$(o)Not configurable, have data about shared peripheral inside state$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/peripheral_sharing"
+    }
+  ]
+}

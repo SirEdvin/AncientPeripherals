@@ -22,8 +22,10 @@ import java.util.stream.Collectors;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUERY_REGISTRY;
 
 public class RecipeRegistryPeripheral extends OperationPeripheral {
-    public RecipeRegistryPeripheral(String type, PeripheralTileEntity<?> tileEntity) {
-        super(type, tileEntity);
+    public static final String TYPE = "recipeRegistry";
+
+    public RecipeRegistryPeripheral(PeripheralTileEntity<?> tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override
@@ -45,6 +47,7 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         return MethodResult.of(Registry.RECIPE_TYPE.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList()));
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @LuaFunction
     public final MethodResult getRecipeFor(String recipeTypeName, String itemID) {
         Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
@@ -67,7 +70,8 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
 
         List<IRecipe<?>> recipes = (List<IRecipe<?>>) getWorld().getRecipeManager().getAllRecipesFor(recipeType);
 
-        Optional<?> optRecipe = recipes.stream()
+        // This is very stupid, but happens!
+        @SuppressWarnings("ConstantConditions") Optional<?> optRecipe = recipes.stream()
                 .filter(recipe -> recipe.getResultItem() != null && recipe.getResultItem().getItem() == optTargetItem.get()).findAny();
         if (!optRecipe.isPresent())
             return MethodResult.of(null, "Cannot find any recipe for this combination");
@@ -78,8 +82,10 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         recipeData.put("id", recipe.getId().toString());
         recipeData.put("group", recipe.getGroup());
         // Sad reality, any of this can be null
+        //noinspection ConstantConditions
         if (recipe.getResultItem() != null)
             recipeData.put("result", NBTUtil.toLua(recipe.getResultItem().serializeNBT()));
+        //noinspection ConstantConditions
         if (recipe.getIngredients() != null) {
             Map<Integer, Object> ingredientsData = new HashMap<>();
             NonNullList<Ingredient> ingredients = recipe.getIngredients();

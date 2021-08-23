@@ -9,11 +9,11 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IPeripheralPlugin;
 import site.siredvin.progressiveperipherals.api.machinery.ICubeMachineryController;
 import site.siredvin.progressiveperipherals.api.machinery.IMachineryStructure;
-import site.siredvin.progressiveperipherals.common.machinery.CubeMachineryStructure;
+import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
+import site.siredvin.progressiveperipherals.extra.machinery.CubeMachineryStructure;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tags.BlockTags;
-import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.machinery.RBTExtractorPeripheral;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.GeneralBreakthroughPointPlugin;
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEntity<RBTExtractorPeripheral> implements ICubeMachineryController<RBTExtractorControllerTileEntity> {
+public class RBTExtractorControllerTileEntity extends MutableNBTTileEntity<RBTExtractorPeripheral> implements ICubeMachineryController<RBTExtractorControllerTileEntity> {
     public final static int SIZE = 3;
 
     private final static String NORTH_WEST_LOWEST_POS_TAG = "northWestLowestPos";
@@ -43,8 +43,13 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
     }
 
     @Override
+    protected boolean hasPeripheral() {
+        return true;
+    }
+
+    @Override
     protected @NotNull RBTExtractorPeripheral createPeripheral() {
-        return new RBTExtractorPeripheral("realityBreakthroughExtractorController", this);
+        return new RBTExtractorPeripheral(this);
     }
 
     @Override
@@ -72,7 +77,7 @@ public class RBTExtractorControllerTileEntity extends MutableNBTPeripheralTileEn
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(NORTH_WEST_LOWEST_POS_TAG)) {
             BlockPos northWestLowest = NBTUtil.readBlockPos(data.getCompound(NORTH_WEST_LOWEST_POS_TAG));
             structure = new CubeMachineryStructure(northWestLowest, SIZE);

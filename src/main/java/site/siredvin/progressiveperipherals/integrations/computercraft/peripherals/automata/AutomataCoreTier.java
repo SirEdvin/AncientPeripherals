@@ -3,6 +3,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.peripher
 import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+
 public enum AutomataCoreTier implements IAutomataCoreTier {
     TIER3(4, 4);
 
@@ -11,6 +12,7 @@ public enum AutomataCoreTier implements IAutomataCoreTier {
     private final int defaultInteractionRadius;
     private final int defaultMaxFuelConsumptionRate;
 
+    @SuppressWarnings("SameParameterValue")
     AutomataCoreTier(int defaultInteractionRadius, int defaultMaxFuelConsumptionRate) {
         this.defaultInteractionRadius = defaultInteractionRadius;
         this.defaultMaxFuelConsumptionRate = defaultMaxFuelConsumptionRate;

@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:enderwire/advanced_button"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.enderwire.advanced_toolkit"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.enderwire.advanced_toolkit.description"
+    }
+  },
+  "parent": "progressiveperipherals:enderwire_base_toolkit",
+  "criteria": {
+    "lever_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/advanced_lever"
+          }
+        ]
+      }
+    },
+    "button_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/advanced_button"
+          }
+        ]
+      }
+    },
+    "plate_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/advanced_pressure_plate"
+          }
+        ]
+      }
+    }
+  }
+}

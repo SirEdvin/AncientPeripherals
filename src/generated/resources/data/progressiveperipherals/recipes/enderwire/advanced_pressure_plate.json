@@ -1,0 +1,20 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "CA  ",
+    "    ",
+    "    ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/pressure_plate"
+    },
+    "A": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/advanced_pressure_plate"
+  }
+}

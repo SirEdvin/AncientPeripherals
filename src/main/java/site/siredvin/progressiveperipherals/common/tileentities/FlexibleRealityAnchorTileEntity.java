@@ -1,9 +1,11 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
@@ -15,7 +17,7 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 
-public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implements ITileEntityDataProvider {
+public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider {
 
     private static final String MIMIC_TAG = "mimic";
     private static final String LIGHT_LEVEL_TAG = "lightLevel";
@@ -30,10 +32,13 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
         super(TileEntityTypes.FLEXIBLE_REALITY_ANCHOR.get());
     }
 
-    public void pushStackedState() {
+    @Override
+    public void pushInternalDataChangeToClient() {
         if (pendingState != null) {
-            pushState(pendingState);
+            pushInternalDataChangeToClient(pendingState);
             pendingState = null;
+        } else {
+            pushInternalDataChangeToClient(getBlockState());
         }
     }
 
@@ -42,11 +47,14 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
     }
 
     public void setMimic(@Nullable BlockState mimic, @NotNull BlockState state, boolean skipUpdate) {
-        if (mimic != null && ProgressivePeripheralsConfig.realityForgerBlacklist.contains(mimic.getBlock().getRegistryName().toString()))
-            return;
+        if (mimic != null) {
+            ResourceLocation blockName = mimic.getBlock().getRegistryName();
+            if (blockName != null && ProgressivePeripheralsConfig.realityForgerBlacklist.contains(blockName.toString()))
+                return;
+        }
         this.mimic = mimic;
         if (!skipUpdate) {
-            pushState(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));
+            pushInternalDataChangeToClient(state.setValue(FlexibleRealityAnchor.CONFIGURED, mimic != null));
         } else {
             if (pendingState == null)
                 pendingState = state;
@@ -73,7 +81,7 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
     }
 
     @Override
-    public IModelData getModelData() {
+    public @NotNull IModelData getModelData() {
         return new ModelDataMap.Builder()
                 .withInitial(MIMIC, mimic)
                 .build();
@@ -90,11 +98,14 @@ public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity implem
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public boolean isRequiredRenderUpdate() {
+        return true;
+    }
+
+    @Override
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(MIMIC_TAG)) {
             setMimic(NBTUtil.readBlockState(data.getCompound(MIMIC_TAG)), state, true);
-            if (!skipUpdate)
-                pushStackedState();
         }
         if (data.contains(LIGHT_LEVEL_TAG))
             setLightLevel(data.getInt(LIGHT_LEVEL_TAG));

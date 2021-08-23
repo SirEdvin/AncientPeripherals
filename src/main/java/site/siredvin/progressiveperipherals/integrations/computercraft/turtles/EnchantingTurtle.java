@@ -30,6 +30,6 @@ public class EnchantingTurtle extends ModelTransformingTurtle<EnchantingAutomata
 
     @Override
     protected EnchantingAutomataCorePeripheral buildPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
-        return new EnchantingAutomataCorePeripheral("enchantingAutomataCore", turtle, side);
+        return new EnchantingAutomataCorePeripheral(turtle, side);
     }
 }

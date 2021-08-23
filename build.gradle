@@ -12,8 +12,8 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "${mod_version}"
-group = 'site.siredvin.anchientperipherals' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "${mod_version}" + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+group = 'site.siredvin.progressiveperipherals' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'progressiveperipherals'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
@@ -23,7 +23,22 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+def static getenv(path = ".env") {
+    def env = [:]
+
+    def file = new File(path)
+    if (file.exists()) {
+        file.eachLine { line ->
+            def (name, value) = line.tokenize("=")
+            env[name.trim()] = value.trim()
+        }
+    }
+
+    return env
+}
+
+def secretEnv = getenv()
+
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
     // Channel:   Version:
@@ -125,19 +140,26 @@ repositories {
     mavenCentral()
     maven { url 'https://squiddev.cc/maven/' }
     maven { url 'https://www.cursemaven.com' }
-    maven { url 'https://panel.repsy.io/mvn/siredvin/default/' }
+    maven {
+        url 'https://maven.pkg.github.com/SirEdvin/ProgressivePeripherals'
+        credentials {
+            username = secretEnv["USERNAME"]
+            password = secretEnv["TOKEN"]
+        }
+    }
     maven { url 'https://ldtteam.jfrog.io/ldtteam/modding' }
 }
 
 configurations {
     extraLibs
+    jsocJavadoc
 }
 
 dependencies {
     compileOnly "org.jetbrains:annotations:${jb_annotations}"
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation fg.deobf("org.squiddev:cc-tweaked-${cc_version}")
-    implementation fg.deobf("curse.maven:AdvancedPeripherals-${ap_version}")
+    implementation fg.deobf("de.srendi.advancedperipherals:advancedperipherals-1.16.5:${ap_version}")
     implementation fg.deobf("mezz.jei:jei-${jei_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
@@ -153,6 +175,15 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
     configurations.implementation.extendsFrom(configurations.extraLibs)
+
+//    jsocJavadoc 'com.surfapi:javadoc-json-doclet:1.0'
+}
+
+
+task generateJson(type: Javadoc) {
+    source = sourceSets.main.allJava
+    options.docletpath = configurations.jsocJavadoc.files.asType(List)
+    options.doclet = "com.rga78.javadoc.JsonDoclet"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -182,15 +213,16 @@ jar.finalizedBy('reobfJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            artifactId archivesBaseName
             artifact jar
         }
     }
     repositories {
         maven {
-            url "https://panel.repsy.io/mvn/siredvin/default/"
+            url "https://maven.pkg.github.com/SirEdvin/ProgressivePeripherals"
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
+                username = secretEnv["USERNAME"]
+                password = secretEnv["TOKEN"]
             }
         }
     }

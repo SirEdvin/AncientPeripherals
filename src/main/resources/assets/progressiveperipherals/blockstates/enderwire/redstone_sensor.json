@@ -1,0 +1,112 @@
+{
+  "variants": {
+    "connected=false,face=ceiling,facing=east": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 180,
+      "y": 270
+    },
+    "connected=false,face=ceiling,facing=north": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 180,
+      "y": 180
+    },
+    "connected=false,face=ceiling,facing=south": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 180
+    },
+    "connected=false,face=ceiling,facing=west": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 180,
+      "y": 90
+    },
+    "connected=false,face=floor,facing=east": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "y": 90
+    },
+    "connected=false,face=floor,facing=north": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty"
+    },
+    "connected=false,face=floor,facing=south": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "y": 180
+    },
+    "connected=false,face=floor,facing=west": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "y": 270
+    },
+    "connected=false,face=wall,facing=east": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 270,
+      "y": 270
+    },
+    "connected=false,face=wall,facing=north": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 270,
+      "y": 180
+    },
+    "connected=false,face=wall,facing=south": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 270,
+      "y": 0
+    },
+    "connected=false,face=wall,facing=west": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_empty",
+      "x": 270,
+      "y": 90
+    },
+    "connected=true,face=ceiling,facing=east": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 180,
+      "y": 270
+    },
+    "connected=true,face=ceiling,facing=north": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 180,
+      "y": 180
+    },
+    "connected=true,face=ceiling,facing=south": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 180
+    },
+    "connected=true,face=ceiling,facing=west": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 180,
+      "y": 90
+    },
+    "connected=true,face=floor,facing=east": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "y": 90
+    },
+    "connected=true,face=floor,facing=north": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected"
+    },
+    "connected=true,face=floor,facing=south": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "y": 180
+    },
+    "connected=true,face=floor,facing=west": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "y": 270
+    },
+    "connected=true,face=wall,facing=east": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 270,
+      "y": 270
+    },
+    "connected=true,face=wall,facing=north": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 270,
+      "y": 180
+    },
+    "connected=true,face=wall,facing=south": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 270,
+      "y": 0
+    },
+    "connected=true,face=wall,facing=west": {
+      "model": "progressiveperipherals:block/enderwire/redstone_sensor_connected",
+      "x": 270,
+      "y": 90
+    }
+  }
+}

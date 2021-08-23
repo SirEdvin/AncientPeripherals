@@ -9,10 +9,10 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.setup.RecipeSerializers;
 
@@ -26,7 +26,6 @@ public class AutomataRecipeBuilder {
     private final int count;
     private final List<String> rows = Lists.newArrayList();
     private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
-    private String group = "";
 
     public AutomataRecipeBuilder(IItemProvider resultItem, int count) {
         this.result = resultItem.asItem();
@@ -39,10 +38,6 @@ public class AutomataRecipeBuilder {
 
     public static AutomataRecipeBuilder start(IItemProvider resultItem, int count) {
         return new AutomataRecipeBuilder(resultItem, count);
-    }
-
-    public AutomataRecipeBuilder define(Character ch, ITag<Item> ingredient) {
-        return this.define(ch, Ingredient.of(ingredient));
     }
 
     public AutomataRecipeBuilder define(Character ch, IItemProvider ingredient) {
@@ -67,9 +62,8 @@ public class AutomataRecipeBuilder {
         return this;
     }
 
-    public AutomataRecipeBuilder group(String group) {
-        this.group = group;
-        return this;
+    public AutomataRecipeBuilder empty() {
+        return pattern("    ");
     }
 
     public void save(Consumer<IFinishedRecipe> consumer) {
@@ -78,7 +72,8 @@ public class AutomataRecipeBuilder {
 
     public void save(Consumer<IFinishedRecipe> consumer, ResourceLocation resultID) {
         this.ensureValid(resultID);
-        consumer.accept(new Result(resultID, this.result, this.count, this.group, this.rows, this.key));
+        String group = "";
+        consumer.accept(new Result(resultID, this.result, this.count, group, this.rows, this.key));
     }
 
     public void save(Consumer<IFinishedRecipe> consumer, String postfix) {
@@ -125,7 +120,7 @@ public class AutomataRecipeBuilder {
             this.keys = keys;
         }
 
-        public void serializeRecipeData(JsonObject targetObject) {
+        public void serializeRecipeData(@NotNull JsonObject targetObject) {
             if (!this.group.isEmpty()) {
                 targetObject.addProperty("group", this.group);
             }
@@ -153,7 +148,7 @@ public class AutomataRecipeBuilder {
             targetObject.add("result", jsonobject1);
         }
 
-        public IRecipeSerializer<?> getType() {
+        public @NotNull IRecipeSerializer<?> getType() {
             return RecipeSerializers.AUTOMATA_CRAFTING.get();
         }
 
@@ -169,7 +164,7 @@ public class AutomataRecipeBuilder {
             return null;
         }
 
-        public ResourceLocation getId() {
+        public @NotNull ResourceLocation getId() {
             return this.id;
         }
     }

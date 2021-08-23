@@ -16,7 +16,6 @@ public class Platform {
             Class<?> clazz = Class.forName(ProgressivePeripherals.class.getPackage().getName() + ".integrations." + path);
             return Optional.of(clazz.newInstance());
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ignored) {
-            ignored.printStackTrace();
             return Optional.empty();
         }
     }

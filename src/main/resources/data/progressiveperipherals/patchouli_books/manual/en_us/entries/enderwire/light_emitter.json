@@ -1,0 +1,23 @@
+{
+  "name": "Light emitter",
+  "icon": "progressiveperipherals:enderwire/light_emitter",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Light emitter",
+      "item": "progressiveperipherals:enderwire/light_emitter",
+      "text": "Light emitter, that can be attached to floor, walls or even celling! Has configurable light level and color.$(p)$(o)Configurable, returns light level and color in state$()"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/light_emitter"
+    },
+    {
+      "type": "text",
+      "title": "Configuration",
+      "text": "{$(br)  color $(#666666)=$() {red$(#666666)=$()$(#666666)255$(), green$(#666666)=$()$(#666666)14$(), blue$(#666666)=$()$(#666666)72$()},$(br)  lightLevel $(#666666)=$() $(#666666)12$()$(br)}$(br)$(p)$(l)Note:$() You can send partial configuration, omitting fields, that you don't want to change"
+    }
+  ]
+}

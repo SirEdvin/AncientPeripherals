@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "connected=false,facing=north": {"model": "progressiveperipherals:block/enderwire/dimension_breaker"},
+    "connected=false,facing=south": {"model": "progressiveperipherals:block/enderwire/dimension_breaker", "y":  180},
+    "connected=false,facing=east": {"model": "progressiveperipherals:block/enderwire/dimension_breaker", "y":  90},
+    "connected=false,facing=west": {"model": "progressiveperipherals:block/enderwire/dimension_breaker", "y":  270},
+    "connected=true,facing=north": {"model": "progressiveperipherals:block/enderwire/dimension_breaker_connected"},
+    "connected=true,facing=south": {"model": "progressiveperipherals:block/enderwire/dimension_breaker_connected", "y":  180},
+    "connected=true,facing=east": {"model": "progressiveperipherals:block/enderwire/dimension_breaker_connected", "y":  90},
+    "connected=true,facing=west": {"model": "progressiveperipherals:block/enderwire/dimension_breaker_connected", "y":  270}
+  }
+}

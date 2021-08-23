@@ -1,0 +1,20 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "    ",
+    " CD ",
+    "    ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/peripheral_casing"
+    },
+    "D": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/network_amplifier"
+  }
+}

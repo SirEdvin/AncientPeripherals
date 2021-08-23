@@ -16,10 +16,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public class StatueWorkbenchPeripheral extends BasePeripheral {
+    public static final String TYPE = "statueWorkbench";
     private final static int MAX_QUAD_COUNT = 128;
 
-    public <T extends TileEntity & IPeripheralTileEntity> StatueWorkbenchPeripheral(String type, T tileEntity) {
-        super(type, tileEntity);
+    public <T extends TileEntity & IPeripheralTileEntity> StatueWorkbenchPeripheral(T tileEntity) {
+        super(TYPE, tileEntity);
     }
 
     @Override
@@ -44,9 +45,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        opStatue.ifPresent(statue -> {
-            statue.setName(name);
-        });
+        opStatue.ifPresent(statue -> statue.setName(name));
         return MethodResult.of(true);
     }
 
@@ -64,9 +63,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        opStatue.ifPresent(statue -> {
-            statue.setAuthor(author);
-        });
+        opStatue.ifPresent(statue -> statue.setAuthor(author));
         return MethodResult.of(true);
     }
 
@@ -84,9 +81,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         Optional<FlexibleStatueTileEntity> opStatue = getStatue();
         if (!opStatue.isPresent())
             return MethodResult.of(null, "Cannot find statue on top of workbench");
-        opStatue.ifPresent(statue -> {
-            statue.setLightLevel(lightLevel);
-        });
+        opStatue.ifPresent(statue -> statue.setLightLevel(lightLevel));
         return MethodResult.of(true);
     }
 
@@ -120,7 +115,7 @@ public class StatueWorkbenchPeripheral extends BasePeripheral {
         if (quadList.list.size() > MAX_QUAD_COUNT)
             return MethodResult.of(null, String.format("You cannot send more then %d quads", MAX_QUAD_COUNT));
         FlexibleStatueTileEntity tileEntity = opStatue.get();
-        tileEntity.setBakedQuads(quadList);
+        tileEntity.setBakedQuads(quadList, false);
         return MethodResult.of(true);
     }
 }

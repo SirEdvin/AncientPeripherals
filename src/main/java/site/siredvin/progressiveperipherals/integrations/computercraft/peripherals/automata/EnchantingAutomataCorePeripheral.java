@@ -22,10 +22,13 @@ import java.util.Map;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.ENCHANTMENT;
 
 public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
+
+    public static final String TYPE = "enchantingAutomataCore";
+
     private static final int MINECRAFT_ENCHANTING_LEVEL_LIMIT = 30;
 
-    public EnchantingAutomataCorePeripheral(String type, ITurtleAccess turtle, TurtleSide side) {
-        super(type, turtle, side);
+    public EnchantingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
+        super(TYPE, turtle, side);
     }
 
     @Override
@@ -54,10 +57,12 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         return ProgressivePeripheralsConfig.enableEnchantingAutomataCore;
     }
 
+    @SuppressWarnings("SameReturnValue")
     public boolean allowTreasureEnchants() {
         return false;
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult enchant(int levels) {
         return withOperation(ENCHANTMENT, context -> {
@@ -81,6 +86,7 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         });
     }
 
+    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult extractEnchantment(int target) throws LuaException {
         CheckUtils.isCorrectSlot(target);

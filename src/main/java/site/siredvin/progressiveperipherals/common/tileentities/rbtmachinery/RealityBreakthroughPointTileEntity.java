@@ -9,16 +9,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;
-import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-public class RealityBreakthroughPointTileEntity extends TileEntity implements ITileEntityDataProvider, IProbeable {
+public class RealityBreakthroughPointTileEntity extends TileEntity implements IProbeable {
 
     private static final String POINT_STATE_TAG = "state";
 
@@ -30,27 +30,25 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
         setTier(RealityBreakthroughPointTier.COMMON);
     }
 
-    @Override
     public CompoundNBT saveInternalData(CompoundNBT data) {
         data.put(POINT_STATE_TAG, pointState.serializeNBT());
         return data;
     }
 
-    @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(POINT_STATE_TAG))
             pointState.deserializeNBT(data.getCompound(POINT_STATE_TAG));
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT tag) {
+    public @NotNull CompoundNBT save(@NotNull CompoundNBT tag) {
         return saveInternalData(super.save(tag));
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT tag) {
+    public void load(@NotNull BlockState state, @NotNull CompoundNBT tag) {
         super.load(state, tag);
-        loadInternalData(state, tag, true);
+        loadInternalData(state, tag);
     }
 
     public @NotNull Color getColor() {
@@ -66,6 +64,7 @@ public class RealityBreakthroughPointTileEntity extends TileEntity implements IT
     }
 
     public void consumePower(int amount) {
+        Objects.requireNonNull(level);
         pointState.consumePower(amount);
         if (pointState.getPowerLevel() <= 0)
             level.destroyBlock(getBlockPos(), false);

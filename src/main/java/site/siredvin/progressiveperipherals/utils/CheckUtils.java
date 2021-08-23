@@ -4,6 +4,7 @@ import dan200.computercraft.api.lua.LuaException;
 import net.minecraft.util.math.BlockPos;
 
 public class CheckUtils {
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean radiusCorrect(BlockPos first, BlockPos second, int radius) {
         if (Math.abs(first.getX() - second.getX()) > radius)
             return false;

@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
+import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements ITileEntityDataProvider, IProbeable {
+public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider, IProbeable {
     public static final String BAKED_QUADS_TAG = "bakedQuads";
     public static final String NAME_TAG = "statueName";
     public static final String AUTHOR_TAG = "statueAuthor";
@@ -31,6 +32,7 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
 
     public static final ModelProperty<QuadList> BAKED_QUADS = new ModelProperty<>();
 
+    private @Nullable BlockState pendingState;
     private @Nullable QuadList bakedQuads;
     private @Nullable VoxelShape blockShape;
     private @Nullable String name;
@@ -42,31 +44,42 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
     }
 
     @Override
-    public IModelData getModelData() {
+    public @NotNull IModelData getModelData() {
         return new ModelDataMap.Builder().withInitial(BAKED_QUADS, bakedQuads).build();
     }
 
-    public void loadInternalData(BlockState state, CompoundNBT tag, boolean skipUpdate) {
+    @Override
+    public void pushInternalDataChangeToClient() {
+        if (pendingState != null) {
+            pushInternalDataChangeToClient(pendingState);
+            pendingState = null;
+        } else {
+            pushInternalDataChangeToClient(getBlockState());
+        }
+    }
+
+    @Override
+    public boolean isRequiredRenderUpdate() {
+        return true;
+    }
+
+    public void loadInternalData(BlockState state, CompoundNBT tag) {
         if (tag.contains(NAME_TAG))
             setName(tag.getString(NAME_TAG));
         if (tag.contains(AUTHOR_TAG))
             setAuthor(tag.getString(AUTHOR_TAG));
         if (tag.contains(LIGHT_LEVEL_TAG))
             setLightLevel(tag.getInt(LIGHT_LEVEL_TAG));
-        boolean quadUpdated = false;
         if (tag.contains(BAKED_QUADS_TAG)) {
             QuadList newBakedQuads = NBTUtils.readQuadList(tag.getByteArray(BAKED_QUADS_TAG));
             if (!Objects.equals(bakedQuads, newBakedQuads)) {
-                quadUpdated = true;
                 if (newBakedQuads != null) {
-                    setBakedQuads(newBakedQuads, skipUpdate);
+                    setBakedQuads(newBakedQuads, state,true);
                 } else {
-                    clear(skipUpdate);
+                    clear(state,true);
                 }
             }
         }
-        if (!quadUpdated)
-            pushState();
     }
 
     public CompoundNBT saveInternalData(CompoundNBT tag) {
@@ -86,15 +99,20 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
         return tag;
     }
 
-    public void setBakedQuads(@NotNull QuadList bakedQuads) {
-        setBakedQuads(bakedQuads, false);
+    public void setBakedQuads(@NotNull QuadList bakedQuads, boolean skipUpdate) {
+        setBakedQuads(bakedQuads, getBlockState(), skipUpdate);
     }
 
-    public void setBakedQuads(@NotNull QuadList bakedQuads, boolean skipUpdate) {
+    public void setBakedQuads(@NotNull QuadList bakedQuads, BlockState state, boolean skipUpdate) {
         this.bakedQuads = bakedQuads;
         refreshShape();
-        if (!skipUpdate)
-            pushState(getBlockState().setValue(FlexibleStatue.CONFIGURED, true));
+        if (!skipUpdate) {
+            pushInternalDataChangeToClient(state.setValue(FlexibleStatue.CONFIGURED, true));
+        } else {
+            if (pendingState == null)
+                pendingState = state;
+            pendingState = pendingState.setValue(FlexibleStatue.CONFIGURED, true);
+        }
     }
 
     public void setName(@NotNull String name) {
@@ -121,11 +139,16 @@ public class FlexibleStatueTileEntity extends MutableNBTTileEntity implements IT
         return lightLevel;
     }
 
-    public void clear(boolean skipUpdate) {
+    public void clear(BlockState state, boolean skipUpdate) {
         bakedQuads = null;
         refreshShape();
-        if (!skipUpdate)
-            pushState(getBlockState().setValue(FlexibleStatue.CONFIGURED, false));
+        if (!skipUpdate) {
+            pushInternalDataChangeToClient(state.setValue(FlexibleStatue.CONFIGURED, false));
+        } else {
+            if (pendingState == null)
+                pendingState = state;
+            pendingState = pendingState.setValue(FlexibleStatue.CONFIGURED, false);
+        }
     }
 
     public void refreshShape() {

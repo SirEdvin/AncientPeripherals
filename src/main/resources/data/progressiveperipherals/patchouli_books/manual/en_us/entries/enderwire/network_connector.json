@@ -1,0 +1,133 @@
+{
+  "name": "Network connector",
+  "icon": "progressiveperipherals:enderwire/network_connector",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Network connector",
+      "item": "progressiveperipherals:enderwire/network_connector",
+      "text": "Powerful computer peripheral, that will serve like a bridge between computers and your enderwire network. When attached to computer, this peripheral will populate events from configured network and allow to inspect network elements and even configure then!"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enderwire/network_connector"
+    },
+    {
+      "type": "text",
+      "title": "Enderwire events",
+      "text": "When network connector connected to network it will populate all event inside network to all connected computers. Event will always have type $(o)enderwire_computer_event$()."
+    },
+    {
+      "type": "text",
+      "text": "{$(br)  $(#BA2121)\"enderwire_computer_event\"$(),$(br)  {$(br)    datetime $(#666666)=$() $(#BA2121)\"2020-08-18T10:55:51.538\"$(),$(br)    element $(#666666)=$() $(#BA2121)\"lever_1\"$(),$(br)    epoch $(#666666)=$() $(#666666)1629284151$(),$(br)    event $(#666666)=$() $(#BA2121)\"lever_enabled\"$()$(br)  }$(br)}$(p)$(p)$(o)Example of event$()"
+    },
+    {
+      "type": "text",
+      "title": "Network range",
+      "text": "By default, enderwire network has limited connection range between elements, take this to account.$(p)If you try to configure element that are not in range of network connector, you will receive error."
+    },
+    {
+      "type": "text",
+      "text": "If you receive event from element that are not in range of network connector you will receive $(o)malformed_enderwire_event$() without any data"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getAttachedNetworkName",
+      "description": "Getter method for attached network name"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "Returns attached network name or nil if element is not attached to any network"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "inspectNetwork",
+      "description": "Method for inspecting all networks element"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{table} | nil", "Array of network element representation or nil on error"],
+        ["nil | string", "nil or error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getNetworkElementState",
+      "description": "Method for inspecting exact element state"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "target element name"]
+      ],
+      "returns": [
+        ["table | nil", "Table with element state or nil on error"],
+        ["nil | string", "nil or error message"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "configureElement",
+      "description": "Method for configuring enderwire element, changing it state (like turn off/on), etc.$(p)You can send partial configuration, omitting fields, that you don't want to change",
+      "throw": [
+        "Incorrect configuration table"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "element name"],
+        ["table", "element configuration, for each element type it is quite different, please, read the documentation"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "configureElements",
+      "description": "Method for batch configuring enderwire element, changing it state (like turn off/on), etc. Should be used in case when you need to configure several items at once to avoid delay.$(p)You can send partial configuration, omitting fields, that you don't want to change",
+      "throw": [
+        "Incorrect configuration table"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["table", "Table where key is element name and value is element configuration, for each element type it is quite different, please, read the documentation"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "isElementLoaded",
+      "description": "Allows to check is element loaded in world"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "element name"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "isElementsInReach",
+      "description": "Allows to check if elements can reach one another"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "first element name"],
+        ["string", "second element name"]
+      ],
+      "returns": [
+        ["boolean | nil", "Is reachable or nil in case of error"],
+        ["nil | string", "nil or string with error"]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "RRRR",
+    "R  R",
+    "    ",
+    "  C "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/casing"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/redstone_emitter"
+  }
+}

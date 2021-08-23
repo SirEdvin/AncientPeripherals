@@ -60,17 +60,17 @@ public class FlexibleRealityAnchorModel implements IDynamicBakedModel {
     }
 
     @Override
-    public TextureAtlasSprite getParticleIcon() {
+    public @NotNull TextureAtlasSprite getParticleIcon() {
         return getTexture();
     }
 
     @Override
-    public ItemCameraTransforms getTransforms() {
+    public @NotNull ItemCameraTransforms getTransforms() {
         return ItemCameraTransforms.NO_TRANSFORMS;
     }
 
     @Override
-    public ItemOverrideList getOverrides() {
+    public @NotNull ItemOverrideList getOverrides() {
         return ItemOverrideList.EMPTY;
     }
 }

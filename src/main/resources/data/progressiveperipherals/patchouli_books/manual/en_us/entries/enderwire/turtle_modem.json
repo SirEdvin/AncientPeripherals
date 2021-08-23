@@ -1,0 +1,79 @@
+{
+  "name": "Turtle enderwire modem",
+  "icon": "computercraft:turtle_advanced",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:enredium",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Enderwire modem can also be attached to turtle. In this case, you can connect turtle to any interdimensional enderwire network. Pocket computer will have access to peripheral that shared inside network and will receive events from network."
+    },
+    {
+      "type": "text",
+      "text": "Also, you can populate turtle as an peripheral inside network, but it will cost fuel. Turtle will consume fuel every tick when exposed and if fuel ends, will be automatically unattached from network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getSelectedNetwork",
+      "description": "Access function for currect selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string | nil", "Current selected network"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "clearSelectedNetwork",
+      "description": "Allows to cleanup selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "selectNetwork",
+      "description": "Trying to access selected network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "network name"],
+        ["[string]", "Optional network password, if network encrypted"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "isExposed",
+      "description": "Check if turtle is exposed to network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["boolean", "is exposed"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "expose",
+      "description": "Expose turtle inside enderwire network",
+      "operationGroup": "expose"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "hide",
+      "description": "Detach turtle from enderwire network"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    }
+  ]
+}

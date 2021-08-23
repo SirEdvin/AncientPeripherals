@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -17,13 +18,8 @@ public class EnchantablePeripheralItem extends PeripheralItem {
         this.allowedEnchantments = allowedEnchantments;
     }
 
-    public EnchantablePeripheralItem(Properties properties, Supplier<Boolean> enabledSup, Set<Enchantment> allowedEnchantments, @Nullable ResourceLocation turtleID, @Nullable ResourceLocation pocketID) {
-        super(properties, enabledSup, turtleID, pocketID);
-        this.allowedEnchantments = allowedEnchantments;
-    }
-
     @Override
-    public boolean isEnchantable(ItemStack stack) {
+    public boolean isEnchantable(@NotNull ItemStack stack) {
         return !allowedEnchantments.isEmpty();
     }
 

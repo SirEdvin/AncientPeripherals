@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "progressiveperipherals:enderwire/redstone_sensor"
+    },
+    "title": {
+      "translate": "advancements.progressiveperipherals.enderwire.redstone"
+    },
+    "description": {
+      "translate": "advancements.progressiveperipherals.enderwire.redstone.description"
+    }
+  },
+  "parent": "progressiveperipherals:enderwire_manager",
+  "criteria": {
+    "sensor_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/redstone_sensor"
+          }
+        ]
+      }
+    },
+    "emitter_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:enderwire/redstone_emitter"
+          }
+        ]
+      }
+    }
+  }
+}

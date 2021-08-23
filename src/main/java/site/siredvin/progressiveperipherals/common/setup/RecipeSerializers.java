@@ -7,6 +7,7 @@ public class RecipeSerializers {
 
     public static final RegistryObject<AutomataRecipeSerializer> AUTOMATA_CRAFTING = Registration.RECIPE_SERIALIZERS.register("automata", AutomataRecipeSerializer::new);
 
+    @SuppressWarnings("EmptyMethod")
     public static void register() {
 
     }

@@ -1,0 +1,18 @@
+{
+  "name": "Enredium",
+  "icon": "progressiveperipherals:enredium_ingot",
+  "category": "progressiveperipherals:enderwire",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Enredium",
+      "item": "progressiveperipherals:enredium_ingot",
+      "text": "Combining irrealium with ender pearls and redstone leads to impressive results. Material, that you found seems capable to create subquantum connection between elements"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:enredium_ingot_automata"
+    }
+  ]
+}

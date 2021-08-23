@@ -7,11 +7,11 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackContainer;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
-import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.AbstractiumPedestalPeripheral;
 
 
-public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntity<AbstractiumPedestalPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
+public class AbstractiumPedestalTileEntity extends MutableNBTTileEntity<AbstractiumPedestalPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
     private static final String ITEM_STACK_TAG = "itemStackTag";
     private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 
@@ -20,13 +20,18 @@ public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntit
     }
 
     @Override
+    protected boolean hasPeripheral() {
+        return true;
+    }
+
+    @Override
     protected @NotNull AbstractiumPedestalPeripheral createPeripheral() {
-        return new AbstractiumPedestalPeripheral("abstractiumPedestal", this);
+        return new AbstractiumPedestalPeripheral(this);
     }
 
     public void setStoredStack(@NotNull ItemStack storedStack) {
         this.storedStack = storedStack;
-        pushState();
+        pushInternalDataChangeToClient();
     }
 
     public @NotNull ItemStack getStoredStack() {
@@ -46,11 +51,9 @@ public class AbstractiumPedestalTileEntity extends MutableNBTPeripheralTileEntit
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(ITEM_STACK_TAG)) {
             storedStack = ItemStack.of(data.getCompound(ITEM_STACK_TAG));
-            if (!skipUpdate)
-                pushState();
         }
     }
 }

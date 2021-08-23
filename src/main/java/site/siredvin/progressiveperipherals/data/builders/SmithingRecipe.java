@@ -3,12 +3,16 @@ package site.siredvin.progressiveperipherals.data.builders;
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
+
+import java.util.Objects;
 
 public class SmithingRecipe implements IFinishedRecipe {
     private final ResourceLocation id;
@@ -31,12 +35,12 @@ public class SmithingRecipe implements IFinishedRecipe {
         p_218610_1_.add("result", jsonobject);
     }
 
-    public ResourceLocation getId() {
+    public @NotNull ResourceLocation getId() {
         return this.id;
     }
 
     @Override
-    public IRecipeSerializer<?> getType() {
+    public @NotNull IRecipeSerializer<?> getType() {
         return IRecipeSerializer.SMITHING;
     }
 
@@ -53,8 +57,12 @@ public class SmithingRecipe implements IFinishedRecipe {
     }
 
     public static IFinishedRecipe of(Ingredient base, Ingredient addition, Item result) {
-        ResourceLocation location = new ResourceLocation(ProgressivePeripherals.MOD_ID, result.getRegistryName().getPath() + "_smithing");
-        ResourceLocation id = new ResourceLocation(location.getNamespace(), "recipes/" + result.getItemCategory().getRecipeFolderName() + "/" + location.getPath());
+        ResourceLocation itemName = result.getRegistryName();
+        ItemGroup category = result.getItemCategory();
+        Objects.requireNonNull(itemName);
+        Objects.requireNonNull(category);
+        ResourceLocation location = new ResourceLocation(ProgressivePeripherals.MOD_ID, itemName.getPath() + "_smithing");
+        ResourceLocation id = new ResourceLocation(location.getNamespace(), "recipes/" + category.getRecipeFolderName() + "/" + location.getPath());
         return new SmithingRecipe(id, base, addition, result);
     }
 }

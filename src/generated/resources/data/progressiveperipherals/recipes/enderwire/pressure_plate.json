@@ -1,0 +1,17 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "CC  ",
+    "    ",
+    "    ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/casing"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/pressure_plate"
+  }
+}

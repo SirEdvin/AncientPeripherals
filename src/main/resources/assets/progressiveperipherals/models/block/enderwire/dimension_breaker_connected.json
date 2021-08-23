@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/enderwire/dimension_breaker_connected",
+    "south": "progressiveperipherals:block/enderwire/casing",
+    "west": "progressiveperipherals:block/enderwire/casing",
+    "east": "progressiveperipherals:block/enderwire/casing",
+    "up": "progressiveperipherals:block/enderwire/casing",
+    "down": "progressiveperipherals:block/enderwire/casing",
+    "particle": "progressiveperipherals:block/enderwire/casing"
+  }
+}

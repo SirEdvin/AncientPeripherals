@@ -25,7 +25,7 @@ public class FlexibleStatue extends BaseNBTBlock<FlexibleStatueTileEntity> {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.@NotNull Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(CONFIGURED);
     }
@@ -56,7 +56,7 @@ public class FlexibleStatue extends BaseNBTBlock<FlexibleStatueTileEntity> {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull IBlockReader world, @NotNull BlockPos pos, @NotNull ISelectionContext context) {
         VoxelShape shape = getDefaultShape(world, pos);
         if (shape != null)
             return shape;
@@ -64,7 +64,7 @@ public class FlexibleStatue extends BaseNBTBlock<FlexibleStatueTileEntity> {
     }
 
     @Override
-    public boolean useShapeForLightOcclusion(BlockState state) {
+    public boolean useShapeForLightOcclusion(@NotNull BlockState state) {
         return true;
     }
 

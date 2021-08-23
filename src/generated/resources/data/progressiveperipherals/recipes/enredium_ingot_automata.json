@@ -1,0 +1,27 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "R  R",
+    " IP ",
+    " NN ",
+    "R  R"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "N": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enredium_ingot",
+    "count": 32
+  }
+}

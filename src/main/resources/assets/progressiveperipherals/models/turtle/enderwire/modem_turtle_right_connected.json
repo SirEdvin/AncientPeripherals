@@ -1,0 +1,6 @@
+{
+  "parent": "progressiveperipherals:turtle/base_upgrade_right",
+  "textures": {
+    "texture": "progressiveperipherals:block/enderwire/modem_connected"
+  }
+}

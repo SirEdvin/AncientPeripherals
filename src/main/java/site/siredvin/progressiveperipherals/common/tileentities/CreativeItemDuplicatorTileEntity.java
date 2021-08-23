@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackContainer;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
-import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTPeripheralTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.CreativeItemDuplicatorPeripheral;
 
-public class CreativeItemDuplicatorTileEntity extends MutableNBTPeripheralTileEntity<CreativeItemDuplicatorPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
+public class CreativeItemDuplicatorTileEntity extends MutableNBTTileEntity<CreativeItemDuplicatorPeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
     private static final String ITEM_STACK_TAG = "itemStackTag";
     private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 
@@ -19,13 +19,18 @@ public class CreativeItemDuplicatorTileEntity extends MutableNBTPeripheralTileEn
     }
 
     @Override
+    protected boolean hasPeripheral() {
+        return true;
+    }
+
+    @Override
     protected @NotNull CreativeItemDuplicatorPeripheral createPeripheral() {
-        return new CreativeItemDuplicatorPeripheral("creativeItemDuplicator", this);
+        return new CreativeItemDuplicatorPeripheral(this);
     }
 
     public void setStoredStack(@NotNull ItemStack storedStack) {
         this.storedStack = storedStack;
-        pushState();
+        pushInternalDataChangeToClient();
     }
 
     public @NotNull ItemStack getStoredStack() {
@@ -45,11 +50,9 @@ public class CreativeItemDuplicatorTileEntity extends MutableNBTPeripheralTileEn
     }
 
     @Override
-    public void loadInternalData(BlockState state, CompoundNBT data, boolean skipUpdate) {
+    public void loadInternalData(BlockState state, CompoundNBT data) {
         if (data.contains(ITEM_STACK_TAG)) {
             storedStack = ItemStack.of(data.getCompound(ITEM_STACK_TAG));
-            if (!skipUpdate)
-                pushState();
         }
     }
 }

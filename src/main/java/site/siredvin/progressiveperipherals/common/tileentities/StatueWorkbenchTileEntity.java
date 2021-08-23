@@ -12,6 +12,6 @@ public class StatueWorkbenchTileEntity extends PeripheralTileEntity<StatueWorkbe
 
     @Override
     protected @NotNull StatueWorkbenchPeripheral createPeripheral() {
-        return new StatueWorkbenchPeripheral("statueWorkbench", this);
+        return new StatueWorkbenchPeripheral(this);
     }
 }

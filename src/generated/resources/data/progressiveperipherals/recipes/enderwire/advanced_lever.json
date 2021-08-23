@@ -1,0 +1,20 @@
+{
+  "type": "progressiveperipherals:automata",
+  "pattern": [
+    "CA  ",
+    "    ",
+    "    ",
+    "    "
+  ],
+  "key": {
+    "C": {
+      "item": "progressiveperipherals:enderwire/lever"
+    },
+    "A": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:enderwire/advanced_lever"
+  }
+}
