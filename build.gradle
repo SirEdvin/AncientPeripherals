@@ -20,7 +20,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = "${mod_version}" + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+def isSnapshotVersion = Boolean.valueOf(System.getProperty("snapshot"))
+
+version = "${mod_version}" + isSnapshotVersion ? "-SNAPSHOT" : ""
 group = 'site.siredvin.progressiveperipherals' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "progressiveperipherals-${minecraft_version}"
 
@@ -243,8 +245,12 @@ curseforge {
             }
         }
 
-        changelog = "${project.changelog.get(project.version).withHeader(false).toText()}"
-        changelogType = "markdown"
+        if (isSnapshotVersion) {
+            changelog = ""
+        } else {
+            changelog = "${project.changelog.get(project.version).withHeader(false).toText()}"
+            changelogType = "markdown"
+        }
     }
 }
 
