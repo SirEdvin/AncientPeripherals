@@ -243,7 +243,8 @@ curseforge {
             }
         }
 
-        changelog = changelog.get(project.version).withHeader(false).toText()
+        changelog = "${project.changelog.get(project.version).withHeader(false).toText()}"
+        changelogType = "markdown"
     }
 }
 
