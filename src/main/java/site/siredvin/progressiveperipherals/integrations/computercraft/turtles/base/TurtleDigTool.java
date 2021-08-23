@@ -24,8 +24,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
 import java.util.function.Function;
 
 public abstract class TurtleDigTool extends TurtleTool {
@@ -39,6 +41,12 @@ public abstract class TurtleDigTool extends TurtleTool {
     public TurtleDigTool(ResourceLocation id, String adjective, Item item) {
         super(id, adjective, item);
         craftingItemStack = new ItemStack(item);
+    }
+
+    public abstract TurtleDigOperationType getOperationType();
+
+    public boolean consumeFuel(@NotNull ITurtleAccess turtle) {
+        return turtle.consumeFuel(getOperationType().getCost());
     }
 
     @NotNull
@@ -84,17 +92,17 @@ public abstract class TurtleDigTool extends TurtleTool {
         if (MinecraftForge.EVENT_BUS.post(digEvent))
             return false;
 
+        boolean canHarvest = state.canHarvestBlock(world, blockPosition, turtlePlayer);
+        boolean canBreak = state.removedByPlayer(world, blockPosition, turtlePlayer, canHarvest, fluidState);
+
         DropConsumer.set(world, blockPosition, turtleDropConsumer(turtleTile, turtle));
         TileEntity tile = world.getBlockEntity(blockPosition);
         world.levelEvent(2001, blockPosition, Block.getId(state));
-        boolean canHarvest = state.canHarvestBlock(world, blockPosition, turtlePlayer);
-        boolean canBreak = state.removedByPlayer(world, blockPosition, turtlePlayer, canHarvest, fluidState);
+
         if (canBreak) {
             state.getBlock().destroy(world, blockPosition, state);
-        }
-
-        if (canHarvest && canBreak) {
-            state.getBlock().playerDestroy(world, turtlePlayer, blockPosition, state, tile, turtlePlayer.getMainHandItem());
+            if (canHarvest)
+                state.getBlock().playerDestroy(world, turtlePlayer, blockPosition, state, tile, turtlePlayer.getMainHandItem());
         }
 
         stopConsuming(turtleTile, turtle);

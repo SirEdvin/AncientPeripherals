@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Items;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigOperationType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
@@ -42,6 +43,12 @@ public class TurtleCorrectingShovel extends TurtleDigTool {
     public ItemStack mimicTool() {
         return new ItemStack(net.minecraft.item.Items.DIAMOND_SHOVEL);
     }
+
+    @Override
+    public TurtleDigOperationType getOperationType() {
+        return TurtleDigOperationType.CORRECTING_SHOVEL;
+    }
+
     @Override
     protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
         World world = turtle.getWorld();
@@ -55,6 +62,8 @@ public class TurtleCorrectingShovel extends TurtleDigTool {
             return TurtleCommandResult.failure("Nothing to dig here");
         TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
         turtlePlayer.loadInventory(mimicTool());
+        if (!consumeFuel(turtle))
+            return TurtleCommandResult.failure("Not enough fuel");
         if (!digOneBlock(turtle, side, world, blockPosition, turtlePlayer, turtleTile))
             return TurtleCommandResult.failure();
         return TurtleCommandResult.success();

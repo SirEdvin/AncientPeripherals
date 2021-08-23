@@ -10,6 +10,7 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.periphera
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.CountOperation;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.TickingOperation;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigOperationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,6 +171,7 @@ public class ProgressivePeripheralsConfig {
             register(SimpleOperation.values(), builder);
             register(FreeOperation.values(), builder);
             register(TickingOperation.values(), builder);
+            register(TurtleDigOperationType.values(), builder);
             builder.pop();
 
             builder.comment("").push("Machinery");
