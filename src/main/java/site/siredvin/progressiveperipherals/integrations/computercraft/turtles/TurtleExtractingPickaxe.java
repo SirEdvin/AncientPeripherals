@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.setup.Items;
+import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigOperationType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
@@ -60,6 +61,11 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
     }
 
     @Override
+    public TurtleDigOperationType getOperationType() {
+        return TurtleDigOperationType.EXTRACTING_PICKAXE;
+    }
+
+    @Override
     protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
         World world = turtle.getWorld();
         BlockPos turtlePosition = turtle.getPosition();
@@ -75,13 +81,15 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
             return TurtleCommandResult.failure("Nothing to dig here");
         TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
         turtlePlayer.loadInventory(mimicTool());
+        if (!consumeFuel(turtle))
+            return TurtleCommandResult.failure("Not enough fuel");
         if (!digOneBlock(turtle, side, world, blockPosition, turtlePlayer, turtleTile))
             return TurtleCommandResult.failure();
         return TurtleCommandResult.success();
     }
 
-    public static EnchantedTurtleExtractingPickaxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel) {
-        return new EnchantedTurtleExtractingPickaxe(prefix, enchantment, enchantmentLevel);
+    public static EnchantedTurtleExtractingPickaxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
+        return new EnchantedTurtleExtractingPickaxe(prefix, enchantment, enchantmentLevel, newOperationType);
     }
 
     @Override
@@ -93,8 +101,9 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
 
         private final Enchantment enchantment;
         private final int enchantmentLevel;
+        private final TurtleDigOperationType operationType;
 
-        public EnchantedTurtleExtractingPickaxe(String prefix, Enchantment enchantment, int enchantmentLevel) {
+        public EnchantedTurtleExtractingPickaxe(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
             super(new ResourceLocation(ProgressivePeripherals.MOD_ID, prefix + CORE_NAME), TranslationUtil.turtle(prefix + CORE_NAME), () -> {
                 ItemStack craftingItem = new ItemStack(Items.EXTRACTING_PICKAXE.get());
                 craftingItem.enchant(enchantment, enchantmentLevel);
@@ -102,6 +111,12 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
             });
             this.enchantment = enchantment;
             this.enchantmentLevel = enchantmentLevel;
+            this.operationType = newOperationType;
+        }
+
+        @Override
+        public TurtleDigOperationType getOperationType() {
+            return operationType;
         }
 
         @Override

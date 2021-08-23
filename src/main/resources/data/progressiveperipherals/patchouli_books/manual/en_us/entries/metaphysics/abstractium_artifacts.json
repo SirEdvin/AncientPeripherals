@@ -12,7 +12,7 @@
       "type": "spotlight",
       "title": "Cutting axe",
       "item": "progressiveperipherals:cutting_axe",
-      "text": "Updated abstractium axe, that obtain abilities to cut whole tree in one cut, but loose ability to cut anything else. Only usable by turtle.$(p)Also, seems even if axe enchanted with Silk Touch it still usable for turtle"
+      "text": "Updated abstractium axe, that obtain abilities to cut whole tree in one cut, but loose ability to cut anything else. Only usable by turtle, and will consume some fuel on dig calls.$(p)Also, seems even if axe enchanted with Silk Touch it still usable for turtle"
     },
     {
       "type": "progressiveperipherals:automata",
@@ -22,7 +22,7 @@
       "type": "spotlight",
       "title": "Extracting pickaxe",
       "item": "progressiveperipherals:extracting_pickaxe",
-      "text": "Updated abstractium pickaxe, that doesn't care about distances. Seems, it mining any ore, that can be found in current chunk. Only usable by turtle.$(p)Also, seems even if pickaxe enchanted with Silk Touch or Fortune it still usable for turtle"
+      "text": "Updated abstractium pickaxe, that doesn't care about distances. Seems, it mining any ore, that can be found in current chunk. Only usable by turtle, and will consume some fuel on dig calls.$(p)Also, seems even if pickaxe enchanted with Silk Touch or Fortune it still usable for turtle"
     },
     {
       "type": "progressiveperipherals:automata",

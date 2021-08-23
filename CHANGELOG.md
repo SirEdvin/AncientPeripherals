@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Now abstractium artifacts (cutting axe and extracting pickaxe) will consume fuel, to make it more [balanced](https://github.com/SirEdvin/ProgressivePeripherals/issues/19) 
+
 ## [0.0.9] - 2021-08-23
 
 ### Added
