@@ -28,18 +28,39 @@
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "getRecipeFor",
-      "description": "Function, that allow you to search recipe for specific item. Please, take a note, then this function may work very unexpected for recipe types from another modifications",
+      "functionName": "getAllRecipesForType",
+      "description": "Function, that allows you to check all recipes for specific type",
+      "throw": [
+        "Incorrect recipe type name provided"
+      ],
       "operationGroup": "query_registry"
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
-        ["string", "Recipe type name, like $(o)minecraft:crafting$()"],
-        ["string", "Minecraft ID of item, like $(o)minecraft:oak_planks$()"]
+        ["string", "recipe type, like $(o)minecraft:crafting$()"]
       ],
       "returns": [
-        ["table", "Recipe representation. For minecraft recipes it will be close to json model, otherwise it can be anything, useful or not"]
+        ["{table}", "List of recipe representation. For minecraft recipes it will be close to json model, otherwise it can be anything, useful or not"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getRecipeFor",
+      "description": "Function, that allow you to search recipe for specific item. Please, take a note, then this function may work very unexpected for recipe types from another modifications",
+      "throw": [
+        "Incorrect identifiers provided"
+      ],
+      "operationGroup": "query_registry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "Minecraft ID of item, like $(o)minecraft:oak_planks$()"],
+        ["string | {string} | nil", "Recipe type or list of recipe types or nil. In case of nil all recipe types will be queued"]
+      ],
+      "returns": [
+        ["{table}", "List of representation. For minecraft recipes it will be close to json model, otherwise it can be anything, useful or not"]
       ]
     }
   ]
