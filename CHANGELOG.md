@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### [0.0.9] - 2021-08-23
+
+### Added
+
+- General endewire network toolkit, wireless sensors, redstone emitter and lamp!
+- Ability to wirelessly share peripheral to computer
+- Ability to access wirelessly shared peripheral from pocket computer
+- Ability to access wirelessly shared peripheral from turtle and ability to share turtle wirelessly in enderwire network!
+
 ### Changed
 
 - Flexible Realty anchor and flexible statue now can be [cleaned](https://github.com/SirEdvin/ProgressivePeripherals/issues/30) on crafting table
