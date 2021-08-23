@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### [0.0.9] - 2021-08-23
+## [0.0.9] - 2021-08-23
 
 ### Added
 
@@ -19,19 +19,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Flexible Realty anchor and flexible statue now can be [cleaned](https://github.com/SirEdvin/ProgressivePeripherals/issues/30) on crafting table
 
-### [0.0.8] - 2021-08-14
+## [0.0.8] - 2021-08-14
 
 ### Fixed
 
 - `lightLevel` support for Flexible reality anchor and Flexible statue [now works fine](https://github.com/SirEdvin/ProgressivePeripherals/issues/33) 
 
-### [0.0.7] - 2021-08-08
+## [0.0.7] - 2021-08-08
 
 ### Fixed
 
 - Incompatibility with 0.7r AP, now you should use release version only
 
-### [0.0.6] - 2021-08-08
+## [0.0.6] - 2021-08-08
 
 ### Fixed
 
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Flexible statue correct [placing](https://github.com/SirEdvin/ProgressivePeripherals/issues/29)
 - Flexible reality anchor correct placing
 
-### [0.0.5] - 2021-08-08
+## [0.0.5] - 2021-08-08
 
 ### Added
 
