@@ -1,20 +1,21 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals;
 
-import com.google.gson.Gson;
+import dan200.computercraft.api.lua.IArguments;
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import dan200.computercraft.shared.util.NBTUtil;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
 import de.srendi.advancedperipherals.common.blocks.base.PeripheralTileEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.extra.recipes.NBTCheckMode;
+import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,54 +48,52 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         return MethodResult.of(Registry.RECIPE_TYPE.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList()));
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     @LuaFunction
-    public final MethodResult getRecipeFor(String recipeTypeName, String itemID) {
+    public final MethodResult getAllRecipesForType(String recipeType) throws LuaException {
         Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
         if (checkResult.isPresent())
             return checkResult.get();
 
-        Optional<IRecipeType<?>> optRecipeType = Registry.RECIPE_TYPE.getOptional(new ResourceLocation(recipeTypeName));
+        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeType);
+        trackOperation(QUERY_REGISTRY, null);
+        return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream()
+                .map(RecipeRegistryToolkit::serializeRecipe).collect(Collectors.toList()));
+    }
 
-        if (!optRecipeType.isPresent())
-            return MethodResult.of(null, String.format("Cannot find recipe type %s", recipeTypeName));
+    @LuaFunction
+    public final MethodResult getRecipesFor(@NotNull IArguments arguments) throws LuaException {
+        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
+        if (checkResult.isPresent())
+            return checkResult.get();
+
+        String itemID = arguments.getString(0);
+        Object types = arguments.get(1);
 
         Optional<Item> optTargetItem = Registry.ITEM.getOptional(new ResourceLocation(itemID));
 
         if (!optTargetItem.isPresent())
-            return MethodResult.of(null, String.format("Cannot find item %s", itemID));
+            throw new LuaException(String.format("Cannot find item with id %s", itemID));
 
-        trackOperation(QUERY_REGISTRY, null);
+        ItemStack targetResult = new ItemStack(optTargetItem.get());
 
-        IRecipeType recipeType = optRecipeType.get();
-
-        List<IRecipe<?>> recipes = (List<IRecipe<?>>) getWorld().getRecipeManager().getAllRecipesFor(recipeType);
-
-        // This is very stupid, but happens!
-        @SuppressWarnings("ConstantConditions") Optional<?> optRecipe = recipes.stream()
-                .filter(recipe -> recipe.getResultItem() != null && recipe.getResultItem().getItem() == optTargetItem.get()).findAny();
-        if (!optRecipe.isPresent())
-            return MethodResult.of(null, "Cannot find any recipe for this combination");
-
-        IRecipe<?> recipe = (IRecipe<?>) optRecipe.get();
-        Map<String, Object> recipeData = new HashMap<>();
-
-        recipeData.put("id", recipe.getId().toString());
-        recipeData.put("group", recipe.getGroup());
-        // Sad reality, any of this can be null
-        //noinspection ConstantConditions
-        if (recipe.getResultItem() != null)
-            recipeData.put("result", NBTUtil.toLua(recipe.getResultItem().serializeNBT()));
-        //noinspection ConstantConditions
-        if (recipe.getIngredients() != null) {
-            Map<Integer, Object> ingredientsData = new HashMap<>();
-            NonNullList<Ingredient> ingredients = recipe.getIngredients();
-            for (int i = 0; i < ingredients.size(); i++) {
-                ingredientsData.put(i + 1, new Gson().fromJson(ingredients.get(i).toJson(), HashMap.class));
+        List<IRecipeType<?>> recipeTypes;
+        if (types instanceof String) {
+            recipeTypes = Collections.singletonList(RecipeRegistryToolkit.getRecipeType((String) types));
+        } else if (types instanceof Map) {
+            recipeTypes = new ArrayList<>();
+            for (Object el: ((Map<?, ?>) types).values()) {
+                recipeTypes.add(RecipeRegistryToolkit.getRecipeType(el.toString()));
             }
-            recipeData.put("ingredients", ingredientsData);
+        } else if (types == null) {
+            recipeTypes = Registry.RECIPE_TYPE.stream().collect(Collectors.toList());
+        } else {
+            throw new LuaException("types should be string or table!");
         }
 
-        return MethodResult.of(recipeData);
+        trackOperation(QUERY_REGISTRY, null);
+        return MethodResult.of(
+                recipeTypes.stream().flatMap(recipeType -> RecipeRegistryToolkit.findRecipesForType(recipeType, targetResult, getWorld(), NBTCheckMode.SUBSET).stream())
+                        .map(RecipeRegistryToolkit::serializeRecipe).collect(Collectors.toList())
+        );
     }
 }

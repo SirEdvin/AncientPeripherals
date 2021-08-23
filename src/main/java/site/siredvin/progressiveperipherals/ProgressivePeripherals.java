@@ -43,6 +43,7 @@ import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughP
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.setup.*;
+import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwireModemTurtle;
 import site.siredvin.progressiveperipherals.integrations.patchouli.AutomataRecipePage;
 import site.siredvin.progressiveperipherals.integrations.patchouli.LuaFunctionLeftPage;
@@ -96,6 +97,7 @@ public class ProgressivePeripherals {
             AdditionalRecipes.register();
             ConfiguredFeatures.register();
             BiomeUtils.setupOverworldBiomesSet();
+            RecipeRegistryToolkit.registerExtra();
         });
     }
 
