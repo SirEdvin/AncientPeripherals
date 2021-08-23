@@ -11,9 +11,9 @@ public enum TurtleDigOperationType implements IConfigHandler {
     CUTTING_AXE(10),
     SILK_CUTTING_AXE(20),
     EXTRACTING_PICKAXE(1),
-    FORTUNE_I_EXTRACTING_PICKAXE(2),
-    FORTUNE_II_EXTRACTING_PICKAXE(3),
-    FORTUNE_III_EXTRACTING_PICKAXE(4),
+    FORTUNE_1_EXTRACTING_PICKAXE(2),
+    FORTUNE_2_EXTRACTING_PICKAXE(3),
+    FORTUNE_3_EXTRACTING_PICKAXE(4),
     SILK_EXTRACTING_PICKAXE(5);
 
     private ForgeConfigSpec.IntValue cost;
@@ -37,8 +37,6 @@ public enum TurtleDigOperationType implements IConfigHandler {
 
     @Override
     public void addToConfig(ForgeConfigSpec.Builder builder) {
-        cost = builder.defineInRange(
-                settingsName() + "Cost", defaultCost, 0, 64
-        );
+        cost = builder.defineInRange(settingsName() + "Cost", defaultCost, 0, 64);
     }
 }

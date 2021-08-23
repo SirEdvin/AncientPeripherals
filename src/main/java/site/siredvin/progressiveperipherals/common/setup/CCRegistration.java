@@ -43,9 +43,9 @@ public class CCRegistration {
             add(new TurtleExtractingPickaxe());
             add(TurtleCuttingAxe.enchant("silk_", Enchantments.SILK_TOUCH, 1, TurtleDigOperationType.SILK_CUTTING_AXE));
             add(TurtleExtractingPickaxe.enchant("silk_", Enchantments.SILK_TOUCH, 1, TurtleDigOperationType.SILK_EXTRACTING_PICKAXE));
-            add(TurtleExtractingPickaxe.enchant("fortune_1_", Enchantments.BLOCK_FORTUNE, 1, TurtleDigOperationType.FORTUNE_I_EXTRACTING_PICKAXE));
-            add(TurtleExtractingPickaxe.enchant("fortune_2_", Enchantments.BLOCK_FORTUNE, 2, TurtleDigOperationType.FORTUNE_II_EXTRACTING_PICKAXE));
-            add(TurtleExtractingPickaxe.enchant("fortune_3_", Enchantments.BLOCK_FORTUNE, 3, TurtleDigOperationType.FORTUNE_III_EXTRACTING_PICKAXE));
+            add(TurtleExtractingPickaxe.enchant("fortune_1_", Enchantments.BLOCK_FORTUNE, 1, TurtleDigOperationType.FORTUNE_1_EXTRACTING_PICKAXE));
+            add(TurtleExtractingPickaxe.enchant("fortune_2_", Enchantments.BLOCK_FORTUNE, 2, TurtleDigOperationType.FORTUNE_2_EXTRACTING_PICKAXE));
+            add(TurtleExtractingPickaxe.enchant("fortune_3_", Enchantments.BLOCK_FORTUNE, 3, TurtleDigOperationType.FORTUNE_3_EXTRACTING_PICKAXE));
             add(new TurtleCorrectingShovel());
             add(new EnderwireModemTurtle());
         }};
