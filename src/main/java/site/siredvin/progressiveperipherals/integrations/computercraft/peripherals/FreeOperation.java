@@ -8,7 +8,7 @@ import java.util.Map;
 
 public enum FreeOperation implements IPeripheralOperation<Object> {
     EXTRACT(5_000),
-    QUERY_REGISTRY(5_000),
+    QUERY_REGISTRY(2_000),
     DUPLICATE_ITEM(1_000),
     QUEUE_EVENT(100);
 
