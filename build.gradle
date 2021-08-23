@@ -22,7 +22,7 @@ apply plugin: 'maven-publish'
 
 def isSnapshotVersion = Boolean.valueOf(System.getProperty("snapshot"))
 
-version = "${mod_version}" + isSnapshotVersion ? "-SNAPSHOT" : ""
+version = "${mod_version}" + (isSnapshotVersion ? "-SNAPSHOT" : "")
 group = 'site.siredvin.progressiveperipherals' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "progressiveperipherals-${minecraft_version}"
 
