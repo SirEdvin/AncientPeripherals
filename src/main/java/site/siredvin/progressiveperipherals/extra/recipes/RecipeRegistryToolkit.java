@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 
 public class RecipeRegistryToolkit {
 
+    private final static Gson GSON = new Gson();
+
     private final static Map<Class<? extends IRecipe<?>>, RecipeTransformer> RECIPE_SERIALIZERS = new HashMap<>();
     private final static Map<Class<?>, Function<Object, Object>> SERIALIZERS = new HashMap<>();
     private final static Map<IRecipeType<?>, RecipeSearchFunction> RECIPE_SEARCHER = new HashMap<>();
@@ -53,10 +55,10 @@ public class RecipeRegistryToolkit {
     static {
         registerSerializer(Ingredient.class, ingredient -> {
             try {
-                return new Gson().fromJson(ingredient.toJson(), HashMap.class);
+                return GSON.fromJson(ingredient.toJson(), HashMap.class);
             } catch (JsonSyntaxException ignored) {
                 try {
-                    return LuaUtils.toLua(new Gson().fromJson(ingredient.toJson(), ArrayList.class));
+                    return LuaUtils.toLua(GSON.fromJson(ingredient.toJson(), ArrayList.class));
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
                 }
@@ -67,7 +69,7 @@ public class RecipeRegistryToolkit {
         registerSerializer(FluidStack.class, fluid -> NBTUtil.toLua(fluid.writeToNBT(new CompoundNBT())));
     }
 
-    protected static @Nullable Object serialize(@Nullable Object obj) {
+    public static @Nullable Object serialize(@Nullable Object obj) {
         for (Class<?> clazz: SERIALIZERS.keySet()) {
             if (clazz.isInstance(obj))
                 return SERIALIZERS.get(clazz).apply(clazz.cast(obj));
@@ -75,11 +77,10 @@ public class RecipeRegistryToolkit {
         if (obj != null) {
             if (obj instanceof Serializable) {
                 try {
-                    Gson gson = new Gson();
-                    return gson.fromJson(gson.toJson(obj), HashMap.class);
+                    return GSON.fromJson(GSON.toJson(obj), HashMap.class);
                 } catch (JsonSyntaxException ignored) {}
             }
-            ProgressivePeripherals.LOGGER.error(String.format("Unknown recipe element type: %s", obj.getClass().toString()));
+            return obj;
         }
         return null;
     }

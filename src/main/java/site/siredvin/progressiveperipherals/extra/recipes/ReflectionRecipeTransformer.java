@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
@@ -28,7 +29,7 @@ public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
     protected Pair<Boolean, Object> extractField(Object targetObj, Class<?> targetClass, String fieldName, int recursionLevel) {
         if (recursionLevel == 0)
             return Pair.onlyLeft(false);
-        String[] splitStrings = fieldName.split("\\.", 1);
+        String[] splitStrings = fieldName.split(Pattern.quote("."), 2);
         String cleanFieldName = splitStrings[0];
 
         if (ProgressivePeripheralsConfig.recipeRegistryReflectionBlacklist.contains(cleanFieldName))

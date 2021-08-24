@@ -6,16 +6,21 @@ import mekanism.api.chemical.gas.GasStack;
 import mekanism.api.chemical.merged.BoxedChemicalStack;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.recipes.*;
+import mekanism.api.recipes.inputs.FluidStackIngredient;
+import mekanism.api.recipes.inputs.InputIngredient;
+import mekanism.api.recipes.inputs.ItemStackIngredient;
+import mekanism.api.recipes.inputs.chemical.GasStackIngredient;
+import mekanism.api.recipes.inputs.chemical.InfusionStackIngredient;
+import mekanism.api.recipes.inputs.chemical.SlurryStackIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class RecipesRegistrator implements Runnable {
@@ -32,17 +37,6 @@ public class RecipesRegistrator implements Runnable {
         }
     }
 
-    private static final class SecondaryChanceRecord {
-        private final double chance;
-
-        protected SecondaryChanceRecord(double chance) {
-            this.chance = chance;
-        }
-
-        public double getChance() {
-            return chance;
-        }
-    }
 
     @Override
     public void run() {
@@ -51,7 +45,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(ChemicalCrystallizerRecipe.class, new RecipeTransformer<ChemicalCrystallizerRecipe>() {
             @Override
             public List<?> getInputs(ChemicalCrystallizerRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -64,8 +58,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(ChemicalDissolutionRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getItemInput().getRepresentations());
-                result.addAll(recipe.getGasInput().getRepresentations());
+                result.add(recipe.getItemInput());
+                result.add(recipe.getGasInput());
                 return result;
             }
 
@@ -79,8 +73,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(ChemicalInfuserRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getLeftInput().getRepresentations());
-                result.addAll(recipe.getRightInput().getRepresentations());
+                result.add(recipe.getLeftInput());
+                result.add(recipe.getRightInput());
                 return result;
             }
 
@@ -94,8 +88,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(CombinerRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getMainInput().getRepresentations());
-                result.addAll(recipe.getExtraInput().getRepresentations());
+                result.add(recipe.getMainInput());
+                result.add(recipe.getExtraInput());
                 return result;
             }
 
@@ -108,7 +102,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(ElectrolysisRecipe.class, new RecipeTransformer<ElectrolysisRecipe>() {
             @Override
             public List<?> getInputs(ElectrolysisRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -124,8 +118,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(FluidSlurryToSlurryRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getFluidInput().getRepresentations());
-                result.addAll(recipe.getChemicalInput().getRepresentations());
+                result.add(recipe.getFluidInput());
+                result.add(recipe.getChemicalInput());
                 return result;
             }
 
@@ -138,7 +132,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(FluidToFluidRecipe.class, new RecipeTransformer<FluidToFluidRecipe>() {
             @Override
             public List<?> getInputs(FluidToFluidRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -150,7 +144,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(GasToGasRecipe.class, new RecipeTransformer<GasToGasRecipe>() {
             @Override
             public List<?> getInputs(GasToGasRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -163,8 +157,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(ItemStackGasToItemStackRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getItemInput().getRepresentations());
-                result.addAll(recipe.getChemicalInput().getRepresentations());
+                result.add(recipe.getItemInput());
+                result.add(recipe.getChemicalInput());
                 return result;
             }
 
@@ -177,7 +171,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(ItemStackToEnergyRecipe.class, new RecipeTransformer<ItemStackToEnergyRecipe>() {
             @Override
             public List<?> getInputs(ItemStackToEnergyRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -189,7 +183,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(ItemStackToGasRecipe.class, new RecipeTransformer<ItemStackToGasRecipe>() {
             @Override
             public List<?> getInputs(ItemStackToGasRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -201,7 +195,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(ItemStackToInfuseTypeRecipe.class, new RecipeTransformer<ItemStackToInfuseTypeRecipe>() {
             @Override
             public List<?> getInputs(ItemStackToInfuseTypeRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -213,7 +207,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(ItemStackToItemStackRecipe.class, new RecipeTransformer<ItemStackToItemStackRecipe>() {
             @Override
             public List<?> getInputs(ItemStackToItemStackRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -226,8 +220,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(MetallurgicInfuserRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getItemInput().getRepresentations());
-                result.addAll(recipe.getInfusionInput().getRepresentations());
+                result.add(recipe.getItemInput());
+                result.add(recipe.getInfusionInput());
                 return result;
             }
 
@@ -241,8 +235,8 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(NucleosynthesizingRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getItemInput().getRepresentations());
-                result.addAll(recipe.getChemicalInput().getRepresentations());
+                result.add(recipe.getItemInput());
+                result.add(recipe.getChemicalInput());
                 return result;
             }
 
@@ -256,10 +250,9 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getInputs(PressurizedReactionRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getInputSolid().getRepresentations());
-                result.addAll(recipe.getInputFluid().getRepresentations());
-                result.addAll(recipe.getInputGas().getRepresentations());
-                result.add(new EnergyRecord(recipe.getEnergyRequired()));
+                result.add(recipe.getInputSolid());
+                result.add(recipe.getInputFluid());
+                result.add(recipe.getInputGas());
                 return result;
             }
 
@@ -270,14 +263,21 @@ public class RecipesRegistrator implements Runnable {
                 result.add(output.getRight());
                 return result;
             }
+
+            @Override
+            public Map<String, Object> getExtraData(PressurizedReactionRecipe recipe) {
+                return new HashMap<String, Object>() {{
+                    put("energy", recipe.getEnergyRequired());
+                }};
+            }
         });
 
         RecipeRegistryToolkit.registerRecipeSerializer(RotaryRecipe.class, new RecipeTransformer<RotaryRecipe>() {
             @Override
             public List<?> getInputs(RotaryRecipe recipe) {
                 List<Object> result = new ArrayList<>();
-                result.addAll(recipe.getGasInput().getRepresentations());
-                result.addAll(recipe.getFluidInput().getRepresentations());
+                result.add(recipe.getGasInput());
+                result.add(recipe.getFluidInput());
                 return result;
             }
 
@@ -293,7 +293,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipeSerializer(SawmillRecipe.class, new RecipeTransformer<SawmillRecipe>() {
             @Override
             public List<?> getInputs(SawmillRecipe recipe) {
-                return recipe.getInput().getRepresentations();
+                return Collections.singletonList(recipe.getInput());
             }
 
             @Override
@@ -301,18 +301,28 @@ public class RecipesRegistrator implements Runnable {
                 List<Object> result = new ArrayList<>();
                 result.addAll(recipe.getMainOutputDefinition());
                 result.addAll(recipe.getSecondaryOutputDefinition());
-                result.add(new SecondaryChanceRecord(recipe.getSecondaryChance()));
                 return result;
+            }
+
+            @Override
+            public Map<String, Object> getExtraData(SawmillRecipe recipe) {
+                return new HashMap<String, Object>() {{
+                    put("secondaryChance", recipe.getSecondaryChance());
+                }};
             }
         });
         // recipe ingredients transfomers
         RecipeRegistryToolkit.registerSerializer(ChemicalStack.class, chemical -> NBTUtil.toLua(chemical.write(new CompoundNBT())));
         RecipeRegistryToolkit.registerSerializer(BoxedChemicalStack.class, boxed -> NBTUtil.toLua(boxed.write(new CompoundNBT())));
-        RecipeRegistryToolkit.registerSerializer(EnergyRecord.class, record -> new HashMap<String, Object>(){{
-            put("energy", record.getEnergy());
-        }});
-        RecipeRegistryToolkit.registerSerializer(SecondaryChanceRecord.class, record -> new HashMap<String, Object>(){{
-            put("secondaryChance", record.getChance());
-        }});
+        RecipeRegistryToolkit.registerSerializer(EnergyRecord.class, record -> new HashMap<String, Object>(){{ put("energy", record.getEnergy());}});
+
+        RecipeRegistryToolkit.registerSerializer(InputIngredient.class, RecipesRegistrator::unpackIngredient);
+    }
+
+    public static Object unpackIngredient(InputIngredient<?> ingredient) {
+        List<?> representation = ingredient.getRepresentations();
+        if (representation.size() == 1)
+            return RecipeRegistryToolkit.serialize(representation.get(0));
+        return Collections.singletonMap("variants", representation.stream().map(RecipeRegistryToolkit::serialize).collect(Collectors.toList()));
     }
 }
