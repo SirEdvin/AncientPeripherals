@@ -24,6 +24,8 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.b
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -50,42 +52,30 @@ public class TurtleCuttingAxe extends TurtleDigTool {
         super(id, adjective, itemStackSup.get());
     }
 
-    public ItemStack mimicTool() {
+    @Override
+    public @NotNull ItemStack getMimicTool() {
         return new ItemStack(net.minecraft.item.Items.DIAMOND_AXE);
     }
 
     @Override
-    public TurtleDigOperationType getOperationType() {
+    public @NotNull TurtleDigOperationType getOperationType() {
         return TurtleDigOperationType.CUTTING_AXE;
     }
 
     @Override
-    protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
-        World world = turtle.getWorld();
-        BlockPos turtlePosition = turtle.getPosition();
-        TileEntity turtleTile = turtle instanceof TurtleBrain ? ((TurtleBrain)turtle).getOwner() : world.getBlockEntity(turtlePosition);
-        if (turtleTile == null) {
-            return TurtleCommandResult.failure("Turtle has vanished from existence.");
-        }
-        BlockPos blockPosition = turtlePosition.relative(direction);
+    protected @NotNull Collection<BlockPos> detectTargetBlocks(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction, @NotNull World world) {
+        BlockPos blockPosition = turtle.getPosition().relative(direction);
         if (world.isEmptyBlock(blockPosition) || WorldUtil.isLiquidBlock(world, blockPosition))
-            return TurtleCommandResult.failure("Nothing to dig here");
+            return Collections.emptyList();
         BlockState state = world.getBlockState(blockPosition);
         if (!isLog(state))
-            return TurtleCommandResult.failure("Nothing to dig here");
+            return Collections.emptyList();
         Set<BlockPos> treeBlocks = new HashSet<>();
         treeBlocks.add(blockPosition);
         detectTree(world, blockPosition, treeBlocks, state);
         if (treeBlocks.size() >= ProgressivePeripheralsConfig.cuttingAxeMaxBlockCount)
             ProgressivePeripherals.LOGGER.info("Tree cutting stopped because of max size");
-        TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
-        turtlePlayer.loadInventory(mimicTool());
-        if (!consumeFuel(turtle))
-            return TurtleCommandResult.failure("Not enough fuel");
-        for (BlockPos pos: treeBlocks) {
-            digOneBlock(turtle, side, world, pos, turtlePlayer, turtleTile);
-        }
-        return TurtleCommandResult.success();
+        return treeBlocks;
     }
 
     @Override
@@ -144,13 +134,13 @@ public class TurtleCuttingAxe extends TurtleDigTool {
         }
 
         @Override
-        public TurtleDigOperationType getOperationType() {
+        public @NotNull TurtleDigOperationType getOperationType() {
             return operationType;
         }
 
         @Override
-        public ItemStack mimicTool() {
-            ItemStack targetTool = super.mimicTool();
+        public @NotNull ItemStack getMimicTool() {
+            ItemStack targetTool = super.getMimicTool();
             targetTool.enchant(enchantment, enchantmentLevel);
             return targetTool;
         }

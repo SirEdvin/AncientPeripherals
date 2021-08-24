@@ -23,9 +23,7 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.b
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 public class TurtleCorrectingShovel extends TurtleDigTool {
@@ -40,33 +38,22 @@ public class TurtleCorrectingShovel extends TurtleDigTool {
         super(ID, TranslationUtil.turtle(CORE_NAME), Items.CORRECTING_SHOVEL.get());
     }
 
-    public ItemStack mimicTool() {
+    @Override
+    public @NotNull ItemStack getMimicTool() {
         return new ItemStack(net.minecraft.item.Items.DIAMOND_SHOVEL);
     }
 
     @Override
-    public TurtleDigOperationType getOperationType() {
+    public @NotNull TurtleDigOperationType getOperationType() {
         return TurtleDigOperationType.CORRECTING_SHOVEL;
     }
 
     @Override
-    protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
-        World world = turtle.getWorld();
-        BlockPos turtlePosition = turtle.getPosition();
-        TileEntity turtleTile = turtle instanceof TurtleBrain ? ((TurtleBrain)turtle).getOwner() : world.getBlockEntity(turtlePosition);
-        if (turtleTile == null) {
-            return TurtleCommandResult.failure("Turtle has vanished from existence.");
-        }
-        BlockPos blockPosition = turtlePosition.relative(direction);
+    protected @NotNull Collection<BlockPos> detectTargetBlocks(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction, @NotNull World world) {
+        BlockPos blockPosition = turtle.getPosition().relative(direction);
         if (world.isEmptyBlock(blockPosition) || WorldUtil.isLiquidBlock(world, blockPosition))
-            return TurtleCommandResult.failure("Nothing to dig here");
-        TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
-        turtlePlayer.loadInventory(mimicTool());
-        if (!consumeFuel(turtle))
-            return TurtleCommandResult.failure("Not enough fuel");
-        if (!digOneBlock(turtle, side, world, blockPosition, turtlePlayer, turtleTile))
-            return TurtleCommandResult.failure();
-        return TurtleCommandResult.success();
+            return Collections.emptyList();
+        return Collections.singletonList(blockPosition);
     }
 
     @Override

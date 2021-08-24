@@ -26,6 +26,8 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.b
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.function.Supplier;
 
 public class TurtleExtractingPickaxe extends TurtleDigTool {
@@ -56,36 +58,24 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
         return null;
     }
 
-    public ItemStack mimicTool() {
+    @Override
+    public @NotNull ItemStack getMimicTool() {
         return new ItemStack(net.minecraft.item.Items.DIAMOND_PICKAXE);
     }
 
     @Override
-    public TurtleDigOperationType getOperationType() {
+    public @NotNull TurtleDigOperationType getOperationType() {
         return TurtleDigOperationType.EXTRACTING_PICKAXE;
     }
 
     @Override
-    protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
-        World world = turtle.getWorld();
-        BlockPos turtlePosition = turtle.getPosition();
-        TileEntity turtleTile = turtle instanceof TurtleBrain ? ((TurtleBrain)turtle).getOwner() : world.getBlockEntity(turtlePosition);
-        if (turtleTile == null) {
-            return TurtleCommandResult.failure("Turtle has vanished from existence.");
-        }
-        // find block here
-        BlockPos blockPosition = findOre(world, turtlePosition);
+    protected @NotNull Collection<BlockPos> detectTargetBlocks(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction, @NotNull World world) {
+        BlockPos blockPosition = findOre(world, turtle.getPosition());
         if (blockPosition == null)
-            return TurtleCommandResult.failure("Nothing to dig here");
+            return Collections.emptyList();
         if (world.isEmptyBlock(blockPosition) || WorldUtil.isLiquidBlock(world, blockPosition))
-            return TurtleCommandResult.failure("Nothing to dig here");
-        TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
-        turtlePlayer.loadInventory(mimicTool());
-        if (!consumeFuel(turtle))
-            return TurtleCommandResult.failure("Not enough fuel");
-        if (!digOneBlock(turtle, side, world, blockPosition, turtlePlayer, turtleTile))
-            return TurtleCommandResult.failure();
-        return TurtleCommandResult.success();
+            return Collections.emptyList();
+        return Collections.singletonList(blockPosition);
     }
 
     public static EnchantedTurtleExtractingPickaxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
@@ -115,13 +105,13 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
         }
 
         @Override
-        public TurtleDigOperationType getOperationType() {
+        public @NotNull TurtleDigOperationType getOperationType() {
             return operationType;
         }
 
         @Override
-        public ItemStack mimicTool() {
-            ItemStack targetTool = super.mimicTool();
+        public @NotNull ItemStack getMimicTool() {
+            ItemStack targetTool = super.getMimicTool();
             targetTool.enchant(enchantment, enchantmentLevel);
             return targetTool;
         }

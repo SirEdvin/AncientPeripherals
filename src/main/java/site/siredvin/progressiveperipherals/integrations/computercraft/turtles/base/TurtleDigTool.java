@@ -1,50 +1,79 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base;
 
 import dan200.computercraft.ComputerCraft;
-import dan200.computercraft.api.turtle.ITurtleAccess;
-import dan200.computercraft.api.turtle.TurtleCommandResult;
-import dan200.computercraft.api.turtle.TurtleSide;
-import dan200.computercraft.api.turtle.TurtleVerb;
+import dan200.computercraft.api.client.TransformedModel;
+import dan200.computercraft.api.turtle.*;
 import dan200.computercraft.api.turtle.event.TurtleBlockEvent;
 import dan200.computercraft.shared.TurtlePermissions;
+import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import dan200.computercraft.shared.turtle.core.TurtlePlayer;
 import dan200.computercraft.shared.turtle.upgrades.TurtleTool;
 import dan200.computercraft.shared.util.DropConsumer;
 import dan200.computercraft.shared.util.InventoryUtil;
+import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.TransformationMatrix;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.Random;
 import java.util.function.Function;
 
-public abstract class TurtleDigTool extends TurtleTool {
+public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
 
     private final ItemStack craftingItemStack;
 
     public TurtleDigTool(ResourceLocation id, String adjective, ItemStack itemStack) {
-        super(id, adjective, itemStack.getItem());
+        super(id, TurtleUpgradeType.TOOL, adjective, itemStack.getItem());
         craftingItemStack = itemStack;
     }
     public TurtleDigTool(ResourceLocation id, String adjective, Item item) {
-        super(id, adjective, item);
+        super(id, TurtleUpgradeType.TOOL, adjective, item);
         craftingItemStack = new ItemStack(item);
     }
 
-    public abstract TurtleDigOperationType getOperationType();
+    public TurtleDigTool(ResourceLocation id, TurtleUpgradeType upgradeType, String adjective, ItemStack itemStack) {
+        super(id, upgradeType, adjective, itemStack.getItem());
+        craftingItemStack = itemStack;
+    }
+    public TurtleDigTool(ResourceLocation id, TurtleUpgradeType upgradeType, String adjective, Item item) {
+        super(id, upgradeType, adjective, item);
+        craftingItemStack = new ItemStack(item);
+    }
 
+    protected abstract @NotNull TurtleDigOperationType getOperationType();
+
+    protected abstract boolean isEnabled();
+
+    protected abstract @NotNull ItemStack getMimicTool();
+
+    protected abstract @NotNull Collection<BlockPos> detectTargetBlocks(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction, @NotNull World world);
+
+    protected boolean canBreakBlock(BlockState state, World world, BlockPos pos, TurtlePlayer player) {
+        Block block = state.getBlock();
+        return !state.isAir() && block != Blocks.BEDROCK && state.getDestroyProgress(player, world, pos) > 0.0F && block.canEntityDestroy(state, world, pos, player);
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean consumeFuel(@NotNull ITurtleAccess turtle) {
         return turtle.consumeFuel(getOperationType().getCost());
     }
@@ -54,6 +83,14 @@ public abstract class TurtleDigTool extends TurtleTool {
         if (verb == TurtleVerb.DIG)
             return dig(turtle, side, direction);
         return TurtleCommandResult.failure("Unsupported action");
+    }
+
+    @Nonnull
+    @OnlyIn(Dist.CLIENT)
+    public TransformedModel getModel(ITurtleAccess turtle, @Nonnull TurtleSide side) {
+        float xOffset = side == TurtleSide.LEFT ? -0.40625F : 0.40625F;
+        Matrix4f transform = new Matrix4f(new float[]{0.0F, 0.0F, -1.0F, 1.0F + xOffset, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, -1.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 1.0F});
+        return TransformedModel.of(this.getCraftingItem(), new TransformationMatrix(transform));
     }
 
     @Override
@@ -69,9 +106,27 @@ public abstract class TurtleDigTool extends TurtleTool {
         return craftingItemStack.getTag().equals(stack.getTag());
     }
 
-    protected abstract TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction);
-
-    protected abstract boolean isEnabled();
+    protected TurtleCommandResult dig(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction) {
+        World world = turtle.getWorld();
+        BlockPos turtlePosition = turtle.getPosition();
+        TileEntity turtleTile = turtle instanceof TurtleBrain ? ((TurtleBrain)turtle).getOwner() : world.getBlockEntity(turtlePosition);
+        if (turtleTile == null) {
+            return TurtleCommandResult.failure("Turtle has vanished from existence.");
+        }
+        BlockPos blockPosition = turtlePosition.relative(direction);
+        TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
+        turtlePlayer.loadInventory(getMimicTool());
+        if (!consumeFuel(turtle))
+            return TurtleCommandResult.failure("Not enough fuel");
+        Collection<BlockPos> targetBlocks = detectTargetBlocks(turtle, side, direction, world);
+        if (targetBlocks.isEmpty())
+            return TurtleCommandResult.failure("Nothing to dig here");
+        for (BlockPos targetBlock: targetBlocks) {
+            if (!digOneBlock(turtle, side, world, targetBlock, turtlePlayer, turtleTile))
+                return TurtleCommandResult.failure();
+        }
+        return TurtleCommandResult.success();
+    }
 
     protected boolean digOneBlock(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, World world, BlockPos blockPosition, TurtlePlayer turtlePlayer, TileEntity turtleTile) {
         BlockState state = world.getBlockState(blockPosition);
