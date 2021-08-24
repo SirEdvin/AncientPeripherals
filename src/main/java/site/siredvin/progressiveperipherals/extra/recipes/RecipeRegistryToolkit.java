@@ -1,6 +1,7 @@
 package site.siredvin.progressiveperipherals.extra.recipes;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.shared.util.NBTUtil;
 import net.minecraft.item.ItemStack;
@@ -15,16 +16,17 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
+import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.Platform;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.Serializable;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RecipeRegistryToolkit {
+
+    private final static Gson GSON = new Gson();
 
     private final static Map<Class<? extends IRecipe<?>>, RecipeTransformer> RECIPE_SERIALIZERS = new HashMap<>();
     private final static Map<Class<?>, Function<Object, Object>> SERIALIZERS = new HashMap<>();
@@ -48,19 +50,38 @@ public class RecipeRegistryToolkit {
         RECIPE_SEARCHER.put(recipeType, searchFunction);
     }
 
+    public static IRecipeTransformer<IRecipe<?>> GENERAL_RECIPE_TRANSFORMER = RecipeRegistryToolkit::serializeRecipe;
+
     static {
-        registerSerializer(Ingredient.class, ingredient -> new Gson().fromJson(ingredient.toJson(), HashMap.class));
+        registerSerializer(Ingredient.class, ingredient -> {
+            try {
+                return GSON.fromJson(ingredient.toJson(), HashMap.class);
+            } catch (JsonSyntaxException ignored) {
+                try {
+                    return LuaUtils.toLua(GSON.fromJson(ingredient.toJson(), ArrayList.class));
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        });
         registerSerializer(ItemStack.class, item -> NBTUtil.toLua(item.serializeNBT()));
         registerSerializer(FluidStack.class, fluid -> NBTUtil.toLua(fluid.writeToNBT(new CompoundNBT())));
     }
 
-    protected static @Nullable Object serialize(@Nullable Object obj) {
+    public static @Nullable Object serialize(@Nullable Object obj) {
         for (Class<?> clazz: SERIALIZERS.keySet()) {
             if (clazz.isInstance(obj))
                 return SERIALIZERS.get(clazz).apply(clazz.cast(obj));
         }
-        if (obj != null)
-            ProgressivePeripherals.LOGGER.error(String.format("Unknown recipe element type: %s", obj.getClass().toString()));
+        if (obj != null) {
+            if (obj instanceof Serializable) {
+                try {
+                    return GSON.fromJson(GSON.toJson(obj), HashMap.class);
+                } catch (JsonSyntaxException ignored) {}
+            }
+            return obj;
+        }
         return null;
     }
 

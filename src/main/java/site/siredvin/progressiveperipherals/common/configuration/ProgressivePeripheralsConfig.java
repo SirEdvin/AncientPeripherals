@@ -17,11 +17,13 @@ import java.util.List;
 
 public class ProgressivePeripheralsConfig {
 
-    private static final List<String> DEFAULT_BLACKLIST = new ArrayList<String>() {{
+    private static final List<String> DEFAULT_REALITY_FORGER_BLACKLIST = new ArrayList<String>() {{
         add(Blocks.FLEXIBLE_STATUE.getId().toString());
         add(Blocks.FLEXIBLE_REALITY_ANCHOR.getId().toString());
         add(Blocks.REALITY_BREAKTHROUGH_POINT.getId().toString());
     }};
+
+    private static final List<String> DEFAULT_RECIPE_REGISTRY_BLACKLIST = new ArrayList<>();
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;
     public static final int REASONABLE_POINT_POWER_LIMIT = 64;
@@ -56,6 +58,8 @@ public class ProgressivePeripheralsConfig {
     public static double furnaceBurnFuelCostRate;
     public static int cuttingAxeMaxBlockCount;
     public static int breakthroughPointSpawnChance;
+    public static int recipeRegistryReflectionAllowedLevel;
+    public static List<? extends String> recipeRegistryReflectionBlacklist;
     // Machinery
     public static int extractorConsumeAmount;
     public static int extractorProduceAmount;
@@ -103,6 +107,8 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.DoubleValue SMELT_FUEL_COST_RATE;
         final ForgeConfigSpec.IntValue CUTTING_AXE_MAX_BLOCK_COUNT;
         final ForgeConfigSpec.IntValue BREAKTHROUGH_POINT_SPAWN_CHANCE;
+        final ForgeConfigSpec.IntValue RECIPE_REGISTRY_REFLECTION_ALLOWED_LEVEL;
+        final ForgeConfigSpec.ConfigValue<List<? extends String>> RECIPE_REGISTRY_REFLECTION_BLACKLIST;
 
         // Machinery
 
@@ -150,7 +156,7 @@ public class ProgressivePeripheralsConfig {
             REALITY_FORGER_RADIUS = builder.defineInRange("realityForgerRadius", 8, 1, 64);
             REALITY_FORGER_MK2_RADIUS = builder.defineInRange("realityForgerMK2Radius", 64, 1, 256);
             REALITY_FORGER_BLACKLIST = builder.comment("Any block, that has tweak somehow it own model logic, should be here.").defineList(
-                    "realityForgerBlacklist", DEFAULT_BLACKLIST, obj -> true
+                    "realityForgerBlacklist", DEFAULT_REALITY_FORGER_BLACKLIST, obj -> true
             );
             ABSTRACTIUM_XP_POINTS_COST = builder.defineInRange("abstractiumXPPointsCost", 20, 5, Integer.MAX_VALUE);
             XP_TO_FUEL_RATE = builder.defineInRange("xpToFuelRate", 10, 1, Integer.MAX_VALUE);
@@ -163,6 +169,12 @@ public class ProgressivePeripheralsConfig {
             BREAKTHROUGH_POINT_SPAWN_CHANCE = builder
                     .comment("Spawn chance per 10000 calls")
                     .defineInRange("breakthroughPointSpawnChance", 20, 1, BREAKTHROUGH_SPAWN_CHANCE_LIMIT);
+            RECIPE_REGISTRY_REFLECTION_ALLOWED_LEVEL = builder
+                    .comment("Define allowed recipe registry reflection level, 0 is disabled at all")
+                    .defineInRange("recipeRegistryReflectionAllowedLevel", 2, 0, 8);
+            RECIPE_REGISTRY_REFLECTION_BLACKLIST = builder
+                    .comment("Define black listed method and fields for call")
+                    .defineList("recipeRegistryReflectionBlacklist", DEFAULT_RECIPE_REGISTRY_BLACKLIST, obj -> true);
 
             builder.pop();
 

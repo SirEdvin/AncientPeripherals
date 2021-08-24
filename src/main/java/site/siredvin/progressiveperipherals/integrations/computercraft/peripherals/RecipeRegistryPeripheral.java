@@ -9,13 +9,16 @@ import de.srendi.advancedperipherals.common.addons.computercraft.operations.Oper
 import de.srendi.advancedperipherals.common.blocks.base.PeripheralTileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.extra.recipes.IRecipeTransformer;
 import site.siredvin.progressiveperipherals.extra.recipes.NBTCheckMode;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
+import site.siredvin.progressiveperipherals.extra.recipes.ReflectionRecipeTransformer;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,15 +52,25 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
     }
 
     @LuaFunction
-    public final MethodResult getAllRecipesForType(String recipeType) throws LuaException {
+    public final MethodResult getAllRecipesForType(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
         if (checkResult.isPresent())
             return checkResult.get();
 
+        String recipeType = arguments.getString(0);
+        Optional<Map<?, ?>> transformationData = arguments.optTable(1);
+        IRecipeTransformer<IRecipe<?>> transformer;
+
+        if (transformationData.isPresent()) {
+            transformer = ReflectionRecipeTransformer.build(transformationData.get());
+        } else {
+            transformer = RecipeRegistryToolkit.GENERAL_RECIPE_TRANSFORMER;
+        }
+
         IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeType);
         trackOperation(QUERY_REGISTRY, null);
         return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream()
-                .map(RecipeRegistryToolkit::serializeRecipe).collect(Collectors.toList()));
+                .map(transformer::transform).collect(Collectors.toList()));
     }
 
     @LuaFunction

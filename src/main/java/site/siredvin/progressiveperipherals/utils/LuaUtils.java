@@ -114,6 +114,14 @@ public class LuaUtils {
         return data;
     }
 
+    public static <T> Map<String, T> toLua(List<T> value) {
+        Map<String, T> data = new HashMap<>();
+        for (int i = 0; i < value.size(); i++) {
+            data.put(Integer.toString(i + 1), value.get(i));
+        }
+        return data;
+    }
+
     public static Map<Integer, Map<Integer, Double>> toLua(double[][] value) {
         Map<Integer, Map<Integer, Double>> data = new HashMap<>();
         for (int i = 0;i < value.length; i++) {
