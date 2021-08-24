@@ -5,6 +5,7 @@ import de.srendi.advancedperipherals.common.util.Pair;
 import net.minecraft.item.crafting.IRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -24,24 +25,40 @@ public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
         this.extraFields = extraFields;
     }
 
-    protected Pair<Boolean, Object> extractField(IRecipe<?> recipe, Class<?> recipeClass, String fieldName) {
+    protected Pair<Boolean, Object> extractField(Object targetObj, Class<?> targetClass, String fieldName, int recursionLevel) {
+        if (recursionLevel == 0)
+            return Pair.onlyLeft(false);
+        String[] splitStrings = fieldName.split("\\.", 1);
+        String cleanFieldName = splitStrings[0];
+
+        if (ProgressivePeripheralsConfig.recipeRegistryReflectionBlacklist.contains(cleanFieldName))
+            return Pair.onlyLeft(false);
+
+        boolean isObjectDiscovered = false;
+        Object discoveredObject = null;
         try {
-            Field field = recipeClass.getField(fieldName);
-            return Pair.of(true, field.get(recipe));
+            Field field = targetClass.getField(cleanFieldName);
+            discoveredObject = field.get(targetObj);
+            isObjectDiscovered = true;
         } catch (NoSuchFieldException | IllegalAccessException ignored) {}
         try {
-            Method method = recipeClass.getMethod(fieldName);
-            return Pair.of(true,  method.invoke(recipe));
+            Method method = targetClass.getMethod(cleanFieldName);
+            discoveredObject = method.invoke(targetObj);
+            isObjectDiscovered = true;
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
         }
-        return Pair.onlyLeft(false);
+
+        if (splitStrings.length > 1 && isObjectDiscovered)
+            return extractField(discoveredObject, discoveredObject.getClass(), splitStrings[1], recursionLevel - 1);
+
+        return Pair.of(isObjectDiscovered, discoveredObject);
     }
 
     protected List<?> extractFields(IRecipe<?> recipe, List<String> fields) {
         Class<?> recipeClass = recipe.getClass();
         List<Object> extractedFields = new ArrayList<>();
         for (String fieldName: fields) {
-            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName);
+            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName, ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel);
             if (extractedPair.getLeft()) {
                 Object extractedData = extractedPair.getRight();
                 if (extractedData instanceof Collection) {
@@ -68,7 +85,7 @@ public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
         Class<?> recipeClass = recipe.getClass();
         Map<String, Object> data = new HashMap<>();
         for (String fieldName: extraFields) {
-            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName);
+            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName, ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel);
             if (extractedPair.getLeft()) {
                 Object extractedData = extractedPair.getRight();
                 if (extractedData instanceof Collection) {

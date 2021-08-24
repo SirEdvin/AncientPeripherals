@@ -49,6 +49,8 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.furnaceBurnFuelCostRate = ConfigHolder.COMMON_CONFIG.SMELT_FUEL_COST_RATE.get();
         ProgressivePeripheralsConfig.cuttingAxeMaxBlockCount = ConfigHolder.COMMON_CONFIG.CUTTING_AXE_MAX_BLOCK_COUNT.get();
         ProgressivePeripheralsConfig.breakthroughPointSpawnChance = ConfigHolder.COMMON_CONFIG.BREAKTHROUGH_POINT_SPAWN_CHANCE.get();
+        ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel = ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_REFLECTION_ALLOWED_LEVEL.get();
+        ProgressivePeripheralsConfig.recipeRegistryReflectionBlacklist = ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_REFLECTION_BLACKLIST.get();
         // Machinery
         ProgressivePeripheralsConfig.enableExtractor = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTOR.get();
         ProgressivePeripheralsConfig.extractorConsumeAmount = ConfigHolder.COMMON_CONFIG.EXTRACTOR_CONSUME_AMOUNT.get();
