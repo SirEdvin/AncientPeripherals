@@ -1,0 +1,148 @@
+{
+  "name": "Irrealium tools",
+  "icon": "progressiveperipherals:irrealium/pickaxe",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "text",
+      "title": "Irrealium tools",
+      "text": "Irrealium can be used for diamond tools upgrading. That tools will have power of netherite tools, but also have bigger enchantability."
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:irrealium/axe",
+      "recipe2": "progressiveperipherals:irrealium/pickaxe"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:irrealium/hoe",
+      "recipe2": "progressiveperipherals:irrealium/shovel"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:irrealium/sword"
+    },
+    {
+      "type": "text",
+      "text": "Irrealium tools also can be used as turtle upgrades! With power of interdimensional communication, this tools provide extra configuration for dig operations.$(p)Now you can perform shape mining and also select blocks for voiding!$(p)$(o)Currently, this available only for pickaxe, axe and shovel"
+    },
+    {
+      "type": "text",
+      "text": "When irrealium tool used as turtle upgrade, it need to be configured via peripheral, that this too will provide.$(p)$(l)Note$(): any additional logic, like shaping or voiding will add fuel consumption"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "isVoiding",
+      "description": "Simple access method to get voiding state"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["boolean", "is voiding enabled"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setVoiding",
+      "description": "Simple access method to set voiding state"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["boolean", "new voiding value"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getUltimineMode",
+      "description": "Simple access method to get current ultimine mode"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string", "current ultimine mode"],
+        ["string", "current ultimine mode description"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getUltimineModes",
+      "description": "Utility method to get all ultimine modes"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{table}", "List of tables with ultimine mod names and descriptions"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setUltimineMode",
+      "description": "Setter for ultimine mode"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "new ultimine mode name"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getVoidingTags",
+      "description": "Simple access method for voiding tags list"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{string}", "List of voiding tags"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "addVoidingTag",
+      "description": "Simple access method for voiding tags modification"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "new voiding tag"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "removeVoidingTag",
+      "description": "Simple access method for voiding tags modification"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "voiding tag to remove"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "clearVoidingTags",
+      "description": "Simple access method for voiding tags modification. Will clean $(l)all$() voiding tags"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getFuelConsumptionInformation",
+      "description": "Informative method for current fuel consumption configuration"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["table", "fuel consumption configuration"]
+      ]
+    }
+  ]
+}

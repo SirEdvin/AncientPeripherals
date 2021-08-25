@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 public class EnchantablePeripheralItem extends PeripheralItem {
     private final Set<Enchantment> allowedEnchantments;
 
-    public EnchantablePeripheralItem(Supplier<Boolean> enabledSup, Set<Enchantment> allowedEnchantments, @Nullable ResourceLocation turtleID, @Nullable ResourceLocation pocketID) {
-        super(enabledSup, turtleID, pocketID);
+    public EnchantablePeripheralItem(Supplier<Boolean> enabledSup, Set<Enchantment> allowedEnchantments) {
+        super(enabledSup);
         this.allowedEnchantments = allowedEnchantments;
     }
 

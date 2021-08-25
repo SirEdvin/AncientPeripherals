@@ -33,49 +33,50 @@ public class Blocks {
     public static final RegistryObject<Block> REALITY_FORGER = register(
             "reality_forger",
             () -> new GenericTileEntityBlock<>(TileEntityTypes.REALITY_FORGER),
-            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
+            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER.get(), () -> ProgressivePeripheralsConfig.enableRealityForger)
     );
 
     public static final RegistryObject<Block> REALITY_FORGER_MK2 = register(
             "reality_forger_mk2",
             () -> new GenericTileEntityBlock<>(TileEntityTypes.REALITY_FORGER),
-            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER_MK2.get(), null, null, () -> ProgressivePeripheralsConfig.enableRealityForger)
+            () -> new PeripheralBlockItem(Blocks.REALITY_FORGER_MK2.get(), () -> ProgressivePeripheralsConfig.enableRealityForger)
     );
 
     public static final RegistryObject<Block> STATUE_WORKBENCH = register(
             "statue_workbench",
             StatueWorkbench::new,
-            () -> new PeripheralBlockItem(Blocks.STATUE_WORKBENCH.get(), null, null, () -> ProgressivePeripheralsConfig.enableStatueWorkbench)
+            () -> new PeripheralBlockItem(Blocks.STATUE_WORKBENCH.get(), () -> ProgressivePeripheralsConfig.enableStatueWorkbench)
     );
 
     public static final RegistryObject<Block> ABSTRACTIUM_PEDESTAL = register(
             "abstractium_pedestal",
             AbstractiumPedestal::new,
-            () -> new PeripheralBlockItem(Blocks.ABSTRACTIUM_PEDESTAL.get(), null, null, () -> ProgressivePeripheralsConfig.enableAbstractiumPedestal)
+            () -> new PeripheralBlockItem(Blocks.ABSTRACTIUM_PEDESTAL.get(), () -> ProgressivePeripheralsConfig.enableAbstractiumPedestal)
     );
 
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_REACTOR_CONTROLLER = register(
             "reality_breakthrough_reactor_controller",
             () -> new MachineryController<>(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER),
-            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(), null, null, () -> true)
+            // TODO: settings here
+            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(), () -> true)
     );
 
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER = register(
             "reality_breakthrough_extractor_controller",
             () -> new MachineryController<>(TileEntityTypes.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER),
-            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(), null, null, () -> ProgressivePeripheralsConfig.enableExtractor)
+            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER.get(), () -> ProgressivePeripheralsConfig.enableExtractor)
     );
 
     public static final RegistryObject<Block> RECIPE_REGISTRY = register(
             "recipe_registry",
             () -> new GenericTileEntityBlock<>(TileEntityTypes.RECIPE_REGISTRY),
-            () -> new PeripheralBlockItem(Blocks.RECIPE_REGISTRY.get(), null, null, () -> ProgressivePeripheralsConfig.enableRecipeRegistry)
+            () -> new PeripheralBlockItem(Blocks.RECIPE_REGISTRY.get(), () -> ProgressivePeripheralsConfig.enableRecipeRegistry)
     );
 
     public static final RegistryObject<Block> EVENT_DISTRIBUTOR = register(
             "event_distributor",
             () -> new GenericTileEntityBlock<>(TileEntityTypes.EVENT_DISTRIBUTOR),
-            () -> new PeripheralBlockItem(Blocks.EVENT_DISTRIBUTOR.get(), null, null, () -> ProgressivePeripheralsConfig.enableEventDistributor)
+            () -> new PeripheralBlockItem(Blocks.EVENT_DISTRIBUTOR.get(), () -> ProgressivePeripheralsConfig.enableEventDistributor)
     );
 
     // Utility
@@ -247,7 +248,7 @@ public class Blocks {
             () -> new EnderwireHorizontalBlock(EnderwireModemTileEntity::new),
             () -> new PeripheralBlockItem(
                     Blocks.ENDERWIRE_MODEM.get(), new Item.Properties().stacksTo(64),
-                    EnderwireModemTurtle.ID, EnderwireModemPocket.ID, EnderwireElementType.MODEM::isEnabled
+                    EnderwireElementType.MODEM::isEnabled
             )
     );
 

@@ -44,7 +44,7 @@ public class TurtleCorrectingShovel extends TurtleDigTool {
     }
 
     @Override
-    public @NotNull TurtleDigOperationType getOperationType() {
+    public @NotNull TurtleDigOperationType getOperationType(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         return TurtleDigOperationType.CORRECTING_SHOVEL;
     }
 
@@ -57,7 +57,7 @@ public class TurtleCorrectingShovel extends TurtleDigTool {
     }
 
     @Override
-    protected Function<ItemStack, ItemStack> turtleDropConsumer(TileEntity tile, ITurtleAccess turtle) {
+    protected Function<ItemStack, ItemStack> turtleDropConsumer(@NotNull TileEntity tile, @NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         return (drop) -> {
             if (tile.isRemoved())
                 return drop;

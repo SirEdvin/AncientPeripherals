@@ -20,6 +20,10 @@ public class TranslationUtil {
         return new TranslationTextComponent(String.format("text.%s.%s", ProgressivePeripherals.MOD_ID, name));
     }
 
+    public static IFormattableTextComponent localization(String prefix, String name) {
+        return new TranslationTextComponent(String.format("text.%s.%s.%s", ProgressivePeripherals.MOD_ID, prefix, name));
+    }
+
     public static IFormattableTextComponent localization(String name, TextFormatting format) {
         return localization(name).withStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(format)));
     }

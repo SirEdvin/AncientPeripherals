@@ -174,6 +174,14 @@
   "turtle.progressiveperipherals.enderwire_modem": "Enderwire modem",
   "pocket.progressiveperipherals.enderwire_network_manager": "Enderwire Network Managing",
   "pocket.progressiveperipherals.enderwire_modem": "Enderwire Modem",
+  "turtle.progressiveperipherals.irrealium_axe": "Irrealium Felling",
+  "turtle.progressiveperipherals.silk_irrealium_axe": "Silk Irrealium Felling",
+  "turtle.progressiveperipherals.irrealium_shovel": "Irrealium Digging",
+  "turtle.progressiveperipherals.irrealium_pickaxe": "Irrealium Mining",
+  "turtle.progressiveperipherals.silk_irrealium_pickaxe": "Silk Irrealium Mining",
+  "turtle.progressiveperipherals.fortune_1_irrealium_pickaxe": "Fortune I Irrealium Mining",
+  "turtle.progressiveperipherals.fortune_2_irrealium_pickaxe": "Fortune II Irrealium Mining",
+  "turtle.progressiveperipherals.fortune_3_irrealium_pickaxe": "Fortune III Irrealium Mining",
   "text.progressiveperipherals.parameters": "$(l)Parameters$(): ",
   "text.progressiveperipherals.returns": "$(l)Returns$():",
   "text.progressiveperipherals.throw": "$(l)Throw in case of$(): ",
@@ -189,5 +197,11 @@
   "text.progressiveperipherals.enderwire.not_attached_to_anything": "This element don't attached to any network",
   "text.progressiveperipherals.enderwire.attached_to": "This element attached to %s, with name %s",
   "text.progressiveperipherals.enderwire.is_disabled": "This element is disabled and cannot be attached to any network",
-  "text.progressiveperipherals.enderwire.network_limit": "Network %s is reached limit"
+  "text.progressiveperipherals.enderwire.network_limit": "Network %s is reached limit",
+  "text.progressiveperipherals.ultimine_mode.3x3": "Square 3x3 with target block in center",
+  "text.progressiveperipherals.ultimine_mode.5x5": "Square 3x3 with target block in center",
+  "text.progressiveperipherals.ultimine_mode.1x2": "One block above target block (in case of up/down mining, one block in turtle direction)",
+  "text.progressiveperipherals.ultimine_mode.3x1": "Line 3x1 with target block in center, line will be perpendicular to turtle direction",
+  "text.progressiveperipherals.ultimine_mode.none": "Just single block mining",
+  "text.progressiveperipherals.ultimine_mode.depth_5": "Mine 4 additional block in turtle direction"
 }

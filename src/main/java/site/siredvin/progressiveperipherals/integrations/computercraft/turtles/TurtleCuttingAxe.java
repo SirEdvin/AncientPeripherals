@@ -58,7 +58,7 @@ public class TurtleCuttingAxe extends TurtleDigTool {
     }
 
     @Override
-    public @NotNull TurtleDigOperationType getOperationType() {
+    public @NotNull TurtleDigOperationType getOperationType(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         return TurtleDigOperationType.CUTTING_AXE;
     }
 
@@ -112,17 +112,16 @@ public class TurtleCuttingAxe extends TurtleDigTool {
         }
     }
 
-    public static EnchantedTurtleCuttingAxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
-        return new EnchantedTurtleCuttingAxe(prefix, enchantment, enchantmentLevel, newOperationType);
+    public static EnchantedTurtleCuttingAxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel) {
+        return new EnchantedTurtleCuttingAxe(prefix, enchantment, enchantmentLevel);
     }
 
     public static class EnchantedTurtleCuttingAxe extends TurtleCuttingAxe {
 
         private final Enchantment enchantment;
         private final int enchantmentLevel;
-        private final TurtleDigOperationType operationType;
 
-        public EnchantedTurtleCuttingAxe(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
+        public EnchantedTurtleCuttingAxe(String prefix, Enchantment enchantment, int enchantmentLevel) {
             super(new ResourceLocation(ProgressivePeripherals.MOD_ID, prefix + CORE_NAME), TranslationUtil.turtle(prefix + CORE_NAME), () -> {
                 ItemStack craftingItem = new ItemStack(Items.CUTTING_AXE.get());
                 craftingItem.enchant(enchantment, enchantmentLevel);
@@ -130,12 +129,6 @@ public class TurtleCuttingAxe extends TurtleDigTool {
             });
             this.enchantment = enchantment;
             this.enchantmentLevel = enchantmentLevel;
-            this.operationType = newOperationType;
-        }
-
-        @Override
-        public @NotNull TurtleDigOperationType getOperationType() {
-            return operationType;
         }
 
         @Override

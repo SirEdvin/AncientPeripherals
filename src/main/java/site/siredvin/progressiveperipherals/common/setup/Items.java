@@ -24,19 +24,19 @@ public class Items {
     public static final RegistryObject<Item> FORGED_AUTOMATA_CORE = Registration.ITEMS.register("forged_automata_core", ForgedAutomataCore::new);
 
     public static final RegistryObject<Item> SCIENTIFIC_AUTOMATA_CORE = Registration.ITEMS.register(
-            "scientific_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableScientificAutomataCore, ScientificTurtle.ID, null)
+            "scientific_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableScientificAutomataCore)
     );
 
     public static final RegistryObject<Item> ENCHANTING_AUTOMATA_CORE = Registration.ITEMS.register(
-            "enchanting_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableEnchantingAutomataCore, EnchantingTurtle.ID, null)
+            "enchanting_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableEnchantingAutomataCore)
     );
 
     public static final RegistryObject<Item> SMITHING_AUTOMATA_CORE = Registration.ITEMS.register(
-            "smithing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableSmithingAutomataCore, SmithingTurtle.ID, null)
+            "smithing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableSmithingAutomataCore)
     );
 
     public static final RegistryObject<Item> BREWING_AUTOMATA_CORE = Registration.ITEMS.register(
-            "brewing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableBrewingAutomataCore, BrewingTurtle.ID, null)
+            "brewing_automata_core", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableBrewingAutomataCore)
     );
 
     // Abstractium
@@ -75,18 +75,18 @@ public class Items {
     public static final RegistryObject<Item> CUTTING_AXE = Registration.ITEMS.register(
             "cutting_axe", () -> new EnchantablePeripheralItem(() -> ProgressivePeripheralsConfig.enableCuttingAxe, new HashSet<Enchantment>(){{
                 add(Enchantments.SILK_TOUCH);
-            }}, TurtleCuttingAxe.ID, null)
+            }})
     );
 
     public static final RegistryObject<Item> EXTRACTING_PICKAXE = Registration.ITEMS.register(
             "extracting_pickaxe", () -> new EnchantablePeripheralItem(() -> ProgressivePeripheralsConfig.enableExtractingPickaxe, new HashSet<Enchantment>(){{
                 add(Enchantments.BLOCK_FORTUNE);
                 add(Enchantments.SILK_TOUCH);
-            }}, TurtleExtractingPickaxe.ID, null)
+            }})
     );
 
     public static final RegistryObject<Item> CORRECTING_SHOVEL = Registration.ITEMS.register(
-            "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel, TurtleCorrectingShovel.ID, null)
+            "correcting_shovel", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableCorrectingShovel)
     );
 
     // Irrealium
@@ -121,7 +121,7 @@ public class Items {
     );
 
     public static final RegistryObject<Item> ENDERWIRE_NETWORK_MANAGER = Registration.ITEMS.register(
-            "enderwire/network_manager", () -> new PeripheralItem(() -> true, null, EnderwireNetworkManagementPocket.ID)
+            "enderwire/network_manager", () -> new PeripheralItem(() -> true)
     );
 
     @SuppressWarnings("EmptyMethod")

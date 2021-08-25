@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public enum ItemTier implements IItemTier {
     ABSTRACTIUM(0, 8, 12.0F, 0.0F, 0, () -> Ingredient.of(Items.ABSTRACTIUM_INGOT.get())),
-    IRREALIUM(4, 2500, 9.0F, 4.0F, 15, () -> Ingredient.of(Items.IRREALIUM_INGOT.get()));
+    IRREALIUM(4, 2500, 9.0F, 4.0F, 30, () -> Ingredient.of(Items.IRREALIUM_INGOT.get()));
 
     private final int level;
     private final int uses;

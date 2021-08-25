@@ -8,6 +8,8 @@ import dan200.computercraft.shared.turtle.core.TurtlePlayer;
 import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -64,7 +66,7 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
     }
 
     @Override
-    public @NotNull TurtleDigOperationType getOperationType() {
+    public @NotNull TurtleDigOperationType getOperationType(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         return TurtleDigOperationType.EXTRACTING_PICKAXE;
     }
 
@@ -78,8 +80,8 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
         return Collections.singletonList(blockPosition);
     }
 
-    public static EnchantedTurtleExtractingPickaxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
-        return new EnchantedTurtleExtractingPickaxe(prefix, enchantment, enchantmentLevel, newOperationType);
+    public static EnchantedTurtleExtractingPickaxe enchant(String prefix, Enchantment enchantment, int enchantmentLevel) {
+        return new EnchantedTurtleExtractingPickaxe(prefix, enchantment, enchantmentLevel);
     }
 
     @Override
@@ -91,9 +93,8 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
 
         private final Enchantment enchantment;
         private final int enchantmentLevel;
-        private final TurtleDigOperationType operationType;
 
-        public EnchantedTurtleExtractingPickaxe(String prefix, Enchantment enchantment, int enchantmentLevel, TurtleDigOperationType newOperationType) {
+        public EnchantedTurtleExtractingPickaxe(String prefix, Enchantment enchantment, int enchantmentLevel) {
             super(new ResourceLocation(ProgressivePeripherals.MOD_ID, prefix + CORE_NAME), TranslationUtil.turtle(prefix + CORE_NAME), () -> {
                 ItemStack craftingItem = new ItemStack(Items.EXTRACTING_PICKAXE.get());
                 craftingItem.enchant(enchantment, enchantmentLevel);
@@ -101,12 +102,6 @@ public class TurtleExtractingPickaxe extends TurtleDigTool {
             });
             this.enchantment = enchantment;
             this.enchantmentLevel = enchantmentLevel;
-            this.operationType = newOperationType;
-        }
-
-        @Override
-        public @NotNull TurtleDigOperationType getOperationType() {
-            return operationType;
         }
 
         @Override

@@ -7,20 +7,19 @@ import dan200.computercraft.api.turtle.event.TurtleBlockEvent;
 import dan200.computercraft.shared.TurtlePermissions;
 import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import dan200.computercraft.shared.turtle.core.TurtlePlayer;
-import dan200.computercraft.shared.turtle.upgrades.TurtleTool;
 import dan200.computercraft.shared.util.DropConsumer;
 import dan200.computercraft.shared.util.InventoryUtil;
-import dan200.computercraft.shared.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Matrix4f;
@@ -30,12 +29,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.Random;
 import java.util.function.Function;
 
 public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
@@ -60,7 +57,7 @@ public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
         craftingItemStack = new ItemStack(item);
     }
 
-    protected abstract @NotNull TurtleDigOperationType getOperationType();
+    protected abstract @NotNull TurtleDigOperationType getOperationType(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side);
 
     protected abstract boolean isEnabled();
 
@@ -74,8 +71,13 @@ public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public boolean consumeFuel(@NotNull ITurtleAccess turtle) {
-        return turtle.consumeFuel(getOperationType().getCost());
+    public boolean consumeFuel(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, int count, @NotNull ItemStack mimicTool) {
+
+        return turtle.consumeFuel(getOperationType(turtle, side).getCost(
+                count,
+                EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, mimicTool),
+                EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, mimicTool))
+        );
     }
 
     @NotNull
@@ -113,14 +115,14 @@ public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
         if (turtleTile == null) {
             return TurtleCommandResult.failure("Turtle has vanished from existence.");
         }
-        BlockPos blockPosition = turtlePosition.relative(direction);
         TurtlePlayer turtlePlayer = TurtlePlayer.getWithPosition(turtle, turtlePosition, direction);
-        turtlePlayer.loadInventory(getMimicTool());
-        if (!consumeFuel(turtle))
-            return TurtleCommandResult.failure("Not enough fuel");
+        ItemStack mimicTool = getMimicTool();
+        turtlePlayer.loadInventory(mimicTool);
         Collection<BlockPos> targetBlocks = detectTargetBlocks(turtle, side, direction, world);
         if (targetBlocks.isEmpty())
             return TurtleCommandResult.failure("Nothing to dig here");
+        if (!consumeFuel(turtle, side, targetBlocks.size(), mimicTool))
+            return TurtleCommandResult.failure("Not enough fuel");
         for (BlockPos targetBlock: targetBlocks) {
             if (!digOneBlock(turtle, side, world, targetBlock, turtlePlayer, turtleTile))
                 return TurtleCommandResult.failure();
@@ -150,7 +152,7 @@ public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
         boolean canHarvest = state.canHarvestBlock(world, blockPosition, turtlePlayer);
         boolean canBreak = state.removedByPlayer(world, blockPosition, turtlePlayer, canHarvest, fluidState);
 
-        DropConsumer.set(world, blockPosition, turtleDropConsumer(turtleTile, turtle));
+        DropConsumer.set(world, blockPosition, turtleDropConsumer(turtleTile, turtle, side));
         TileEntity tile = world.getBlockEntity(blockPosition);
         world.levelEvent(2001, blockPosition, Block.getId(state));
 
@@ -164,7 +166,7 @@ public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
         return true;
     }
 
-    protected Function<ItemStack, ItemStack> turtleDropConsumer(TileEntity tile, ITurtleAccess turtle) {
+    protected Function<ItemStack, ItemStack> turtleDropConsumer(@NotNull TileEntity tile, @NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         return (drop) -> tile.isRemoved() ? drop : InventoryUtil.storeItems(drop, turtle.getItemHandler(), turtle.getSelectedSlot());
     }
 

@@ -1,6 +1,9 @@
 package site.siredvin.progressiveperipherals;
 
+import dan200.computercraft.api.pocket.AbstractPocketUpgrade;
+import dan200.computercraft.api.turtle.AbstractTurtleUpgrade;
 import de.srendi.advancedperipherals.common.configuration.ConfigHandler;
+import de.srendi.advancedperipherals.common.util.ItemUtil;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -8,6 +11,7 @@ import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -66,6 +70,19 @@ public class ProgressivePeripherals {
         @Override
         public @NotNull ItemStack makeIcon() {
             return new ItemStack(Blocks.REALITY_FORGER.get());
+        }
+
+        @Override
+        public void fillItemList(@NotNull NonNullList<ItemStack> items) {
+            super.fillItemList(items);
+            for (AbstractTurtleUpgrade turtleUpgrade: CCRegistration.turtleUpgrades) {
+                items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_ADVANCED, turtleUpgrade.getUpgradeID().toString()));
+                items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_NORMAL, turtleUpgrade.getUpgradeID().toString()));
+            }
+            for (AbstractPocketUpgrade pocketUpgrade: CCRegistration.pocketUpgrades) {
+                items.add(ItemUtil.makePocket(ItemUtil.POCKET_ADVANCED, pocketUpgrade.getUpgradeID().toString()));
+                items.add(ItemUtil.makePocket(ItemUtil.POCKET_NORMAL, pocketUpgrade.getUpgradeID().toString()));
+            }
         }
     };
 

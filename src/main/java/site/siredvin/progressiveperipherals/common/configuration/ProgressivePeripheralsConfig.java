@@ -45,6 +45,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableCuttingAxe;
     public static boolean enableExtractingPickaxe;
     public static boolean enableCorrectingShovel;
+    public static boolean enableIrrealiumTools;
     // Creative features
     public static boolean enableCreativeItemDuplicator;
     // Restictions
@@ -90,6 +91,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_CUTTING_AXE;
         final ForgeConfigSpec.BooleanValue ENABLE_EXTRACTING_PICKAXE;
         final ForgeConfigSpec.BooleanValue ENABLE_CORRECTING_SHOVEL;
+        final ForgeConfigSpec.BooleanValue ENABLE_IRREALIUM_TOOLS;
 
         // Creative features
 
@@ -146,6 +148,7 @@ public class ProgressivePeripheralsConfig {
             ENABLE_CUTTING_AXE = builder.define("enableCuttingAxe", true);
             ENABLE_EXTRACTING_PICKAXE = builder.define("enableExtractingPickaxe", true);
             ENABLE_CORRECTING_SHOVEL = builder.define("enableCorrectingShovel", true);
+            ENABLE_IRREALIUM_TOOLS = builder.define("enableIrrealiumTools", true);
             builder.pop();
 
             builder.comment("").push("Creative features");
