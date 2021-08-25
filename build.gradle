@@ -184,6 +184,8 @@ dependencies {
 
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
+    implementation fg.deobf("curse.maven:AstralSorcery-241721:3333980")
+    implementation fg.deobf("curse.maven:ObserveLib-316833:3333962")
 
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
