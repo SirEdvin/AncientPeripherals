@@ -94,6 +94,22 @@ public class Items {
             "irrealium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
     );
 
+    public static final RegistryObject<Item> IRREALIUM_SWORD = Registration.ITEMS.register(
+            "irrealium/sword", () -> new SwordItem(ItemTier.IRREALIUM, 3, -2.4F, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
+    );
+    public static final RegistryObject<Item> IRREALIUM_SHOVEL = Registration.ITEMS.register(
+            "irrealium/shovel", () -> new ShovelItem(ItemTier.IRREALIUM, 1.5F, -3.0F, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
+    );
+    public static final RegistryObject<Item> IRREALIUM_PICKAXE = Registration.ITEMS.register(
+            "irrealium/pickaxe", () -> new PickaxeItem(ItemTier.IRREALIUM, 1, -2.8F, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
+    );
+    public static final RegistryObject<Item> IRREALIUM_AXE = Registration.ITEMS.register(
+            "irrealium/axe", () -> new AxeItem(ItemTier.IRREALIUM, 6.0F, -3.0F, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
+    );
+    public static final RegistryObject<Item> IRREALIUM_HOE = Registration.ITEMS.register(
+            "irrealium/hoe", () -> new HoeItem(ItemTier.IRREALIUM, 0, -3.0F, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
+    );
+
     public static final RegistryObject<Item> KNOWLEDGIUM_INGOT = Registration.ITEMS.register(
             "knowledgium_ingot", () -> new BaseItem(new Item.Properties().stacksTo(64))
     );

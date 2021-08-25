@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " I ",
+    " O "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "O": {
+      "item": "minecraft:diamond_sword"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium/sword"
+  }
+}

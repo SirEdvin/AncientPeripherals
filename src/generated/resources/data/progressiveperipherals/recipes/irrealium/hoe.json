@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "II ",
+    " O ",
+    " S "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "O": {
+      "item": "minecraft:diamond_hoe"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium/hoe"
+  }
+}

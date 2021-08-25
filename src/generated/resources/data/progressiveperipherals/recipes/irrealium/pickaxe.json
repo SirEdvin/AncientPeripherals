@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    " O ",
+    " S "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "O": {
+      "item": "minecraft:diamond_pickaxe"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium/pickaxe"
+  }
+}

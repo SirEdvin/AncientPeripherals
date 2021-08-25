@@ -450,6 +450,50 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("I I")
                 .pattern("I I")
                 .save(consumer);
+
+        TweakedShapedRecipeBuilder.shaped(Items.IRREALIUM_AXE.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .define('O', net.minecraft.item.Items.DIAMOND_AXE)
+                .pattern("II ")
+                .pattern("IO ")
+                .pattern(" S ")
+                .save(consumer);
+
+        TweakedShapedRecipeBuilder.shaped(Items.IRREALIUM_PICKAXE.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .define('O', net.minecraft.item.Items.DIAMOND_PICKAXE)
+                .pattern("III")
+                .pattern(" O ")
+                .pattern(" S ")
+                .save(consumer);
+
+        TweakedShapedRecipeBuilder.shaped(Items.IRREALIUM_HOE.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .define('O', net.minecraft.item.Items.DIAMOND_HOE)
+                .pattern("II ")
+                .pattern(" O ")
+                .pattern(" S ")
+                .save(consumer);
+
+        TweakedShapedRecipeBuilder.shaped(Items.IRREALIUM_SHOVEL.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .define('O', net.minecraft.item.Items.DIAMOND_SHOVEL)
+                .pattern(" I ")
+                .pattern(" O ")
+                .pattern(" S ")
+                .save(consumer);
+
+        TweakedShapedRecipeBuilder.shaped(Items.IRREALIUM_SWORD.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('O', net.minecraft.item.Items.DIAMOND_SWORD)
+                .pattern(" I ")
+                .pattern(" I ")
+                .pattern(" O ")
+                .save(consumer);
     }
 
     protected void buildCleanupRecipes(Consumer<IFinishedRecipe> consumer) {

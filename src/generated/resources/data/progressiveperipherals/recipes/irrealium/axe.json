@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "II ",
+    "IO ",
+    " S "
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "O": {
+      "item": "minecraft:diamond_axe"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium/axe"
+  }
+}
