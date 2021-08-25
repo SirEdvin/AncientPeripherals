@@ -184,7 +184,6 @@ dependencies {
 
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
-    implementation fg.deobf("vazkii.botania:Botania:${botania_version}")
 
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
