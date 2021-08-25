@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.shared.util.NBTUtil;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -15,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.Platform;
 
@@ -67,6 +68,8 @@ public class RecipeRegistryToolkit {
         });
         registerSerializer(ItemStack.class, item -> NBTUtil.toLua(item.serializeNBT()));
         registerSerializer(FluidStack.class, fluid -> NBTUtil.toLua(fluid.writeToNBT(new CompoundNBT())));
+        registerSerializer(Item.class, item -> new HashMap<String, Object>(){{ put("item", item.getRegistryName().toString());}});
+        registerSerializer(Fluid.class, fluid -> new HashMap<String, Object>(){{ put("fluid", fluid.getRegistryName().toString());}});
     }
 
     public static @Nullable Object serialize(@Nullable Object obj) {
