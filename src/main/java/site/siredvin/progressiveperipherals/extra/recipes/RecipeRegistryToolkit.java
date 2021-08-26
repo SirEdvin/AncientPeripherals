@@ -39,9 +39,8 @@ public class RecipeRegistryToolkit {
     private final static RecipeSearchPredicate<IRecipe<?>> DEFAULT_RECIPE_PREDICATE = (stack, recipe, checkMode) -> checkMode.itemStackEquals(recipe.getResultItem(), stack);
 
     private static final String[] SUPPORTED_MODS = new String[]{
-        "mekanism",
-        "astralsorcery",
-        "botania",
+        "mekanism", "astralsorcery",
+        "botania", "integrateddynamics",
     };
 
     public static void registerRecipeSerializer(Class<? extends IRecipe<?>> recipeClass, RecipeTransformer<?> transformer) {
