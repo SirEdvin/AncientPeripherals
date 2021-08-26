@@ -6,16 +6,10 @@ import mekanism.api.chemical.gas.GasStack;
 import mekanism.api.chemical.merged.BoxedChemicalStack;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.recipes.*;
-import mekanism.api.recipes.inputs.FluidStackIngredient;
 import mekanism.api.recipes.inputs.InputIngredient;
-import mekanism.api.recipes.inputs.ItemStackIngredient;
-import mekanism.api.recipes.inputs.chemical.GasStackIngredient;
-import mekanism.api.recipes.inputs.chemical.InfusionStackIngredient;
-import mekanism.api.recipes.inputs.chemical.SlurryStackIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
@@ -28,7 +22,7 @@ public class RecipesRegistrator implements Runnable {
     private static final class EnergyRecord {
         private final FloatingLong energy;
 
-        protected EnergyRecord(FloatingLong energy) {
+        private EnergyRecord(FloatingLong energy) {
             this.energy = energy;
         }
 

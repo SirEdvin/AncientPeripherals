@@ -5,6 +5,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 
+import java.util.HashSet;
+
 @Mod.EventBusSubscriber(modid = ProgressivePeripherals.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ConfigHandler {
 
@@ -42,7 +44,7 @@ public class ConfigHandler {
         // Restrictions
         ProgressivePeripheralsConfig.realityForgerRadius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_RADIUS.get();
         ProgressivePeripheralsConfig.realityForgerMK2Radius = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_MK2_RADIUS.get();
-        ProgressivePeripheralsConfig.realityForgerBlacklist = ConfigHolder.COMMON_CONFIG.REALITY_FORGER_BLACKLIST.get();
+        ProgressivePeripheralsConfig.realityForgerBlacklist = new HashSet<>(ConfigHolder.COMMON_CONFIG.REALITY_FORGER_BLACKLIST.get());
         ProgressivePeripheralsConfig.abstractiumXPPointsCost = ConfigHolder.COMMON_CONFIG.ABSTRACTIUM_XP_POINTS_COST.get();
         ProgressivePeripheralsConfig.xpToFuelRate = ConfigHolder.COMMON_CONFIG.XP_TO_FUEL_RATE.get();
         ProgressivePeripheralsConfig.brewingXPReward = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get();
@@ -51,7 +53,8 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.cuttingAxeMaxBlockCount = ConfigHolder.COMMON_CONFIG.CUTTING_AXE_MAX_BLOCK_COUNT.get();
         ProgressivePeripheralsConfig.breakthroughPointSpawnChance = ConfigHolder.COMMON_CONFIG.BREAKTHROUGH_POINT_SPAWN_CHANCE.get();
         ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel = ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_REFLECTION_ALLOWED_LEVEL.get();
-        ProgressivePeripheralsConfig.recipeRegistryReflectionBlacklist = ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_REFLECTION_BLACKLIST.get();
+        ProgressivePeripheralsConfig.recipeRegistryReflectionBlacklist = new HashSet<>(ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_REFLECTION_BLACKLIST.get());
+        ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist = new HashSet<>(ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_TYPES_BLACKLIST.get());
         // Machinery
         ProgressivePeripheralsConfig.enableExtractor = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTOR.get();
         ProgressivePeripheralsConfig.extractorConsumeAmount = ConfigHolder.COMMON_CONFIG.EXTRACTOR_CONSUME_AMOUNT.get();

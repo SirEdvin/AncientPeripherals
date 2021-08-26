@@ -14,6 +14,7 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.b
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ProgressivePeripheralsConfig {
 
@@ -23,7 +24,10 @@ public class ProgressivePeripheralsConfig {
         add(Blocks.REALITY_BREAKTHROUGH_POINT.getId().toString());
     }};
 
-    private static final List<String> DEFAULT_RECIPE_REGISTRY_BLACKLIST = new ArrayList<>();
+    private static final List<String> DEFAULT_RECIPE_REGISTRY_REFLECTION_BLACKLIST = new ArrayList<>();
+    private static final List<String> DEFAULT_RECIPE_REGISTRY_RECIPE_TYPES_BLACKLIST = new ArrayList<String>() {{
+        add("titanium:test_serializer");
+    }};
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;
     public static final int REASONABLE_POINT_POWER_LIMIT = 64;
@@ -51,7 +55,7 @@ public class ProgressivePeripheralsConfig {
     // Restictions
     public static int realityForgerRadius;
     public static int realityForgerMK2Radius;
-    public static List<? extends String> realityForgerBlacklist;
+    public static Set<? extends String> realityForgerBlacklist;
     public static int abstractiumXPPointsCost;
     public static int enchantLevelCost;
     public static int xpToFuelRate;
@@ -60,7 +64,8 @@ public class ProgressivePeripheralsConfig {
     public static int cuttingAxeMaxBlockCount;
     public static int breakthroughPointSpawnChance;
     public static int recipeRegistryReflectionAllowedLevel;
-    public static List<? extends String> recipeRegistryReflectionBlacklist;
+    public static Set<? extends String> recipeRegistryReflectionBlacklist;
+    public static Set<? extends String> recipeRegistryTypesBlacklist;
     // Machinery
     public static int extractorConsumeAmount;
     public static int extractorProduceAmount;
@@ -111,6 +116,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.IntValue BREAKTHROUGH_POINT_SPAWN_CHANCE;
         final ForgeConfigSpec.IntValue RECIPE_REGISTRY_REFLECTION_ALLOWED_LEVEL;
         final ForgeConfigSpec.ConfigValue<List<? extends String>> RECIPE_REGISTRY_REFLECTION_BLACKLIST;
+        final ForgeConfigSpec.ConfigValue<List<? extends String>> RECIPE_REGISTRY_TYPES_BLACKLIST;
 
         // Machinery
 
@@ -177,8 +183,10 @@ public class ProgressivePeripheralsConfig {
                     .defineInRange("recipeRegistryReflectionAllowedLevel", 2, 0, 8);
             RECIPE_REGISTRY_REFLECTION_BLACKLIST = builder
                     .comment("Define black listed method and fields for call")
-                    .defineList("recipeRegistryReflectionBlacklist", DEFAULT_RECIPE_REGISTRY_BLACKLIST, obj -> true);
-
+                    .defineList("recipeRegistryReflectionBlacklist", DEFAULT_RECIPE_REGISTRY_REFLECTION_BLACKLIST, obj -> true);
+            RECIPE_REGISTRY_TYPES_BLACKLIST = builder
+                    .comment("Define black listed recipes types for recipe registry")
+                    .defineList("recipeRegistryTypesBlacklist", DEFAULT_RECIPE_REGISTRY_RECIPE_TYPES_BLACKLIST, obj -> true);
             builder.pop();
 
             builder.comment("").push("Operations");

@@ -48,7 +48,8 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         if (checkResult.isPresent())
             return checkResult.get();
         trackOperation(QUERY_REGISTRY, null);
-        return MethodResult.of(Registry.RECIPE_TYPE.keySet().stream().map(ResourceLocation::toString).collect(Collectors.toList()));
+        return MethodResult.of(Registry.RECIPE_TYPE.keySet().stream().map(ResourceLocation::toString)
+                .filter(type -> !ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist.contains(type)).collect(Collectors.toList()));
     }
 
     @LuaFunction
