@@ -149,7 +149,13 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
-    maven { url 'https://squiddev.cc/maven/' }
+    maven {
+        name 'CC:T maven'
+        url 'https://squiddev.cc/maven/'
+        content {
+            includeGroup 'org.squiddev'
+        }
+    }
     maven { url 'https://www.cursemaven.com' }
     maven {
         url 'https://maven.pkg.github.com/SirEdvin/ProgressivePeripherals'
@@ -158,7 +164,39 @@ repositories {
             password = secretEnv["TOKEN"] ?: System.getenv("TOKEN")
         }
     }
-    maven { url 'https://ldtteam.jfrog.io/ldtteam/modding' }
+
+    maven {
+        name 'curios maven'
+        url "https://maven.theillusivec4.top/"
+        content {
+            includeGroup 'top.theillusivec4.curios'
+        }
+    }
+
+    maven {
+        name 'Botania maven'
+        url "https://maven.blamejared.com"
+        content {
+            includeGroupByRegex 'vazkii.*'
+        }
+    }
+
+    maven {
+        name 'JEI maven'
+        url 'https://dvs1.progwml6.com/files/maven'
+        content {
+            includeGroup 'mezz.jei'
+        }
+    }
+
+    maven {
+        name 'Minecolonies Maven'
+        url 'https://ldtteam.jfrog.io/ldtteam/modding'
+        content {
+            includeGroup 'mekanism'
+            includeGroup 'mcjty.theoneprobe'
+        }
+    }
 }
 
 configurations {
@@ -183,12 +221,20 @@ dependencies {
 
     // Soft integrations
 
+    // Popular libraries
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+
+    // Mekanism
+
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
-    implementation fg.deobf("curse.maven:AstralSorcery-241721:3333980")
-    implementation fg.deobf("curse.maven:ObserveLib-316833:3333962")
 
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+    // Astral sorcery
+    implementation fg.deobf("curse.maven:AstralSorcery-${astralsorcery_version}")
+    runtimeOnly fg.deobf("curse.maven:ObserveLib-${observerlib_version}")
+
+    // Botania
+    implementation fg.deobf("vazkii.botania:Botania:${botania_version}")
 
     // Testing stuff
     runtimeOnly fg.deobf("curse.maven:CyclopsCore-${cyclops_core_version}")
