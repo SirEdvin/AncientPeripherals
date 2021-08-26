@@ -33,9 +33,10 @@ public class RecipeRegistryToolkit {
 
     private final static Map<Class<? extends IRecipe<?>>, RecipeTransformer> RECIPE_SERIALIZERS = new HashMap<>();
     private final static Map<Class<?>, Function<Object, Object>> SERIALIZERS = new HashMap<>();
-    private final static Map<IRecipeType<?>, RecipeSearchFunction> RECIPE_SEARCHER = new HashMap<>();
+    private final static Map<IRecipeType<?>, RecipeSearchPredicate<?>> RECIPE_PREDICATES = new HashMap<>();
 
     private final static DefaultRecipeTransformer DEFAULT_RECIPE_TRANSFORMER = new DefaultRecipeTransformer();
+    private final static RecipeSearchPredicate<IRecipe<?>> DEFAULT_RECIPE_PREDICATE = (stack, recipe, checkMode) -> checkMode.itemStackEquals(recipe.getResultItem(), stack);
 
     private static final String[] SUPPORTED_MODS = new String[]{
             "mekanism",
@@ -50,8 +51,8 @@ public class RecipeRegistryToolkit {
         SERIALIZERS.put(clazz, (Function<Object, Object>) serializer);
     }
 
-    public static void registerRecipeSearcher(IRecipeType<?> recipeType, RecipeSearchFunction searchFunction) {
-        RECIPE_SEARCHER.put(recipeType, searchFunction);
+    public static <T extends IRecipe<?>> void registerRecipePredicate(IRecipeType<T> recipeType, RecipeSearchPredicate<T> searchFunction) {
+        RECIPE_PREDICATES.put(recipeType, searchFunction);
     }
 
     public static IRecipeTransformer<IRecipe<?>> GENERAL_RECIPE_TRANSFORMER = RecipeRegistryToolkit::serializeRecipe;
@@ -118,11 +119,9 @@ public class RecipeRegistryToolkit {
     }
 
     public static List<IRecipe<?>> findRecipesForType(IRecipeType<?> recipeType, @NotNull ItemStack result, @NotNull World world, @NotNull NBTCheckMode checkMode) {
-        RecipeSearchFunction searchFunction = RECIPE_SEARCHER.get(recipeType);
-        if (searchFunction != null)
-            return searchFunction.search(recipeType, result, world, checkMode);
+        final RecipeSearchPredicate searchPredicate = RECIPE_PREDICATES.getOrDefault(recipeType, DEFAULT_RECIPE_PREDICATE);
         List<IRecipe<?>> recipes = getRecipesForType(recipeType, world);
-        return recipes.stream().filter(recipe -> checkMode.itemStackEquals(recipe.getResultItem(), result)).collect(Collectors.toList());
+        return recipes.stream().filter(recipe -> searchPredicate.test(result, recipe, checkMode)).collect(Collectors.toList());
     }
 
     public static void registerExtra() {

@@ -1,16 +1,19 @@
 package site.siredvin.progressiveperipherals.integrations.mekanism;
 
 import dan200.computercraft.shared.util.NBTUtil;
+import de.srendi.advancedperipherals.common.util.Pair;
+import mekanism.api.annotations.NonNull;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.chemical.gas.GasStack;
 import mekanism.api.chemical.merged.BoxedChemicalStack;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.recipes.*;
 import mekanism.api.recipes.inputs.InputIngredient;
+import mekanism.common.recipe.MekanismRecipeType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import org.apache.commons.lang3.tuple.Pair;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
+import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
 import java.util.*;
@@ -252,7 +255,7 @@ public class RecipesRegistrator implements Runnable {
 
             @Override
             public List<?> getOutputs(PressurizedReactionRecipe recipe) {
-                Pair<List<ItemStack>, GasStack> output = recipe.getOutputDefinition();
+                org.apache.commons.lang3.tuple.Pair<List<@NonNull ItemStack>, @NonNull GasStack> output = recipe.getOutputDefinition();
                 List<Object> result = new ArrayList<>(output.getLeft());
                 result.add(output.getRight());
                 return result;
@@ -311,6 +314,20 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerSerializer(EnergyRecord.class, record -> new HashMap<String, Object>(){{ put("energy", record.getEnergy());}});
 
         RecipeRegistryToolkit.registerSerializer(InputIngredient.class, RecipesRegistrator::unpackIngredient);
+
+        // recipe searchers
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.CRUSHING, RecipeSearchUtils.buildPredicate(ItemStackToItemStackRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.ENRICHING, RecipeSearchUtils.buildPredicate(ItemStackToItemStackRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.SMELTING, RecipeSearchUtils.buildPredicate(ItemStackToItemStackRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.COMBINING, RecipeSearchUtils.buildPredicate(CombinerRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.CRYSTALLIZING, RecipeSearchUtils.buildPredicate(ChemicalCrystallizerRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.COMPRESSING, RecipeSearchUtils.buildPredicate(ItemStackGasToItemStackRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.PURIFYING, RecipeSearchUtils.buildPredicate(ItemStackGasToItemStackRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.INJECTING, RecipeSearchUtils.buildPredicate(ItemStackGasToItemStackRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.NUCLEOSYNTHESIZING, RecipeSearchUtils.buildPredicate(NucleosynthesizingRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.METALLURGIC_INFUSING, RecipeSearchUtils.buildPredicate(MetallurgicInfuserRecipe::getOutputDefinition));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.REACTION, RecipeSearchUtils.buildPredicate(recipe -> recipe.getOutputDefinition().getLeft()));
+        RecipeRegistryToolkit.registerRecipePredicate(MekanismRecipeType.SAWING, RecipeSearchUtils.buildPredicateForPair(recipe -> Pair.of(recipe.getMainOutputDefinition(), recipe.getSecondaryOutputDefinition())));
     }
 
     public static Object unpackIngredient(InputIngredient<?> ingredient) {

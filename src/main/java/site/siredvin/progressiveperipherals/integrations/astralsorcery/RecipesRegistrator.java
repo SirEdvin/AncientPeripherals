@@ -5,8 +5,10 @@ import hellfirepvp.astralsorcery.common.crafting.recipe.*;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.InteractionResult;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.ResultDropItem;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.ResultSpawnEntity;
+import hellfirepvp.astralsorcery.common.lib.RecipeTypesAS;
 import net.minecraft.item.ItemStack;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
+import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
 import java.util.*;
@@ -128,5 +130,16 @@ public class RecipesRegistrator implements Runnable {
                 }};
             return null;
         });
+
+        // register searchers
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_ALTAR.getType(), RecipeSearchUtils.buildPredicate(simpleAltarRecipe -> simpleAltarRecipe.getOutputs(null)));
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_INFUSION.getType(), RecipeSearchUtils.buildPredicate(liquidInfusion -> Collections.singleton(liquidInfusion.getOutput(ItemStack.EMPTY))));
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_BLOCK_TRANSMUTATION.getType(), RecipeSearchUtils.buildPredicate(blockTransmutation -> Collections.singleton(blockTransmutation.getOutputDisplay())));
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_LIQUID_INTERACTION.getType(), RecipeSearchUtils.buildPredicate(liquidInteraction -> {
+            InteractionResult result = liquidInteraction.getResult();
+            if (result instanceof ResultDropItem)
+                return Collections.singleton(((ResultDropItem) result).getOutput());
+            return Collections.emptyList();
+        }));
     }
 }
