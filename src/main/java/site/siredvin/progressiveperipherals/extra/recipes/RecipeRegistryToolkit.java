@@ -1,6 +1,7 @@
 package site.siredvin.progressiveperipherals.extra.recipes;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.shared.util.NBTUtil;
@@ -17,6 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.Platform;
 
@@ -36,7 +38,8 @@ public class RecipeRegistryToolkit {
     private final static DefaultRecipeTransformer DEFAULT_RECIPE_TRANSFORMER = new DefaultRecipeTransformer();
 
     private static final String[] SUPPORTED_MODS = new String[]{
-            "mekanism"
+            "mekanism",
+            "astralsorcery"
     };
 
     public static void registerRecipeSerializer(Class<? extends IRecipe<?>> recipeClass, RecipeTransformer<?> transformer) {
@@ -70,6 +73,7 @@ public class RecipeRegistryToolkit {
         registerSerializer(FluidStack.class, fluid -> NBTUtil.toLua(fluid.writeToNBT(new CompoundNBT())));
         registerSerializer(Item.class, item -> new HashMap<String, Object>(){{ put("item", item.getRegistryName().toString());}});
         registerSerializer(Fluid.class, fluid -> new HashMap<String, Object>(){{ put("fluid", fluid.getRegistryName().toString());}});
+        registerSerializer(JsonObject.class, json -> GSON.fromJson(json, HashMap.class));
     }
 
     public static @Nullable Object serialize(@Nullable Object obj) {
@@ -101,6 +105,8 @@ public class RecipeRegistryToolkit {
     }
 
     public static IRecipeType<?> getRecipeType(ResourceLocation type) throws LuaException {
+        if (ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist.contains(type.toString()))
+            throw new LuaException(String.format("Incorrect recipe type %s", type));
         Optional<IRecipeType<?>> optRecipeType = Registry.RECIPE_TYPE.getOptional(type);
         if (!optRecipeType.isPresent())
             throw new LuaException(String.format("Incorrect recipe type %s", type));
