@@ -39,11 +39,12 @@ public class RecipeRegistryToolkit {
     private final static RecipeSearchPredicate<IRecipe<?>> DEFAULT_RECIPE_PREDICATE = (stack, recipe, checkMode) -> checkMode.itemStackEquals(recipe.getResultItem(), stack);
 
     private static final String[] SUPPORTED_MODS = new String[]{
-        "mekanism", "astralsorcery",
-        "botania", "integrateddynamics",
+            "mekanism", "astralsorcery",
+            "botania", "integrateddynamics",
+            "immersiveengineering",
     };
 
-    public static void registerRecipeSerializer(Class<? extends IRecipe<?>> recipeClass, RecipeTransformer<?> transformer) {
+    public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, RecipeTransformer<T> transformer) {
         RECIPE_SERIALIZERS.put(recipeClass, transformer);
     }
 

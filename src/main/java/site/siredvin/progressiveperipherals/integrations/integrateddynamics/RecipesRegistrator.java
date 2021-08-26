@@ -29,7 +29,7 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getOutputs(RecipeDryingBasin recipe) {
                 return new ArrayList<Object>() {{
-                    add(recipe.getRecipeOutput());
+                    add(recipe.getOutputItem());
                     add(recipe.getOutputFluid());
                 }};
             }

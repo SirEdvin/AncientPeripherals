@@ -9,6 +9,10 @@ import java.util.function.Function;
 
 public class RecipeSearchUtils {
 
+    public static boolean checkInsideOutput(ItemStack targetingStack, NBTCheckMode checkMode, ItemStack output) {
+        return checkMode.itemStackEquals(output, targetingStack);
+    }
+
     public static boolean checkInsideOutput(ItemStack targetingStack, NBTCheckMode checkMode, Collection<ItemStack> output) {
         return output.stream().anyMatch(resultStack -> checkMode.itemStackEquals(resultStack, targetingStack));
     }
@@ -20,6 +24,10 @@ public class RecipeSearchUtils {
     }
 
     public static  <T extends IRecipe<?>> RecipeSearchPredicate<T> buildPredicate(Function<T, Collection<ItemStack>> mapper) {
+        return (stack, recipe, checkMode) -> checkInsideOutput(stack, checkMode, mapper.apply(recipe));
+    }
+
+    public static  <T extends IRecipe<?>> RecipeSearchPredicate<T> buildPredicateSingle(Function<T, ItemStack> mapper) {
         return (stack, recipe, checkMode) -> checkInsideOutput(stack, checkMode, mapper.apply(recipe));
     }
 

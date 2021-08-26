@@ -197,6 +197,16 @@ repositories {
         }
     }
 
+
+    maven {
+        name "Immersive Engineer"
+        url "https://maven.blamejared.com/"
+        content {
+            includeGroup 'blusunrize.immersiveengineering'
+            includeGroup 'malte0811'
+        }
+    }
+
     maven {
         name 'Minecolonies Maven'
         url 'https://ldtteam.jfrog.io/ldtteam/modding'
@@ -250,22 +260,30 @@ dependencies {
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
 
     // Astral sorcery
-    implementation("hellfirepvp.astralsorcery:astralsorcery-1.16:${astralsorcery_version}:deobf") {
+    implementation(fg.deobf("hellfirepvp.astralsorcery:astralsorcery-1.16:${astralsorcery_version}", {
         transitive = false
-    }
-    runtimeOnly("hellfirepvp.observerlib:observerlib:${observerlib_version}:deobf")
+    }))
+    runtimeOnly(fg.deobf("hellfirepvp.observerlib:observerlib:${observerlib_version}", {
+        transitive = false
+    }))
 
     // Botania
     implementation fg.deobf("vazkii.botania:Botania:${botania_version}")
 
     // Integrated Dynamics
-    runtimeOnly("org.cyclops.cyclopscore:cyclopscore:${cyclops_core_version}:deobf")
-    runtimeOnly("org.cyclops.commoncapabilities:commoncapabilities:${common_capabilities_version}:deobf") { // https://dl.bintray.com/cyclopsmc/dev/org/cyclops/commoncapabilities/CommonCapabilities/
+    runtimeOnly(fg.deobf("org.cyclops.cyclopscore:cyclopscore:${cyclops_core_version}", {
         transitive = false
-    }
-    implementation("org.cyclops.integrateddynamics:integrateddynamics:${integrated_dynamics_version}:deobf") {
+    }))
+    runtimeOnly(fg.deobf("org.cyclops.commoncapabilities:commoncapabilities:${common_capabilities_version}", {
         transitive = false
-    }
+    }))
+    implementation(fg.deobf("org.cyclops.integrateddynamics:integrateddynamics:${integrated_dynamics_version}", {
+        transitive = false
+    }))
+
+    // Immersive engineer
+
+    implementation(fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.16.5-5.0.3-138.2"))
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")

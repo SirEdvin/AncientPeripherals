@@ -133,8 +133,8 @@ public class RecipesRegistrator implements Runnable {
 
         // register searchers
         RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_ALTAR.getType(), RecipeSearchUtils.buildPredicate(simpleAltarRecipe -> simpleAltarRecipe.getOutputs(null)));
-        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_INFUSION.getType(), RecipeSearchUtils.buildPredicate(liquidInfusion -> Collections.singleton(liquidInfusion.getOutput(ItemStack.EMPTY))));
-        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_BLOCK_TRANSMUTATION.getType(), RecipeSearchUtils.buildPredicate(blockTransmutation -> Collections.singleton(blockTransmutation.getOutputDisplay())));
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_INFUSION.getType(), RecipeSearchUtils.buildPredicateSingle(liquidInfusion -> liquidInfusion.getOutput(ItemStack.EMPTY)));
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_BLOCK_TRANSMUTATION.getType(), RecipeSearchUtils.buildPredicateSingle(BlockTransmutation::getOutputDisplay));
         RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_LIQUID_INTERACTION.getType(), RecipeSearchUtils.buildPredicate(liquidInteraction -> {
             InteractionResult result = liquidInteraction.getResult();
             if (result instanceof ResultDropItem)
