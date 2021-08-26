@@ -5,11 +5,13 @@ import net.minecraft.nbt.CompoundNBT;
 import site.siredvin.progressiveperipherals.utils.NBTUtils;
 
 public enum NBTCheckMode {
-    FULL, SUBSET, SUPERSET;
+    FULL, SUBSET, SUPERSET, NONE;
 
     public boolean itemStackEquals(ItemStack result, ItemStack targetingResult) {
         if (result.getItem() != targetingResult.getItem())
             return false;
+        if (this == NONE)
+            return true;
         CompoundNBT targetingNBT = targetingResult.getTag();
         CompoundNBT resultNBT = result.getTag();
         if (targetingNBT == null)

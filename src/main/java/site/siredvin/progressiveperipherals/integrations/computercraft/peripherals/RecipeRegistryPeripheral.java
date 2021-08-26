@@ -106,7 +106,7 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
 
         trackOperation(QUERY_REGISTRY, null);
         return MethodResult.of(
-                recipeTypes.stream().flatMap(recipeType -> RecipeRegistryToolkit.findRecipesForType(recipeType, targetResult, getWorld(), NBTCheckMode.SUBSET).stream())
+                recipeTypes.stream().flatMap(recipeType -> RecipeRegistryToolkit.findRecipesForType(recipeType, targetResult, getWorld(), NBTCheckMode.NONE).stream())
                         .map(RecipeRegistryToolkit::serializeRecipe).collect(Collectors.toList())
         );
     }
