@@ -40,7 +40,9 @@ def static getenv(path = ".env") {
     if (file.exists()) {
         file.eachLine { line ->
             def (name, value) = line.tokenize("=")
-            env[name.trim()] = value.trim()
+            if (value != null) {
+                env[name.trim()] = value.trim()
+            }
         }
     }
 
