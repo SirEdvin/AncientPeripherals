@@ -23,7 +23,6 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.Platform;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -99,6 +98,14 @@ public class RecipeRegistryToolkit {
         return GSON.fromJson(obj, HashMap.class);
     }
 
+    public static @Nullable Object serializePossibleCollection(@Nullable Object obj) {
+        if (obj instanceof Collection)
+            return LuaUtils.toLua(((Collection<?>) obj).stream().map(RecipeRegistryToolkit::serialize).collect(Collectors.toList()));
+        if (obj != null && obj.getClass().isArray())
+            return LuaUtils.toLua(Arrays.stream((Object[]) obj).map(RecipeRegistryToolkit::serialize).collect(Collectors.toList()));
+        return serialize(obj);
+    }
+
     public static @Nullable Object serialize(@Nullable Object obj) {
         if (obj instanceof IRecipeSerializableRecord)
             return ((IRecipeSerializableRecord) obj).serializeForToolkit();
@@ -106,15 +113,7 @@ public class RecipeRegistryToolkit {
             if (clazz.isInstance(obj))
                 return SERIALIZERS.get(clazz).apply(clazz.cast(obj));
         }
-        if (obj != null) {
-            if (obj instanceof Serializable) {
-                try {
-                    return GSON.fromJson(GSON.toJson(obj), HashMap.class);
-                } catch (JsonSyntaxException ignored) {}
-            }
-            return obj;
-        }
-        return null;
+        return obj;
     }
 
     public static Map<String, Object> serializeRecipe(IRecipe<?> recipe) {
@@ -146,6 +145,21 @@ public class RecipeRegistryToolkit {
         final RecipeSearchPredicate searchPredicate = RECIPE_PREDICATES.getOrDefault(recipeType, DEFAULT_RECIPE_PREDICATE);
         List<IRecipe<?>> recipes = getRecipesForType(recipeType, world);
         return recipes.stream().filter(recipe -> searchPredicate.test(result, recipe, checkMode)).collect(Collectors.toList());
+    }
+
+    public static List<IRecipeType<?>> collectRecipeTypes(Object types) throws LuaException {
+        if (types instanceof String)
+            return Collections.singletonList(RecipeRegistryToolkit.getRecipeType((String) types));
+        if (types instanceof Map) {
+            List<IRecipeType<?>> recipeTypes = new ArrayList<>();
+            for (Object el: ((Map<?, ?>) types).values()) {
+                recipeTypes.add(RecipeRegistryToolkit.getRecipeType(el.toString()));
+            }
+            return recipeTypes;
+        }
+        if (types == null)
+            return Registry.RECIPE_TYPE.stream().collect(Collectors.toList());
+        throw new LuaException("types should be string or table!");
     }
 
     public static void registerExtra() {

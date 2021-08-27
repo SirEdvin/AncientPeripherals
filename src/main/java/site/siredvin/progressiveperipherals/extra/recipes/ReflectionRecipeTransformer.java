@@ -7,69 +7,22 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static site.siredvin.progressiveperipherals.extra.recipes.ReflectionUtil.extractField;
+import static site.siredvin.progressiveperipherals.extra.recipes.ReflectionUtil.extractFields;
 
 public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
 
     private final @NotNull List<String> inputFields;
     private final @NotNull List<String> outputFields;
-    private final @NotNull List<String> extraFields;
+    private final @NotNull Map<String, String> extraFields;
 
-    protected ReflectionRecipeTransformer(@NotNull List<String> inputFields, @NotNull List<String> outputFields, @NotNull List<String> extraFields) {
+    protected ReflectionRecipeTransformer(@NotNull List<String> inputFields, @NotNull List<String> outputFields, @NotNull Map<String, String> extraFields) {
         this.inputFields = inputFields;
         this.outputFields = outputFields;
         this.extraFields = extraFields;
-    }
-
-    protected Pair<Boolean, Object> extractField(Object targetObj, Class<?> targetClass, String fieldName, int recursionLevel) {
-        if (recursionLevel == 0)
-            return Pair.onlyLeft(false);
-        String[] splitStrings = fieldName.split(Pattern.quote("."), 2);
-        String cleanFieldName = splitStrings[0];
-
-        if (ProgressivePeripheralsConfig.recipeRegistryReflectionBlacklist.contains(cleanFieldName))
-            return Pair.onlyLeft(false);
-
-        boolean isObjectDiscovered = false;
-        Object discoveredObject = null;
-        try {
-            Field field = targetClass.getField(cleanFieldName);
-            discoveredObject = field.get(targetObj);
-            isObjectDiscovered = true;
-        } catch (NoSuchFieldException | IllegalAccessException ignored) {}
-        try {
-            Method method = targetClass.getMethod(cleanFieldName);
-            discoveredObject = method.invoke(targetObj);
-            isObjectDiscovered = true;
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ignored) {
-        }
-
-        if (splitStrings.length > 1 && isObjectDiscovered)
-            return extractField(discoveredObject, discoveredObject.getClass(), splitStrings[1], recursionLevel - 1);
-
-        return Pair.of(isObjectDiscovered, discoveredObject);
-    }
-
-    protected List<?> extractFields(IRecipe<?> recipe, List<String> fields) {
-        Class<?> recipeClass = recipe.getClass();
-        List<Object> extractedFields = new ArrayList<>();
-        for (String fieldName: fields) {
-            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName, ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel);
-            if (extractedPair.getLeft()) {
-                Object extractedData = extractedPair.getRight();
-                if (extractedData instanceof Collection) {
-                    extractedFields.addAll((Collection<?>) extractedData);
-                } else {
-                    extractedFields.add(extractedData);
-                }
-            }
-        }
-        return extractedFields;
     }
 
     @Override
@@ -85,15 +38,10 @@ public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
     public @Nullable Map<String, Object> getExtraData(IRecipe<?> recipe) {
         Class<?> recipeClass = recipe.getClass();
         Map<String, Object> data = new HashMap<>();
-        for (String fieldName: extraFields) {
-            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName, ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel);
+        for (Map.Entry<String, String> fieldName: extraFields.entrySet()) {
+            Pair<Boolean, Object> extractedPair = extractField(recipe, recipeClass, fieldName.getValue(), ProgressivePeripheralsConfig.recipeRegistryReflectionAllowedLevel);
             if (extractedPair.getLeft()) {
-                Object extractedData = extractedPair.getRight();
-                if (extractedData instanceof Collection) {
-                    data.put(fieldName, ((Collection<?>) extractedData).stream().map(RecipeRegistryToolkit::serialize).collect(Collectors.toList()));
-                } else {
-                    data.put(fieldName, RecipeRegistryToolkit.serialize(extractedData));
-                }
+                data.put(fieldName.getKey(), RecipeRegistryToolkit.serializePossibleCollection(extractedPair.getRight()));
             }
         }
         return data;
@@ -111,11 +59,11 @@ public class ReflectionRecipeTransformer extends RecipeTransformer<IRecipe<?>> {
             throw new LuaException("Extra should be table or absent");
         List<String> inputFields = ((Map<?, ?>) inputObj).values().stream().map(Object::toString).collect(Collectors.toList());
         List<String> outputFields = ((Map<?, ?>) outputObj).values().stream().map(Object::toString).collect(Collectors.toList());
-        List<String> extraFields;
+        Map<String, String> extraFields;
         if (extraObj == null) {
-            extraFields = Collections.emptyList();
+            extraFields = Collections.emptyMap();
         } else {
-            extraFields = ((Map<?, ?>) extraObj).values().stream().map(Object::toString).collect(Collectors.toList());
+            extraFields = (Map<String, String>) extraObj;
         }
         return new ReflectionRecipeTransformer(inputFields, outputFields, extraFields);
     }

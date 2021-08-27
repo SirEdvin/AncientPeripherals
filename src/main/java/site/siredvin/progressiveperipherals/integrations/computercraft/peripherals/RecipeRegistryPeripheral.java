@@ -15,10 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
-import site.siredvin.progressiveperipherals.extra.recipes.IRecipeTransformer;
-import site.siredvin.progressiveperipherals.extra.recipes.NBTCheckMode;
-import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
-import site.siredvin.progressiveperipherals.extra.recipes.ReflectionRecipeTransformer;
+import site.siredvin.progressiveperipherals.extra.recipes.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,6 +50,18 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
     }
 
     @LuaFunction
+    public final MethodResult inspectRecipeType(String recipeTypeName) throws LuaException {
+        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
+        if (checkResult.isPresent())
+            return checkResult.get();
+
+        IRecipeType<?> recipeType = RecipeRegistryToolkit.collectRecipeTypes(recipeTypeName).get(0);
+        trackOperation(QUERY_REGISTRY, null);
+        Optional<IRecipe<?>> recipe = RecipeRegistryToolkit.getRecipesForType(recipeType, getWorld()).stream().findFirst();
+        return recipe.map(iRecipe -> MethodResult.of(ReflectionUtil.expandObject(iRecipe))).orElseGet(() -> MethodResult.of(null, String.format("No recipe for %s exists", recipeTypeName)));
+    }
+
+    @LuaFunction
     public final MethodResult getAllRecipesForType(@NotNull IArguments arguments) throws LuaException {
         Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
         if (checkResult.isPresent())
@@ -82,6 +91,14 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
 
         String itemID = arguments.getString(0);
         Object types = arguments.get(1);
+        Optional<Map<?, ?>> transformationData = arguments.optTable(2);
+        IRecipeTransformer<IRecipe<?>> transformer;
+
+        if (transformationData.isPresent()) {
+            transformer = ReflectionRecipeTransformer.build(transformationData.get());
+        } else {
+            transformer = RecipeRegistryToolkit.GENERAL_RECIPE_TRANSFORMER;
+        }
 
         Optional<Item> optTargetItem = Registry.ITEM.getOptional(new ResourceLocation(itemID));
 
@@ -90,24 +107,12 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
 
         ItemStack targetResult = new ItemStack(optTargetItem.get());
 
-        List<IRecipeType<?>> recipeTypes;
-        if (types instanceof String) {
-            recipeTypes = Collections.singletonList(RecipeRegistryToolkit.getRecipeType((String) types));
-        } else if (types instanceof Map) {
-            recipeTypes = new ArrayList<>();
-            for (Object el: ((Map<?, ?>) types).values()) {
-                recipeTypes.add(RecipeRegistryToolkit.getRecipeType(el.toString()));
-            }
-        } else if (types == null) {
-            recipeTypes = Registry.RECIPE_TYPE.stream().collect(Collectors.toList());
-        } else {
-            throw new LuaException("types should be string or table!");
-        }
+        List<IRecipeType<?>> recipeTypes = RecipeRegistryToolkit.collectRecipeTypes(types);
 
         trackOperation(QUERY_REGISTRY, null);
         return MethodResult.of(
                 recipeTypes.stream().flatMap(recipeType -> RecipeRegistryToolkit.findRecipesForType(recipeType, targetResult, getWorld(), NBTCheckMode.NONE).stream())
-                        .map(RecipeRegistryToolkit::serializeRecipe).collect(Collectors.toList())
+                        .map(transformer::transform).collect(Collectors.toList())
         );
     }
 }

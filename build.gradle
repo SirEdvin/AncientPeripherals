@@ -156,7 +156,13 @@ repositories {
             includeGroup 'org.squiddev'
         }
     }
-    maven { url 'https://www.cursemaven.com' }
+    maven {
+        name "Curseforge maven proxy"
+        url 'https://www.cursemaven.com'
+        content {
+            includeGroup "curse.maven"
+        }
+    }
     maven {
         url 'https://maven.pkg.github.com/SirEdvin/ProgressivePeripherals'
         credentials {
@@ -331,7 +337,7 @@ dependencies {
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
-
+    runtimeOnly fg.deobf("curse.maven:Cyclic-239286:3435180")
     configurations.implementation.extendsFrom(configurations.extraLibs)
 
 //    jsocJavadoc 'com.surfapi:javadoc-json-doclet:1.0'
