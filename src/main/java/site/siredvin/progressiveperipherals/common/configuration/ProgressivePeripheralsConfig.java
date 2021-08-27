@@ -32,6 +32,8 @@ public class ProgressivePeripheralsConfig {
         add("immersiveengineering:mineral_mix"); // useless
         add("create:conversion"); // utility data for jei
         add("industrialforegoing:stonework_generate"); // pretty useless, actually, still need manual machine configuration ...
+        add("pneumaticcraft:fuel_quality"); // fuel data, not recipe
+        add("pneumaticcraft:heat_properties"); // heat data, not recipe
     }};
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;

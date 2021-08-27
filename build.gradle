@@ -245,6 +245,14 @@ repositories {
             includeGroup "com.hrznstudio"
         }
     }
+
+    maven {
+        name = "PneumaticCraft Repressured"
+        url = "https://modmaven.dev/"
+        content {
+            includeGroup "me.desht.pneumaticcraft"
+        }
+    }
 }
 
 configurations {
@@ -314,6 +322,12 @@ dependencies {
     // Industrial foregoins
     implementation fg.deobf("curse.maven:IndustrialForegoing-266515:3425275")
     implementation fg.deobf("com.hrznstudio:titanium:1.16.5-3.2.8.2")
+
+    // PNC:R
+
+    implementation fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.9.6-133", {
+        transitive = false
+    })
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")

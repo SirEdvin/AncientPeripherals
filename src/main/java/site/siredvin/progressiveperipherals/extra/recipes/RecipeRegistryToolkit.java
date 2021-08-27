@@ -44,7 +44,8 @@ public class RecipeRegistryToolkit {
             "mekanism", "astralsorcery",
             "botania", "integrateddynamics",
             "immersiveengineering", "naturesaura",
-            "create", "industrialforegoing"
+            "create", "industrialforegoing",
+            "pneumaticcraft"
     };
 
     public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, IRecipeTransformer<T> transformer) {
@@ -90,11 +91,17 @@ public class RecipeRegistryToolkit {
         });
         registerSerializer(Item.class, item -> new HashMap<String, Object>(){{ put("item", item.getRegistryName().toString());}});
         registerSerializer(Fluid.class, fluid -> new HashMap<String, Object>(){{ put("fluid", fluid.getRegistryName().toString());}});
-        registerSerializer(JsonObject.class, json -> GSON.fromJson(json, HashMap.class));
+        registerSerializer(JsonObject.class, RecipeRegistryToolkit::serializeJson);
         registerSerializer(EntityType.class, entityType -> new HashMap<String, Object>() {{ put("entity", entityType.getRegistryName().toString());}});
     }
 
+    public static Object serializeJson(JsonObject obj) {
+        return GSON.fromJson(obj, HashMap.class);
+    }
+
     public static @Nullable Object serialize(@Nullable Object obj) {
+        if (obj instanceof IRecipeSerializableRecord)
+            return ((IRecipeSerializableRecord) obj).serializeForToolkit();
         for (Class<?> clazz: SERIALIZERS.keySet()) {
             if (clazz.isInstance(obj))
                 return SERIALIZERS.get(clazz).apply(clazz.cast(obj));
