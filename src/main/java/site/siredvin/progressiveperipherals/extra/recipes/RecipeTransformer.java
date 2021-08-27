@@ -19,13 +19,18 @@ public abstract class RecipeTransformer<T extends IRecipe<?>> implements IRecipe
         return null;
     }
 
+    protected List<Object> serializeIngredients(List<?> originalData) {
+        return originalData.stream().filter(Objects::nonNull).map(RecipeRegistryToolkit::serialize)
+                .filter(obj -> obj != RecipeRegistryToolkit.SERIALIZATION_NULL).collect(Collectors.toList());
+    }
+
     @Override
     public Map<String, Object> transform(T recipe) {
         Map<String, Object> recipeData = new HashMap<>();
         recipeData.put("id", recipe.getId().toString());
         recipeData.put("type", recipe.getType().toString());
-        recipeData.put("output", getOutputs(recipe).stream().filter(Objects::nonNull).map(RecipeRegistryToolkit::serialize).collect(Collectors.toList()));
-        recipeData.put("inputs", getInputs(recipe).stream().filter(Objects::nonNull).map(RecipeRegistryToolkit::serialize).collect(Collectors.toList()));
+        recipeData.put("outputs", serializeIngredients(getOutputs(recipe)));
+        recipeData.put("inputs", serializeIngredients(getInputs(recipe)));
 
         Map<String, Object> extraData = getExtraData(recipe);
         if (extraData != null)

@@ -7,10 +7,8 @@ import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class RecipesRegistrator implements Runnable {
@@ -44,16 +42,25 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public List<?> getOutputs(RecipeSqueezer recipe) {
                 return new ArrayList<Object>() {{
-                    add(recipe.getOutputItems());
+                    addAll(recipe.getOutputItems());
                     add(recipe.getOutputFluid());
                 }};
             }
         });
 
+        // serializers
+
+        RecipeRegistryToolkit.registerSerializer(RecipeSqueezer.ItemStackChance.class, itemStackChance -> new HashMap<String, Object>() {{
+            put("item", RecipeRegistryToolkit.serialize(itemStackChance.getItemStack()));
+            put("chance", itemStackChance.getChance());
+        }});
+
         // predicates
-        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_DRYING_BASIN, RecipeSearchUtils.buildPredicate(recipe -> Arrays.asList(recipe.getInputIngredient().getItems())));
-        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_MECHANICAL_DRYING_BASIN, RecipeSearchUtils.buildPredicate(recipe -> Arrays.asList(recipe.getInputIngredient().getItems())));
-        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_SQUEEZER, RecipeSearchUtils.buildPredicate(recipe -> Arrays.asList(recipe.getInputIngredient().getItems())));
-        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_MECHANICAL_SQUEEZER, RecipeSearchUtils.buildPredicate(recipe -> Arrays.asList(recipe.getInputIngredient().getItems())));
+        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_DRYING_BASIN, RecipeSearchUtils.buildPredicateSingle(RecipeDryingBasin::getOutputItem));
+        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_MECHANICAL_DRYING_BASIN, RecipeSearchUtils.buildPredicateSingle(RecipeDryingBasin::getOutputItem));
+        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_SQUEEZER,
+                RecipeSearchUtils.buildPredicate(recipe -> recipe.getOutputItems().stream().map(RecipeSqueezer.ItemStackChance::getItemStack).collect(Collectors.toList())));
+        RecipeRegistryToolkit.registerRecipePredicate(RegistryEntries.RECIPETYPE_MECHANICAL_SQUEEZER,
+                RecipeSearchUtils.buildPredicate(recipe -> recipe.getOutputItems().stream().map(RecipeSqueezer.ItemStackChance::getItemStack).collect(Collectors.toList())));
     }
 }

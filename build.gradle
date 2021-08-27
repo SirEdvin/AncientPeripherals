@@ -237,6 +237,14 @@ repositories {
             includeGroup "com.jozufozu.flywheel"
         }
     }
+
+    maven {
+        name = "Industrial forgeoing maven"
+        url = "https://cdn.hrzn.studio/maven/"
+        content {
+            includeGroup "com.hrznstudio"
+        }
+    }
 }
 
 configurations {
@@ -301,7 +309,11 @@ dependencies {
 
     // Create
     implementation fg.deobf("com.simibubi.create:Create:${create_version}")
-    runtimeOnly fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
+    implementation fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
+
+    // Industrial foregoins
+    implementation fg.deobf("curse.maven:IndustrialForegoing-266515:3425275")
+    implementation fg.deobf("com.hrznstudio:titanium:1.16.5-3.2.8.2")
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")

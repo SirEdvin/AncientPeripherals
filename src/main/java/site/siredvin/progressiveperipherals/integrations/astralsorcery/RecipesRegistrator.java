@@ -1,11 +1,13 @@
 package site.siredvin.progressiveperipherals.integrations.astralsorcery;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hellfirepvp.astralsorcery.common.crafting.recipe.*;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.InteractionResult;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.ResultDropItem;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.ResultSpawnEntity;
 import hellfirepvp.astralsorcery.common.lib.RecipeTypesAS;
+import hellfirepvp.astralsorcery.common.util.data.JsonHelper;
 import net.minecraft.item.ItemStack;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
@@ -76,27 +78,10 @@ public class RecipesRegistrator implements Runnable {
             }
         });
 
-        RecipeRegistryToolkit.registerRecipeSerializer(SimpleAltarRecipe.class, new RecipeTransformer<SimpleAltarRecipe>() {
-            @Override
-            public List<?> getInputs(SimpleAltarRecipe recipe) {
-                JsonObject serializedData = new JsonObject();
-                recipe.getInputs().serialize(serializedData);
-                return Collections.singletonList(serializedData);
-            }
-
-            @Override
-            public List<?> getOutputs(SimpleAltarRecipe recipe) {
-                return recipe.getOutputs(null);
-            }
-
-            @Override
-            public Map<String, Object> getExtraData(SimpleAltarRecipe recipe) {
-                return new HashMap<String, Object>() {{
-                    put("starlightRequirement", recipe.getStarlightRequirement());
-                    put("duration", recipe.getDuration());
-                    put("altarTye", recipe.getAltarType().name());
-                }};
-            }
+        RecipeRegistryToolkit.registerRecipeSerializer(SimpleAltarRecipe.class, recipe -> {
+            JsonObject data = new JsonObject();
+            recipe.write(data);
+            return RecipeRegistryToolkit.GSON.fromJson(data, HashMap.class);
         });
 
         RecipeRegistryToolkit.registerRecipeSerializer(BlockTransmutation.class, new RecipeTransformer<BlockTransmutation>() {
@@ -132,7 +117,14 @@ public class RecipesRegistrator implements Runnable {
         });
 
         // register searchers
-        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_ALTAR.getType(), RecipeSearchUtils.buildPredicate(simpleAltarRecipe -> simpleAltarRecipe.getOutputs(null)));
+        RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_ALTAR.getType(), RecipeSearchUtils.buildPredicate(simpleAltarRecipe -> {
+            JsonObject data = new JsonObject();
+            simpleAltarRecipe.write(data);
+            List<ItemStack> result = new ArrayList<>();
+            for (JsonElement element: data.getAsJsonArray("output"))
+                result.add(JsonHelper.getItemStack(element, "dummy_key"));
+            return result;
+        }));
         RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_INFUSION.getType(), RecipeSearchUtils.buildPredicateSingle(liquidInfusion -> liquidInfusion.getOutput(ItemStack.EMPTY)));
         RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_BLOCK_TRANSMUTATION.getType(), RecipeSearchUtils.buildPredicateSingle(BlockTransmutation::getOutputDisplay));
         RecipeRegistryToolkit.registerRecipePredicate(RecipeTypesAS.TYPE_LIQUID_INTERACTION.getType(), RecipeSearchUtils.buildPredicate(liquidInteraction -> {

@@ -31,6 +31,7 @@ public class ProgressivePeripheralsConfig {
         add("immersiveengineering:fertilizer"); // useless
         add("immersiveengineering:mineral_mix"); // useless
         add("create:conversion"); // utility data for jei
+        add("industrialforegoing:stonework_generate"); // pretty useless, actually, still need manual machine configuration ...
     }};
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;

@@ -31,8 +31,9 @@ import java.util.stream.Collectors;
 public class RecipeRegistryToolkit {
 
     public final static Gson GSON = new Gson();
+    public final static Object SERIALIZATION_NULL = new Object();
 
-    private final static Map<Class<? extends IRecipe<?>>, RecipeTransformer> RECIPE_SERIALIZERS = new HashMap<>();
+    private final static Map<Class<? extends IRecipe<?>>, IRecipeTransformer> RECIPE_SERIALIZERS = new HashMap<>();
     private final static Map<Class<?>, Function<Object, Object>> SERIALIZERS = new HashMap<>();
     private final static Map<IRecipeType<?>, RecipeSearchPredicate<?>> RECIPE_PREDICATES = new HashMap<>();
 
@@ -43,10 +44,10 @@ public class RecipeRegistryToolkit {
             "mekanism", "astralsorcery",
             "botania", "integrateddynamics",
             "immersiveengineering", "naturesaura",
-            "create"
+            "create", "industrialforegoing"
     };
 
-    public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, RecipeTransformer<T> transformer) {
+    public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, IRecipeTransformer<T> transformer) {
         RECIPE_SERIALIZERS.put(recipeClass, transformer);
     }
 
@@ -77,8 +78,16 @@ public class RecipeRegistryToolkit {
             }
             return null;
         });
-        registerSerializer(ItemStack.class, item -> NBTUtil.toLua(item.serializeNBT()));
-        registerSerializer(FluidStack.class, fluid -> NBTUtil.toLua(fluid.writeToNBT(new CompoundNBT())));
+        registerSerializer(ItemStack.class, item -> {
+            if (item.isEmpty())
+                return SERIALIZATION_NULL;
+            return NBTUtil.toLua(item.serializeNBT());
+        });
+        registerSerializer(FluidStack.class, fluid -> {
+            if (fluid.isEmpty())
+                return SERIALIZATION_NULL;
+            return NBTUtil.toLua(fluid.writeToNBT(new CompoundNBT()));
+        });
         registerSerializer(Item.class, item -> new HashMap<String, Object>(){{ put("item", item.getRegistryName().toString());}});
         registerSerializer(Fluid.class, fluid -> new HashMap<String, Object>(){{ put("fluid", fluid.getRegistryName().toString());}});
         registerSerializer(JsonObject.class, json -> GSON.fromJson(json, HashMap.class));
