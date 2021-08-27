@@ -326,8 +326,8 @@ dependencies {
     implementation fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
 
     // Industrial foregoins
-    implementation fg.deobf("curse.maven:IndustrialForegoing-266515:3425275")
-    implementation fg.deobf("com.hrznstudio:titanium:1.16.5-3.2.8.2")
+    implementation fg.deobf("curse.maven:IndustrialForegoing-${industrial_foregoing_version}")
+    implementation fg.deobf("com.hrznstudio:titanium:${titanium_version}")
 
     // PNC:R
 
@@ -337,7 +337,7 @@ dependencies {
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
-    runtimeOnly fg.deobf("curse.maven:Cyclic-239286:3435180")
+
     configurations.implementation.extendsFrom(configurations.extraLibs)
 
 //    jsocJavadoc 'com.surfapi:javadoc-json-doclet:1.0'
