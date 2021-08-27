@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.shared.util.NBTUtil;
+import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,7 +42,7 @@ public class RecipeRegistryToolkit {
     private static final String[] SUPPORTED_MODS = new String[]{
             "mekanism", "astralsorcery",
             "botania", "integrateddynamics",
-            "immersiveengineering",
+            "immersiveengineering", "naturesaura",
     };
 
     public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, RecipeTransformer<T> transformer) {
@@ -76,6 +77,7 @@ public class RecipeRegistryToolkit {
         registerSerializer(Item.class, item -> new HashMap<String, Object>(){{ put("item", item.getRegistryName().toString());}});
         registerSerializer(Fluid.class, fluid -> new HashMap<String, Object>(){{ put("fluid", fluid.getRegistryName().toString());}});
         registerSerializer(JsonObject.class, json -> GSON.fromJson(json, HashMap.class));
+        registerSerializer(EntityType.class, entityType -> new HashMap<String, Object>() {{ put("entity", entityType.getRegistryName().toString());}});
     }
 
     public static @Nullable Object serialize(@Nullable Object obj) {

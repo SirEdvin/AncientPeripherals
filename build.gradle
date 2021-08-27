@@ -283,7 +283,11 @@ dependencies {
 
     // Immersive engineer
 
-    implementation(fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.16.5-5.0.3-138.2"))
+    implementation(fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:${immersive_engineer_version}"))
+
+    // Natures Aura
+
+    implementation(fg.deobf("curse.maven:NaturesAura-${natures_aura_version}"))
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
