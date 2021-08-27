@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report bugs and problems\
+description: Report bugs and problems
 title: "[Bug] "
 labels: [bug]
 body:
@@ -32,6 +32,9 @@ body:
         - 0.0.4
         - 0.0.5
         - 0.0.6
+        - 0.0.7
+        - 0.0.8
+        - 0.0.9
         - Own compiled build
     validations:
       required: true
