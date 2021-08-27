@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 public class RecipeRegistryToolkit {
 
-    private final static Gson GSON = new Gson();
+    public final static Gson GSON = new Gson();
 
     private final static Map<Class<? extends IRecipe<?>>, RecipeTransformer> RECIPE_SERIALIZERS = new HashMap<>();
     private final static Map<Class<?>, Function<Object, Object>> SERIALIZERS = new HashMap<>();
@@ -43,9 +43,14 @@ public class RecipeRegistryToolkit {
             "mekanism", "astralsorcery",
             "botania", "integrateddynamics",
             "immersiveengineering", "naturesaura",
+            "create"
     };
 
     public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, RecipeTransformer<T> transformer) {
+        RECIPE_SERIALIZERS.put(recipeClass, transformer);
+    }
+
+    public static <T extends IRecipe<?>> void registerRecipeSerializerRaw(Class<T> recipeClass, RecipeTransformer<?> transformer) {
         RECIPE_SERIALIZERS.put(recipeClass, transformer);
     }
 

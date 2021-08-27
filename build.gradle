@@ -227,6 +227,16 @@ repositories {
             includeGroupByRegex 'org.cyclops.*'
         }
     }
+
+    maven {
+        // Location of the maven for mixed mappings, Registrate, and Flywheel
+        name = "Create maven"
+        url = "https://maven.tterrag.com/"
+        content {
+            includeGroup "com.simibubi.create"
+            includeGroup "com.jozufozu.flywheel"
+        }
+    }
 }
 
 configurations {
@@ -288,6 +298,10 @@ dependencies {
     // Natures Aura
 
     implementation(fg.deobf("curse.maven:NaturesAura-${natures_aura_version}"))
+
+    // Create
+    implementation fg.deobf("com.simibubi.create:Create:${create_version}")
+    runtimeOnly fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
 
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")

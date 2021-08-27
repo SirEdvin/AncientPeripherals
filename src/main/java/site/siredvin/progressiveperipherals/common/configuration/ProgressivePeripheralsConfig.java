@@ -26,10 +26,11 @@ public class ProgressivePeripheralsConfig {
 
     private static final List<String> DEFAULT_RECIPE_REGISTRY_REFLECTION_BLACKLIST = new ArrayList<>();
     private static final List<String> DEFAULT_RECIPE_REGISTRY_RECIPE_TYPES_BLACKLIST = new ArrayList<String>() {{
-        add("titanium:test_serializer");
-        add("immersiveengineering:blast_furnace_fuel");
-        add("immersiveengineering:fertilizer");
-        add("immersiveengineering:mineral_mix");
+        add("titanium:test_serializer"); // utility data
+        add("immersiveengineering:blast_furnace_fuel"); // useless
+        add("immersiveengineering:fertilizer"); // useless
+        add("immersiveengineering:mineral_mix"); // useless
+        add("create:conversion"); // utility data for jei
     }};
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;
