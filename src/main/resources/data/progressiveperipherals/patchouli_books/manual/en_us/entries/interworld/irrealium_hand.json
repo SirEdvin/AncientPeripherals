@@ -1,0 +1,56 @@
+{
+  "name": "Irrealium hand",
+  "icon": "progressiveperipherals:irrealium/hand",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Irrealium pedestal",
+      "item": "progressiveperipherals:irrealium/hand",
+      "text": "Irrealium hand is perfect turtle upgrade that allow to execute place operation on area, like with ultimine!"
+    },
+    {
+      "type": "crafting",
+      "recipe": "progressiveperipherals:irrealium/hand"
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "relations",
+      "title": "Available APIs",
+      "entries": [
+        "progressiveperipherals:api_documentation/ultimine_api"
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "place",
+      "description": "Place function, that execute operation in current turtle direction"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "placeDown",
+      "description": "Place function, that execute operation on position above the turtle"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "placeUp",
+      "description": "Place function, that execute operation on position below the turtle"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    }
+  ]
+}

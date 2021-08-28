@@ -35,7 +35,7 @@ public enum UltimineMode {
         this.endZ = endZ;
     }
 
-    public @NotNull List<BlockPos> getMiningArea(@NotNull Direction miningDirection, @NotNull Direction turtleFacingDirection, @NotNull BlockPos center) {
+    public @NotNull List<BlockPos> getTargetArea(@NotNull Direction miningDirection, @NotNull Direction turtleFacingDirection, @NotNull BlockPos center) {
         List<BlockPos> result = new ArrayList<>();
         Direction.Axis zAxis = miningDirection.getAxis();
         Direction.AxisDirection zDirection = miningDirection.getAxisDirection();

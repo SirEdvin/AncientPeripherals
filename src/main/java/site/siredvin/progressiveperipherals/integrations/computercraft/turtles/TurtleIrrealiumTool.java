@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
-import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.IrrealiumToolPeripheral;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.tools.IrrealiumToolPeripheral;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigOperationType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigTool;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.dataproxy.IrrealiumToolDataProxy;
@@ -50,7 +50,7 @@ public class TurtleIrrealiumTool extends TurtleDigTool {
 
     @Override
     protected @NotNull Collection<BlockPos> detectTargetBlocks(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side, @NotNull Direction direction, @NotNull World world) {
-        return IrrealiumToolDataProxy.getUltimineMode(turtle, side).getMiningArea(direction, turtle.getDirection(), turtle.getPosition().relative(direction));
+        return IrrealiumToolDataProxy.getUltimineMode(turtle, side).getTargetArea(direction, turtle.getDirection(), turtle.getPosition().relative(direction));
     }
 
     @Override

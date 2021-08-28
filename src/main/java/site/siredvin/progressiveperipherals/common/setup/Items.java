@@ -7,14 +7,12 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.common.items.ForgedAutomataCore;
 import site.siredvin.progressiveperipherals.common.items.base.ArmorMaterial;
 import site.siredvin.progressiveperipherals.common.items.base.BaseItem;
 import site.siredvin.progressiveperipherals.common.items.base.ItemTier;
-import site.siredvin.progressiveperipherals.common.items.*;
 import site.siredvin.progressiveperipherals.common.items.peripheral.EnchantablePeripheralItem;
 import site.siredvin.progressiveperipherals.common.items.peripheral.PeripheralItem;
-import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
-import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
 
 import java.util.HashSet;
 
@@ -108,6 +106,10 @@ public class Items {
     );
     public static final RegistryObject<Item> IRREALIUM_HOE = Registration.ITEMS.register(
             "irrealium/hoe", () -> new HoeItem(ItemTier.IRREALIUM, 0, -3.0F, (new Item.Properties()).tab(ProgressivePeripherals.TAB))
+    );
+
+    public static final RegistryObject<Item> IRREALIUM_HAND = Registration.ITEMS.register(
+            "irrealium/hand", () -> new PeripheralItem(() -> ProgressivePeripheralsConfig.enableIrrealiumTools)
     );
 
     public static final RegistryObject<Item> KNOWLEDGIUM_INGOT = Registration.ITEMS.register(

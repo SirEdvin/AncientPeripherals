@@ -494,6 +494,15 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern(" I ")
                 .pattern(" O ")
                 .save(consumer);
+
+        TweakedShapedRecipeBuilder.shaped(Items.IRREALIUM_HAND.get())
+                .define('I', Items.IRREALIUM_INGOT.get())
+                .define('S', net.minecraft.item.Items.STICK)
+                .define('Z', net.minecraft.block.Blocks.SMOOTH_STONE)
+                .pattern("II ")
+                .pattern("ISZ")
+                .pattern(" ZS")
+                .save(consumer);
     }
 
     protected void buildCleanupRecipes(Consumer<IFinishedRecipe> consumer) {

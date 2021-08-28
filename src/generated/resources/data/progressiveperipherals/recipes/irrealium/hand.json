@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "II ",
+    "ISZ",
+    " ZS"
+  ],
+  "key": {
+    "I": {
+      "item": "progressiveperipherals:irrealium_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "Z": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "result": {
+    "item": "progressiveperipherals:irrealium/hand"
+  }
+}

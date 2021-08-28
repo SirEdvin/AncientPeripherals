@@ -1,0 +1,54 @@
+{
+  "name": "Ultimine API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "progressiveperipherals:irrealium",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getUltimineMode",
+      "description": "Simple access method to get current ultimine mode"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["string", "current ultimine mode"],
+        ["string", "current ultimine mode description"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getUltimineModes",
+      "description": "Utility method to get all ultimine modes"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["{table}", "List of tables with ultimine mod names and descriptions"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "setUltimineMode",
+      "description": "Setter for ultimine mode"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "new ultimine mode name"]
+      ],
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getFuelConsumptionInformation",
+      "description": "Informative method for current fuel consumption configuration"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["table", "fuel consumption configuration"]
+      ]
+    }
+  ]
+}

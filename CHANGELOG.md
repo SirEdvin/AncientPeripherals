@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Irrealium tools
+- Irrealium hand
 - Turtle upgrades (based on irrealium tools) that allows some [enchantments, ultimine and voiding](https://github.com/SirEdvin/ProgressivePeripherals/issues/31) 
 
 ### Changed

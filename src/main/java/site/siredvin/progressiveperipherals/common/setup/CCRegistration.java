@@ -9,7 +9,6 @@ import site.siredvin.progressiveperipherals.ProgressivePeripherals;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireModemPocket;
 import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireNetworkManagementPocket;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.*;
-import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.TurtleDigOperationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +55,7 @@ public class CCRegistration {
             add(TurtleIrrealiumTool.build("fortune_1_irrealium_pickaxe", Items.IRREALIUM_PICKAXE.get(), Enchantments.BLOCK_FORTUNE, 1));
             add(TurtleIrrealiumTool.build("fortune_2_irrealium_pickaxe", Items.IRREALIUM_PICKAXE.get(), Enchantments.BLOCK_FORTUNE, 2));
             add(TurtleIrrealiumTool.build("fortune_3_irrealium_pickaxe", Items.IRREALIUM_PICKAXE.get(), Enchantments.BLOCK_FORTUNE, 3));
+            add(new TurtleIrrealiumHand());
 
         }};
         turtleUpgrades.forEach(ComputerCraftAPI::registerTurtleUpgrade);

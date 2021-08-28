@@ -32,6 +32,17 @@
       "text": "When irrealium tool used as turtle upgrade, it need to be configured via peripheral, that this too will provide.$(p)$(l)Note$(): any additional logic, like shaping or voiding will add fuel consumption"
     },
     {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "relations",
+      "title": "Available APIs",
+      "entries": [
+        "progressiveperipherals:api_documentation/ultimine_api"
+      ]
+    },
+    {
       "type": "progressiveperipherals:lua_function_left_page",
       "functionName": "isVoiding",
       "description": "Simple access method to get voiding state"
@@ -51,41 +62,6 @@
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
         ["boolean", "new voiding value"]
-      ],
-      "operationReturn": true
-    },
-    {
-      "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "getUltimineMode",
-      "description": "Simple access method to get current ultimine mode"
-    },
-    {
-      "type": "progressiveperipherals:lua_function_right_page",
-      "returns": [
-        ["string", "current ultimine mode"],
-        ["string", "current ultimine mode description"]
-      ]
-    },
-    {
-      "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "getUltimineModes",
-      "description": "Utility method to get all ultimine modes"
-    },
-    {
-      "type": "progressiveperipherals:lua_function_right_page",
-      "returns": [
-        ["{table}", "List of tables with ultimine mod names and descriptions"]
-      ]
-    },
-    {
-      "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "setUltimineMode",
-      "description": "Setter for ultimine mode"
-    },
-    {
-      "type": "progressiveperipherals:lua_function_right_page",
-      "parameters": [
-        ["string", "new ultimine mode name"]
       ],
       "operationReturn": true
     },
@@ -132,17 +108,6 @@
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "operationReturn": true
-    },
-    {
-      "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "getFuelConsumptionInformation",
-      "description": "Informative method for current fuel consumption configuration"
-    },
-    {
-      "type": "progressiveperipherals:lua_function_right_page",
-      "returns": [
-        ["table", "fuel consumption configuration"]
-      ]
     }
   ]
 }

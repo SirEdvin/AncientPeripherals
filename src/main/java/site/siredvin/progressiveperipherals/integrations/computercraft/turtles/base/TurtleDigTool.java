@@ -52,10 +52,6 @@ public abstract class TurtleDigTool extends AbstractTurtleUpgrade {
         super(id, upgradeType, adjective, itemStack.getItem());
         craftingItemStack = itemStack;
     }
-    public TurtleDigTool(ResourceLocation id, TurtleUpgradeType upgradeType, String adjective, Item item) {
-        super(id, upgradeType, adjective, item);
-        craftingItemStack = new ItemStack(item);
-    }
 
     protected abstract @NotNull TurtleDigOperationType getOperationType(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side);
 
