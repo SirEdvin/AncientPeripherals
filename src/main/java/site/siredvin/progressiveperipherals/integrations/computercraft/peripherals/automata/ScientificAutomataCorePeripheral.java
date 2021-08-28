@@ -41,7 +41,7 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
         return true;
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult crystallizeXP(int ingots_count) throws LuaException {
         ItemStack result = new ItemStack(Items.ABSTRACTIUM_INGOT.get());
         if (ingots_count < result.getMaxStackSize())

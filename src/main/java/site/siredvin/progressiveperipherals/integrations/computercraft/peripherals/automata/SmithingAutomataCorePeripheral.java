@@ -51,7 +51,7 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
         return data;
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult smith(int secondSlot, int targetSlot) throws LuaException {
         CheckUtils.isCorrectSlot(secondSlot, "second");
         CheckUtils.isCorrectSlot(targetSlot);
@@ -76,7 +76,7 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
         });
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult smelt(@NotNull IArguments arguments) throws LuaException {
         IInventory turtleInventory = turtle.getInventory();
         LimitedInventory limitedInventory = new LimitedInventory(turtleInventory, new int[]{turtle.getSelectedSlot()});

@@ -152,13 +152,13 @@ public abstract class ExperienceAutomataCorePeripheral extends AutomataCorePerip
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final double getStoredXP() {
         return _getStoredXP();
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getOwnerXP() {
         PlayerEntity player = owner.getOwner();
         if (player == null)

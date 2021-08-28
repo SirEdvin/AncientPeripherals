@@ -7,34 +7,40 @@ import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.shared.turtle.blocks.BlockTurtle;
+import dan200.computercraft.shared.util.InventoryUtil;
+import dan200.computercraft.shared.util.WorldUtil;
 import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
 import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
 import net.minecraft.dispenser.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.ZombieVillagerEntity;
 import net.minecraft.entity.projectile.PotionEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionBrewing;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.potion.*;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 
 import java.util.List;
+import java.util.function.Predicate;
 
-import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.BREW;
-import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.THROW_POTION;
+import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.*;
 
 public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
 
     public static final String TYPE = "brewingAutomataCore";
+
+    private static final Predicate<Entity> suitableEntity = entity -> entity instanceof ZombieVillagerEntity;
 
     public BrewingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
         super(TYPE, turtle, side);
@@ -106,6 +112,8 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
         List<IPeripheralOperation<?>> operations = super.possibleOperations();
         operations.add(BREW);
         operations.add(THROW_POTION);
+        operations.add(FILL_BOTTLES);
+        operations.add(CURE);
         return operations;
     }
 
@@ -115,7 +123,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult brew() {
         return withOperation(BREW, context -> {
             IInventory turtleInventory = turtle.getInventory();
@@ -152,7 +160,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult throwPotion(@NotNull IArguments arguments) throws LuaException {
         double power = Math.min(arguments.optFiniteDouble(0, 1), 16);
         double uncertainty = Math.min(arguments.optFiniteDouble(1, 1), 16);
@@ -173,6 +181,62 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
             IDispenseItemBehavior behavior = new TurtlePotionDispenseBehavior(uncertainty, power);
             turtleInventory.setItem(selectedSlot, behavior.dispense(new ProxyBlockSource((ServerWorld) getWorld(), getPos()), selectedStack));
             return MethodResult.of(true);
+        });
+    }
+
+    @LuaFunction(mainThread = true)
+    public final MethodResult fillBottle() {
+        return withOperation(FILL_BOTTLES, context -> {
+            int selectedSlot = turtle.getSelectedSlot();
+            IInventory turtleInventory = turtle.getInventory();
+            ItemStack selectedStack = turtleInventory.getItem(selectedSlot);
+            Item selectedItem = selectedStack.getItem();
+            if (selectedItem != Items.GLASS_BOTTLE)
+                return MethodResult.of(null, "Selected item should be glass bottle");
+            ItemStack potion = new ItemStack(Items.POTION);
+            PotionUtils.setPotion(potion, Potions.WATER);
+            selectedStack.shrink(1);
+            if (selectedStack.getCount() == 0) {
+                turtleInventory.setItem(selectedSlot, potion);
+            } else {
+                ItemStack restPotion = InventoryUtil.storeItems(potion, turtle.getItemHandler());
+                if (!restPotion.isEmpty())
+                    WorldUtil.dropItemStack(restPotion, getWorld(), getPos(), Direction.UP);
+            }
+            return MethodResult.of(true);
+        });
+    }
+
+    @LuaFunction(mainThread = true)
+    public final MethodResult inspectView() {
+        addRotationCycle();
+        RayTraceResult entityHit = owner.withPlayer(player -> player.findHit(false, true, suitableEntity));
+        if (entityHit.getType() == RayTraceResult.Type.MISS)
+            return MethodResult.of(null, "Nothing found");
+        Entity entity = ((EntityRayTraceResult) entityHit).getEntity();
+        if (!(entity instanceof ZombieVillagerEntity))
+            return MethodResult.of(null, "Well, entity is not animal entity, but how?");
+        ZombieVillagerEntity zvEntity = (ZombieVillagerEntity) entity;
+        if (zvEntity.isConverting())
+            return MethodResult.of(false, "Already started converting");
+        if (zvEntity.hasEffect(Effects.WEAKNESS))
+            return MethodResult.of(true);
+        return MethodResult.of(false, "Zombie villager are without weakness");
+    }
+
+    @LuaFunction(mainThread = true)
+    public final MethodResult cure() {
+        return withOperation(CURE, context -> {
+            int selectedSlot = turtle.getSelectedSlot();
+            IInventory turtleInventory = turtle.getInventory();
+            ItemStack selectedStack = turtleInventory.getItem(selectedSlot);
+            Item selectedItem = selectedStack.getItem();
+            if (selectedItem != Items.GOLDEN_APPLE)
+                return MethodResult.of(null, "Selected item should be golden apple");
+            ActionResultType result = owner.withPlayer(player -> player.useOnFilteredEntity(suitableEntity));
+            if (result == ActionResultType.SUCCESS)
+                return MethodResult.of(true);
+            return MethodResult.of(null, "Golden apple usage failed");
         });
     }
 }

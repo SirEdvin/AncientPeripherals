@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Irrealium tools
 - Irrealium hand
-- Turtle upgrades (based on irrealium tools) that allows some [enchantments, ultimine and voiding](https://github.com/SirEdvin/ProgressivePeripherals/issues/31) 
+- Turtle upgrades (based on irrealium tools) that allows some [enchantments, ultimine and voiding](https://github.com/SirEdvin/ProgressivePeripherals/issues/31)
+- Brewing automata now can fill bottles and cure villages
 
 ### Changed
 

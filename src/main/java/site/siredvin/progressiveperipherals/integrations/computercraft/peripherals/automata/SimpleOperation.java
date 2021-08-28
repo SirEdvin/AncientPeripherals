@@ -11,7 +11,9 @@ public enum SimpleOperation implements IPeripheralOperation<Object> {
     ENCHANTMENT(5_000, 10),
     SMITH(1_000, 1),
     BREW(1_000, 5),
-    THROW_POTION(1_000, 10);
+    THROW_POTION(1_000, 10),
+    FILL_BOTTLES(0, 0),
+    CURE(60_000, 50);
 
     private ForgeConfigSpec.IntValue cooldown;
     private ForgeConfigSpec.IntValue cost;
@@ -26,7 +28,7 @@ public enum SimpleOperation implements IPeripheralOperation<Object> {
     @Override
     public void addToConfig(ForgeConfigSpec.Builder builder) {
         cooldown = builder.defineInRange(
-                settingsName() + "Cooldown", defaultCooldown, 1_000, Integer.MAX_VALUE
+                settingsName() + "Cooldown", defaultCooldown, 0, Integer.MAX_VALUE
         );
         cost = builder.defineInRange(
                 settingsName() + "Cost", defaultCost, 0, Integer.MAX_VALUE
