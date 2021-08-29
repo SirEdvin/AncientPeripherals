@@ -8,6 +8,7 @@ import java.util.Optional;
 public class Platform {
 
     public static Optional<Object> maybeLoadIntegration(final String modid, final String path) {
+        ProgressivePeripherals.LOGGER.info(String.format("%s not loaded, skip integration loading", modid));
         return ModList.get().isLoaded(modid) ? maybeLoadIntegration(path) : Optional.empty();
     }
 

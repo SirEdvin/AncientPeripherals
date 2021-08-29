@@ -34,6 +34,17 @@ public class ProgressivePeripheralsConfig {
         add("industrialforegoing:stonework_generate"); // pretty useless, actually, still need manual machine configuration ...
         add("pneumaticcraft:fuel_quality"); // fuel data, not recipe
         add("pneumaticcraft:heat_properties"); // heat data, not recipe
+        add("thermal:stirling_fuel");
+        add("thermal:compression_fuel");
+        add("thermal:magmatic_fuel");
+        add("thermal:numismatic_fuel");
+        add("thermal:lapidary_fuel");
+        add("thermal:tree_extractor_boost");
+        add("thermal:fisher_boost");
+        add("thermal:potion_diffuser_boost");
+        add("thermal:pulverizer_catalyst");
+        add("thermal:smelter_catalyst");
+        add("thermal:insolator_catalyst");
     }};
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;

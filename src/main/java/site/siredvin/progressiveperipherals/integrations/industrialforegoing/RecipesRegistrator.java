@@ -4,16 +4,18 @@ import com.buuz135.industrial.recipe.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
+import site.siredvin.progressiveperipherals.utils.LuaUtils;
 
 import java.util.*;
 
 @SuppressWarnings({"unused", "unchecked"})
-public class RecipeRegistrator implements Runnable {
+public class RecipesRegistrator implements Runnable {
 
     @Override
     public void run() {
@@ -81,8 +83,8 @@ public class RecipeRegistrator implements Runnable {
                 Map<String, Object> data = new HashMap<>();
                 data.put("rarities", Arrays.stream(rarities).map(rarity -> {
                     Map<String, Object> rarityData = new HashMap<>();
-                    rarityData.put("whitelistedBiomes", rarity.whitelist);
-                    rarityData.put("blacklisterdBiomes", rarity.blacklist);
+                    rarityData.put("whitelistedBiomes", LuaUtils.toLua(rarity.whitelist, RegistryKey::toString));
+                    rarityData.put("blacklisterdBiomes", LuaUtils.toLua(rarity.blacklist, RegistryKey::toString));
                     rarityData.put("depth_max", rarity.depth_max);
                     rarityData.put("depth_min", rarity.depth_min);
                     rarityData.put("weight", rarity.weight);
@@ -110,8 +112,8 @@ public class RecipeRegistrator implements Runnable {
                 Map<String, Object> data = new HashMap<>();
                 data.put("rarities", Arrays.stream(rarities).map(rarity -> {
                     Map<String, Object> rarityData = new HashMap<>();
-                    rarityData.put("whitelistedBiomes", rarity.whitelist);
-                    rarityData.put("blacklisterdBiomes", rarity.blacklist);
+                    rarityData.put("whitelistedBiomes", LuaUtils.toLua(rarity.whitelist, RegistryKey::toString));
+                    rarityData.put("blacklisterdBiomes", LuaUtils.toLua(rarity.blacklist, RegistryKey::toString));
                     rarityData.put("depth_max", rarity.depth_max);
                     rarityData.put("depth_min", rarity.depth_min);
                     rarityData.put("weight", rarity.weight);

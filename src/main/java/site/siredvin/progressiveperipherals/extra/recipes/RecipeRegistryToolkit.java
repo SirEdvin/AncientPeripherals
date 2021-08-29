@@ -12,7 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.SmithingRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -44,7 +46,7 @@ public class RecipeRegistryToolkit {
             "botania", "integrateddynamics",
             "immersiveengineering", "naturesaura",
             "create", "industrialforegoing",
-            "pneumaticcraft"
+            "pneumaticcraft", "thermal"
     };
 
     public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, IRecipeTransformer<T> transformer) {
@@ -67,6 +69,8 @@ public class RecipeRegistryToolkit {
 
     static {
         registerSerializer(Ingredient.class, ingredient -> {
+            if (ingredient.isEmpty())
+                return new HashMap<>();
             try {
                 return GSON.fromJson(ingredient.toJson(), HashMap.class);
             } catch (JsonSyntaxException ignored) {
@@ -92,6 +96,22 @@ public class RecipeRegistryToolkit {
         registerSerializer(Fluid.class, fluid -> new HashMap<String, Object>(){{ put("fluid", fluid.getRegistryName().toString());}});
         registerSerializer(JsonObject.class, RecipeRegistryToolkit::serializeJson);
         registerSerializer(EntityType.class, entityType -> new HashMap<String, Object>() {{ put("entity", entityType.getRegistryName().toString());}});
+        registerSerializer(INBT.class, NBTUtil::toLua);
+
+        registerRecipeSerializer(SmithingRecipe.class, new RecipeTransformer<SmithingRecipe>() {
+            @Override
+            public List<?> getInputs(SmithingRecipe recipe) {
+                return new ArrayList<Object>() {{
+                    add(recipe.base);
+                    add(recipe.addition);
+                }};
+            }
+
+            @Override
+            public List<?> getOutputs(SmithingRecipe recipe) {
+                return Collections.singletonList(recipe.getResultItem());
+            }
+        });
     }
 
     public static Object serializeJson(JsonObject obj) {
@@ -148,8 +168,12 @@ public class RecipeRegistryToolkit {
     }
 
     public static List<IRecipeType<?>> collectRecipeTypes(Object types) throws LuaException {
-        if (types instanceof String)
-            return Collections.singletonList(RecipeRegistryToolkit.getRecipeType((String) types));
+        if (types instanceof String) {
+            String recipeTypesSelector = (String) types;
+            if (recipeTypesSelector.contains(":"))
+                return Collections.singletonList(RecipeRegistryToolkit.getRecipeType((String) types));
+            return Registry.RECIPE_TYPE.stream().filter(p -> p.toString().startsWith(recipeTypesSelector)).collect(Collectors.toList());
+        }
         if (types instanceof Map) {
             List<IRecipeType<?>> recipeTypes = new ArrayList<>();
             for (Object el: ((Map<?, ?>) types).values()) {

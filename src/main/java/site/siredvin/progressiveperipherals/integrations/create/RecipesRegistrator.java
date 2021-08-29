@@ -11,6 +11,8 @@ import com.simibubi.create.content.contraptions.components.mixer.MixingRecipe;
 import com.simibubi.create.content.contraptions.components.press.PressingRecipe;
 import com.simibubi.create.content.contraptions.components.saw.CuttingRecipe;
 import com.simibubi.create.content.contraptions.fluids.actors.FillingRecipe;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedAssemblyRecipe;
+import com.simibubi.create.content.contraptions.itemAssembly.SequencedRecipe;
 import com.simibubi.create.content.contraptions.processing.BasinRecipe;
 import com.simibubi.create.content.contraptions.processing.EmptyingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
@@ -22,10 +24,7 @@ import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class RecipesRegistrator implements Runnable {
@@ -61,6 +60,18 @@ public class RecipesRegistrator implements Runnable {
             }
         });
 
+        RecipeRegistryToolkit.registerRecipeSerializer(SequencedAssemblyRecipe.class, new RecipeTransformer<SequencedAssemblyRecipe>() {
+            @Override
+            public List<?> getInputs(SequencedAssemblyRecipe recipe) {
+                return recipe.getSequence();
+            }
+
+            @Override
+            public List<?> getOutputs(SequencedAssemblyRecipe recipe) {
+                return Collections.singletonList(recipe.getResultItem());
+            }
+        });
+
         // serializers
 
         RecipeRegistryToolkit.registerSerializer(ProcessingOutput.class, processingOutput -> new HashMap<String, Object>(){{
@@ -69,6 +80,7 @@ public class RecipesRegistrator implements Runnable {
         }});
 
         RecipeRegistryToolkit.registerSerializer(FluidIngredient.class, fluidIngredient -> RecipeRegistryToolkit.GSON.fromJson(fluidIngredient.serialize(), HashMap.class));
+        RecipeRegistryToolkit.registerSerializer(SequencedRecipe.class, sequencedRecipe -> RecipeRegistryToolkit.serializeRecipe(sequencedRecipe.getRecipe()));
 
         // searcher
 
@@ -85,6 +97,7 @@ public class RecipesRegistrator implements Runnable {
         RecipeRegistryToolkit.registerRecipePredicate((IRecipeType<DeployerApplicationRecipe>)AllRecipeTypes.DEPLOYING.getType(), RecipeSearchUtils.buildPredicate(ProcessingRecipe::getRollableResultsAsItemStacks));
         RecipeRegistryToolkit.registerRecipePredicate((IRecipeType<FillingRecipe>)AllRecipeTypes.FILLING.getType(), RecipeSearchUtils.buildPredicate(ProcessingRecipe::getRollableResultsAsItemStacks));
         RecipeRegistryToolkit.registerRecipePredicate((IRecipeType<EmptyingRecipe>)AllRecipeTypes.EMPTYING.getType(), RecipeSearchUtils.buildPredicate(ProcessingRecipe::getRollableResultsAsItemStacks));
+        RecipeRegistryToolkit.registerRecipePredicate(AllRecipeTypes.SEQUENCED_ASSEMBLY.getType(), RecipeSearchUtils.buildPredicateSingle(SequencedAssemblyRecipe::getResultItem));
 
 
     }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class LuaUtils {
     private static final int MAX_QUAD_VECTOR = 48;
@@ -110,6 +111,14 @@ public class LuaUtils {
         Map<Integer, Double> data = new HashMap<>();
         for (int i = 0;i < value.length; i++) {
             data.put(i + 1, value[i]);
+        }
+        return data;
+    }
+
+    public static <T, V> Map<Integer, V> toLua(T[] value, Function<T, V> mapper) {
+        Map<Integer, V> data = new HashMap<>();
+        for (int i = 0;i < value.length; i++) {
+            data.put(i + 1, mapper.apply(value[i]));
         }
         return data;
     }

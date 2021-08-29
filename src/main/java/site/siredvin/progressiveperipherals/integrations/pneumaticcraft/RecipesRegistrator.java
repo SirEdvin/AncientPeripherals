@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.pneumaticcraft;
 
-import com.google.gson.JsonObject;
+import me.desht.pneumaticcraft.api.crafting.AmadronTradeResource;
 import me.desht.pneumaticcraft.api.crafting.recipe.*;
 import me.desht.pneumaticcraft.common.recipes.PneumaticCraftRecipeType;
 import me.desht.pneumaticcraft.common.recipes.amadron.AmadronOffer;
@@ -13,7 +13,7 @@ import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
 import java.util.*;
 
-@SuppressWarnings({"unused", "unchecked"})
+@SuppressWarnings({"unused"})
 public class RecipesRegistrator implements Runnable {
 
     private static class IngredientWithAmountRecord implements IRecipeSerializableRecord {
@@ -38,7 +38,31 @@ public class RecipesRegistrator implements Runnable {
     public void run() {
         // transformers
 
-        RecipeRegistryToolkit.registerRecipeSerializer(AmadronOffer.class, recipe -> RecipeRegistryToolkit.GSON.fromJson(recipe.toJson(new JsonObject()), HashMap.class));
+        RecipeRegistryToolkit.registerRecipeSerializer(AmadronOffer.class, new RecipeTransformer<AmadronOffer>() {
+            @Override
+            public List<?> getInputs(AmadronOffer recipe) {
+                AmadronTradeResource input = recipe.getInput();
+                if (input.getType() == AmadronTradeResource.Type.FLUID)
+                    return Collections.singletonList(input.getFluid());
+                return Collections.singletonList(input.getItem());
+            }
+
+            @Override
+            public List<?> getOutputs(AmadronOffer recipe) {
+                AmadronTradeResource output = recipe.getOutput();
+                if (output.getType() == AmadronTradeResource.Type.FLUID)
+                    return Collections.singletonList(output.getFluid());
+                return Collections.singletonList(output.getItem());
+            }
+
+            @Override
+            public Map<String, Object> getExtraData(AmadronOffer recipe) {
+                return new HashMap<String, Object>() {{
+                    put("static", recipe.isStaticOffer());
+                }};
+            }
+        });
+
         RecipeRegistryToolkit.registerRecipeSerializer(AssemblyRecipe.class, new RecipeTransformer<AssemblyRecipe>() {
             @Override
             public List<?> getInputs(AssemblyRecipe recipe) {

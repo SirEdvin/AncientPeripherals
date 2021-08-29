@@ -29,8 +29,8 @@ public abstract class RecipeTransformer<T extends IRecipe<?>> implements IRecipe
         Map<String, Object> recipeData = new HashMap<>();
         recipeData.put("id", recipe.getId().toString());
         recipeData.put("type", recipe.getType().toString());
-        recipeData.put("outputs", serializeIngredients(getOutputs(recipe)));
-        recipeData.put("inputs", serializeIngredients(getInputs(recipe)));
+        recipeData.put("output", serializeIngredients(getOutputs(recipe)));
+        recipeData.put("input", serializeIngredients(getInputs(recipe)));
 
         Map<String, Object> extraData = getExtraData(recipe);
         if (extraData != null)

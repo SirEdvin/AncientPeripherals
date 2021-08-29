@@ -1,5 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.immersiveengineering;
 
+import blusunrize.immersiveengineering.api.ComparableItemStack;
 import blusunrize.immersiveengineering.api.crafting.*;
 import dan200.computercraft.shared.util.NBTUtil;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
@@ -9,7 +10,7 @@ import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class RecipeRegistrator implements Runnable {
+public class RecipesRegistrator implements Runnable {
 
     @Override
     public void run() {
@@ -298,7 +299,8 @@ public class RecipeRegistrator implements Runnable {
             put("count", ingredientWithSize.getCount());
         }});
 
-        RecipeRegistryToolkit.registerSerializer(FluidTagInput.class, FluidTagInput::serialize);
+        RecipeRegistryToolkit.registerSerializer(ComparableItemStack.class, stack -> RecipeRegistryToolkit.serialize(stack.stack));
+        RecipeRegistryToolkit.registerSerializer(FluidTagInput.class, tagInput -> RecipeRegistryToolkit.serialize(tagInput.serialize()));
         RecipeRegistryToolkit.registerSerializer(StackWithChance.class, stackWithChance -> NBTUtil.toLua(stackWithChance.writeToNBT()));
 
         // predicates

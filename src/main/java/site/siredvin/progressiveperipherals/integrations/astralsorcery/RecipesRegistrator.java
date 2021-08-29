@@ -3,6 +3,7 @@ package site.siredvin.progressiveperipherals.integrations.astralsorcery;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hellfirepvp.astralsorcery.common.crafting.recipe.*;
+import hellfirepvp.astralsorcery.common.crafting.recipe.altar.AltarRecipeGrid;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.InteractionResult;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.ResultDropItem;
 import hellfirepvp.astralsorcery.common.crafting.recipe.interaction.ResultSpawnEntity;
@@ -14,6 +15,7 @@ import site.siredvin.progressiveperipherals.extra.recipes.RecipeSearchUtils;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeTransformer;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class RecipesRegistrator implements Runnable {
@@ -78,10 +80,35 @@ public class RecipesRegistrator implements Runnable {
             }
         });
 
-        RecipeRegistryToolkit.registerRecipeSerializer(SimpleAltarRecipe.class, recipe -> {
-            JsonObject data = new JsonObject();
-            recipe.write(data);
-            return RecipeRegistryToolkit.GSON.fromJson(data, HashMap.class);
+        RecipeRegistryToolkit.registerRecipeSerializer(SimpleAltarRecipe.class, new RecipeTransformer<SimpleAltarRecipe>() {
+            @Override
+            public List<?> getInputs(SimpleAltarRecipe recipe) {
+                List<Object> data = new ArrayList<>();
+                AltarRecipeGrid grid = recipe.getInputs();
+                for (int i = 0; i < grid.getWidth(); i++) {
+                    for (int j = 0; j < grid.getHeight(); j++) {
+                        data.add(grid.getIngredient(i + j * grid.getWidth()));
+                    }
+                }
+                return data;
+            }
+
+            @Override
+            public List<?> getOutputs(SimpleAltarRecipe recipe) {
+                JsonObject data = new JsonObject();
+                recipe.write(data);
+                List<ItemStack> result = new ArrayList<>();
+                for (JsonElement element: data.getAsJsonArray("output"))
+                    result.add(JsonHelper.getItemStack(element, "dummy_key"));
+                return result;
+            }
+
+            @Override
+            public Map<String, Object> getExtraData(SimpleAltarRecipe recipe) {
+                return new HashMap<String, Object>() {{
+                    put("relays", recipe.getRelayInputs().stream().map(ing -> RecipeRegistryToolkit.serialize(ing.getIngredient())).collect(Collectors.toList()));
+                }};
+            }
         });
 
         RecipeRegistryToolkit.registerRecipeSerializer(BlockTransmutation.class, new RecipeTransformer<BlockTransmutation>() {
