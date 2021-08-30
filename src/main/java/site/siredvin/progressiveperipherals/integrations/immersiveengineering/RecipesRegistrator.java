@@ -129,7 +129,7 @@ public class RecipesRegistrator implements Runnable {
             @Override
             public Map<String, Object> getExtraData(MetalPressRecipe recipe) {
                 return new HashMap<String, Object>() {{
-                    put("mold", recipe.mold);
+                    put("mold", RecipeRegistryToolkit.serialize(recipe.mold));
                 }};
             }
         });

@@ -46,8 +46,13 @@ public class RecipeRegistryToolkit {
             "botania", "integrateddynamics",
             "immersiveengineering", "naturesaura",
             "create", "industrialforegoing",
-            "pneumaticcraft", "thermal"
+            "pneumaticcraft", "thermal",
+            "tconstruct"
     };
+
+    public static final Map<String, String> EXTRA_SUPPORTED_MODS = new HashMap<String, String>() {{
+        put("mana-and-artifice", "ma");
+    }};
 
     public static <T extends IRecipe<?>> void registerRecipeSerializer(Class<T> recipeClass, IRecipeTransformer<T> transformer) {
         RECIPE_SERIALIZERS.put(recipeClass, transformer);
@@ -189,5 +194,7 @@ public class RecipeRegistryToolkit {
     public static void registerExtra() {
         for (String supportedMod: SUPPORTED_MODS)
             Platform.maybeLoadIntegration(supportedMod, supportedMod + ".RecipesRegistrator").ifPresent(obj -> ((Runnable) obj).run());
+        for (Map.Entry<String, String> supportedMod: EXTRA_SUPPORTED_MODS.entrySet())
+            Platform.maybeLoadIntegration(supportedMod.getKey(), supportedMod.getValue() + ".RecipesRegistrator").ifPresent(obj -> ((Runnable) obj).run());
     }
 }

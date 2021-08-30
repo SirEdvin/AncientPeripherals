@@ -45,6 +45,15 @@ public class ProgressivePeripheralsConfig {
         add("thermal:pulverizer_catalyst");
         add("thermal:smelter_catalyst");
         add("thermal:insolator_catalyst");
+        add("tconstruct:part_builder");
+        add("tconstruct:material");
+        add("tconstruct:tinker_station");
+        add("tconstruct:fuel");
+        add("tconstruct:severing");
+        add("tconstruct:data");
+        add("mana-and-artifice:manaweaving-pattern-type");
+        add("mana-and-artifice:runescribing-type");
+        add("mana-and-artifice:runeforging-type");
     }};
 
     public static final int BREAKTHROUGH_SPAWN_CHANCE_LIMIT = 10_000;

@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LuaUtils {
     private static final int MAX_QUAD_VECTOR = 48;
@@ -129,6 +131,11 @@ public class LuaUtils {
             data.put(i + 1, value.get(i));
         }
         return data;
+    }
+
+    public static <T> Map<Integer, T> toLua(Stream<T> value) {
+        Counter counter = new Counter();
+        return value.collect(Collectors.toMap(el -> counter.getAndIncrease(), el -> el));
     }
 
     public static Map<Integer, Map<Integer, Double>> toLua(double[][] value) {

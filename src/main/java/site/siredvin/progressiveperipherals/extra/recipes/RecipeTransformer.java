@@ -3,10 +3,7 @@ package site.siredvin.progressiveperipherals.extra.recipes;
 import net.minecraft.item.crafting.IRecipe;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class RecipeTransformer<T extends IRecipe<?>> implements IRecipeTransformer<T> {
@@ -33,8 +30,16 @@ public abstract class RecipeTransformer<T extends IRecipe<?>> implements IRecipe
         recipeData.put("input", serializeIngredients(getInputs(recipe)));
 
         Map<String, Object> extraData = getExtraData(recipe);
-        if (extraData != null)
+        if (extraData != null) {
+            // extra cleanup
+            List<String> cleanupList = new ArrayList<>();
+            for (String key: extraData.keySet()) {
+                if (extraData.get(key) == RecipeRegistryToolkit.SERIALIZATION_NULL)
+                    cleanupList.add(key);
+            }
+            cleanupList.forEach(extraData::remove);
             recipeData.put("extra", extraData);
+        }
 
         return recipeData;
     }

@@ -342,6 +342,16 @@ dependencies {
     implementation fg.deobf("curse.maven:ThermalInnovation-291737:3404886")
     implementation fg.deobf("curse.maven:CoFHCore-69162:3407019")
 
+    // Tinkers construct
+
+    implementation fg.deobf("curse.maven:Mantle-74924:3439180")
+    implementation fg.deobf("curse.maven:TinkersConstruct-74072:3439200")
+
+    // Mana and artifact
+
+    implementation fg.deobf("curse.maven:ManaAndArtifact-406360:3244357")
+    runtimeOnly fg.deobf("curse.maven:Geckolib-388172:3428832")
+
     // Testing stuff
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
