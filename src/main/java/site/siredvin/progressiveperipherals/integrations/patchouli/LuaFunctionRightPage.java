@@ -4,6 +4,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import org.jetbrains.annotations.Nullable;
+import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.client.book.BookPage;
 import vazkii.patchouli.client.book.gui.BookTextRenderer;
@@ -13,9 +15,9 @@ import java.util.List;
 
 public class LuaFunctionRightPage extends BookPage {
 
-    IVariable parameters;
-    IVariable operationReturn;
-    IVariable returns;
+    @Nullable IVariable parameters;
+    @Nullable IVariable operationReturn;
+    @Nullable IVariable returns;
 
     transient BookTextRenderer textRenderer;
 
@@ -50,7 +52,7 @@ public class LuaFunctionRightPage extends BookPage {
             builder.local("returns").br().startList();
             builder.listElement().italic("true | nil").add(": ").add("True if operation successful, nil otherwise").finish();
             builder.listElement().italic("nil | string").add(": ").add("Error message").finish();
-        } else {
+        } else if (returns != null) {
             List<IVariable> returns = this.returns.asList();
             builder.local("returns").br().startList();
             for (IVariable returnValue : returns) {
@@ -61,7 +63,8 @@ public class LuaFunctionRightPage extends BookPage {
                         .finish();
             }
             builder.finishList();
-        }
+        } else if (ProgressivePeripheralsConfig.strictPatchouli)
+            throw new IllegalArgumentException(String.format("Incorrect filled page %d inside entry %s", this.pageNum, this.entry.getId()));
         textRenderer = new BookTextRenderer(parent, builder.build(), 0, LuaFunctionPage.STARTING_HEIGHT_WITHOUT_TITLE);
 
     }

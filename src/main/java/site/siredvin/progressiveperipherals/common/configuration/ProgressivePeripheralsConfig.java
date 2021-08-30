@@ -107,6 +107,8 @@ public class ProgressivePeripheralsConfig {
     public static int enderwireNetworkComputerBusSize;
     public static int enderwireNetworkMaxElementCount;
     public static int enderwireNetworkMaxCountPerPlayer;
+    // Debug and test features
+    public static boolean strictPatchouli = false;
 
     public static class CommonConfig {
 
