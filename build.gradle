@@ -294,7 +294,6 @@ repositories {
 
 configurations {
     extraLibs
-    jsocJavadoc
     never
 
     testModImplementation.extendsFrom(implementation)
@@ -366,46 +365,38 @@ dependencies {
 
     // PNC:R
 
-    compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.9.6-133", {
+    compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:${pneumaticcraft_version}", {
         transitive = false
     })
 
     // Thermal series
-    compileOnly fg.deobf("curse.maven:ThermalExpansion-69163:3404884")
-    compileOnly fg.deobf("curse.maven:ThermalFoundation-222880:3412300")
-    compileOnly fg.deobf("curse.maven:ThermalCultivation-271835:3404883")
-    compileOnly fg.deobf("curse.maven:ThermalInnovation-291737:3404886")
-    compileOnly fg.deobf("curse.maven:CoFHCore-69162:3407019")
+    compileOnly fg.deobf("curse.maven:CoFHCore-${cofh_core_version}")
+    compileOnly fg.deobf("curse.maven:ThermalFoundation-${thermal_foundation_version}")
+    never fg.deobf("curse.maven:ThermalExpansion-${thermal_expansion_version}")
+    never fg.deobf("curse.maven:ThermalCultivation-${thermal_cultivation_version}")
+    never fg.deobf("curse.maven:ThermalInnovation-${thermal_innovation_version}")
 
     // Tinkers construct
 
-    compileOnly fg.deobf("curse.maven:Mantle-74924:3439180")
-    compileOnly fg.deobf("curse.maven:TinkersConstruct-74072:3439200")
+    compileOnly fg.deobf("curse.maven:Mantle-${mantle_version}")
+    compileOnly fg.deobf("curse.maven:TinkersConstruct-${tconstruct_version}")
 
     // Mana and artifact
-
-    compileOnly fg.deobf("curse.maven:ManaAndArtifact-406360:3244357")
-    never fg.deobf("curse.maven:Geckolib-388172:3428832")
++
+    compileOnly fg.deobf("curse.maven:ManaAndArtifact-${ma_version}")
+    never fg.deobf("curse.maven:Geckolib-${geckolib_version}")
 
     // Ars Nouveau
 
-    compileOnly fg.deobf("curse.maven:ArsNouveau-401955:3442387")
+    compileOnly fg.deobf("curse.maven:ArsNouveau-${ars_nouveau_version}")
 
     // Blood magic
 
-    compileOnly fg.deobf("curse.maven:BloodMagic-224791:3399440")
+    compileOnly fg.deobf("curse.maven:BloodMagic-${bloodmagic_version}")
 
     // Woot
 
-    compileOnly fg.deobf("curse.maven:Woot-244049:3383734")
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    testImplementation 'org.hamcrest:hamcrest:2.2'
-    testImplementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.72'
-    testImplementation 'org.jetbrains.kotlin:kotlin-reflect:1.3.72'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8'
+    compileOnly fg.deobf("curse.maven:Woot-${woot_version}")
 
     testModImplementation sourceSets.main.output
 
@@ -414,7 +405,13 @@ dependencies {
 
     configurations.implementation.extendsFrom(configurations.extraLibs)
 
-//    jsocJavadoc 'com.surfapi:javadoc-json-doclet:1.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_version}"
+    testImplementation "org.hamcrest:hamcrest:${hamcrest_version}"
+    testImplementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinx_coroutines_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
 }
 
 changelog {
@@ -426,12 +423,6 @@ changelog {
     keepUnreleasedSection = true
     unreleasedTerm = "[Unreleased]"
     groups = []
-}
-
-task generateJson(type: Javadoc) {
-    source = sourceSets.main.allJava
-    options.docletpath = configurations.jsocJavadoc.files.asType(List)
-    options.doclet = "com.rga78.javadoc.JsonDoclet"
 }
 
 compileTestModJava {
