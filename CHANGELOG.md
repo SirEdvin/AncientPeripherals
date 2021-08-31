@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Possible incorrect flexible statue texture
+- Irrealium [progression](https://github.com/SirEdvin/ProgressivePeripherals/issues/21) now correct
 
 ## [0.0.9] - 2021-08-23
 

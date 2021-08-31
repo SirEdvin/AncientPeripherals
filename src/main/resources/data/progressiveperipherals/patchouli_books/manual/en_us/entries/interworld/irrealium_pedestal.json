@@ -2,7 +2,7 @@
   "name": "Irrealium pedestal",
   "icon": "progressiveperipherals:irrealium_pedestal",
   "category": "progressiveperipherals:interworld",
-  "advancement": "progressiveperipherals:irrealium",
+  "advancement": "progressiveperipherals:irrealium_machinery",
   "pages": [
     {
       "type": "spotlight",

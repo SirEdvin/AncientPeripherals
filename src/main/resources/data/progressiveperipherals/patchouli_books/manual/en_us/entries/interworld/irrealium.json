@@ -8,51 +8,7 @@
       "type": "spotlight",
       "title": "Irrealium",
       "item": "progressiveperipherals:irrealium_ingot",
-      "text": "Irrealium is material from interworld dimension, that can be found near reality breakthrough points."
-    },
-    {
-      "type": "text",
-      "text": "Irrealium it self is perfect material for interworld machinery. Your scientific automata can craft many machinery blocks for you."
-    },
-    {
-      "type": "spotlight",
-      "title": "Irrealium casing",
-      "item": "progressiveperipherals:irrealium_machinery_casing",
-      "text": "Base casing block for irrealium machine! Can be used in any place of machine"
-    },
-    {
-      "type": "progressiveperipherals:automata",
-      "recipe": "progressiveperipherals:irrealium_machinery_casing"
-    },
-    {
-      "type": "spotlight",
-      "title": "Irrealium glass",
-      "item": "progressiveperipherals:irrealium_machinery_glass",
-      "text": "Transparent casing block for irrealium machine! Cannot be used on corners of machine"
-    },
-    {
-      "type": "progressiveperipherals:automata",
-      "recipe": "progressiveperipherals:irrealium_machinery_glass"
-    },
-    {
-      "type": "spotlight",
-      "title": "Machinery storage",
-      "item": "progressiveperipherals:irrealium_machinery_storage",
-      "text": "Machinery storage block! Can store up to 27 stacks of items. Also can be used as regular chest. Cannot be used on corners of machine"
-    },
-    {
-      "type": "progressiveperipherals:automata",
-      "recipe": "progressiveperipherals:irrealium_machinery_storage"
-    },
-    {
-      "type": "spotlight",
-      "title": "Double machinery storage",
-      "item": "progressiveperipherals:irrealium_double_machinery_storage",
-      "text": "Machinery storage block! Can store up to 54 stacks of items. Also can be used as regular chest. Cannot be used on corners of machine"
-    },
-    {
-      "type": "progressiveperipherals:automata",
-      "recipe": "progressiveperipherals:irrealium_double_machinery_storage"
+      "text": "Irrealium is material from interworld dimension, that can be found near reality breakthrough points.$(p)Itself it a perfect material for interworld machinery. Your scientific automata can craft many machinery blocks for you."
     }
   ]
 }

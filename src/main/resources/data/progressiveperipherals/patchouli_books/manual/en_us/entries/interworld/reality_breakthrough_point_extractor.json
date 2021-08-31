@@ -2,7 +2,7 @@
   "name": "RBT extractor",
   "icon": "progressiveperipherals:reality_breakthrough_extractor_controller",
   "category": "progressiveperipherals:interworld",
-  "advancement": "progressiveperipherals:irrealium",
+  "advancement": "progressiveperipherals:irrealium_machinery",
   "pages": [
     {
       "type": "spotlight",

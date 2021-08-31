@@ -1,0 +1,44 @@
+{
+  "parent": "progressiveperipherals:abstractium",
+  "criteria": {
+    "item_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:irrealium_ingot"
+          }
+        ]
+      }
+    },
+    "block_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:irrealium_block"
+          }
+        ]
+      }
+    },
+    "core_in_inventory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "progressiveperipherals:scientific_automata_core"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "item_in_inventory",
+      "block_in_inventory"
+    ],
+    [
+      "core_in_inventory"
+    ]
+  ]
+}

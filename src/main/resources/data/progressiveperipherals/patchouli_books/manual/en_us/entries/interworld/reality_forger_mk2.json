@@ -2,7 +2,7 @@
   "name": "Reality forger MK2",
   "icon": "progressiveperipherals:reality_forger_mk2",
   "category": "progressiveperipherals:interworld",
-  "advancement": "progressiveperipherals:irrealium",
+  "advancement": "progressiveperipherals:irrealium_machinery",
   "pages": [
     {
       "type": "spotlight",

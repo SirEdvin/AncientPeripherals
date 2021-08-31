@@ -3,6 +3,7 @@
   "icon": "progressiveperipherals:scientific_automata_core",
   "category": "advancedperipherals:metaphysics",
   "advancement": "progressiveperipherals:forged_automata_core",
+  "turnin": "progressiveperipherals:scientific_automata_core",
   "pages": [
     {
       "type": "spotlight",

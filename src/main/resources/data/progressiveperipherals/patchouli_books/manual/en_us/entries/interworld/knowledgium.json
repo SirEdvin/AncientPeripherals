@@ -2,7 +2,7 @@
   "name": "Knowledgium",
   "icon": "progressiveperipherals:knowledgium_ingot",
   "category": "progressiveperipherals:interworld",
-  "advancement": "progressiveperipherals:irrealium",
+  "advancement": "progressiveperipherals:irrealium_machinery",
   "pages": [
     {
       "type": "spotlight",
