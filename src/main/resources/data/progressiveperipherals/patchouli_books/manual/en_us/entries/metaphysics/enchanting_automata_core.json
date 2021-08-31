@@ -2,7 +2,7 @@
   "name": "Enchanting core",
   "icon": "progressiveperipherals:enchanting_automata_core",
   "category": "advancedperipherals:metaphysics",
-  "advancement": "progressiveperipherals:enchanting_automata_core",
+  "advancement": "progressiveperipherals:forged_automata_core",
   "pages": [
     {
       "type": "spotlight",

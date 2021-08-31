@@ -3,7 +3,6 @@ package site.siredvin.progressiveperipherals.data.builders;
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -56,13 +55,15 @@ public class SmithingRecipe implements IFinishedRecipe {
         return null;
     }
 
+    public static IFinishedRecipe of(Ingredient base, Ingredient addition, Item result, ResourceLocation location) {
+        return new SmithingRecipe(location, base, addition, result);
+    }
+
     public static IFinishedRecipe of(Ingredient base, Ingredient addition, Item result) {
-        ResourceLocation itemName = result.getRegistryName();
-        ItemGroup category = result.getItemCategory();
-        Objects.requireNonNull(itemName);
-        Objects.requireNonNull(category);
-        ResourceLocation location = new ResourceLocation(ProgressivePeripherals.MOD_ID, itemName.getPath() + "_smithing");
-        ResourceLocation id = new ResourceLocation(location.getNamespace(), "recipes/" + category.getRecipeFolderName() + "/" + location.getPath());
-        return new SmithingRecipe(id, base, addition, result);
+        return of(base, addition, result, new ResourceLocation(ProgressivePeripherals.MOD_ID, Objects.requireNonNull(result.getRegistryName()).getPath()));
+    }
+
+    public static IFinishedRecipe of(Ingredient base, Ingredient addition, Item result, String prefix) {
+        return of(base, addition, result, new ResourceLocation(ProgressivePeripherals.MOD_ID, Objects.requireNonNull(result.getRegistryName()).getPath() + "_" + prefix));
     }
 }

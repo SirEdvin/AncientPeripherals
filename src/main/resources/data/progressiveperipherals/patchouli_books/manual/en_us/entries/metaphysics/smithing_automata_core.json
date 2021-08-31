@@ -2,7 +2,7 @@
   "name": "Smithing automata core",
   "icon": "progressiveperipherals:smithing_automata_core",
   "category": "advancedperipherals:metaphysics",
-  "advancement": "progressiveperipherals:smithing_automata_core",
+  "advancement": "progressiveperipherals:forged_automata_core",
   "pages": [
     {
       "type": "spotlight",
