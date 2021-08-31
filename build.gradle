@@ -382,7 +382,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:TinkersConstruct-${tconstruct_version}")
 
     // Mana and artifact
-+
+
     compileOnly fg.deobf("curse.maven:ManaAndArtifact-${ma_version}")
     never fg.deobf("curse.maven:Geckolib-${geckolib_version}")
 
