@@ -150,10 +150,6 @@ public class RecipeRegistryToolkit {
         return DEFAULT_RECIPE_TRANSFORMER.transform(recipe);
     }
 
-    public static IRecipeType<?> getRecipeType(String type) throws LuaException {
-        return getRecipeType(new ResourceLocation(type));
-    }
-
     public static IRecipeType<?> getRecipeType(ResourceLocation type) throws LuaException {
         if (ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist.contains(type.toString()))
             throw new LuaException(String.format("Incorrect recipe type %s", type));
@@ -177,13 +173,13 @@ public class RecipeRegistryToolkit {
         if (types instanceof String) {
             String recipeTypesSelector = (String) types;
             if (recipeTypesSelector.contains(":"))
-                return Collections.singletonList(RecipeRegistryToolkit.getRecipeType((String) types));
+                return Collections.singletonList(RecipeRegistryToolkit.getRecipeType(LuaUtils.toResourceLocation(types.toString())));
             return Registry.RECIPE_TYPE.stream().filter(p -> p.toString().startsWith(recipeTypesSelector)).collect(Collectors.toList());
         }
         if (types instanceof Map) {
             List<IRecipeType<?>> recipeTypes = new ArrayList<>();
             for (Object el: ((Map<?, ?>) types).values()) {
-                recipeTypes.add(RecipeRegistryToolkit.getRecipeType(el.toString()));
+                recipeTypes.add(RecipeRegistryToolkit.getRecipeType(LuaUtils.toResourceLocation(el.toString())));
             }
             return recipeTypes;
         }

@@ -1,8 +1,12 @@
 package site.siredvin.progressiveperipherals.utils;
 
+import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.ResourceLocationException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.utils.quad.QuadData;
 import site.siredvin.progressiveperipherals.utils.quad.QuadList;
@@ -192,6 +196,20 @@ public class LuaUtils {
             value[i] = toArray(valueCandidate);
         }
         return value;
+    }
+
+    // argument tricks
+
+    public static ResourceLocation getResourceLocation(@NotNull IArguments arguments, int index) throws LuaException {
+        return toResourceLocation(arguments.getString(index));
+    }
+
+    public static ResourceLocation toResourceLocation(String value) throws LuaException {
+        try{
+            return new ResourceLocation(value);
+        } catch (ResourceLocationException e) {
+            throw new LuaException(e.getMessage());
+        }
     }
 
 }

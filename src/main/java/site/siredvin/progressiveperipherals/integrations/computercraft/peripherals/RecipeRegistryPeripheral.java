@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.recipes.*;
+import site.siredvin.progressiveperipherals.utils.LuaUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUERY_REGISTRY;
 
 public class RecipeRegistryPeripheral extends OperationPeripheral {
-    // TODO: recipe type and id validations
     public static final String TYPE = "recipeRegistry";
 
     public RecipeRegistryPeripheral(PeripheralTileEntity<?> tileEntity) {
@@ -76,12 +76,9 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         if (checkResult.isPresent())
             return checkResult.get();
 
-        String recipeType = arguments.getString(0);
+        ResourceLocation recipeTypeID = LuaUtils.getResourceLocation(arguments, 0);
         IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(1, null));
-
-
-
-        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeType);
+        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
         trackOperation(QUERY_REGISTRY, null);
         return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream()
                 .map(transformer::transform).collect(Collectors.toList()));
@@ -92,10 +89,10 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
         if (checkResult.isPresent())
             return checkResult.get();
-        String recipeTypeName = arguments.getString(0);
-        ResourceLocation recipeID = new ResourceLocation(arguments.getString(1));
+        ResourceLocation recipeTypeID = LuaUtils.getResourceLocation(arguments, 0);
+        ResourceLocation recipeID = LuaUtils.getResourceLocation(arguments, 1);
         IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(2, null));
-        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeName);
+        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
         trackOperation(QUERY_REGISTRY, null);
         return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream().filter(recipe -> recipe.getId().equals(recipeID))
                 .map(transformer::transform).collect(Collectors.toList()));
@@ -107,11 +104,11 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         if (checkResult.isPresent())
             return checkResult.get();
 
-        String itemID = arguments.getString(0);
+        ResourceLocation itemID = LuaUtils.getResourceLocation(arguments, 0);
         Object types = arguments.get(1);
         IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(2, null));
 
-        Optional<Item> optTargetItem = Registry.ITEM.getOptional(new ResourceLocation(itemID));
+        Optional<Item> optTargetItem = Registry.ITEM.getOptional(itemID);
 
         if (!optTargetItem.isPresent())
             throw new LuaException(String.format("Cannot find item with id %s", itemID));
