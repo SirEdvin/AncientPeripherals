@@ -295,6 +295,7 @@ repositories {
 configurations {
     extraLibs
     jsocJavadoc
+    never
 
     testModImplementation.extendsFrom(implementation)
     testModImplementation.extendsFrom(testImplementation)
@@ -322,73 +323,73 @@ dependencies {
 
     // Mekanism
 
-    implementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
-    implementation fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
+    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
+    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")
 
     // Astral sorcery
-    implementation(fg.deobf("hellfirepvp.astralsorcery:astralsorcery-1.16:${astralsorcery_version}", {
+    compileOnly(fg.deobf("hellfirepvp.astralsorcery:astralsorcery-1.16:${astralsorcery_version}", {
         transitive = false
     }))
-    implementation(fg.deobf("hellfirepvp.observerlib:observerlib:${observerlib_version}", {
+    compileOnly(fg.deobf("hellfirepvp.observerlib:observerlib:${observerlib_version}", {
         transitive = false
     }))
 
     // Botania
-    implementation fg.deobf("vazkii.botania:Botania:${botania_version}")
+    compileOnly fg.deobf("vazkii.botania:Botania:${botania_version}")
 
     // Integrated Dynamics
     runtimeOnly(fg.deobf("org.cyclops.cyclopscore:cyclopscore:${cyclops_core_version}", {
         transitive = false
     }))
-    runtimeOnly(fg.deobf("org.cyclops.commoncapabilities:commoncapabilities:${common_capabilities_version}", {
+    never(fg.deobf("org.cyclops.commoncapabilities:commoncapabilities:${common_capabilities_version}", {
         transitive = false
     }))
-    implementation(fg.deobf("org.cyclops.integrateddynamics:integrateddynamics:${integrated_dynamics_version}", {
+    compileOnly(fg.deobf("org.cyclops.integrateddynamics:integrateddynamics:${integrated_dynamics_version}", {
         transitive = false
     }))
 
     // Immersive engineer
 
-    implementation(fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:${immersive_engineer_version}"))
+    compileOnly(fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:${immersive_engineer_version}"))
 
     // Natures Aura
 
-    implementation(fg.deobf("curse.maven:NaturesAura-${natures_aura_version}"))
+    compileOnly(fg.deobf("curse.maven:NaturesAura-${natures_aura_version}"))
 
     // Create
-    implementation fg.deobf("com.simibubi.create:Create:${create_version}")
-    implementation fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
+    compileOnly fg.deobf("com.simibubi.create:Create:${create_version}")
+    compileOnly fg.deobf("com.jozufozu.flywheel:Flywheel:${flywheel_version}")
 
     // Industrial foregoins
-    implementation fg.deobf("curse.maven:IndustrialForegoing-${industrial_foregoing_version}")
-    implementation fg.deobf("com.hrznstudio:titanium:${titanium_version}")
+    compileOnly fg.deobf("curse.maven:IndustrialForegoing-${industrial_foregoing_version}")
+    compileOnly fg.deobf("com.hrznstudio:titanium:${titanium_version}")
 
     // PNC:R
 
-    implementation fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.9.6-133", {
+    compileOnly fg.deobf("me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.16.5-2.9.6-133", {
         transitive = false
     })
 
     // Thermal series
-    implementation fg.deobf("curse.maven:ThermalExpansion-69163:3404884")
-    implementation fg.deobf("curse.maven:ThermalFoundation-222880:3412300")
-    implementation fg.deobf("curse.maven:ThermalCultivation-271835:3404883")
-    implementation fg.deobf("curse.maven:ThermalInnovation-291737:3404886")
-    implementation fg.deobf("curse.maven:CoFHCore-69162:3407019")
+    compileOnly fg.deobf("curse.maven:ThermalExpansion-69163:3404884")
+    compileOnly fg.deobf("curse.maven:ThermalFoundation-222880:3412300")
+    compileOnly fg.deobf("curse.maven:ThermalCultivation-271835:3404883")
+    compileOnly fg.deobf("curse.maven:ThermalInnovation-291737:3404886")
+    compileOnly fg.deobf("curse.maven:CoFHCore-69162:3407019")
 
     // Tinkers construct
 
-    implementation fg.deobf("curse.maven:Mantle-74924:3439180")
-    implementation fg.deobf("curse.maven:TinkersConstruct-74072:3439200")
+    compileOnly fg.deobf("curse.maven:Mantle-74924:3439180")
+    compileOnly fg.deobf("curse.maven:TinkersConstruct-74072:3439200")
 
     // Mana and artifact
 
-    implementation fg.deobf("curse.maven:ManaAndArtifact-406360:3244357")
-    runtimeOnly fg.deobf("curse.maven:Geckolib-388172:3428832")
+    compileOnly fg.deobf("curse.maven:ManaAndArtifact-406360:3244357")
+    never fg.deobf("curse.maven:Geckolib-388172:3428832")
 
     // Ars Nouveau
 
-    implementation fg.deobf("curse.maven:ArsNouveau-401955:3442387")
+    compileOnly fg.deobf("curse.maven:ArsNouveau-401955:3442387")
 
     // Blood magic
 
@@ -396,7 +397,7 @@ dependencies {
 
     // Woot
 
-    implementation fg.deobf("curse.maven:Woot-244049:3383734")
+    compileOnly fg.deobf("curse.maven:Woot-244049:3383734")
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'

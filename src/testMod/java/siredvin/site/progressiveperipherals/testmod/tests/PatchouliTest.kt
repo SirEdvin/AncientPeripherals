@@ -17,7 +17,7 @@ import vazkii.patchouli.common.item.ItemModBook
 val BOOK_ID = ResourceLocation("advancedperipherals:manual")
 
 class PatchouliTest {
-    @GameTest
+    @GameTest(batch = "client")
     fun book(context: GameTestHelper) = context.sequence {
         ProgressivePeripheralsConfig.strictPatchouli = true
         this.thenOnClient {
