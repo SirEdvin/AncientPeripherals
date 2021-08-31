@@ -76,7 +76,7 @@ public class RecipeRegistryToolkit {
     static {
         registerSerializer(Ingredient.class, ingredient -> {
             if (ingredient.isEmpty())
-                return new HashMap<>();
+                return SERIALIZATION_NULL;
             try {
                 return GSON.fromJson(ingredient.toJson(), HashMap.class);
             } catch (JsonSyntaxException ignored) {
