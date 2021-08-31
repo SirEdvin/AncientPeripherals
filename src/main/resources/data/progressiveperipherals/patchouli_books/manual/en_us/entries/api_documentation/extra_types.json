@@ -41,6 +41,20 @@
       "title": "ShapeCube",
       "anchor": "ShapeCube",
       "text": "ShapeCube is table in next format $(o){x1=1, x2=2, y1=1, y2=5, z1=1, z2=10.5}$(). Values should be from 0 to 48.$(p)Additionally this table can have $(l:progressiveperipherals:api_documentation/extra_types#Color)Color$() property with name $(o)color$()."
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    },
+    {
+      "type": "text",
+      "title": "RecipeMapping",
+      "anchor": "RecipeMapping",
+      "text": "RecipeMapping is table with required $(o)input$() and $(o)output$() fields and optional field $(o)extra$().$(p)$(o)input$() and $(o)output$() are just array of strings, that represents method or fields names of recipe class. All correct fields and method call results will be merged into one big array in time of serialization."
+    },
+    {
+      "type": "text",
+      "text": "$(o)extra$() is little trickier. It actually a map of $(o)name=field/method$(), and result of field accessing or method call will be put to result $(o)extra$() field in recipe serialization result."
     }
   ]
 }

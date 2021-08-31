@@ -19,7 +19,10 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.extra.recipes.*;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUERY_REGISTRY;
@@ -64,7 +67,9 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
         if (checkResult.isPresent())
             return checkResult.get();
 
-        IRecipeType<?> recipeType = RecipeRegistryToolkit.collectRecipeTypes(recipeTypeName).get(0);
+        ResourceLocation recipeTypeID = LuaUtils.toResourceLocation(recipeTypeName);
+
+        IRecipeType<?> recipeType = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
         trackOperation(QUERY_REGISTRY, null);
         Optional<IRecipe<?>> recipe = RecipeRegistryToolkit.getRecipesForType(recipeType, getWorld()).stream().findFirst();
         return recipe.map(iRecipe -> MethodResult.of(ReflectionUtil.expandObject(iRecipe))).orElseGet(() -> MethodResult.of(null, String.format("No recipe for %s exists", recipeTypeName)));

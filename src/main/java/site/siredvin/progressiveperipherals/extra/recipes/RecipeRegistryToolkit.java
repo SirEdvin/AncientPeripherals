@@ -170,6 +170,8 @@ public class RecipeRegistryToolkit {
     }
 
     public static List<IRecipeType<?>> collectRecipeTypes(Object types) throws LuaException {
+        if (types == null || types.toString().equals("*"))
+            return Registry.RECIPE_TYPE.stream().collect(Collectors.toList());
         if (types instanceof String) {
             String recipeTypesSelector = (String) types;
             if (recipeTypesSelector.contains(":"))
@@ -183,8 +185,6 @@ public class RecipeRegistryToolkit {
             }
             return recipeTypes;
         }
-        if (types == null)
-            return Registry.RECIPE_TYPE.stream().collect(Collectors.toList());
         throw new LuaException("types should be string or table!");
     }
 

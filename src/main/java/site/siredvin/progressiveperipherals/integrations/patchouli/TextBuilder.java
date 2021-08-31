@@ -16,6 +16,7 @@ public class TextBuilder {
         put("$(blockVisual)", "$(l:progressiveperipherals:api_documentation/extra_types#BlockVisual)blockVisual$()");
         put("$(configuration)", "$(l:progressiveperipherals:api_documentation/operations#configuration)getConfiguration$()");
         put("$(shapeCube)", "$(l:progressiveperipherals:api_documentation/extra_types#ShapeCube)shapeCube$()");
+        put("$(recipeMapping)", "$(l:progressiveperipherals:api_documentation/extra_types#RecipeMapping)recipeMapping$()");
     }};
     private IFormattableTextComponent buffer;
     private int list_last_number = 1;

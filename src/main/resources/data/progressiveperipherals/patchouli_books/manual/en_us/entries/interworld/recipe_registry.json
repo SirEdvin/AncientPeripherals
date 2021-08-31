@@ -18,7 +18,7 @@
       "type": "progressiveperipherals:lua_function_left_page",
       "functionName": "getRecipeTypes",
       "description": "Generic function to receive all recipe types registered in game",
-      "operationGroup": "query_registry"
+      "operationGroup": "queryRegistry"
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
@@ -28,12 +28,12 @@
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
-      "functionName": "getAllRecipesForType",
-      "description": "Function, that allows you to check all recipes for specific type",
+      "functionName": "inspectRecipeType",
+      "description": "Utility function that helps to understand target recipe class and fields that can be serialized",
       "throw": [
-        "Incorrect recipe type name provided"
+        "Incorrect identifiers provided"
       ],
-      "operationGroup": "query_registry"
+      "operationGroup": "queryRegistry"
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
@@ -41,7 +41,46 @@
         ["string", "recipe type, like $(o)minecraft:crafting$()"]
       ],
       "returns": [
-        ["{table}", "List of recipe representation. For minecraft recipes it will be close to json model, otherwise it can be anything, useful or not"]
+        ["table", "All parsable recipe class fields with example output"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getAllRecipesForType",
+      "description": "Function, that allows you to get all recipes for specific type",
+      "throw": [
+        "Incorrect identifiers provided"
+      ],
+      "operationGroup": "queryRegistry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "recipe type, like $(o)minecraft:crafting$()"],
+        ["[$(recipeMapping)]", "Optional custom recipe mapping"]
+      ],
+      "returns": [
+        ["{table}", "List of serialized recipes"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getRecipeForType",
+      "description": "Function, that allows you to get particular recipe for specific type",
+      "throw": [
+        "Incorrect identifiers provided"
+      ],
+      "operationGroup": "queryRegistry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "recipe type, like $(o)minecraft:crafting$()"],
+        ["string", "recipe id"],
+        ["[$(recipeMapping)]", "Optional custom recipe mapping"]
+      ],
+      "returns": [
+        ["table", "Serialized recipes"]
       ]
     },
     {
@@ -51,16 +90,17 @@
       "throw": [
         "Incorrect identifiers provided"
       ],
-      "operationGroup": "query_registry"
+      "operationGroup": "queryRegistry"
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
       "parameters": [
         ["string", "Minecraft ID of item, like $(o)minecraft:oak_planks$()"],
-        ["string | {string} | nil", "Recipe type or list of recipe types or nil. In case of nil all recipe types will be queued"]
+        ["[string | {string}]", "Optional filter, recipe type or list of recipe types. In case of filter absent or * are passed all recipe types will be queued"],
+        ["[$(recipeMapping)]", "Optional custom recipe mapping, should be third argument!"]
       ],
       "returns": [
-        ["{table}", "List of representation. For minecraft recipes it will be close to json model, otherwise it can be anything, useful or not"]
+        ["{table}", "List of serialized recipes"]
       ]
     }
   ]
