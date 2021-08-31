@@ -1,0 +1,27 @@
+{
+  "name": "Curing API",
+  "icon": "minecraft:writable_book",
+  "category": "progressiveperipherals:api_documentation",
+  "advancement": "progressiveperipherals:brewing_automata_core",
+  "pages": [
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "inspectView",
+      "description": "Inspecting view in front of turtle, detecting if there is zombie villager, that can be cured"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "checkReturn": "curable zombie found"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "cure",
+      "description": "Trying to perform zombie villager curing, for this golden apple should be in selected slot and zombie villager should have weakness effect",
+      "operationGroup": "cure"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
+    }
+  ]
+}

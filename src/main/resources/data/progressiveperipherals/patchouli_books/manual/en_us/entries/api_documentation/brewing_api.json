@@ -12,10 +12,7 @@
     },
     {
       "type": "progressiveperipherals:lua_function_right_page",
-      "returns": [
-        ["boolean | nil", "Boolean is brewing performed, nil otherwise"],
-        ["nil | string", "Error message"]
-      ]
+      "operationReturn": true
     },
     {
       "type": "progressiveperipherals:lua_function_left_page",
@@ -38,10 +35,17 @@
           "Throw uncertainty multiplicator. Optional argument, should be between 0 and 16, but not 0"
         ]
       ],
-      "returns": [
-        ["true | nil", "True if operation successful, nil otherwise"],
-        ["nil | string", "Error message"]
-      ]
+      "operationReturn": true
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "fillBottle",
+      "description": "Fill one glass bottle in selected slot with water",
+      "operationGroup": "fillBottles"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "operationReturn": true
     }
   ]
 }

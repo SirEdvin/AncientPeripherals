@@ -17,7 +17,8 @@
         "progressiveperipherals:api_documentation/fuel_consumption",
         "progressiveperipherals:api_documentation/operations",
         "progressiveperipherals:api_documentation/experience_interaction",
-        "progressiveperipherals:api_documentation/brewing_api"
+        "progressiveperipherals:api_documentation/brewing_api",
+        "progressiveperipherals:api_documentation/curing_api"
       ]
     }
   ]

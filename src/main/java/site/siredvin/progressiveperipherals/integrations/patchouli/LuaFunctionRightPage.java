@@ -17,6 +17,7 @@ public class LuaFunctionRightPage extends BookPage {
 
     @Nullable IVariable parameters;
     @Nullable IVariable operationReturn;
+    @Nullable IVariable checkReturn;
     @Nullable IVariable returns;
 
     transient BookTextRenderer textRenderer;
@@ -52,6 +53,14 @@ public class LuaFunctionRightPage extends BookPage {
             builder.local("returns").br().startList();
             builder.listElement().italic("true | nil").add(": ").add("True if operation successful, nil otherwise").finish();
             builder.listElement().italic("nil | string").add(": ").add("Error message").finish();
+        } else if (checkReturn != null) {
+            /*
+            ["true | nil", "True if <>, nil otherwise"],
+            ["nil | string", "Reason, why not <>"]
+             */
+            builder.local("returns").br().startList();
+            builder.listElement().italic("true | nil").add(": ").add(String.format("True if %s, nil otherwise", checkReturn.asString())).finish();
+            builder.listElement().italic("nil | string").add(": ").add(String.format("Reason, why not %s", checkReturn.asString())).finish();
         } else if (returns != null) {
             List<IVariable> returns = this.returns.asList();
             builder.local("returns").br().startList();
