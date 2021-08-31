@@ -386,6 +386,18 @@ dependencies {
     implementation fg.deobf("curse.maven:ManaAndArtifact-406360:3244357")
     runtimeOnly fg.deobf("curse.maven:Geckolib-388172:3428832")
 
+    // Ars Nouveau
+
+    implementation fg.deobf("curse.maven:ArsNouveau-401955:3442387")
+
+    // Blood magic
+
+    compileOnly fg.deobf("curse.maven:BloodMagic-224791:3399440")
+
+    // Woot
+
+    implementation fg.deobf("curse.maven:Woot-244049:3383734")
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'

@@ -47,7 +47,8 @@ public class RecipeRegistryToolkit {
             "immersiveengineering", "naturesaura",
             "create", "industrialforegoing",
             "pneumaticcraft", "thermal",
-            "tconstruct"
+            "tconstruct", "bloodmagic",
+            "woot", "ars_nouveau"
     };
 
     public static final Map<String, String> EXTRA_SUPPORTED_MODS = new HashMap<String, String>() {{

@@ -18,6 +18,9 @@ public class Platform {
             return Optional.of(clazz.newInstance());
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ignored) {
             return Optional.empty();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
         }
     }
 }

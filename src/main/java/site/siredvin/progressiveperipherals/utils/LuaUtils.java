@@ -117,6 +117,22 @@ public class LuaUtils {
         return data;
     }
 
+    public static Map<Integer, Float> toLua(float[] value) {
+        Map<Integer, Float> data = new HashMap<>();
+        for (int i = 0;i < value.length; i++) {
+            data.put(i + 1, value[i]);
+        }
+        return data;
+    }
+
+    public static Map<Integer, Integer> toLua(int[] value) {
+        Map<Integer, Integer> data = new HashMap<>();
+        for (int i = 0;i < value.length; i++) {
+            data.put(i + 1, value[i]);
+        }
+        return data;
+    }
+
     public static <T, V> Map<Integer, V> toLua(T[] value, Function<T, V> mapper) {
         Map<Integer, V> data = new HashMap<>();
         for (int i = 0;i < value.length; i++) {
