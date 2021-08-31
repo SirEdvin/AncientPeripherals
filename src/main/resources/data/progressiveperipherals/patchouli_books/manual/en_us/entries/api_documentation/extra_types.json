@@ -54,7 +54,7 @@
     },
     {
       "type": "text",
-      "text": "$(o)extra$() is little trickier. It actually a map of $(o)name=field/method$(), and result of field accessing or method call will be put to result $(o)extra$() field in recipe serialization result."
+      "text": "$(o)extra$() is little trickier. It actually a map of $(o)name=field/method$(), and result of field accessing or method call will be put to result $(o)extra$() field in recipe serialization result.$(p)If you need example of usage of such parsing (trust me, you need) you can visit $(l:https://gitlab.com/SirEdvin/dark_toolkit/-/blob/master/libs/recipeRegistryCompact.lua)compact library$() to find some examples."
     }
   ]
 }
