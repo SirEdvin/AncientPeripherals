@@ -48,7 +48,7 @@ public class QuadData implements Serializable {
     }
 
     public float[] getUV() {
-        return new float[]{x1, z1, x2, z2};
+        return new float[]{x1 / 4, z1 / 4, x2 / 4, z2 / 4};
     }
 
     public VoxelShape shape() {

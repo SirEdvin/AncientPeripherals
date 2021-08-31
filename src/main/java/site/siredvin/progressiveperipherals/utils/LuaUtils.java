@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LuaUtils {
-    private static final int MAX_QUAD_VECTOR = 48;
+    private static final int MAX_QUAD_VECTOR = 64;
 
     private static Vector3f buildVector(float x, float y, float z, float min, float max) throws LuaException {
         if (x < min || y < min || z < min)
