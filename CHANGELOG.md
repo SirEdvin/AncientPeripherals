@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reworked Recipe registry, now more suitable for [usage](https://github.com/SirEdvin/ProgressivePeripherals/issues/36)
 - Recipe registry cooldown was reduced by default
 
+### Fixed
+
+- Possible incorrect flexible statue texture
+
 ## [0.0.9] - 2021-08-23
 
 ### Added
