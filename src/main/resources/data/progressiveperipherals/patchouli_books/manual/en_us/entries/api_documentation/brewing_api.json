@@ -2,7 +2,6 @@
   "name": "Brewing API",
   "icon": "minecraft:writable_book",
   "category": "progressiveperipherals:api_documentation",
-  "advancement": "progressiveperipherals:brewing_automata_core",
   "pages": [
     {
       "type": "progressiveperipherals:lua_function_left_page",

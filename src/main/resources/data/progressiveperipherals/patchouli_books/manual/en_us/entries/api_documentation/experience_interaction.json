@@ -2,7 +2,6 @@
   "name": "Experience Interaction API",
   "icon": "minecraft:writable_book",
   "category": "progressiveperipherals:api_documentation",
-  "advancement": "progressiveperipherals:scientific_automata_core",
   "pages": [
     {
       "type": "progressiveperipherals:lua_function",
