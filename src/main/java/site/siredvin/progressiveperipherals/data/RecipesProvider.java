@@ -365,6 +365,17 @@ public class RecipesProvider extends RecipeProvider implements IConditionBuilder
                 .pattern("    ")
                 .save(consumer);
 
+        AutomataRecipeBuilder.start(Blocks.ITEM_REGISTRY.get())
+                .define('C', Blocks.KNOWLEDGIUM_CASING.get())
+                .define('B', net.minecraft.block.Blocks.BOOKSHELF)
+                .define('T', net.minecraft.item.Items.BOOK)
+                .pattern("    ")
+                .pattern(" CT ")
+                .pattern(" TB ")
+                .pattern("    ")
+                .save(consumer);
+
+
         AutomataRecipeBuilder.start(Blocks.REALITY_FORGER_MK2.get())
                 .define('O', Blocks.REALITY_FORGER.get())
                 .define('I', Blocks.IRREALIUM_MACHINERY_CASING.get())

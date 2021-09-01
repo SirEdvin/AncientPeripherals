@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "north": "progressiveperipherals:block/item_registry_side",
+    "south": "progressiveperipherals:block/item_registry_side",
+    "west": "progressiveperipherals:block/item_registry_side",
+    "east": "progressiveperipherals:block/item_registry_side",
+    "up": "progressiveperipherals:block/knowledgium_casing",
+    "down": "progressiveperipherals:block/knowledgium_casing",
+    "particle": "progressiveperipherals:block/knowledgium_casing"
+  }
+}

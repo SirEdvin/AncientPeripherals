@@ -30,6 +30,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.enableStatueWorkbench = ConfigHolder.COMMON_CONFIG.ENABLE_STATUE_WORKBENCH.get();
         ProgressivePeripheralsConfig.enableAbstractiumPedestal = ConfigHolder.COMMON_CONFIG.ENABLE_ABSTRACTIUM_PEDESTAL.get();
         ProgressivePeripheralsConfig.enableRecipeRegistry = ConfigHolder.COMMON_CONFIG.ENABLE_RECIPE_REGISTRY.get();
+        ProgressivePeripheralsConfig.enableItemRegistry = ConfigHolder.COMMON_CONFIG.ENABLE_ITEM_REGISTRY.get();
         ProgressivePeripheralsConfig.enableEventDistributor = ConfigHolder.COMMON_CONFIG.ENABLE_EVENT_DISTRIBUTOR.get();
         ProgressivePeripheralsConfig.enableEnchantingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHATING_AUTOMATA_CORE.get();
         ProgressivePeripheralsConfig.enableSmithingAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get();
@@ -57,6 +58,7 @@ public class ConfigHandler {
         ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist = new HashSet<>(ConfigHolder.COMMON_CONFIG.RECIPE_REGISTRY_TYPES_BLACKLIST.get());
         // Machinery
         ProgressivePeripheralsConfig.enableExtractor = ConfigHolder.COMMON_CONFIG.ENABLE_EXTRACTOR.get();
+        ProgressivePeripheralsConfig.enableReactor = ConfigHolder.COMMON_CONFIG.ENABLE_REACTOR.get();
         ProgressivePeripheralsConfig.extractorConsumeAmount = ConfigHolder.COMMON_CONFIG.EXTRACTOR_CONSUME_AMOUNT.get();
         ProgressivePeripheralsConfig.extractorProduceAmount = ConfigHolder.COMMON_CONFIG.EXTRACTOR_PRODUCE_AMOUNT.get();
         // Puzzles

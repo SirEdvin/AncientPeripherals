@@ -1,0 +1,48 @@
+{
+  "name": "Item registry",
+  "icon": "progressiveperipherals:item_registry",
+  "category": "progressiveperipherals:interworld",
+  "advancement": "progressiveperipherals:knowledgium",
+  "pages": [
+    {
+      "type": "spotlight",
+      "title": "Item registry",
+      "item": "progressiveperipherals:item_registry",
+      "text": "Knowledgium researching finally gives you some useful results. The world becomes more and more understandable. With this registry you can extract information about any item in the world!"
+    },
+    {
+      "type": "progressiveperipherals:automata",
+      "recipe": "progressiveperipherals:item_registry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getItems",
+      "description": "Allows to access list of items in game",
+      "operationGroup": "queryRegistry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "returns": [
+        ["table", "all item IDs in game"]
+      ]
+    },
+    {
+      "type": "progressiveperipherals:lua_function_left_page",
+      "functionName": "getItemDescription",
+      "description": "Allows to access description for specific item",
+      "throw": [
+        "Incorrect id formatting passed"
+      ],
+      "operationGroup": "queryRegistry"
+    },
+    {
+      "type": "progressiveperipherals:lua_function_right_page",
+      "parameters": [
+        ["string", "item id"]
+      ],
+      "returns": [
+        ["table", "Item description with list of tags, id and display name"]
+      ]
+    }
+  ]
+}

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Irrealium hand
 - Turtle upgrades (based on irrealium tools) that allows some [enchantments, ultimine and voiding](https://github.com/SirEdvin/ProgressivePeripherals/issues/31)
 - Brewing automata now can fill bottles and cure villages
+- Item registry
 
 ### Changed
 
@@ -28,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- General endewire network toolkit, wireless sensors, redstone emitter and lamp!
+- General enderwire network toolkit, wireless sensors, redstone emitter and lamp!
 - Ability to wirelessly share peripheral to computer
 - Ability to access wirelessly shared peripheral from pocket computer
 - Ability to access wirelessly shared peripheral from turtle and ability to share turtle wirelessly in enderwire network!

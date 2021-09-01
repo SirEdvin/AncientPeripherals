@@ -49,6 +49,8 @@ public class TileEntityTypes {
 
     public static final RegistryObject<TileEntityType<RecipeRegistryTileEntity>> RECIPE_REGISTRY = ofBlock(RecipeRegistryTileEntity::new, Blocks.RECIPE_REGISTRY);
 
+    public static final RegistryObject<TileEntityType<ItemRegistryTileEntity>> ITEM_REGISTRY = ofBlock(ItemRegistryTileEntity::new, Blocks.ITEM_REGISTRY);
+
     public static final RegistryObject<TileEntityType<EventDistributorTileEntity>> EVENT_DISTRIBUTOR = ofBlock(EventDistributorTileEntity::new, Blocks.EVENT_DISTRIBUTOR);
 
     // Utility

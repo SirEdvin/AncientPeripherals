@@ -104,6 +104,8 @@
   "block.progressiveperipherals.knowledgium_casing.tooltip": "§7Casing, suitable for crafting knowledge-access peripherals",
   "block.progressiveperipherals.recipe_registry": "Recipe registry",
   "block.progressiveperipherals.recipe_registry.tooltip": "§7Peripheral, that allow to access information about any recipe in game",
+  "block.progressiveperipherals.item_registry": "Item registry",
+  "block.progressiveperipherals.item_registry.tooltip": "§7Peripheral, that allow to access information about any item in game",
   "block.progressiveperipherals.irrealium_pedestal": "Irrealium pedestal",
   "block.progressiveperipherals.irrealium_pedestal.tooltip": "§7Pedestal, that can store items. Maybe it has additional uses?",
   "block.progressiveperipherals.creative_item_duplicator": "Creative item duplicator",

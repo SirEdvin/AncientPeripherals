@@ -68,6 +68,7 @@ public class ProgressivePeripheralsConfig {
     public static boolean enableStatueWorkbench;
     public static boolean enableAbstractiumPedestal;
     public static boolean enableRecipeRegistry;
+    public static boolean enableItemRegistry;
     public static boolean enableEventDistributor;
     public static boolean enableScientificAutomataCore;
     public static boolean enableEnchantingAutomataCore;
@@ -97,6 +98,7 @@ public class ProgressivePeripheralsConfig {
     public static int extractorConsumeAmount;
     public static int extractorProduceAmount;
     public static boolean enableExtractor;
+    public static boolean enableReactor;
     // Puzzles
     public static int linearSystemTimeLimit;
     // Automata cores
@@ -117,6 +119,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.BooleanValue ENABLE_STATUE_WORKBENCH;
         final ForgeConfigSpec.BooleanValue ENABLE_ABSTRACTIUM_PEDESTAL;
         final ForgeConfigSpec.BooleanValue ENABLE_RECIPE_REGISTRY;
+        final ForgeConfigSpec.BooleanValue ENABLE_ITEM_REGISTRY;
         final ForgeConfigSpec.BooleanValue ENABLE_EVENT_DISTRIBUTOR;
         final ForgeConfigSpec.BooleanValue ENABLE_ENCHATING_AUTOMATA_CORE;
         final ForgeConfigSpec.BooleanValue ENABLE_SMITHING_AUTOMATA_CORE;
@@ -152,6 +155,7 @@ public class ProgressivePeripheralsConfig {
         final ForgeConfigSpec.IntValue EXTRACTOR_CONSUME_AMOUNT;
         final ForgeConfigSpec.IntValue EXTRACTOR_PRODUCE_AMOUNT;
         final ForgeConfigSpec.BooleanValue ENABLE_EXTRACTOR;
+        final ForgeConfigSpec.BooleanValue ENABLE_REACTOR;
 
         // Puzzles
 
@@ -175,6 +179,7 @@ public class ProgressivePeripheralsConfig {
             ENABLE_STATUE_WORKBENCH = builder.define("enableStatueWorkbench", true);
             ENABLE_ABSTRACTIUM_PEDESTAL = builder.define("enableAbstractiumPedestal", true);
             ENABLE_RECIPE_REGISTRY = builder.define("enableRecipeRegistry", true);
+            ENABLE_ITEM_REGISTRY = builder.define("enableItemRegistry", true);
             ENABLE_EVENT_DISTRIBUTOR = builder.define("enableEventDistributor", true);
             ENABLE_ENCHATING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true);
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true);
@@ -227,8 +232,10 @@ public class ProgressivePeripheralsConfig {
             builder.pop();
 
             builder.comment("").push("Machinery");
-            ENABLE_EXTRACTOR = builder.comment("Defines is reality breakthrough point is enable. Do not disable it without understanding of mod progression logic!")
+            ENABLE_EXTRACTOR = builder.comment("Defines is reality breakthrough point extractor is enable. Do not disable it without understanding of mod progression logic!")
                     .define("enableExtractor", true);
+            ENABLE_REACTOR = builder.comment("Defines is reality breakthrough point reactor is enable. Do not disable it without understanding of mod progression logic!")
+                    .define("enableReactor", true);
             EXTRACTOR_CONSUME_AMOUNT = builder.comment("Defines amount of power that consumed from RBT point by one operation")
                     .defineInRange("extractorConsumeAmount", 1, 1, REASONABLE_POINT_POWER_LIMIT);
             EXTRACTOR_PRODUCE_AMOUNT = builder.comment("Defines amount of product that produced by extractor by one operation")

@@ -17,8 +17,6 @@ import site.siredvin.progressiveperipherals.common.tileentities.enderwire.*;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativeDecryptPlugin;
 import site.siredvin.progressiveperipherals.integrations.computercraft.plugins.machinery.CreativePowerGeneratorPlugin;
-import site.siredvin.progressiveperipherals.integrations.computercraft.pocket.EnderwireModemPocket;
-import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.EnderwireModemTurtle;
 import site.siredvin.progressiveperipherals.utils.BlockUtils;
 
 import java.util.function.Supplier;
@@ -57,8 +55,7 @@ public class Blocks {
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_REACTOR_CONTROLLER = register(
             "reality_breakthrough_reactor_controller",
             () -> new MachineryController<>(TileEntityTypes.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER),
-            // TODO: settings here
-            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(), () -> true)
+            () -> new PeripheralBlockItem(Blocks.REALITY_BREAKTHROUGH_REACTOR_CONTROLLER.get(), () -> ProgressivePeripheralsConfig.enableReactor)
     );
 
     public static final RegistryObject<Block> REALITY_BREAKTHROUGH_EXTRACTOR_CONTROLLER = register(
@@ -71,6 +68,12 @@ public class Blocks {
             "recipe_registry",
             () -> new GenericTileEntityBlock<>(TileEntityTypes.RECIPE_REGISTRY),
             () -> new PeripheralBlockItem(Blocks.RECIPE_REGISTRY.get(), () -> ProgressivePeripheralsConfig.enableRecipeRegistry)
+    );
+
+    public static final RegistryObject<Block> ITEM_REGISTRY = register(
+            "item_registry",
+            () -> new GenericTileEntityBlock<>(TileEntityTypes.ITEM_REGISTRY),
+            () -> new PeripheralBlockItem(Blocks.ITEM_REGISTRY.get(), () -> ProgressivePeripheralsConfig.enableItemRegistry)
     );
 
     public static final RegistryObject<Block> EVENT_DISTRIBUTOR = register(

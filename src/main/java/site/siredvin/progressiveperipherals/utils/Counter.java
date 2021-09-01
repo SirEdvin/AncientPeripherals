@@ -2,8 +2,8 @@ package site.siredvin.progressiveperipherals.utils;
 
 public class Counter {
     private int counter;
-    public Counter() {
-        counter = 0;
+    public Counter(int start) {
+        counter = start;
     }
 
     public void increase() {

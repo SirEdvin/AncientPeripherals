@@ -12,10 +12,8 @@ import site.siredvin.progressiveperipherals.utils.quad.QuadData;
 import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -145,22 +143,24 @@ public class LuaUtils {
         return data;
     }
 
-    public static <T> Map<Integer, T> toLua(List<T> value) {
+    public static <T> Map<Integer, T> toLua(Collection<T> value) {
         Map<Integer, T> data = new HashMap<>();
-        for (int i = 0; i < value.size(); i++) {
-            data.put(i + 1, value.get(i));
+        int index = 0;
+        for (T innerValue: value) {
+            data.put(index + 1, innerValue);
+            index++;
         }
         return data;
     }
 
     public static <T> Map<Integer, T> toLua(Stream<T> value) {
-        Counter counter = new Counter();
+        Counter counter = new Counter(1);
         return value.collect(Collectors.toMap(el -> counter.getAndIncrease(), el -> el));
     }
 
     public static Map<Integer, Map<Integer, Double>> toLua(double[][] value) {
         Map<Integer, Map<Integer, Double>> data = new HashMap<>();
-        for (int i = 0;i < value.length; i++) {
+        for (int i = 0; i < value.length; i++) {
             data.put(i + 1, toLua(value[i]));
         }
         return data;
