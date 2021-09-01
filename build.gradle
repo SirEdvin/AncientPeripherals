@@ -413,7 +413,7 @@ dependencies {
 
     configurations.implementation.extendsFrom(configurations.extraLibs)
 
-    testImplementation fg.deobf("site.siredvin.ttoolkit:TestToolkit:0.1.0-SNAPSHOT")
+    testImplementation fg.deobf("site.siredvin.ttoolkit:ttoolkit-${minecraft_version}:${ttoolkit_version}")
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_version}"
     testImplementation "org.hamcrest:hamcrest:${hamcrest_version}"

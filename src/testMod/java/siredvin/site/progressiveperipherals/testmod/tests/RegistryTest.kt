@@ -6,7 +6,7 @@ import dan200.computercraft.ingame.api.sequence
 import dan200.computercraft.ingame.api.thenComputerOk
 
 class RegistryTest {
-    @GameTest
+    @GameTest(timeoutTicks = 1000, batch = "hated")
     fun item(context: GameTestHelper) = context.sequence {
         thenComputerOk()
     }

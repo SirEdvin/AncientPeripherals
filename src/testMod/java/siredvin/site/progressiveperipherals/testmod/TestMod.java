@@ -12,6 +12,6 @@ public class TestMod {
     public static final String MOD_ID = "pptest";
 
     public TestMod() {
-        TToolkitMod.performConfiguration(sourceDir);
+        TToolkitMod.performConfiguration(sourceDir, 20 * 3);
     }
 }
