@@ -159,7 +159,7 @@ minecraft {
             parent runs.client
 
             mods {
-                pptest {
+                ttoolkit {
                     source sourceSets.testMod
                 }
             }
@@ -170,7 +170,7 @@ minecraft {
             parent runs.server
 
             mods {
-                pptest {
+                ttoolkit {
                     source sourceSets.testMod
                 }
             }
@@ -290,6 +290,14 @@ repositories {
             includeGroup "me.desht.pneumaticcraft"
         }
     }
+
+    maven {
+        name = "SirEdvin's private repository"
+        url = "https://repo.repsy.io/mvn/siredvin/default"
+        content {
+            includeGroup "site.siredvin.ttoolkit"
+        }
+    }
 }
 
 configurations {
@@ -405,6 +413,7 @@ dependencies {
 
     configurations.implementation.extendsFrom(configurations.extraLibs)
 
+    testImplementation fg.deobf("site.siredvin.ttoolkit:TestToolkit:0.1.0-SNAPSHOT")
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junit_version}"
     testImplementation "org.hamcrest:hamcrest:${hamcrest_version}"
@@ -453,7 +462,7 @@ task setupServer(type: Copy) {
         it.setArgs(exec.getArgs())
 
         it.systemProperty('forge.logging.console.level', 'info')
-        it.systemProperty('pptest.run', 'true')
+        it.systemProperty('ttoolkit.run', 'true')
 
         // Jacoco and modlauncher don't play well together as the classes loaded in-game don't
         // match up with those written to disk. We get Jacoco to dump all classes to disk, and

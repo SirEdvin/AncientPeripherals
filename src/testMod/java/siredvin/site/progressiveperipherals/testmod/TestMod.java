@@ -1,17 +1,7 @@
-/*
- * This file is part of ComputerCraft - http://www.computercraft.info
- * Copyright Daniel Ratcliffe, 2011-2021. Do not distribute without permission.
- * Send enquiries to dratcliffe@gmail.com
- */
 package siredvin.site.progressiveperipherals.testmod;
 
-import dan200.computercraft.api.ComputerCraftAPI;
-import dan200.computercraft.ingame.mod.TestAPI;
-import dan200.computercraft.ingame.mod.TestLoader;
-import net.minecraft.test.StructureHelper;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import site.siredvin.ttoolkit.TToolkitMod;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,16 +9,9 @@ import java.nio.file.Paths;
 @Mod(TestMod.MOD_ID)
 public class TestMod {
     public static final Path sourceDir = Paths.get("../../src/testMod/server-files").normalize().toAbsolutePath();
-
     public static final String MOD_ID = "pptest";
 
-    public static final Logger log = LogManager.getLogger(MOD_ID);
-
     public TestMod() {
-        log.info("CC: Test initialised");
-        ComputerCraftAPI.registerAPIFactory(TestAPI::new);
-        TestLoader.setup();
-
-        StructureHelper.testStructuresDir = sourceDir.resolve("structures").toString();
+        TToolkitMod.performConfiguration(sourceDir);
     }
 }
