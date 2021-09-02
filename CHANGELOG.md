@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.10] - 2021-09-02
+
 ### Highlights
 
 - Irrealium tools! Better than diamond tools, can be enchanted with silk touch or fortune, can ultimine and void items that you want!
