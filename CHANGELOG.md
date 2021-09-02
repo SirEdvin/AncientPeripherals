@@ -6,23 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Highlights
+
+- Irrealium tools! Better than diamond tools, can be enchanted with silk touch or fortune, can ultimine and void items that you want!
+- Brewing automata now can cure villagers! 
+- Recipe registry are now can be used for [any](https://github.com/SirEdvin/ProgressivePeripherals/issues/36) recipe
+- Item registry, that can tell you tags and display name of items!
+
 ### Added
 
-- Irrealium tools
 - Irrealium hand
-- Turtle upgrades (based on irrealium tools) that allows some [enchantments, ultimine and voiding](https://github.com/SirEdvin/ProgressivePeripherals/issues/31)
-- Brewing automata now can fill bottles and cure villages
-- Item registry
+- Brewing automata now can fill bottles
 
 ### Changed
 
 - Now abstractium artifacts (cutting axe and extracting pickaxe) will consume fuel, to make it more [balanced](https://github.com/SirEdvin/ProgressivePeripherals/issues/19)
-- Reworked Recipe registry, now more suitable for [usage](https://github.com/SirEdvin/ProgressivePeripherals/issues/36)
 - Recipe registry cooldown was reduced by default
 
 ### Fixed
 
-- Possible incorrect flexible statue texture
+- Incorrect flexible statue texture
 - Irrealium [progression](https://github.com/SirEdvin/ProgressivePeripherals/issues/21) now correct
 
 ## [0.0.9] - 2021-08-23
