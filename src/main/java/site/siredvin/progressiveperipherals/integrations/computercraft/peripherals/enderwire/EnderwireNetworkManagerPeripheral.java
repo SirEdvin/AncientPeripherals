@@ -5,8 +5,9 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.pocket.IPocketAccess;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import de.srendi.advancedperipherals.common.util.Pair;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.PocketPeripheralOwner;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
@@ -17,12 +18,12 @@ import java.util.stream.Collectors;
 
 import static site.siredvin.progressiveperipherals.extra.network.tools.NetworkPeripheralTool.withNetworks;
 
-public class EnderwireNetworkManagerPeripheral extends BasePeripheral {
+public class EnderwireNetworkManagerPeripheral extends BasePeripheral<PocketPeripheralOwner> {
 
     public static final String TYPE = "enderwireNetworkManager";
 
     public EnderwireNetworkManagerPeripheral(IPocketAccess pocket) {
-        super(TYPE, pocket);
+        super(TYPE, new PocketPeripheralOwner(pocket));
     }
 
     @Override

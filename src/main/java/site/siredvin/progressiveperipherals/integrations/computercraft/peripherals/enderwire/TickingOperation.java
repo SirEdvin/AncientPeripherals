@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralOperation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;
@@ -20,6 +20,11 @@ public enum TickingOperation implements IPeripheralOperation<Object> {
         this.defaultCooldown = defaultCooldown;
         this.defaultStartCost = defaultStartCost;
         this.defaultTickCost = defaultTickCost;
+    }
+
+    @Override
+    public int getInitialCooldown() {
+        return cooldown.get();
     }
 
     @Override

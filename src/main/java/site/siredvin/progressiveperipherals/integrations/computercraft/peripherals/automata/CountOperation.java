@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralOperation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;
@@ -42,6 +42,11 @@ public enum CountOperation implements IPeripheralOperation<Integer> {
     @SuppressWarnings("SameParameterValue")
     CountOperation(int defaultCooldown, int defaultCost) {
         this(defaultCooldown, CountPolicy.MULTIPLY, defaultCost, CountPolicy.MULTIPLY);
+    }
+
+    @Override
+    public int getInitialCooldown() {
+        return cooldown.get() * 64;
     }
 
     @Override

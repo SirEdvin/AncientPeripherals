@@ -4,7 +4,8 @@ import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TileEntityPeripheralOwner;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -16,15 +17,12 @@ import site.siredvin.progressiveperipherals.common.tileentities.AbstractiumPedes
 
 import java.util.Optional;
 
-public class AbstractiumPedestalPeripheral extends BasePeripheral {
+public class AbstractiumPedestalPeripheral extends BasePeripheral<TileEntityPeripheralOwner<AbstractiumPedestalTileEntity>> {
 
     public static final String TYPE = "abstractiumPedestal";
 
-    private final AbstractiumPedestalTileEntity tileEntity;
-
     public AbstractiumPedestalPeripheral(AbstractiumPedestalTileEntity tileEntity) {
-        super(TYPE, tileEntity);
-        this.tileEntity = tileEntity;
+        super(TYPE, new TileEntityPeripheralOwner<>(tileEntity));
     }
 
     @Override
@@ -33,7 +31,7 @@ public class AbstractiumPedestalPeripheral extends BasePeripheral {
     }
 
     @SuppressWarnings({"deprecation", "unused"})
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult setItem(@NotNull IArguments arguments) throws LuaException {
         String item = arguments.getString(0);
         Optional<String> nameOptional = arguments.optString(1);
@@ -42,14 +40,14 @@ public class AbstractiumPedestalPeripheral extends BasePeripheral {
             throw new LuaException(String.format("Cannot find item %s", item));
         ItemStack stack = new ItemStack(itemOptional.get());
         nameOptional.ifPresent(name -> stack.setHoverName(new StringTextComponent(name)));
-        tileEntity.setStoredStack(stack);
+        owner.tileEntity.setStoredStack(stack);
         return MethodResult.of(true);
     }
 
     @SuppressWarnings("unused")
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final String getItem() {
-        ItemStack stored = tileEntity.getStoredStack();
+        ItemStack stored = owner.tileEntity.getStoredStack();
         if (stored.isEmpty())
             return "";
         ResourceLocation name = stored.getItem().getRegistryName();

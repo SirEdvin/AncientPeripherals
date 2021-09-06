@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.turtles;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.ModelTransformingTurtle;
+import de.srendi.advancedperipherals.lib.turtle.ClockwiseAnimatedTurtleUpgrade;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.BrewingAutomataCorePeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class BrewingTurtle extends ModelTransformingTurtle<BrewingAutomataCorePeripheral> {
+public class BrewingTurtle extends ClockwiseAnimatedTurtleUpgrade<BrewingAutomataCorePeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "brewing_automata");
     public BrewingTurtle() {
         super(ID, TranslationUtil.turtle("brewing"), new ItemStack(Items.BREWING_AUTOMATA_CORE.get()));

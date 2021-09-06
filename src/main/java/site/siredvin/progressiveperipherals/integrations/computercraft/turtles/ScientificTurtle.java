@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.turtles;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.ModelTransformingTurtle;
+import de.srendi.advancedperipherals.lib.turtle.ClockwiseAnimatedTurtleUpgrade;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.ScientificAutomataCorePeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class ScientificTurtle extends ModelTransformingTurtle<ScientificAutomataCorePeripheral> {
+public class ScientificTurtle extends ClockwiseAnimatedTurtleUpgrade<ScientificAutomataCorePeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "scientific_automata");
     public ScientificTurtle() {
         super(ID, TranslationUtil.turtle("scientific"), new ItemStack(Items.SCIENTIFIC_AUTOMATA_CORE.get()));

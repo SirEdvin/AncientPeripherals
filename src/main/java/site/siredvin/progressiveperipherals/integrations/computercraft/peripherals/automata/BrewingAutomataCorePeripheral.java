@@ -9,8 +9,7 @@ import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.shared.turtle.blocks.BlockTurtle;
 import dan200.computercraft.shared.util.InventoryUtil;
 import dan200.computercraft.shared.util.WorldUtil;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralOperation;
 import net.minecraft.dispenser.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.ZombieVillagerEntity;
@@ -30,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.PPAbilities;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -43,7 +43,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
     private static final Predicate<Entity> suitableEntity = entity -> entity instanceof ZombieVillagerEntity;
 
     public BrewingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
-        super(TYPE, turtle, side);
+        super(TYPE, turtle, side, AutomataCoreTier.TIER3);
     }
 
     private static class TurtlePotionDispenseBehavior implements IDispenseItemBehavior {
@@ -103,11 +103,6 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
     }
 
     @Override
-    public IAutomataCoreTier getTier() {
-        return AutomataCoreTier.TIER3;
-    }
-
-    @Override
     public List<IPeripheralOperation<?>> possibleOperations() {
         List<IPeripheralOperation<?>> operations = super.possibleOperations();
         operations.add(BREW);
@@ -124,10 +119,10 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
 
     @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
-    public final MethodResult brew() {
+    public final MethodResult brew() throws LuaException {
         return withOperation(BREW, context -> {
-            IInventory turtleInventory = turtle.getInventory();
-            int selectedSlot = turtle.getSelectedSlot();
+            IInventory turtleInventory = owner.turtle.getInventory();
+            int selectedSlot = owner.turtle.getSelectedSlot();
             ItemStack component = turtleInventory.getItem(selectedSlot);
 
             if (!PotionBrewing.isIngredient(component))
@@ -146,7 +141,9 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
                 if (PotionBrewing.hasMix(slotStack, component)) {
                     turtleInventory.setItem(slot, PotionBrewing.mix(component, slotStack));
                     usedForBrewing = true;
-                    adjustStoredXP(ProgressivePeripheralsConfig.brewingXPReward);
+                    ExperienceAbility experienceAbility = owner.getAbility(PPAbilities.EXPERIENCE);
+                    if (experienceAbility != null)
+                        experienceAbility.adjustStoredXP(ProgressivePeripheralsConfig.brewingXPReward);
                 }
             }
             if (usedForBrewing)
@@ -169,8 +166,8 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
         if (uncertainty == 0)
             throw new LuaException("Uncertainty multiplicator cannot be 0");
         return withOperation(THROW_POTION, context -> {
-            int selectedSlot = turtle.getSelectedSlot();
-            IInventory turtleInventory = turtle.getInventory();
+            int selectedSlot = owner.turtle.getSelectedSlot();
+            IInventory turtleInventory = owner.turtle.getInventory();
             ItemStack selectedStack = turtleInventory.getItem(selectedSlot);
             Item selectedItem = selectedStack.getItem();
             if (selectedItem != Items.SPLASH_POTION && selectedItem != Items.LINGERING_POTION)
@@ -185,10 +182,10 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult fillBottle() {
+    public final MethodResult fillBottle() throws LuaException {
         return withOperation(FILL_BOTTLES, context -> {
-            int selectedSlot = turtle.getSelectedSlot();
-            IInventory turtleInventory = turtle.getInventory();
+            int selectedSlot = owner.turtle.getSelectedSlot();
+            IInventory turtleInventory = owner.turtle.getInventory();
             ItemStack selectedStack = turtleInventory.getItem(selectedSlot);
             Item selectedItem = selectedStack.getItem();
             if (selectedItem != Items.GLASS_BOTTLE)
@@ -199,7 +196,7 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
             if (selectedStack.getCount() == 0) {
                 turtleInventory.setItem(selectedSlot, potion);
             } else {
-                ItemStack restPotion = InventoryUtil.storeItems(potion, turtle.getItemHandler());
+                ItemStack restPotion = InventoryUtil.storeItems(potion, owner.turtle.getItemHandler());
                 if (!restPotion.isEmpty())
                     WorldUtil.dropItemStack(restPotion, getWorld(), getPos(), Direction.UP);
             }
@@ -225,10 +222,10 @@ public class BrewingAutomataCorePeripheral extends ExperienceAutomataCorePeriphe
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult cure() {
+    public final MethodResult cure() throws LuaException {
         return withOperation(CURE, context -> {
-            int selectedSlot = turtle.getSelectedSlot();
-            IInventory turtleInventory = turtle.getInventory();
+            int selectedSlot = owner.turtle.getSelectedSlot();
+            IInventory turtleInventory = owner.turtle.getInventory();
             ItemStack selectedStack = turtleInventory.getItem(selectedSlot);
             Item selectedItem = selectedStack.getItem();
             if (selectedItem != Items.GOLDEN_APPLE)

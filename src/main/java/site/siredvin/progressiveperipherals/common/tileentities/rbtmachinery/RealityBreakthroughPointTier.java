@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
+import de.srendi.advancedperipherals.lib.misc.IConfigHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.api.puzzles.IPuzzle;

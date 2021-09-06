@@ -4,9 +4,8 @@ import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
-import de.srendi.advancedperipherals.common.blocks.base.PeripheralTileEntity;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TileEntityPeripheralOwner;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -16,10 +15,10 @@ import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.common.tileentities.RecipeRegistryTileEntity;
 import site.siredvin.progressiveperipherals.extra.recipes.*;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,16 +26,12 @@ import java.util.stream.Collectors;
 
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.QUERY_REGISTRY;
 
-public class RecipeRegistryPeripheral extends OperationPeripheral {
+public class RecipeRegistryPeripheral extends BasePeripheral<TileEntityPeripheralOwner<RecipeRegistryTileEntity>> {
     public static final String TYPE = "recipeRegistry";
 
-    public RecipeRegistryPeripheral(PeripheralTileEntity<?> tileEntity) {
-        super(TYPE, tileEntity);
-    }
-
-    @Override
-    public List<IPeripheralOperation<?>> possibleOperations() {
-        return Collections.singletonList(FreeOperation.QUERY_REGISTRY);
+    public RecipeRegistryPeripheral(RecipeRegistryTileEntity tileEntity) {
+        super(TYPE, new TileEntityPeripheralOwner<>(tileEntity));
+        owner.attachOperation(QUERY_REGISTRY);
     }
 
     @Override
@@ -52,80 +47,66 @@ public class RecipeRegistryPeripheral extends OperationPeripheral {
     }
 
     @LuaFunction
-    public final MethodResult getRecipeTypes() {
-        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
-        if (checkResult.isPresent())
-            return checkResult.get();
-        trackOperation(QUERY_REGISTRY, null);
-        return MethodResult.of(Registry.RECIPE_TYPE.keySet().stream().map(ResourceLocation::toString)
-                .filter(type -> !ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist.contains(type)).collect(Collectors.toList()));
+    public final MethodResult getRecipeTypes() throws LuaException {
+        return withOperation(QUERY_REGISTRY, null, null,
+                ignored -> MethodResult.of(Registry.RECIPE_TYPE.keySet().stream().map(ResourceLocation::toString)
+                        .filter(type -> !ProgressivePeripheralsConfig.recipeRegistryTypesBlacklist.contains(type)).collect(Collectors.toList())), null);
     }
 
     @LuaFunction
     public final MethodResult inspectRecipeType(String recipeTypeName) throws LuaException {
-        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
-        if (checkResult.isPresent())
-            return checkResult.get();
+        return withOperation(QUERY_REGISTRY, null, null, ignored -> {
+            ResourceLocation recipeTypeID = LuaUtils.toResourceLocation(recipeTypeName);
 
-        ResourceLocation recipeTypeID = LuaUtils.toResourceLocation(recipeTypeName);
-
-        IRecipeType<?> recipeType = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
-        trackOperation(QUERY_REGISTRY, null);
-        Optional<IRecipe<?>> recipe = RecipeRegistryToolkit.getRecipesForType(recipeType, getWorld()).stream().findFirst();
-        return recipe.map(iRecipe -> MethodResult.of(ReflectionUtil.expandObject(iRecipe))).orElseGet(() -> MethodResult.of(null, String.format("No recipe for %s exists", recipeTypeName)));
+            IRecipeType<?> recipeType = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
+            Optional<IRecipe<?>> recipe = RecipeRegistryToolkit.getRecipesForType(recipeType, getWorld()).stream().findFirst();
+            return recipe.map(iRecipe -> MethodResult.of(ReflectionUtil.expandObject(iRecipe))).orElseGet(() -> MethodResult.of(null, String.format("No recipe for %s exists", recipeTypeName)));
+        }, null);
     }
 
     @LuaFunction
     public final MethodResult getAllRecipesForType(@NotNull IArguments arguments) throws LuaException {
-        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
-        if (checkResult.isPresent())
-            return checkResult.get();
-
-        ResourceLocation recipeTypeID = LuaUtils.getResourceLocation(arguments, 0);
-        IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(1, null));
-        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
-        trackOperation(QUERY_REGISTRY, null);
-        return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream()
-                .map(transformer::transform).collect(Collectors.toList()));
+        return withOperation(QUERY_REGISTRY, null, null, ignored -> {
+            ResourceLocation recipeTypeID = LuaUtils.getResourceLocation(arguments, 0);
+            IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(1, null));
+            IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
+            return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream()
+                    .map(transformer::transform).collect(Collectors.toList()));
+        }, null);
     }
 
     @LuaFunction
     public final MethodResult getRecipeForType(@NotNull IArguments arguments) throws LuaException {
-        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
-        if (checkResult.isPresent())
-            return checkResult.get();
-        ResourceLocation recipeTypeID = LuaUtils.getResourceLocation(arguments, 0);
-        ResourceLocation recipeID = LuaUtils.getResourceLocation(arguments, 1);
-        IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(2, null));
-        IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
-        trackOperation(QUERY_REGISTRY, null);
-        return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream().filter(recipe -> recipe.getId().equals(recipeID))
-                .map(transformer::transform).collect(Collectors.toList()));
+        return withOperation(QUERY_REGISTRY, null, null, ignored -> {
+            ResourceLocation recipeTypeID = LuaUtils.getResourceLocation(arguments, 0);
+            ResourceLocation recipeID = LuaUtils.getResourceLocation(arguments, 1);
+            IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(2, null));
+            IRecipeType<?> type = RecipeRegistryToolkit.getRecipeType(recipeTypeID);
+            return MethodResult.of(RecipeRegistryToolkit.getRecipesForType(type, getWorld()).stream().filter(recipe -> recipe.getId().equals(recipeID))
+                    .map(transformer::transform).collect(Collectors.toList()));
+        }, null);
     }
 
     @LuaFunction
     public final MethodResult getRecipesFor(@NotNull IArguments arguments) throws LuaException {
-        Optional<MethodResult> checkResult = this.cooldownCheck(QUERY_REGISTRY);
-        if (checkResult.isPresent())
-            return checkResult.get();
+        return withOperation(QUERY_REGISTRY, null, null, ignored -> {
 
-        ResourceLocation itemID = LuaUtils.getResourceLocation(arguments, 0);
-        Object types = arguments.get(1);
-        IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(2, null));
+            ResourceLocation itemID = LuaUtils.getResourceLocation(arguments, 0);
+            Object types = arguments.get(1);
+            IRecipeTransformer<IRecipe<?>> transformer = buildTransformer(arguments.optTable(2, null));
 
-        Optional<Item> optTargetItem = Registry.ITEM.getOptional(itemID);
+            Optional<Item> optTargetItem = Registry.ITEM.getOptional(itemID);
 
-        if (!optTargetItem.isPresent())
-            throw new LuaException(String.format("Cannot find item with id %s", itemID));
+            if (!optTargetItem.isPresent())
+                throw new LuaException(String.format("Cannot find item with id %s", itemID));
 
-        ItemStack targetResult = new ItemStack(optTargetItem.get());
+            ItemStack targetResult = new ItemStack(optTargetItem.get());
 
-        List<IRecipeType<?>> recipeTypes = RecipeRegistryToolkit.collectRecipeTypes(types);
-
-        trackOperation(QUERY_REGISTRY, null);
-        return MethodResult.of(
-                recipeTypes.stream().flatMap(recipeType -> RecipeRegistryToolkit.findRecipesForType(recipeType, targetResult, getWorld(), NBTCheckMode.NONE).stream())
-                        .map(transformer::transform).collect(Collectors.toList())
-        );
+            List<IRecipeType<?>> recipeTypes = RecipeRegistryToolkit.collectRecipeTypes(types);
+            return MethodResult.of(
+                    recipeTypes.stream().flatMap(recipeType -> RecipeRegistryToolkit.findRecipesForType(recipeType, targetResult, getWorld(), NBTCheckMode.NONE).stream())
+                            .map(transformer::transform).collect(Collectors.toList())
+            );
+        }, null);
     }
 }

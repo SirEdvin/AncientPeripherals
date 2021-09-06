@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.Peripherals;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntity<EnderwirePeripheralSharingTileEntity, IBasePeripheral> {
+public class EnderwirePeripheralSharingTileEntity extends BaseEnderwireTileEntity<EnderwirePeripheralSharingTileEntity, BasePeripheral<?>> {
 
     private boolean initialized = false;
     private @Nullable IPeripheral sharedPeripheral;

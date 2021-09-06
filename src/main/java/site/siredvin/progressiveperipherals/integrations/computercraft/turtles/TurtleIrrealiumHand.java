@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.turtles;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BaseTurtle;
+import de.srendi.advancedperipherals.lib.turtle.PeripheralTurtleUpgrade;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.tools.HandIrrealiumToolPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class TurtleIrrealiumHand extends BaseTurtle<HandIrrealiumToolPeripheral> {
+public class TurtleIrrealiumHand extends PeripheralTurtleUpgrade<HandIrrealiumToolPeripheral> {
     public static final String CORE_NAME = "irrealium_hand";
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, CORE_NAME);
 

@@ -4,8 +4,9 @@ import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
 import de.srendi.advancedperipherals.common.util.Pair;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TileEntityPeripheralOwner;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
@@ -31,7 +32,7 @@ import site.siredvin.progressiveperipherals.utils.ScanUtils;
 
 import java.util.*;
 
-public class RealityForgerPeripheral extends BasePeripheral {
+public class RealityForgerPeripheral extends BasePeripheral<TileEntityPeripheralOwner<RealityForgerTileEntity>> {
     public static final String TYPE = "realityForger";
 
     private static final Map<String, BooleanProperty> FLAG_MAPPING = new HashMap<String, BooleanProperty>() {{
@@ -42,12 +43,12 @@ public class RealityForgerPeripheral extends BasePeripheral {
     }};
 
     public RealityForgerPeripheral(RealityForgerTileEntity tileEntity) {
-        super(TYPE, tileEntity);
+        super(TYPE, new TileEntityPeripheralOwner<>(tileEntity));
     }
 
     @SuppressWarnings("SameParameterValue")
     protected RealityForgerPeripheral(String type, RealityForgerTileEntity tileEntity) {
-        super(type, tileEntity);
+        super(type, new TileEntityPeripheralOwner<>(tileEntity));
     }
 
     @Override

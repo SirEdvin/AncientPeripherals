@@ -13,9 +13,12 @@ import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.core.apis.PeripheralAPI;
 import dan200.computercraft.core.asm.PeripheralMethod;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.FuelConsumingPeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralTileEntity;
+import de.srendi.advancedperipherals.lib.peripherals.owner.IPeripheralOwner;
+import de.srendi.advancedperipherals.lib.peripherals.owner.PocketPeripheralOwner;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TileEntityPeripheralOwner;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TurtlePeripheralOwner;
 import net.minecraft.tileentity.TileEntity;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
@@ -27,7 +30,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class BaseEnderwireModemPeripheral extends FuelConsumingPeripheral {
+public class BaseEnderwireModemPeripheral extends BasePeripheral<IPeripheralOwner> {
 
     public static final String TYPE = "modem";
 
@@ -153,16 +156,16 @@ public class BaseEnderwireModemPeripheral extends FuelConsumingPeripheral {
     private final ConcurrentMap<String, PeripheralRecord> peripheralsRecord = new ConcurrentHashMap<>();
     private final Set<IPeripheral> sharedPeripherals = Collections.newSetFromMap(new MapMaker().concurrencyLevel(4).weakKeys().makeMap());
 
-    public <T extends TileEntity & IPeripheralTileEntity> BaseEnderwireModemPeripheral(T tileEntity) {
-        super(TYPE, tileEntity);
+    public <T1 extends TileEntity & IPeripheralTileEntity> BaseEnderwireModemPeripheral(T1 tileEntity) {
+        super(TYPE, new TileEntityPeripheralOwner<>(tileEntity));
     }
 
     public BaseEnderwireModemPeripheral(ITurtleAccess turtle, TurtleSide side) {
-        super("modem", turtle, side);
+        super(TYPE, new TurtlePeripheralOwner(turtle, side));
     }
 
     public BaseEnderwireModemPeripheral(IPocketAccess access) {
-        super("modem", access);
+        super(TYPE, new PocketPeripheralOwner(access));
     }
 
     protected String buildElementType(@NotNull String networkName, @NotNull IPeripheral peripheral) {
@@ -217,26 +220,6 @@ public class BaseEnderwireModemPeripheral extends FuelConsumingPeripheral {
     public void detach(@NotNull IComputerAccess computer) {
         super.detach(computer);
         peripheralsRecord.values().forEach(record -> record.detach(computer));
-    }
-
-    @Override
-    public List<IPeripheralOperation<?>> possibleOperations() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    protected int getMaxFuelConsumptionRate() {
-        return 1;
-    }
-
-    @Override
-    protected int _getFuelConsumptionRate() {
-        return 1;
-    }
-
-    @Override
-    protected void _setFuelConsumptionRate(int i) {
-
     }
 
     @SuppressWarnings("unused")

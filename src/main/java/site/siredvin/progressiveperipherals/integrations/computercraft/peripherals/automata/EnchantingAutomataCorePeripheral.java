@@ -5,14 +5,14 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralOperation;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.PPAbilities;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 
 import java.util.Collections;
@@ -28,7 +28,7 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
     private static final int MINECRAFT_ENCHANTING_LEVEL_LIMIT = 30;
 
     public EnchantingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
-        super(TYPE, turtle, side);
+        super(TYPE, turtle, side, AutomataCoreTier.TIER3);
     }
 
     @Override
@@ -38,11 +38,6 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         data.put("treasureEnchantmentsAllowed", allowTreasureEnchants());
         data.put("enchantmentWipeChance", ProgressivePeripheralsConfig.enchantingAutomataCoreDisappearChance);
         return data;
-    }
-
-    @Override
-    public IAutomataCoreTier getTier() {
-        return AutomataCoreTier.TIER3;
     }
 
     @Override
@@ -64,23 +59,26 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
 
     @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
-    public final MethodResult enchant(int levels) {
+    public final MethodResult enchant(int levels) throws LuaException {
         return withOperation(ENCHANTMENT, context -> {
             if (levels > MINECRAFT_ENCHANTING_LEVEL_LIMIT)
                 return MethodResult.of(null, String.format("Enchanting levels cannot be bigger then %d", MINECRAFT_ENCHANTING_LEVEL_LIMIT));
+            ExperienceAbility experienceAbility = owner.getAbility(PPAbilities.EXPERIENCE);
+            if (experienceAbility == null)
+                return MethodResult.of(null, "Internal error ...?");
             addRotationCycle();
             int requiredXP = levels * ProgressivePeripheralsConfig.enchantLevelCost;
-            if (requiredXP > _getStoredXP())
+            if (requiredXP > experienceAbility._getStoredXP())
                 return MethodResult.of(null, String.format("Not enough XP, %d required", requiredXP));
-            int selectedSlot = turtle.getSelectedSlot();
-            IInventory turtleInventory = turtle.getInventory();
+            int selectedSlot = owner.turtle.getSelectedSlot();
+            IInventory turtleInventory = owner.turtle.getInventory();
             ItemStack targetItem = turtleInventory.getItem(selectedSlot);
             if (!targetItem.isEnchantable())
                 return MethodResult.of(null, "Item is not enchantable");
             if (targetItem.isEnchanted())
                 return MethodResult.of(null, "Item already enchanted!");
             ItemStack enchantedItem = EnchantmentHelper.enchantItem(getWorld().random, owner.getToolInMainHand(), levels, allowTreasureEnchants());
-            adjustStoredXP(-requiredXP);
+            experienceAbility.adjustStoredXP(-requiredXP);
             turtleInventory.setItem(selectedSlot, enchantedItem);
             return MethodResult.of(true);
         });
@@ -92,8 +90,8 @@ public class EnchantingAutomataCorePeripheral extends ExperienceAutomataCorePeri
         CheckUtils.isCorrectSlot(target);
         int realSlot = target - 1;
         return withOperation(ENCHANTMENT, context -> {
-            IInventory turtleInventory = turtle.getInventory();
-            int selectedSlot = turtle.getSelectedSlot();
+            IInventory turtleInventory = owner.turtle.getInventory();
+            int selectedSlot = owner.turtle.getSelectedSlot();
             ItemStack selectedItem = turtleInventory.getItem(selectedSlot);
             ItemStack targetItem = turtleInventory.getItem(realSlot);
             if (!selectedItem.isEnchanted())

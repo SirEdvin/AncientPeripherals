@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.IBasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +14,7 @@ import site.siredvin.progressiveperipherals.extra.network.GlobalNetworksData;
 import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireTileEntity;
 import site.siredvin.progressiveperipherals.server.SingleTickScheduler;
 
-public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireTileEntity<T>, V  extends IBasePeripheral> extends MutableNBTTileEntity<V> implements IEnderwireTileEntity<T>, IBlockObservingTileEntity {
+public abstract class BaseEnderwireTileEntity<T extends TileEntity & IEnderwireTileEntity<T>, V  extends IBasePeripheral<?>> extends MutableNBTTileEntity<V> implements IEnderwireTileEntity<T>, IBlockObservingTileEntity {
     private static final String ATTACHED_NETWORK_TAG = "attachedNetwork";
     private static final String ELEMENT_NAME_TAG = "elementName";
 

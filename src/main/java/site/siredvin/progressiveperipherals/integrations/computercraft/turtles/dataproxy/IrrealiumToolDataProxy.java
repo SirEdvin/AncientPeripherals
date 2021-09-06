@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.turtles.
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralOwner;
+import de.srendi.advancedperipherals.lib.peripherals.owner.IPeripheralOwner;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;

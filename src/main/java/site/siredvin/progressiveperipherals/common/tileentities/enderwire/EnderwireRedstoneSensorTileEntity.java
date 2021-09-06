@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -10,7 +10,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementTy
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnderwireRedstoneSensorTileEntity extends BaseEnderwireTileEntity<EnderwireRedstoneSensorTileEntity, BasePeripheral> {
+public class EnderwireRedstoneSensorTileEntity extends BaseEnderwireTileEntity<EnderwireRedstoneSensorTileEntity, BasePeripheral<?>> {
 
     private final static String POWER_BUFFER_TAG = "powerBuffer";
 

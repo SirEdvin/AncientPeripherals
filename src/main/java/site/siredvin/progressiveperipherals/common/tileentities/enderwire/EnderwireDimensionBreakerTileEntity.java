@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.extra.network.api.EnderwireElementType;
@@ -9,7 +9,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.NetworkAmplifier;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnderwireDimensionBreakerTileEntity extends BaseEnderwireTileEntity<EnderwireDimensionBreakerTileEntity, BasePeripheral> {
+public class EnderwireDimensionBreakerTileEntity extends BaseEnderwireTileEntity<EnderwireDimensionBreakerTileEntity, BasePeripheral<?>> {
 
     public EnderwireDimensionBreakerTileEntity() {
         super(TileEntityTypes.ENDERWIRE_DIMENSION_BREAKER.get());

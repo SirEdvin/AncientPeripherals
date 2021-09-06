@@ -3,7 +3,7 @@ package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.core.computer.ComputerSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.AttachFace;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EnderwireRedstoneEmitterTileEntity extends BaseEnderwireTileEntity<EnderwireRedstoneEmitterTileEntity, BasePeripheral> {
+public class EnderwireRedstoneEmitterTileEntity extends BaseEnderwireTileEntity<EnderwireRedstoneEmitterTileEntity, BasePeripheral<?>> {
 
     private final static String POWER_BUFFER_TAG = "powerBuffer";
     private final static ComputerSide[] ALLOWED_SIDES = new ComputerSide[]{

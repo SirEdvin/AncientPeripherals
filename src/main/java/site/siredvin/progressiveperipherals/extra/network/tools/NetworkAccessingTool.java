@@ -1,8 +1,8 @@
 package site.siredvin.progressiveperipherals.extra.network.tools;
 
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralOwner;
 import de.srendi.advancedperipherals.common.util.Pair;
+import de.srendi.advancedperipherals.lib.peripherals.owner.IPeripheralOwner;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import org.jetbrains.annotations.Nullable;

@@ -6,9 +6,9 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.OperationPeripheral;
 import de.srendi.advancedperipherals.common.util.InventoryUtil;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TileEntityPeripheralOwner;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -21,13 +21,10 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.common.tileentities.CreativeItemDuplicatorTileEntity;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.FreeOperation.DUPLICATE_ITEM;
 
-public class CreativeItemDuplicatorPeripheral extends OperationPeripheral {
+public class CreativeItemDuplicatorPeripheral extends BasePeripheral<TileEntityPeripheralOwner<CreativeItemDuplicatorTileEntity>> {
     public static final String TYPE = "creativeItemDuplicator";
 
     private final CreativeItemDuplicatorTileEntity tileEntity;
@@ -84,13 +81,9 @@ public class CreativeItemDuplicatorPeripheral extends OperationPeripheral {
 
 
     public CreativeItemDuplicatorPeripheral(CreativeItemDuplicatorTileEntity tileEntity) {
-        super(TYPE, tileEntity);
+        super(TYPE, new TileEntityPeripheralOwner<>(tileEntity));
+        owner.attachOperation(DUPLICATE_ITEM);
         this.tileEntity = tileEntity;
-    }
-
-    @Override
-    public List<IPeripheralOperation<?>> possibleOperations() {
-        return Collections.singletonList(DUPLICATE_ITEM);
     }
 
     @Override
@@ -98,29 +91,24 @@ public class CreativeItemDuplicatorPeripheral extends OperationPeripheral {
         return ProgressivePeripheralsConfig.enableCreativeItemDuplicator;
     }
 
-    @SuppressWarnings("unused")
     @LuaFunction(mainThread = true)
     public final MethodResult pushItem(@NotNull IComputerAccess access, @NotNull IArguments arguments) throws LuaException {
-        Optional<MethodResult> checkResult = cooldownCheck(DUPLICATE_ITEM);
-        if (checkResult.isPresent())
-            return checkResult.get();
-        // Parsing arguments
         String toName = arguments.getString(0);
         int limit = arguments.optInt(1, Integer.MAX_VALUE);
         int toSlot = arguments.optInt(2, -1);
-        // Find location to transfer to
-        IPeripheral location = access.getAvailablePeripheral(toName);
-        if (location == null) throw new LuaException("Target '" + toName + "' does not exist");
+        return withOperation(DUPLICATE_ITEM, null, null, ingored -> {
+            // Find location to transfer to
+            IPeripheral location = access.getAvailablePeripheral(toName);
+            if (location == null) throw new LuaException("Target '" + toName + "' does not exist");
 
-        IItemHandler to = extractHandler(location.getTarget());
-        if (to == null) throw new LuaException("Target '" + toName + "' is not an inventory");
-        if (toSlot != -1 && (toSlot < 1 || toSlot > to.getSlots()))
-            return MethodResult.of(null, "To slot is incorrect");
+            IItemHandler to = extractHandler(location.getTarget());
+            if (to == null) throw new LuaException("Target '" + toName + "' is not an inventory");
+            if (toSlot != -1 && (toSlot < 1 || toSlot > to.getSlots()))
+                return MethodResult.of(null, "To slot is incorrect");
 
-        if (limit <= 0)
-            return MethodResult.of(0);
-
-        trackOperation(DUPLICATE_ITEM, null);
-        return MethodResult.of(InventoryUtil.moveItem(new UnlimitedItemHandler(), 0, to, toSlot - 1, limit));
+            if (limit <= 0)
+                return MethodResult.of(0);
+            return MethodResult.of(InventoryUtil.moveItem(new UnlimitedItemHandler(), 0, to, toSlot - 1, limit));
+        }, null);
     }
 }

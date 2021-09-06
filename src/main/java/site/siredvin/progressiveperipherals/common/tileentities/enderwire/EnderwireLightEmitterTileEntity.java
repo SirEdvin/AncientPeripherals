@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitterTileRenderer;
@@ -16,7 +16,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<EnderwireLightEmitterTileEntity, BasePeripheral> {
+public class EnderwireLightEmitterTileEntity extends BaseEnderwireTileEntity<EnderwireLightEmitterTileEntity, BasePeripheral<?>> {
 
     private static final int MAX_LIGHT_LEVEL = 15;
     private static final String COLOR_TAG = "color";

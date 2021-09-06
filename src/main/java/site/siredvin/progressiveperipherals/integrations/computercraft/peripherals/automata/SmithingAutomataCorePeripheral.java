@@ -6,8 +6,7 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralOperation;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
@@ -16,31 +15,27 @@ import net.minecraft.item.crafting.SmithingRecipe;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.PPAbilities;
 import site.siredvin.progressiveperipherals.utils.CheckUtils;
 import site.siredvin.progressiveperipherals.utils.LimitedInventory;
 
 import java.util.List;
 import java.util.Optional;
 
-import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.SMITH;
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.CountOperation.SMELT;
+import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata.SimpleOperation.SMITH;
 
 public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeripheral {
 
     public static final String TYPE = "smithingAutomataCore";
 
     public SmithingAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
-        super(TYPE, turtle, side);
+        super(TYPE, turtle, side, AutomataCoreTier.TIER3);
     }
 
     @Override
     public boolean isEnabled() {
         return ProgressivePeripheralsConfig.enableSmithingAutomataCore;
-    }
-
-    @Override
-    public IAutomataCoreTier getTier() {
-        return AutomataCoreTier.TIER3;
     }
 
     @Override
@@ -58,11 +53,11 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
         int realTargetSlot = targetSlot - 1;
         int realSecondSlot = secondSlot - 1;
         return withOperation(SMITH, context -> {
-            IInventory turtleInventory = turtle.getInventory();
+            IInventory turtleInventory = owner.turtle.getInventory();
             if (!turtleInventory.getItem(realTargetSlot).isEmpty())
                 return MethodResult.of(null, "Target slot should be empty!");
             addRotationCycle();
-            LimitedInventory limitedInventory = new LimitedInventory(turtleInventory, new int[]{turtle.getSelectedSlot(), realSecondSlot});
+            LimitedInventory limitedInventory = new LimitedInventory(turtleInventory, new int[]{owner.turtle.getSelectedSlot(), realSecondSlot});
             World world = getWorld();
             Optional<SmithingRecipe> optRecipe = world.getRecipeManager().getRecipeFor(IRecipeType.SMITHING, limitedInventory, world);
             if (!optRecipe.isPresent())
@@ -78,8 +73,8 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
 
     @LuaFunction(mainThread = true)
     public final MethodResult smelt(@NotNull IArguments arguments) throws LuaException {
-        IInventory turtleInventory = turtle.getInventory();
-        LimitedInventory limitedInventory = new LimitedInventory(turtleInventory, new int[]{turtle.getSelectedSlot()});
+        IInventory turtleInventory = owner.turtle.getInventory();
+        LimitedInventory limitedInventory = new LimitedInventory(turtleInventory, new int[]{owner.turtle.getSelectedSlot()});
         int targetSlot = arguments.getInt(0);
         CheckUtils.isCorrectSlot(targetSlot);
         int realTargetSlot = targetSlot - 1;
@@ -98,7 +93,9 @@ public class SmithingAutomataCorePeripheral extends ExperienceAutomataCorePeriph
             result.setCount(smeltCount);
             turtleInventory.setItem(realTargetSlot, result);
             limitedInventory.reduceCount(0, smeltCount);
-            adjustStoredXP(smeltCount * recipe.getExperience());
+            ExperienceAbility ability = owner.getAbility(PPAbilities.EXPERIENCE);
+            if (ability != null)
+                ability.adjustStoredXP(smeltCount * recipe.getExperience());
             return MethodResult.of(true);
         }, null);
     }

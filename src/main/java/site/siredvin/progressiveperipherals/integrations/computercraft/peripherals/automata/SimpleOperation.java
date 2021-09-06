@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralOperation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;
@@ -33,6 +33,11 @@ public enum SimpleOperation implements IPeripheralOperation<Object> {
         cost = builder.defineInRange(
                 settingsName() + "Cost", defaultCost, 0, Integer.MAX_VALUE
         );
+    }
+
+    @Override
+    public int getInitialCooldown() {
+        return cooldown.get();
     }
 
     @Override

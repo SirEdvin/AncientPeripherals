@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities.enderwire;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.Block;
 import net.minecraft.state.properties.BlockStateProperties;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
@@ -10,7 +10,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.IEnderwireSensorBl
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnderwireSensorTileEntity extends BaseEnderwireTileEntity<EnderwireSensorTileEntity, BasePeripheral> {
+public class EnderwireSensorTileEntity extends BaseEnderwireTileEntity<EnderwireSensorTileEntity, BasePeripheral<?>> {
     public EnderwireSensorTileEntity() {
         super(TileEntityTypes.ENDERWIRE_SENSOR.get());
     }

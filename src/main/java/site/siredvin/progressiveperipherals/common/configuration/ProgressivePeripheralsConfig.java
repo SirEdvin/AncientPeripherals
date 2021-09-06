@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.configuration;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
+import de.srendi.advancedperipherals.lib.misc.IConfigHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.common.tileentities.rbtmachinery.RealityBreakthroughPointTier;

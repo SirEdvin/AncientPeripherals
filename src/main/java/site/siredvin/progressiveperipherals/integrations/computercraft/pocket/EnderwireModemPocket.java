@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.pocket;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.pocket.IPocketAccess;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePocket;
+import de.srendi.advancedperipherals.lib.pocket.BasePocketUpgrade;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +11,7 @@ import site.siredvin.progressiveperipherals.common.setup.Blocks;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireUpgradeModemPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnderwireModemPocket extends BasePocket<EnderwireUpgradeModemPeripheral> {
+public class EnderwireModemPocket extends BasePocketUpgrade<EnderwireUpgradeModemPeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_modem_pocket");
 
     public EnderwireModemPocket() {

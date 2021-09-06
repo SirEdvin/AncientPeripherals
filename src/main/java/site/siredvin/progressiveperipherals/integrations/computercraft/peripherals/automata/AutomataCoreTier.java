@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.automata;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
+import de.srendi.advancedperipherals.lib.metaphysics.IAutomataCoreTier;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 

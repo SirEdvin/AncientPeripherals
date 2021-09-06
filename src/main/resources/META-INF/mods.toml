@@ -35,7 +35,7 @@ In addition to automata core system expansion, you can find many useful peripher
 [[dependencies.progressiveperipherals]]
     modId = "advancedperipherals"
     mandatory = true
-    versionRange = "[0.7.1r,0.7.2r)"
+    versionRange = "[0.7.2r,)"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.progressiveperipherals]]

@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
+import de.srendi.advancedperipherals.lib.misc.IConfigHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.HashMap;

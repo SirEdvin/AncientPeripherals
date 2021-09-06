@@ -3,8 +3,8 @@ package site.siredvin.progressiveperipherals.common.tileentities.base;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.shared.Capabilities;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
+import de.srendi.advancedperipherals.lib.peripherals.IBasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.IPeripheralTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends TileEntity implements IPeripheralTileEntity {
+public class OptionalPeripheralTileEntity<T extends IBasePeripheral<?>> extends TileEntity implements IPeripheralTileEntity {
 
     private static final String PERIPHERAL_DATA_TAG = "peripheralData";
 
@@ -101,7 +101,12 @@ public class OptionalPeripheralTileEntity<T extends IBasePeripheral> extends Til
     }
 
     @Override
-    public CompoundNBT getApSettings() {
-        return this.peripheralData;
+    public CompoundNBT getPeripheralSettings() {
+        return peripheralData;
+    }
+
+    @Override
+    public void markSettingsChanged() {
+        setChanged();
     }
 }

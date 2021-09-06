@@ -2,6 +2,7 @@ package site.siredvin.progressiveperipherals.utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class ValueContainer<T> {
@@ -17,6 +18,18 @@ public class ValueContainer<T> {
 
     public T getValue() {
         return value;
+    }
+
+    public @NotNull T getNotNull() {
+        return Objects.requireNonNull(value);
+    }
+
+    public boolean isEmpty() {
+        return value == null;
+    }
+
+    public boolean isPresent() {
+        return !isEmpty();
     }
 
     public void setValue(T value) {

@@ -1,10 +1,14 @@
 package site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire;
 
+import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.operations.IPeripheralOperation;
+import de.srendi.advancedperipherals.lib.peripherals.owner.FuelAbility;
+import de.srendi.advancedperipherals.lib.peripherals.owner.PeripheralOwnerAbility;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TurtleFuelAbility;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TurtlePeripheralOwner;
 import net.minecraft.world.server.ServerWorld;
 import org.jetbrains.annotations.NotNull;
 import site.siredvin.progressiveperipherals.extra.network.EnderwireNetwork;
@@ -15,9 +19,7 @@ import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetwor
 import site.siredvin.progressiveperipherals.extra.network.events.EnderwireNetworkEvent;
 import site.siredvin.progressiveperipherals.extra.network.tools.NetworkElementTool;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import static site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.TickingOperation.EXPOSE;
 
@@ -28,13 +30,8 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
     public EnderwireTurtleUpgradeModemPeripheral(@NotNull ITurtleAccess turtle, @NotNull TurtleSide side) {
         super(turtle, side);
         elementProvider = new TurtleEnderwireElement(turtle, side);
-    }
-
-    @Override
-    public List<IPeripheralOperation<?>> possibleOperations() {
-        List<IPeripheralOperation<?>> data = super.possibleOperations();
-        data.add(EXPOSE);
-        return data;
+        owner.attachOperation(EXPOSE);
+        owner.attachAbility(PeripheralOwnerAbility.FUEL, new TurtleFuelAbility((TurtlePeripheralOwner) owner, 1));
     }
 
     protected void shareTurtlePeripheral() {
@@ -86,7 +83,9 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
 
     public void consumeTickFuel() {
         if (isPeripheralSharingEnabled && elementProvider.isPeripheralShared()) {
-            if (!consumeFuel(EXPOSE.getTickCost(null)))
+            FuelAbility<?> fuelAbility = owner.getAbility(PeripheralOwnerAbility.FUEL);
+            Objects.requireNonNull(fuelAbility);
+            if (!fuelAbility.consumeFuel(EXPOSE.getTickCost(null), false))
                 stopExposing();
         }
     }
@@ -97,20 +96,16 @@ public class EnderwireTurtleUpgradeModemPeripheral extends EnderwireUpgradeModem
     }
 
     @LuaFunction(mainThread = true)
-    public final MethodResult expose() {
+    public final MethodResult expose() throws LuaException {
         if (elementProvider.getAttachedNetwork() == null)
             return MethodResult.of(null, "Turtle don't attached to any network");
         if (!isPeripheralSharingEnabled) {
-            Optional<MethodResult> checkResult = cooldownCheck(EXPOSE);
-            if (checkResult.isPresent())
-                return checkResult.get();
-            checkResult = consumeFuelOp(EXPOSE.getCost(null));
-            if (checkResult.isPresent())
-                return checkResult.get();
-            isPeripheralSharingEnabled = true;
-            shareTurtlePeripheral();
-            trackOperation(EXPOSE, null);
-            return MethodResult.of(true);
+            return withOperation(EXPOSE, null, null, ignored -> {
+                isPeripheralSharingEnabled = true;
+                shareTurtlePeripheral();
+                return MethodResult.of(true);
+            }, null);
+
         }
         return MethodResult.of(null, "Already exposed");
     }

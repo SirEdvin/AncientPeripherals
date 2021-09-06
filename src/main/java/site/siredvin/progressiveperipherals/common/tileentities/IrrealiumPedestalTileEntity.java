@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -10,7 +10,7 @@ import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityStackConta
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 
-public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider, ITileEntityStackContainer {
+public class IrrealiumPedestalTileEntity extends MutableNBTTileEntity<BasePeripheral<?>> implements ITileEntityDataProvider, ITileEntityStackContainer {
     private static final String ITEM_STACK_TAG = "itemStackTag";
     private @NotNull ItemStack storedStack = ItemStack.EMPTY;
 

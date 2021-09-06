@@ -6,8 +6,8 @@ import dan200.computercraft.api.turtle.AbstractTurtleUpgrade;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.api.turtle.TurtleUpgradeType;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.DisabledPeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IBasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.DisabledPeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.IBasePeripheral;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class DataDependPeripheralTurtle<T extends IBasePeripheral> extends AbstractTurtleUpgrade {
+public abstract class DataDependPeripheralTurtle<T extends IBasePeripheral<?>> extends AbstractTurtleUpgrade {
 
     protected static final Map<ModelResourceLocation, TransformedModel> _TRANSFORMED_MODEL_CACHE = new HashMap<>();
 

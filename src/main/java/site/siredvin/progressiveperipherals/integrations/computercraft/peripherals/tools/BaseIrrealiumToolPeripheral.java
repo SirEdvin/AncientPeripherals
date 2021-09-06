@@ -4,7 +4,8 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TurtlePeripheralOwner;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.base.UltimineMode;
 import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.dataproxy.IrrealiumToolDataProxy;
@@ -12,11 +13,11 @@ import site.siredvin.progressiveperipherals.integrations.computercraft.turtles.d
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseIrrealiumToolPeripheral extends BasePeripheral {
+public class BaseIrrealiumToolPeripheral extends BasePeripheral<TurtlePeripheralOwner> {
     public static final String TYPE = "irrealiumTool";
 
     public BaseIrrealiumToolPeripheral(ITurtleAccess turtle, TurtleSide side) {
-        super(TYPE, turtle, side);
+        super(TYPE, new TurtlePeripheralOwner(turtle, side));
     }
 
     @Override
@@ -24,7 +25,7 @@ public class BaseIrrealiumToolPeripheral extends BasePeripheral {
         return ProgressivePeripheralsConfig.enableIrrealiumTools;
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult getUltimineMode() {
         UltimineMode mode = IrrealiumToolDataProxy.getUltimineMode(owner);
         return MethodResult.of(mode.prettyName(), mode.getDescription());
@@ -43,7 +44,7 @@ public class BaseIrrealiumToolPeripheral extends BasePeripheral {
         return data;
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final MethodResult setUltimineMode(String mode) {
         try {
             IrrealiumToolDataProxy.setUltimineMod(owner, UltimineMode.fromPretty(mode));
@@ -52,7 +53,7 @@ public class BaseIrrealiumToolPeripheral extends BasePeripheral {
         return MethodResult.of(null, "Incorrect mode provided");
     }
 
-    @LuaFunction
+    @LuaFunction(mainThread = true)
     public final Map<String, Object> getFuelConsumptionInformation() {
         return IrrealiumToolDataProxy.getOperationType(owner).computerDescription();
     }

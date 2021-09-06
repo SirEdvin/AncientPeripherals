@@ -5,13 +5,13 @@ import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.TurtleSide;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IAutomataCoreTier;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.recipes.AutomataRecipe;
 import site.siredvin.progressiveperipherals.common.setup.Items;
+import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.PPAbilities;
 
 import java.util.Map;
 import java.util.Optional;
@@ -21,12 +21,7 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
     public static final String TYPE = "scientificAutomataCore";
 
     public ScientificAutomataCorePeripheral(ITurtleAccess turtle, TurtleSide side) {
-        super(TYPE, turtle, side);
-    }
-
-    @Override
-    public IAutomataCoreTier getTier() {
-        return AutomataCoreTier.TIER3;
+        super(TYPE, turtle, side, AutomataCoreTier.TIER3);
     }
 
     @Override
@@ -43,6 +38,9 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
 
     @LuaFunction(mainThread = true)
     public final MethodResult crystallizeXP(int ingots_count) throws LuaException {
+        ExperienceAbility ability = owner.getAbility(PPAbilities.EXPERIENCE);
+        if (ability == null)
+            throw new LuaException("Unsupporterd operation");
         ItemStack result = new ItemStack(Items.ABSTRACTIUM_INGOT.get());
         if (ingots_count < result.getMaxStackSize())
             throw new LuaException("Count should less or equal stack count");
@@ -50,11 +48,11 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
             throw new LuaException("Count should be positive integer");
         int requiredXPAmount = ingots_count * ProgressivePeripheralsConfig.abstractiumXPPointsCost;
         CompoundNBT data = owner.getDataStorage();
-        double currentAmount = _getStoredXP(data);
+        double currentAmount = ability._getStoredXP(data);
         if (currentAmount < requiredXPAmount)
             return MethodResult.of(null, String.format("Not enough xp stored: %.2f/%d", currentAmount, requiredXPAmount));
         int freeSlot = -1;
-        IInventory turtleInventory = turtle.getInventory();
+        IInventory turtleInventory = owner.turtle.getInventory();
         for (int slot = 0; slot < turtleInventory.getContainerSize(); slot++) {
             if (turtleInventory.getItem(slot).isEmpty()) {
                 freeSlot = slot;
@@ -63,7 +61,7 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
         }
         if (freeSlot == -1)
             return MethodResult.of(null, "Cannot find free slot in turtle");
-        adjustStoredXP(-requiredXPAmount, data);
+        ability.adjustStoredXP(-requiredXPAmount, data);
         result.setCount(ingots_count);
         turtleInventory.setItem(freeSlot, result);
         return MethodResult.of(true);
@@ -71,7 +69,7 @@ public class ScientificAutomataCorePeripheral extends ExperienceAutomataCorePeri
 
     @LuaFunction(mainThread = true)
     public final MethodResult craft() {
-        IInventory inventory = turtle.getInventory();
+        IInventory inventory = owner.turtle.getInventory();
         Optional<AutomataRecipe> optRecipe = getWorld().getRecipeManager().getRecipeFor(AutomataRecipe.TYPE(), inventory, getWorld());
         if (!optRecipe.isPresent())
             return MethodResult.of(null, "Cannot find recipe");

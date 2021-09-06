@@ -202,10 +202,13 @@ repositories {
         }
     }
     maven {
-        url 'https://maven.pkg.github.com/SirEdvin/ProgressivePeripherals'
+        url 'https://maven.pkg.github.com/Seniorendi/AdvancedPeripherals'
         credentials {
             username = secretEnv["USERNAME"] ?: System.getenv("USERNAME")
             password = secretEnv["TOKEN"] ?: System.getenv("TOKEN")
+        }
+        content {
+
         }
     }
 

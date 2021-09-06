@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.extra.network.api;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IConfigHandler;
+import de.srendi.advancedperipherals.lib.misc.IConfigHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.StringUtils;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;

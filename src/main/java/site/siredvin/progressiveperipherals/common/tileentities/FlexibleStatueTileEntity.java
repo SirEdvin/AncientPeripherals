@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -11,8 +11,8 @@ import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.api.integrations.IProbeable;
+import site.siredvin.progressiveperipherals.api.tileentity.ITileEntityDataProvider;
 import site.siredvin.progressiveperipherals.common.blocks.FlexibleStatue;
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider, IProbeable {
+public class FlexibleStatueTileEntity extends MutableNBTTileEntity<BasePeripheral<?>> implements ITileEntityDataProvider, IProbeable {
     public static final String BAKED_QUADS_TAG = "bakedQuads";
     public static final String NAME_TAG = "statueName";
     public static final String AUTHOR_TAG = "statueAuthor";

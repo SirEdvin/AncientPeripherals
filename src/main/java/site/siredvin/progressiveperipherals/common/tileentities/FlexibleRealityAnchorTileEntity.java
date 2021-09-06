@@ -1,6 +1,6 @@
 package site.siredvin.progressiveperipherals.common.tileentities;
 
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
@@ -17,7 +17,7 @@ import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeri
 import site.siredvin.progressiveperipherals.common.setup.TileEntityTypes;
 import site.siredvin.progressiveperipherals.common.tileentities.base.MutableNBTTileEntity;
 
-public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePeripheral> implements ITileEntityDataProvider {
+public class FlexibleRealityAnchorTileEntity extends MutableNBTTileEntity<BasePeripheral<?>> implements ITileEntityDataProvider {
 
     private static final String MIMIC_TAG = "mimic";
     private static final String LIGHT_LEVEL_TAG = "lightLevel";

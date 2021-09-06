@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.pocket;
 
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.pocket.IPocketAccess;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePocket;
+import de.srendi.advancedperipherals.lib.pocket.BasePocketUpgrade;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +15,7 @@ import site.siredvin.progressiveperipherals.common.setup.Items;
 import site.siredvin.progressiveperipherals.integrations.computercraft.peripherals.enderwire.EnderwireNetworkManagerPeripheral;
 import site.siredvin.progressiveperipherals.utils.TranslationUtil;
 
-public class EnderwireNetworkManagementPocket extends BasePocket<EnderwireNetworkManagerPeripheral> {
+public class EnderwireNetworkManagementPocket extends BasePocketUpgrade<EnderwireNetworkManagerPeripheral> {
     public static final ResourceLocation ID = new ResourceLocation(ProgressivePeripherals.MOD_ID, "enderwire_network_manager_pocket");
 
     public EnderwireNetworkManagementPocket() {

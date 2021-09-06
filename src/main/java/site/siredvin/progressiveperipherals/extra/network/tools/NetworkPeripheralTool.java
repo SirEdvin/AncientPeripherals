@@ -2,7 +2,7 @@ package site.siredvin.progressiveperipherals.extra.network.tools;
 
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -13,7 +13,7 @@ import site.siredvin.progressiveperipherals.extra.network.api.PeripheralBiFuncti
 import site.siredvin.progressiveperipherals.extra.network.api.PeripheralFunction;
 
 public class NetworkPeripheralTool {
-    public static <T extends BasePeripheral> MethodResult withNetworks(World world, PlayerEntity owner, PeripheralBiFunction<GlobalNetworksData, PlayerEntity, MethodResult> function) throws LuaException {
+    public static <T extends BasePeripheral<?>> MethodResult withNetworks(World world, PlayerEntity owner, PeripheralBiFunction<GlobalNetworksData, PlayerEntity, MethodResult> function) throws LuaException {
         ServerWorld serverWorld = (ServerWorld) world;
         GlobalNetworksData data = GlobalNetworksData.get(serverWorld);
         if (owner == null)

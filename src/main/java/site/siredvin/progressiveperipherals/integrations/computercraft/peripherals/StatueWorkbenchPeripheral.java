@@ -3,11 +3,12 @@ package site.siredvin.progressiveperipherals.integrations.computercraft.peripher
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.lua.MethodResult;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.BasePeripheral;
-import de.srendi.advancedperipherals.common.addons.computercraft.base.IPeripheralTileEntity;
+import de.srendi.advancedperipherals.lib.peripherals.BasePeripheral;
+import de.srendi.advancedperipherals.lib.peripherals.owner.TileEntityPeripheralOwner;
 import net.minecraft.tileentity.TileEntity;
 import site.siredvin.progressiveperipherals.common.configuration.ProgressivePeripheralsConfig;
 import site.siredvin.progressiveperipherals.common.tileentities.FlexibleStatueTileEntity;
+import site.siredvin.progressiveperipherals.common.tileentities.StatueWorkbenchTileEntity;
 import site.siredvin.progressiveperipherals.utils.LuaUtils;
 import site.siredvin.progressiveperipherals.utils.quad.QuadList;
 
@@ -15,12 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class StatueWorkbenchPeripheral extends BasePeripheral {
+public class StatueWorkbenchPeripheral extends BasePeripheral<TileEntityPeripheralOwner<StatueWorkbenchTileEntity>> {
     public static final String TYPE = "statueWorkbench";
     private final static int MAX_QUAD_COUNT = 128;
 
-    public <T extends TileEntity & IPeripheralTileEntity> StatueWorkbenchPeripheral(T tileEntity) {
-        super(TYPE, tileEntity);
+    public StatueWorkbenchPeripheral(StatueWorkbenchTileEntity tileEntity) {
+        super(TYPE, new TileEntityPeripheralOwner<>(tileEntity));
     }
 
     @Override
