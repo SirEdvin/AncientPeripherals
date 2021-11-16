@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.12] - 2021-11-16
+
+### Added
+
+- AP 0.7.4.1b support
+
 ## [0.0.11] - 2021-09-06
 
 ### Added

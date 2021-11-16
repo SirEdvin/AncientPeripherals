@@ -66,7 +66,7 @@ public class ExperienceAbility implements IOwnerAbility, IPeripheralPlugin {
     protected MethodResult withOperation(SimpleOperation operation, IPeripheralFunction<Object, MethodResult> function) throws LuaException {
         OperationAbility ability = automataCore.getPeripheralOwner().getAbility(PeripheralOwnerAbility.OPERATION);
         Objects.requireNonNull(ability);
-        return ability.performOperation(operation, null, null, function, null);
+        return ability.performOperation(operation, null, null, function, null, null);
     }
 
     @SuppressWarnings("unused")

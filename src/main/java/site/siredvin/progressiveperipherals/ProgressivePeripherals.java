@@ -2,7 +2,6 @@ package site.siredvin.progressiveperipherals;
 
 import dan200.computercraft.api.pocket.AbstractPocketUpgrade;
 import dan200.computercraft.api.turtle.AbstractTurtleUpgrade;
-import de.srendi.advancedperipherals.common.configuration.ConfigHandler;
 import de.srendi.advancedperipherals.common.util.ItemUtil;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -45,6 +44,7 @@ import site.siredvin.progressiveperipherals.client.renderer.EnderwireLightEmitte
 import site.siredvin.progressiveperipherals.client.renderer.PedestalTileRenderer;
 import site.siredvin.progressiveperipherals.client.renderer.RealityBreakthroughPointTileRenderer;
 import site.siredvin.progressiveperipherals.common.blocks.enderwire.EnderwireLightEmitterBlockColor;
+import site.siredvin.progressiveperipherals.common.configuration.ConfigHandler;
 import site.siredvin.progressiveperipherals.common.configuration.ConfigHolder;
 import site.siredvin.progressiveperipherals.common.setup.*;
 import site.siredvin.progressiveperipherals.extra.recipes.RecipeRegistryToolkit;
